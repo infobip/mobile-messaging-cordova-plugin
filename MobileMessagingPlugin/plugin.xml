@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com-infobip-plugins-mobilemessaging" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com-infobip-plugins-mobilemessaging" version="0.0.2" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>MobileMessagingCordova</name>
 
 	<dependency id="cordova-plugin-cocoapod-support"/>
@@ -22,25 +22,21 @@
 	</platform>
 
 	<platform name="android">
+		
 		<config-file target="config.xml" parent="/*">
 	        <feature name="MobileMessagingCordova">
 	            <param name="android-package" value="org.apache.cordova.plugin.MobileMessagingCordova"/>
 	        </feature>
 	    </config-file>
+	    
 	    <config-file target="AndroidManifest.xml" parent="/*">
-	    	<!-- Mobile Messaging permissions -->
 		    <uses-permission android:name="android.permission.INTERNET" />
 		    <uses-permission android:name="android.permission.WAKE_LOCK" />
-		    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-		    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 		    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
 		    <permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-
-		    <!-- Needed for push notifications that contain VIBRATE flag. Optional, but recommended. -->
 		    <uses-permission android:name="android.permission.VIBRATE" />
-		    <!-- /Mobile Messaging permissions -->
-
 		</config-file>
+		
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 		        <receiver
 		                android:name="org.infobip.mobile.messaging.gcm.MobileMessagingGcmReceiver"
@@ -64,24 +60,12 @@
 		                    <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 		                </intent-filter>
 		        </service>
-
-		        <!--Service that triggers when geofence area is entered-->
-		        <service android:name="org.infobip.mobile.messaging.geo.GeofenceTransitionsIntentService" />
-
-		        <receiver android:name="org.infobip.mobile.messaging.BootReceiver">
-		                <intent-filter>
-		                    <action android:name="android.intent.action.BOOT_COMPLETED"/>
-		                </intent-filter>
-		        </receiver>
-
-		        <receiver android:name="org.infobip.mobile.messaging.GeofencingAlarmReceiver"/>
 		</config-file>
-		<framework src="com.google.android.gms:play-services-gcm:8.4.0" />
-		<framework src="com.google.android.gms:play-services-location:8.4.0" />
-		<framework src="com.google.code.gson:gson:2.6.2" />
+		
 		<framework src="src/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
 
     	<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
+	
 	</platform>
 
 </plugin>

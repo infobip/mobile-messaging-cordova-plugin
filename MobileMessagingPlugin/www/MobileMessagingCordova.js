@@ -1,17 +1,17 @@
 var exec = require('cordova/exec');
 
-exports.start = function(success, error) {
-    exec(success, error, "MobileMessagingCordova", "start");
-};
+exports.init = function(config, clientCallback) {
+    exec(function(event) {
+    	console.log('Received event: ' + JSON.stringify(event));
 
-exports.showAlert = function(message, success, error) {
-    exec(success, error, "MobileMessagingCordova", "showAlert", [message]);
-};
+		switch(event.type) {
+			case 'message':
+				clientCallback(event.type, event.data);
+				break;
 
-exports.registerForMessage = function(success, error) {
-	exec(success, error, "MobileMessagingCordova", "registerForMessage");
-};
-
-exports.initWithCredentials = function(success, error, app_code, extra) {
-	exec(success, error, "MobileMessagingCordova", "initWithCredentials", [app_code, extra])
+			default:
+				console.log('Unknown event type from library: ' + event.type);
+				break;
+		}
+    }, function(error){}, "MobileMessagingCordova", "init", [config]);
 };
