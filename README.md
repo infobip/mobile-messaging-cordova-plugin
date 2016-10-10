@@ -20,11 +20,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     1. [Create new application](https://dev.infobip.com/v1/docs/push-introduction-create-app) on Infobip Push portal.
     2. Navigate to your Application where you will get the Application Code.
     3. Mark the "Available on Android" checkbox and insert previously obtained GCM Server Key (Server API Key).
-
     <center><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/GCMAppSetup.png" alt="CUP Settings"/></center>
 
     4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 certificate you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application).
-
 	<center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
 
 3. Create new application with Cordova
