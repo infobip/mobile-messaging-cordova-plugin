@@ -4,36 +4,53 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import org.apache.cordova.*;
-import org.infobip.mobile.messaging.*;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
+import org.infobip.mobile.messaging.BroadcastParameter;
+import org.infobip.mobile.messaging.Event;
+import org.infobip.mobile.messaging.Message;
+import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class MobileMessagingCordova extends CordovaPlugin
 {
 	private static final String TAG = "MobileMessagingCordova";
 
     private static final String FUNCTION_INIT = "init";
+    private static final String FUNCTION_REGISTER = "register";
+    private static final String FUNCTION_UNREGISTER = "unregister";
 
-    private static final String EVENT_FIELD_TYPE = "type";
-    private static final String EVENT_FIELD_DATA = "data";
+    private static final String EVENT_MESSAGE_RECEIVED = "messageReceived";
+    private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
+    private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
 
-    private static final String EVENT_TYPE_INIT = "init";
-    private static final String EVENT_TYPE_MESSAGE = "message";
+    private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
+        put(Event.MESSAGE_RECEIVED.getKey(), EVENT_MESSAGE_RECEIVED);
+        put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
+        put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
+    }};
 
-    private CallbackContext cordovaCallback;
-    private CordovaInterface cordovaInterface;
-    private CordovaWebView cordovaWebView;
+    private final Map<String, Set<CallbackContext>> eventCallbacksMap = new HashMap<String, Set<CallbackContext>>() {{
+        put(EVENT_MESSAGE_RECEIVED, new HashSet<CallbackContext>());
+        put(EVENT_TOKEN_RECEIVED, new HashSet<CallbackContext>());
+        put(EVENT_REGISTRATION_UPDATED, new HashSet<CallbackContext>());
+    }};
 
-	private MobileMessaging mobileMessaging;
-
-    static class Configuration {
+    private static class Configuration {
 
         class AndroidConfiguration {
             String senderId;
@@ -52,85 +69,182 @@ public class MobileMessagingCordova extends CordovaPlugin
     }
 
 	@Override
-	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-
-        Log.d(TAG, "initialize plugin");
-
-        this.cordovaInterface = cordova;
-        this.cordovaWebView = webView;
-	}
-
-	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        Log.d(TAG, "execute: " + action);
+        Log.d(TAG, "execute: " + action + " args: " + args.toString());
+
         if (FUNCTION_INIT.equals(action)) {
-            return init(args, callbackContext);
+            init(args, callbackContext);
+            return true;
+        } else if (FUNCTION_REGISTER.equals(action)) {
+            register(args, callbackContext);
+            return true;
+        } else if (FUNCTION_UNREGISTER.equals(action)) {
+            unregister(args, callbackContext);
+            return true;
         }
 
 	    return false;
 	}
 
-    private boolean init(JSONArray args, CallbackContext callbackContext) throws JSONException {
+    private void init(JSONArray args, CallbackContext callbackContext) throws JSONException {
 
         Log.d(TAG, "init: " + args.toString());
 
         if (args.length() < 1 || args.getJSONObject(0) == null) {
             Log.e(TAG, "Wrong arguments for init");
-            return false;
+            sendCallbackError(callbackContext);
+            return;
         }
 
         Configuration config = Configuration.fromJson(args.getJSONObject(0).toString());
         if (config == null || config.applicationCode == null || config.android.senderId == null) {
             Log.e(TAG, "Configuration is invalid: " + args.getJSONObject(0).toString());
-            return false;
+            sendCallbackError(callbackContext);
+            return;
         }
 
-        this.cordovaCallback = callbackContext;
+        try {
+            init(config.applicationCode, config.android.senderId);
+            sendCallbackSuccess(callbackContext);
+        } catch (IllegalArgumentException ignored) {
+            sendCallbackError(callbackContext);
+        }
+    }
+
+    private void init(String applicationCode, String senderId) throws IllegalArgumentException {
+
+        IntentFilter intentFilter = new IntentFilter();
+        for (String action : broadcastEventMap.keySet()) {
+            intentFilter.addAction(action);
+        }
 
         LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    Message message = Message.createFrom(intent.getExtras());
-                    JSONObject json = convertToJson(message);
-                    if (json == null) {
-                        return;
-                    }
+            @Override
+            public void onReceive(Context context, Intent intent) {
 
-                    Log.v(TAG, "Received message: " + json.toString());
-                    sendCallbackEvent(EVENT_TYPE_MESSAGE, json);
+                String event = broadcastEventMap.get(intent.getAction());
+                if (event == null) {
+                    return;
                 }
-            }, new IntentFilter(Event.MESSAGE_RECEIVED.getKey()));
 
-        mobileMessaging = new MobileMessaging.Builder(cordova.getActivity().getApplication())
-            .withApplicationCode(config.applicationCode)
-            .withGcmSenderId(config.android.senderId)
+                Object data = null;
+                if (Event.MESSAGE_RECEIVED.getKey().equals(intent.getAction())) {
+                    data = messageFromBundle(intent.getExtras());
+                } else if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
+                    data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
+                } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
+                    data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
+                }
+
+                sendCallbackEvent(event, data);
+            }
+        }, intentFilter);
+
+        new MobileMessaging.Builder(cordova.getActivity().getApplication())
+            .withApplicationCode(applicationCode)
+            .withGcmSenderId(senderId)
             .build();
-
-        return true;
     }
 
-    void sendCallbackEvent(String event, Object object) {
-        if (cordovaCallback == null) {
+    private void register(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (args.length() < 1 || args.getString(0) == null) {
+            Log.e(TAG, "Wrong arguments for register");
+            sendCallbackError(callbackContext);
             return;
         }
 
-        JSONObject json = new JSONObject();
+        String eventName = args.getString(0);
         try {
-            json.putOpt(EVENT_FIELD_TYPE, event);
-            json.putOpt(EVENT_FIELD_DATA, object);
-        } catch (JSONException e) {
-            Log.e(TAG, "Cannot create event: " + e.getMessage());
-            Log.d(TAG, Log.getStackTraceString(e));
+            register(eventName, callbackContext);
+            sendCallbackNoResult(callbackContext);
+        } catch (InvalidParameterException ignored) {
+            sendCallbackError(callbackContext);
+        }
+    }
+
+    private synchronized void register(String eventName, CallbackContext callback) throws InvalidParameterException {
+        if (!eventCallbacksMap.containsKey(eventName)) {
+            Log.e(TAG, "Not supported event name: " + eventName);
+            throw new InvalidParameterException("Not supported event name: " + eventName);
+        }
+
+        eventCallbacksMap.get(eventName).add(callback);
+    }
+
+    private void unregister(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (args.length() < 1 || args.getString(0) == null) {
+            Log.e(TAG, "Wrong arguments for unregister");
+            sendCallbackError(callbackContext);
             return;
         }
 
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, json);
-        pluginResult.setKeepCallback(true);
-        cordovaCallback.sendPluginResult(pluginResult);
+        String eventName = args.getString(0);
+        try {
+            unregister(eventName, callbackContext);
+            sendCallbackNoResult(callbackContext);
+        } catch (InvalidParameterException ignored) {
+            sendCallbackError(callbackContext);
+        }
     }
 
-    JSONObject convertToJson(Message message) {
+    private synchronized void unregister(String eventName, CallbackContext callback) throws InvalidParameterException {
+        if (!eventCallbacksMap.containsKey(eventName)) {
+            Log.e(TAG, "Not supported event name: " + eventName);
+            throw new InvalidParameterException("Not supported event name: " + eventName);
+        }
+
+        eventCallbacksMap.get(eventName).remove(callback);
+    }
+
+    private synchronized void sendCallbackEvent(String event, Object object) {
+        if (event == null || object == null) {
+            return;
+        }
+
+        Set<CallbackContext> callbacks = eventCallbacksMap.get(event);
+        if (callbacks == null || callbacks.isEmpty()) {
+            return;
+        }
+
+        PluginResult pluginResult;
+        if (object instanceof String) {
+            pluginResult = new PluginResult(PluginResult.Status.OK, (String) object);
+        } else if (object instanceof JSONObject) {
+            pluginResult = new PluginResult(PluginResult.Status.OK, (JSONObject) object);
+        } else {
+            Log.e(TAG, "Unsupported callback object type: " + object.getClass().getSimpleName());
+            return;
+        }
+
+        pluginResult.setKeepCallback(true);
+        for (CallbackContext callback : callbacks) {
+            callback.sendPluginResult(pluginResult);
+        }
+    }
+
+    private void sendCallbackError(CallbackContext callback) {
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR);
+        callback.sendPluginResult(pluginResult);
+    }
+
+    private void sendCallbackNoResult(CallbackContext callback) {
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+        pluginResult.setKeepCallback(true);
+        callback.sendPluginResult(pluginResult);
+    }
+
+    private void sendCallbackSuccess(CallbackContext callback) {
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
+        callback.sendPluginResult(pluginResult);
+    }
+
+    private JSONObject messageFromBundle(Bundle bundle) {
+        Message message = Message.createFrom(bundle);
+        if (message == null) {
+            return null;
+        }
+
         try {
             return new JSONObject()
                 .putOpt("messageId", message.getMessageId())
