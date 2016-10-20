@@ -4,10 +4,11 @@
 
 	<dependency id="cordova-plugin-cocoapod-support"/>
 
-    <js-module name="MobileMessagingCordova" src="www/MobileMessagingCordova.js">
-        <clobbers target="MobileMessagingCordova" />
+    <js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
+        <clobbers target="mobileMessaging" />
     </js-module>
-    <platform name="ios">
+
+<platform name="ios">
 		<config-file target="config.xml" parent="/*">
     		<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
@@ -15,8 +16,9 @@
 		</config-file>
 
 		<pods-config ios-min-version="8.0" uses-frameworks="true"/>
-		<pod id="MobileMessaging" git="https://github.com/infobip/mobile-messaging-sdk-ios.git" configurations="release,debug"/>
-
+		<pod id="MobileMessaging" git="ssh://git@git.ib-ci.com:7999/mml/infobip-mobile-messaging-ios.git" configurations="release,debug"/>
+		<pod id="CocoaLumberjack" version="2.3.0"/>
+		<pod id="SwiftyJSON" version="2.3.2"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
 	</platform>

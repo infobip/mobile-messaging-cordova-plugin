@@ -41,28 +41,58 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 	cordova plugin add ../infobip-mobile-messaging-cordova-plugin/MobileMessagingPlugin
 	```
 
+5. Steps to setup iOS project: 
+	1. Change the `config.xml` to add cocoapods support:
+
+	```xml
+	<platform name="ios">
+		<preference name="pods_ios_min_version" value="8.0" />
+		<preference name="pods_use_frameworks" value="true" />
+		...
+		<allow-intent href="itms:*" />
+		<allow-intent href="itms-apps:*" />
+	</platform>
+	```
+
+	2. To have the cocoaPods installed do 
+	```bash
+	cordova build
+	```
+
+	3. Open workspace and add Objective-C Bridging Header manually
+	<center><img src="https://confluence.infobip.com/download/attachments/19271014/Screen%20Shot%202016-09-23%20at%2011.22.41.png?raw=true" alt="Bridging Header setup"/></center>
+
+	4. Configure your project to support Push Notifications:
+
+			i. Click on "Capabilities", then turn on Push Notifications.
+
+			ii. Turn on Background Modes and check the Remote notifications checkbox.
+
 5. Add code to your project to initialize the library after 'deviceready' event with configuration options and library event listener
 
 ```javascript
 onDeviceReady: function() {
 	...
         
-    MobileMessagingCordova.init({
-        applicationCode: '46e2bae4133904456eb7ee29f26279cb-d3d78a46-7654-44dc-ad23-0702efaef19b',
-        android: {
-            senderId: '1041118394583'
-        }
-    },
-    function(event, data) {
-    	switch (event) {
-    		case 'message':
-	        	alert('Message: ' + data.body);
-	        	break;
+    mobileMessaging.init({
+			applicationCode: '46e2bae4133904456eb7ee29f26279cb-d3d78a46-7654-44dc-ad23-0702efaef19b',
+			android: {
+				senderId: '1041118394583'
+			},
+			ios: {
+				notificationTypes: ['alert', 'badge', 'sound']
+			}
+		},
+		function() {
+			console.log('error')
+		}
+	);
 
-	        default:
-	        	break;
-    	}
-    })
+	mobileMessaging.register('messageReceived', 
+		function(result) {
+			console.log('Message Received ' + result.body);
+		}
+	);
 }
 ```
 
@@ -72,23 +102,27 @@ onDeviceReady: function() {
 | --- | --- |
 | applicationCode | Infobip Application Code from the Customer Portal obtained in step 2 |
 | android.senderId | Cloud Messaging Sender ID obtained in step 1 | 
+| ios.notificationTypes | Preferable notification types that indicating how the app alerts the user when a push notification arrives. |
 
 
 ## Supported events
 | Event | Description |
 | --- | --- |
-| 'message' | Occurs when new message arrives, see separate section for all available message fields |
+| 'messageReceived' | Occurs when new message arrives, see separate section for all available message fields |
+| 'tokenReceived' | Posted when an APNs device token is received. Contains a hex-encoded device token string received from APNS. Available fields: 'token' - device token hex-encoded string.|
+| 'registrationUpdated' | Posted when the registration is updated on backend server. Available fields: 'internallId' - string for the registered user.|
 
-### 'message' event fields
+### 'messageReceived' event fields
 | Field | Description |
 | --- | --- |
 | messageId | Unique ID of a message |
 | title | Title of a message (if available) |
 | body | Message text |
 | sound | The name of a sound file to be played when message arrives |
-| vibrate | Flag that indicates if vibration should be used for notification |
-| icon | Dedicated icon ID to be used for notification |
+| vibrate | Flag that indicates if vibration should be used for notification (Android only)|
+| icon | Dedicated icon ID to be used for notification (Android only)|
 | silent | Flag that indicates if message is silent |
-| category | Notification category |
+| category | Notification category (Android only)|
 | receivedTimestamp | Absolute timestamp in milliseconds that indicates when the message was received |
 | customData | Any custom data provided with a message |
+| originalPayload | Original payload of the message (iOS only)|
