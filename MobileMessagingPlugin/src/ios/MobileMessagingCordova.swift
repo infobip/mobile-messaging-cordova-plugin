@@ -16,9 +16,9 @@ class MMConfiguration {
 		let notificationTypes = ios["notificationTypes"] as? [String]
 		notificationTypes?.forEach({ (type) in
 			switch type {
-			case "badge": notificationType.insert(.Badge)
-			case "sound": notificationType.insert(.Sound)
-			case "alert": notificationType.insert(.Alert)
+			case "badge": notificationType.insert(.badge)
+			case "sound": notificationType.insert(.sound)
+			case "alert": notificationType.insert(.alert)
 			default: break
 			}
 		})
@@ -36,8 +36,8 @@ class MMConfiguration {
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
 		guard let configDict = command.arguments[0] as? [String: AnyObject],
 			let configuration = MMConfiguration(rawConfig: configDict) else {
-				let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAsString: "Can't parse configuration")
-				self.commandDelegate?.sendPluginResult(errorResult, callbackId: command.callbackId)
+				let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
+				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 				return
 		}
 		
@@ -45,26 +45,26 @@ class MMConfiguration {
 		MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType).start()
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		self.commandDelegate?.sendPluginResult(pluginResult, callbackId: command.callbackId)
+		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 	}
 	
 	func register(command: CDVInvokedUrlCommand) {
 		let callbackId = command.callbackId
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
 		guard let event = command.arguments[0] as? String else {
-			self.commandDelegate?.sendPluginResult(pluginResult, callbackId: command.callbackId)
+			self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 			return
 		}
 		
-		guard let mmNotificationName = mmNotificationName(event) else {
-			self.commandDelegate?.sendPluginResult(pluginResult, callbackId: command.callbackId)
+		guard let mmNotificationName = mmNotificationName(event: event) else {
+			self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 			return
 		}
 		
 		unregister(mmNotificationName)
 		
-		let observer = NSNotificationCenter.defaultCenter().addObserverForName(mmNotificationName, object: nil, queue: nil) { (notification) in
-			var result: [String: AnyObject]?
+		let observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
+			var result: [String: Any]?
 			switch mmNotificationName {
 			case MMNotificationMessageReceived:
 				if let userInfo = notification.userInfo,
@@ -83,9 +83,9 @@ class MMConfiguration {
 				}
 			default: break
 			}
-			let notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAsDictionary: result)
-			notificationResult.setKeepCallbackAsBool(true)
-			self.commandDelegate?.sendPluginResult(notificationResult, callbackId: callbackId)
+			let notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
+			notificationResult?.setKeepCallbackAs(true)
+			self.commandDelegate?.send(notificationResult, callbackId: callbackId)
 		}
 		
 		notificationObservers?[mmNotificationName] = observer
@@ -94,29 +94,29 @@ class MMConfiguration {
 	func unregister(command: CDVInvokedUrlCommand) {
 		var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
 		guard let event = command.arguments[0] as? String else {
-			self.commandDelegate?.sendPluginResult(pluginResult, callbackId: command.callbackId)
+			self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 			return
 		}
 		
-		guard let mmNotificationName = mmNotificationName(event) else {
-			self.commandDelegate?.sendPluginResult(pluginResult, callbackId: command.callbackId)
+		guard let mmNotificationName = mmNotificationName(event: event) else {
+			self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 			return
 		}
 		
 		unregister(mmNotificationName)
 		
 		pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		self.commandDelegate?.sendPluginResult(pluginResult, callbackId: command.callbackId)
+		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 	}
 	
 	//MARK: Utils
-	private func unregister(mmNotificationName: String) {
+	private func unregister(_ mmNotificationName: String) {
 		guard let observer = notificationObservers?[mmNotificationName] else {
 			return
 		}
 		
-		NSNotificationCenter.defaultCenter().removeObserver(observer, name: mmNotificationName, object: nil)
-		notificationObservers?.removeValueForKey(mmNotificationName)
+		NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: mmNotificationName), object: nil)
+		let _ = notificationObservers?.removeValue(forKey: mmNotificationName)
 	}
 	
 	private func mmNotificationName(event: String) -> String? {
@@ -131,8 +131,8 @@ class MMConfiguration {
 }
 
 extension MTMessage {
-	func dictionary() -> [String: AnyObject] {
-		var result = [String: AnyObject]()
+	func dictionary() -> [String: Any] {
+		var result = [String: Any]()
 		result["messageId"] = messageId
 		result["body"] = text
 		result["sound"] = sound

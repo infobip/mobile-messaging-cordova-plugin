@@ -16,9 +16,9 @@
 		</config-file>
 
 		<pods-config ios-min-version="8.0" uses-frameworks="true"/>
-		<pod id="MobileMessaging" git="ssh://git@git.ib-ci.com:7999/mml/infobip-mobile-messaging-ios.git" configurations="release,debug"/>
-		<pod id="CocoaLumberjack" version="2.3.0"/>
-		<pod id="SwiftyJSON" version="2.3.2"/>
+		<pod id="MobileMessaging" version="2.0.1"/>
+		<pod id="CocoaLumberjack"/>
+		<pod id="SwiftyJSON"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
 	</platform>

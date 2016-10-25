@@ -60,9 +60,14 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 	```
 
 	3. Open workspace and add Objective-C Bridging Header manually
-	<center><img src="https://confluence.infobip.com/download/attachments/19271014/Screen%20Shot%202016-09-23%20at%2011.22.41.png?raw=true" alt="Bridging Header setup"/></center>
+	<center><img src="https://gyazo.com/35c5eb3af1dc841aa030c15250791424?raw=true" alt="Bridging Header setup"/></center>
 
-	4. Configure your project to support Push Notifications:
+	4. 	Change "Use Legacy Swift Language Version" to "NO"
+	<center><img src="https://gyazo.com/13d375fe9e19ebc441b7b7b66b8bd9bc?raw=true" alt="Legacy Swift Version"/></center>
+
+	5. 	For support Swift 3 call 'pod update' manually from command line, inside platform/ios folder
+
+	6. Configure your project to support Push Notifications:
 
 			i. Click on "Capabilities", then turn on Push Notifications.
 
