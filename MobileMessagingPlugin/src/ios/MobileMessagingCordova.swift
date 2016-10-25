@@ -43,12 +43,14 @@ class MMConfiguration {
 		
 		MobileMessagingCordovaApplicationDelegate.install()
 		MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType).start()
+		MobileMessaging.logger.logLevel = .All
+		MobileMessaging.logger.logOutput = .Console
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 	}
 	
-	func register(command: CDVInvokedUrlCommand) {
+	func register(_ command: CDVInvokedUrlCommand) {
 		let callbackId = command.callbackId
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
 		guard let event = command.arguments[0] as? String else {
@@ -91,7 +93,7 @@ class MMConfiguration {
 		notificationObservers?[mmNotificationName] = observer
 	}
 	
-	func unregister(command: CDVInvokedUrlCommand) {
+	func unregister(_ command: CDVInvokedUrlCommand) {
 		var pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
 		guard let event = command.arguments[0] as? String else {
 			self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
