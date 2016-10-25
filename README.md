@@ -60,10 +60,10 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 	```
 
 	3. Open workspace and add Objective-C Bridging Header manually
-	<center><img src="https://gyazo.com/35c5eb3af1dc841aa030c15250791424?raw=true" alt="Bridging Header setup"/></center>
+	<center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
 
 	4. 	Change "Use Legacy Swift Language Version" to "NO"
-	<center><img src="https://gyazo.com/13d375fe9e19ebc441b7b7b66b8bd9bc?raw=true" alt="Legacy Swift Version"/></center>
+	<center><img src="https://i.gyazo.com/13d375fe9e19ebc441b7b7b66b8bd9bc.png" alt="Legacy Swift Version"/></center>
 
 	5. 	For support Swift 3 call 'pod update' manually from command line, inside platform/ios folder
 
