@@ -80,9 +80,9 @@ onDeviceReady: function() {
 	...
         
     mobileMessaging.init({
-			applicationCode: '46e2bae4133904456eb7ee29f26279cb-d3d78a46-7654-44dc-ad23-0702efaef19b',
+			applicationCode: '<your_application_code>',
 			android: {
-				senderId: '1041118394583'
+				senderId: '<sender id>'
 			},
 			ios: {
 				notificationTypes: ['alert', 'badge', 'sound']
