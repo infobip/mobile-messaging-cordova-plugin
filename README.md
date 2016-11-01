@@ -65,7 +65,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 	4. 	Change "Use Legacy Swift Language Version" to "NO"
 	<center><img src="https://i.gyazo.com/fb5a9e2d6ec994c83ba495ce0dd70b0a.png" alt="Legacy Swift Version"/></center>
 
-	5. 	For support Swift 3 call 'pod update' manually from command line, inside platforms/ios folder
+	5. 	For Swift3 support call 'pod update' manually from command line, inside platforms/ios folder
 
 	6. Configure your project to support Push Notifications:
 
