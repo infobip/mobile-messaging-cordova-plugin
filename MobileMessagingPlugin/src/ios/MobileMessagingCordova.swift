@@ -43,8 +43,6 @@ class MMConfiguration {
 		
 		MobileMessagingCordovaApplicationDelegate.install()
 		MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType).start()
-		MobileMessaging.logger.logLevel = .All
-		MobileMessaging.logger.logOutput = .Console
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
