@@ -7,6 +7,7 @@ The document describes library integration steps for your Cordova project.
 
 - Cordova installed
 - Android or iOS project
+- Cocoapods 1.1.1 or higher installed
 
 ## Quick start guide
 
