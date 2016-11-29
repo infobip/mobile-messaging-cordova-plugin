@@ -33,13 +33,13 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 	1. You can add plugin directly from a git repository 
 	
 	```bash
-	cordova plugin add https://git.ib-ci.com/scm/mml/infobip-mobile-messaging-cordova-plugin.git:MobileMessagingPlugin --save
+	cordova plugin add https://git.ib-ci.com/scm/mml/infobip-mobile-messaging-cordova-plugin.git --save
 	```
 
 	2. Or you can add plugin from a local directory if you already have a local copy
 
 	```bash
-	cordova plugin add ../infobip-mobile-messaging-cordova-plugin/MobileMessagingPlugin
+	cordova plugin add ../infobip-mobile-messaging-cordova-plugin
 	```
 
 5. Steps to setup iOS project: 
@@ -80,7 +80,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 onDeviceReady: function() {
 	...
         
-    mobileMessaging.init({
+    MobileMessaging.init({
 			applicationCode: '<your_application_code>',
 			android: {
 				senderId: '<sender id>'
@@ -94,11 +94,23 @@ onDeviceReady: function() {
 		}
 	);
 
-	mobileMessaging.register('messageReceived', 
+	MobileMessaging.register('messageReceived', 
 		function(result) {
 			console.log('Message Received ' + result.body);
 		}
 	);
+ 
+    MobileMessaging.register('tokenReceived',
+         function(token) {
+             console.log('Token: ' + token);
+         }
+    );
+    
+    MobileMessaging.register('registrationUpdated',
+         function(internalId) {
+             console.log('Internal ID: ' + internalId);
+         }
+    );
 }
 ```
 
@@ -115,8 +127,8 @@ onDeviceReady: function() {
 | Event | Description |
 | --- | --- |
 | 'messageReceived' | Occurs when new message arrives, see separate section for all available message fields |
-| 'tokenReceived' | Posted when an APNs device token is received. Contains a hex-encoded device token string received from APNS. Available fields: 'token' - device token hex-encoded string.|
-| 'registrationUpdated' | Posted when the registration is updated on backend server. Available fields: 'internallId' - string for the registered user.|
+| 'tokenReceived' | Posted when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
+| 'registrationUpdated' | Posted when the registration is updated on backend server. Returns internallId - string for the registered user.|
 
 ### 'messageReceived' event fields
 | Field | Description |
@@ -132,3 +144,45 @@ onDeviceReady: function() {
 | receivedTimestamp | Absolute timestamp in milliseconds that indicates when the message was received |
 | customData | Any custom data provided with a message |
 | originalPayload | Original payload of the message (iOS only)|
+
+## Synchronizing user data
+It is possible to sync user data to the server as well as fetch latest user data from the server
+
+### Sync user data
+Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. 'customData' object shall contain all custom fields.
+```javascript
+MobileMessaging.syncUserData({
+        firstName:'John',
+        lastName:'Smith',
+        middleName:'Matthew',
+        msisdn:'385989000000',
+        gender:'M',
+        birthdate:'1985-12-31',
+        email:'john.smith@infobip.com',
+        telephone:'385989111111',
+        customData: {
+            customString: 'CustomString',
+            customDate: new Date(),
+            customNumber: 3
+        }
+    },
+    function(data) {
+        alert('User data synchronized:' + JSON.stringify(data));
+    },
+    function(error) {
+        alert('Error while syncing user data: ' + error);
+    }
+);
+```
+
+### Fetch user data
+```javascript
+MobileMessaging.fetchUserData(
+    function(data) {
+        alert('User data fetched:' + JSON.stringify(data));
+    },
+    function(error) {
+        alert('Error while syncing user data: ' + error);
+    }
+);
+```
