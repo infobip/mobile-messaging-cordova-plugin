@@ -152,6 +152,7 @@ It is possible to sync user data to the server as well as fetch latest user data
 Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. 'customData' object shall contain all custom fields.
 ```javascript
 MobileMessaging.syncUserData({
+		externalUserId:'johnsmith',
         firstName:'John',
         lastName:'Smith',
         middleName:'Matthew',

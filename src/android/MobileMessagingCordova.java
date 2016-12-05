@@ -346,6 +346,9 @@ public class MobileMessagingCordova extends CordovaPlugin
                 for (String key : predefinedUserDataKeys) {
                     json.putOpt(key, userData.getPredefinedUserData().get(key));
                 }
+                if (userData.getExternalUserId() != null) {
+                    json.putOpt("externalUserId", userData.getExternalUserId());
+                }
                 if (userData.getCustomUserData() != null && !userData.getCustomUserData().isEmpty()) {
                     JSONObject custom = new JSONObject();
                     for (String key : userData.getCustomUserData().keySet()) {

@@ -203,6 +203,10 @@ extension MMUser {
             }
         }
         
+        if let externalUserId = dictionary["externalUserId"] as? String {
+            self.externalId = externalUserId
+        }
+        
         guard let customData = dictionary["customData"] as? [String:AnyObject?] else {
             return
         }
@@ -238,6 +242,10 @@ extension MMUser {
             if let value = MobileMessaging.currentUser?.predefinedData(forKey: key) {
                 result[jsonKey] = value
             }
+        }
+        
+        if let externalUserId = MobileMessaging.currentUser?.externalId {
+            result["externalUserId"] = externalUserId
         }
         
         guard let customData = MobileMessaging.currentUser?.customData else {
