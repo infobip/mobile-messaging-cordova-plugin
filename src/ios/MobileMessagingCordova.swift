@@ -42,7 +42,7 @@ class MMConfiguration {
 		}
 		
 		MobileMessagingCordovaApplicationDelegate.install()
-		MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType).start()
+		MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)?.start()
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
@@ -152,7 +152,7 @@ class MMConfiguration {
 	private func mmNotificationName(event: String) -> String? {
 		switch event {
 		case "messageReceived" : return MMNotificationMessageReceived
-		case "tokenReceived" : return MMNotificationKeyDeviceToken
+		case "tokenReceived" : return MMNotificationDeviceTokenReceived
 		case "registrationUpdated" : return MMNotificationRegistrationUpdated
 		default: break
 		}

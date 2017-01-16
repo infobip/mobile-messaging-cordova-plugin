@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com-infobip-plugins-mobilemessaging" version="0.0.4" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com-infobip-plugins-mobilemessaging" version="0.0.5" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>MobileMessagingCordova</name>
 
 	<dependency id="cordova-plugin-cocoapod-support"/>
@@ -15,10 +15,8 @@
 			</feature>
 		</config-file>
 
-		<pods-config ios-min-version="8.0" uses-frameworks="true"/>
-		<pod id="MobileMessaging" version="2.1.2"/>
-		<pod id="CocoaLumberjack"/>
-		<pod id="SwiftyJSON"/>
+		<pods-config ios-min-version="8.4" uses-frameworks="true"/>
+		<pod id="MobileMessaging" version="2.2.0"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
 	</platform>
@@ -30,39 +28,6 @@
 	            <param name="android-package" value="org.apache.cordova.plugin.MobileMessagingCordova"/>
 	        </feature>
 	    </config-file>
-	    
-	    <config-file target="AndroidManifest.xml" parent="/*">
-		    <uses-permission android:name="android.permission.INTERNET" />
-		    <uses-permission android:name="android.permission.WAKE_LOCK" />
-		    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-		    <permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-		    <uses-permission android:name="android.permission.VIBRATE" />
-		</config-file>
-		
-		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-		        <receiver
-		                android:name="org.infobip.mobile.messaging.gcm.MobileMessagingGcmReceiver"
-		                android:exported="true"
-		                android:permission="com.google.android.c2dm.permission.SEND" >
-		            <intent-filter>
-		                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-		            </intent-filter>
-		        </receiver>
-
-		        <service
-		                android:name="org.infobip.mobile.messaging.gcm.MobileMessagingGcmIntentService"
-		                android:exported="true">
-		        </service>
-
-		        <service
-		                android:name="org.infobip.mobile.messaging.gcm.MobileMessagingInstanceIDListenerService"
-		                android:exported="false">
-		                <intent-filter>
-		                    <action android:name="com.google.android.gms.iid.InstanceID"/>
-		                    <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-		                </intent-filter>
-		        </service>
-		</config-file>
 		
 		<framework src="src/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
 

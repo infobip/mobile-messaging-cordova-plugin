@@ -29,17 +29,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 3. Create new application with Cordova
     * You can find more info on this link https://cordova.apache.org/#getstarted
 
-4. Add Mobile Messaging plugin to your porject
-	1. You can add plugin directly from a git repository 
-	
+4. Add Mobile Messaging plugin to your project
 	```bash
-	cordova plugin add https://git.ib-ci.com/scm/mml/infobip-mobile-messaging-cordova-plugin.git --save
-	```
-
-	2. Or you can add plugin from a local directory if you already have a local copy
-
-	```bash
-	cordova plugin add ../infobip-mobile-messaging-cordova-plugin
+	cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --save
 	```
 
 5. Steps to setup iOS project: 
@@ -47,7 +39,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 	```xml
 	<platform name="ios">
-		<preference name="pods_ios_min_version" value="8.0" />
+		<preference name="pods_ios_min_version" value="8.4" />
 		<preference name="pods_use_frameworks" value="true" />
 		...
 		<allow-intent href="itms:*" />
@@ -63,18 +55,20 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 	3. Open workspace and add Objective-C Bridging Header manually
 	<center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
 
-	4. 	Change "Use Legacy Swift Language Version" to "NO"
+	4. Change "Use Legacy Swift Language Version" to "NO"
 	<center><img src="https://i.gyazo.com/fb5a9e2d6ec994c83ba495ce0dd70b0a.png" alt="Legacy Swift Version"/></center>
 
-	5. 	For Swift3 support call 'pod update' manually from command line, inside platforms/ios folder
+	5. Change minimum deployment target version to 8.4
 
-	6. Configure your project to support Push Notifications:
+	6. For Swift3 support call 'pod update' manually from command line, inside platforms/ios folder
+
+	7. Configure your project to support Push Notifications:
 
 			i. Click on "Capabilities", then turn on Push Notifications.
 
 			ii. Turn on Background Modes and check the Remote notifications checkbox.
 
-5. Add code to your project to initialize the library after 'deviceready' event with configuration options and library event listener
+6. Add code to your project to initialize the library after 'deviceready' event with configuration options and library event listener
 
 ```javascript
 onDeviceReady: function() {
@@ -96,7 +90,7 @@ onDeviceReady: function() {
 
 	MobileMessaging.register('messageReceived', 
 		function(result) {
-			console.log('Message Received ' + result.body);
+			console.log('Message Received: ' + result.body);
 		}
 	);
  
