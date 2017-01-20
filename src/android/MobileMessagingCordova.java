@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class MobileMessagingCordova extends CordovaPlugin
 {
@@ -361,7 +362,7 @@ public class MobileMessagingCordova extends CordovaPlugin
                                 custom.putOpt(key, value.numberValue());
                                 break;
                             case Date:
-                                custom.putOpt(key, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault()).format(value.dateValue()));
+                                custom.putOpt(key, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault()).format(value.dateValue()));
                         }
                     }
                     json.putOpt("customData", custom);
@@ -399,7 +400,7 @@ public class MobileMessagingCordova extends CordovaPlugin
                 } else if (value instanceof String) {
                     try {
                         custom.put(key, new CustomUserDataValue(dateFromString((String) value)));
-                    } catch (ParseException ignored) {
+                    } catch (Exception ignored) {
                         custom.put(key, new CustomUserDataValue((String) value));
                     }
                 }
@@ -408,8 +409,14 @@ public class MobileMessagingCordova extends CordovaPlugin
             return new UserDataJson(externalUserId, predefined, custom);
         }
 
-        private static Date dateFromString(String date) throws ParseException {
-            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault()).parse(date);
+        private static Date dateFromString(String date) throws Exception {
+            try {
+                return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault()).parse(date);
+            } catch (Exception ignored) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                format.setTimeZone(TimeZone.getTimeZone("UTC"));
+                return format.parse(date);
+            }
         }
     }
 }
