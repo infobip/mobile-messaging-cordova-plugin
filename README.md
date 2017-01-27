@@ -14,8 +14,8 @@ The document describes library integration steps for your Cordova project.
 This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova.
 
 1. Prepare your push credentials for Android and iOS
-	1. Get Sender ID and Server API Key for Android: [Cloud Messaging credentials](https://github.com/infobip/mobile-messaging-sdk-android/wiki/Firebase-Cloud-Messaging).
-	2. Prepare your App ID, provisioning profiles and APNs certificate: ([APNs Certificate Guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/APNs-Certificate-guide)).
+	1. Get Sender ID and Server API Key for Android ([Cloud Messaging credentials](https://github.com/infobip/mobile-messaging-sdk-android/wiki/Firebase-Cloud-Messaging)).
+	2. Prepare your App ID, provisioning profiles and APNs certificate ([APNs Certificate Guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/APNs-Certificate-guide)).
 
 2. Prepare your Infobip account (https://portal.infobip.com/push/) to get your Application Code:
     1. [Create new application](https://dev.infobip.com/v1/docs/push-introduction-create-app) on Infobip Push portal.
@@ -83,61 +83,121 @@ onDeviceReady: function() {
 				notificationTypes: ['alert', 'badge', 'sound']
 			}
 		},
-		function() {
-			console.log('error')
+		function(error) {
+			console.log('Init error: ' + error);
 		}
 	);
 
 	MobileMessaging.register('messageReceived', 
-		function(result) {
-			console.log('Message Received: ' + result.body);
+		function(message) {
+			console.log('Message Received: ' + message.body);
 		}
 	);
- 
-    MobileMessaging.register('tokenReceived',
-         function(token) {
-             console.log('Token: ' + token);
-         }
-    );
-    
-    MobileMessaging.register('registrationUpdated',
-         function(internalId) {
-             console.log('Internal ID: ' + internalId);
-         }
-    );
+
+ 	...
 }
 ```
 
-## Supported configuration options
+## Initialization configuration
+```javascript
+configuration: {
+	applicationCode: '<Infobip Application Code from the Customer Portal obtained in step 2>',
+	geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
+	android: {
+		senderId: '<Cloud Messaging Sender ID obtained in step 1>'
+	},
+	ios: {
+		notificationTypes: '<notification types to indicate how the app should alert user when push message arrives>'
+	}
+}
+```
 
-| Option | Description |
-| --- | --- |
-| applicationCode | Infobip Application Code from the Customer Portal obtained in step 2 |
-| android.senderId | Cloud Messaging Sender ID obtained in step 1 | 
-| ios.notificationTypes | Preferable notification types that indicating how the app alerts the user when a push notification arrives. |
 
+## Events
+```javascript
+MobileMessaging.register('<event name>',
+     function(eventData) {
+         console.log('Event: ' + eventData);
+     }
+);
+```
 
-## Supported events
-| Event | Description |
-| --- | --- |
-| 'messageReceived' | Occurs when new message arrives, see separate section for all available message fields |
-| 'tokenReceived' | Posted when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
-| 'registrationUpdated' | Posted when the registration is updated on backend server. Returns internallId - string for the registered user.|
+| Event name | Event data | Description |
+| --- | --- | --- |
+| 'messageReceived' | message object | Occurs when new message arrives, see separate section for all available message fields |
+| 'tokenReceived' | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
+| 'registrationUpdated' | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internallId - string for the registered user.|
+| 'geofenceEntered' | geo object |Occurs when device enters a geofence area. |
 
-### 'messageReceived' event fields
-| Field | Description |
-| --- | --- |
-| messageId | Unique ID of a message |
-| title | Title of a message (if available) |
-| body | Message text |
-| sound | The name of a sound file to be played when message arrives |
-| vibrate | Flag that indicates if vibration should be used for notification (Android only)|
-| icon | Dedicated icon ID to be used for notification (Android only)|
-| silent | Flag that indicates if message is silent |
-| category | Notification category (Android only)|
-| receivedTimestamp | Absolute timestamp in milliseconds that indicates when the message was received |
-| customData | Any custom data provided with a message |
-| originalPayload | Original payload of the message (iOS only)|
+### 'messageReceived' event
+```javascript
+MobileMessaging.register('messageReceived', 
+	function(message) {
+		console.log('Message Received: ' + message.body);
+	}
+);
+```
+Supported message fields are described below.
+```javascript
+message: {
+	messageId: '<unique message id>',
+	title: '<title, optional>',
+	body: '<message text>',
+	sound: '<notification sound, optional>',
+	vibrate: '<true/false, notification vibration setting (Android only)>',
+	icon: '<notification icon, optional (Android only)>',
+	silent: '<true/false, disables notification for message>',
+	category: '<notification category (Android only)>',
+	receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
+	customData: '<any custom data provided with message>',
+	originalPayload: '<original payload of message (iOS only)>'
+}
+```
+
+### 'tokenReceived' event
+```javascript
+MobileMessaging.register('tokenReceived',
+     function(token) {
+         console.log('Token: ' + token);
+     }
+);
+```
+
+### 'registrationUpdated' event
+```javascript
+MobileMessaging.register('registrationUpdated',
+     function(internalId) {
+         console.log('Internal ID: ' + internalId);
+     }
+);
+```
+
+### 'geofenceEntered' event
+```javascript
+MobileMessaging.register('geofenceEntered',
+     function(geo) {
+         console.log('Geo area entered: ' + geo.area.title);
+     }
+);
+```
+Supported geo fields are described below.
+```javascript
+geo: {
+	area: {
+		id: '<area id>',
+		center: {
+			lat: '<area latitude>',
+			lon: '<area longitude>'
+		},
+		radius: '<area radius>',
+		title: '<area title>'
+	},
+	message: {
+		// notification message
+		// same as in 'messageReceived' event
+	}
+}
+```
 
 ## Synchronizing user data
 It is possible to sync user data to the server as well as fetch latest user data from the server
@@ -181,3 +241,24 @@ MobileMessaging.fetchUserData(
     }
 );
 ```
+## Geofencing
+It is possible to enable geofencing engine inside Mobile Messaging. In this case "geofencingEnabled" shall be set to true in configuration. Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
+
+### Android
+Make sure that location permission is added to android configuration in "config.xml".
+```xml
+<widget ... xmlns:android="http://schemas.android.com/apk/res/android">
+...
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        </config-file>
+    </platform>
+...
+</widget>
+```
+
+After that Mobile Messaging plugin can be initialized with geofencing enabled. Be aware that the plugin might request runtime permissions by itself on Android 6.0 and above right before initialization.
+
+### iOS
+Make sure to include NSLocationWhenInUseUsageDescription and NSLocationAlwaysUsageDescription keys in your app’s Info.plist. These keys let you describe the reason your app accesses the user’s location information. Mobile Messaging library will request location permission by itself. iOS will use the values of these keys in the alert panel displayed to the user when requesting permission to use location services.

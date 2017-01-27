@@ -5,13 +5,18 @@ import MobileMessaging
 
 class MMConfiguration {
 	let appCode: String
+    var geofencingEnabled: Bool = false
 	var notificationType: UIUserNotificationType = []
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig["applicationCode"] as? String,
 			let ios = rawConfig["ios"] as? [String: AnyObject] else {
 				return nil
 		}
+        
 		self.appCode = appCode
+        if let geofencingEnabled = rawConfig["geofencingEnabled"] as? Bool {
+            self.geofencingEnabled = geofencingEnabled
+        }
 		
 		let notificationTypes = ios["notificationTypes"] as? [String]
 		notificationTypes?.forEach({ (type) in
@@ -41,8 +46,12 @@ class MMConfiguration {
 				return
 		}
 		
-		MobileMessagingCordovaApplicationDelegate.install()
-		MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)?.start()
+        MobileMessagingCordovaApplicationDelegate.install()
+        if (configuration.geofencingEnabled) {
+            MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)?.withGeofencingService().start()
+        } else {
+            MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)?.start()
+        }
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
@@ -67,20 +76,21 @@ class MMConfiguration {
             var notificationResult:CDVPluginResult?
 			switch mmNotificationName {
 			case MMNotificationMessageReceived:
-				if let userInfo = notification.userInfo,
-					let message = userInfo[MMNotificationKeyMessage] as? MTMessage {
+				if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
 					notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message.dictionary())
 				}
 			case MMNotificationDeviceTokenReceived:
-				if let userInfo = notification.userInfo,
-					let token = userInfo[MMNotificationKeyDeviceToken] as? String {
+				if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
 					notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: token)
 				}
 			case MMNotificationRegistrationUpdated:
-				if let userInfo = notification.userInfo,
-					let internalId = userInfo[MMNotificationKeyRegistrationInternalId] as? String {
+				if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
 					notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: internalId)
 				}
+            case MMNotificationGeographicalRegionDidEnter:
+                if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
+                    notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: region.dictionary())
+                }
 			default: break
 			}
 			notificationResult?.setKeepCallbackAs(true)
@@ -138,6 +148,24 @@ class MMConfiguration {
             }
         })
     }
+    
+    func markMessagesSeen(_ command: CDVInvokedUrlCommand) {
+        guard let messageIds = command.arguments as? [String] else {
+            let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve message ids")
+            self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+            return
+        }
+        
+        if (messageIds.isEmpty) {
+            let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No message ids provided")
+            self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+            return
+        }
+        
+        MobileMessaging.setSeen(messageIds: messageIds)
+        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: messageIds)
+        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+    }
 
 	//MARK: Utils
 	private func unregister(_ mmNotificationName: String) {
@@ -154,6 +182,7 @@ class MMConfiguration {
 		case "messageReceived" : return MMNotificationMessageReceived
 		case "tokenReceived" : return MMNotificationDeviceTokenReceived
 		case "registrationUpdated" : return MMNotificationRegistrationUpdated
+        case "geofenceEntered" : return MMNotificationGeographicalRegionDidEnter
 		default: break
 		}
 		return nil
@@ -266,6 +295,25 @@ extension MMUser {
         
         result["customData"] = customDictionary
         
+        return result
+    }
+}
+
+extension MMRegion {
+    func dictionary() -> [String: Any] {
+        var areaCenter = [String: Any]()
+        areaCenter["lat"] = center.latitude
+        areaCenter["lon"] = center.longitude
+        
+        var area = [String: Any]()
+        area["id"] = identifier
+        area["center"] = areaCenter
+        area["radius"] = radius
+        area["title"] = title
+        
+        var result = [String: Any]()
+        result["area"] = area
+        result["message"] = message?.dictionary()
         return result
     }
 }

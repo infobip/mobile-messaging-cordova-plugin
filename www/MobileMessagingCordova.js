@@ -8,6 +8,7 @@ var exec = require('cordova/exec'), MobileMessagingCordova = function () {};
  * Configuration format:
  *	{
  *       applicationCode: '<The application code of your Application from Push Portal website>',
+ *       geofencingEnabled: 'true',
  *       android: {
  *           senderId: 'sender_id'
  *       },
@@ -31,7 +32,7 @@ MobileMessagingCordova.prototype.init = function(config, error) {
  *
  * @name register
  * @param {String} eventName
- * @param {Function} callback for handling event
+ * @param {Function} callback will be called when registration is complete
  */
 MobileMessagingCordova.prototype.register = function(eventName, callback) {
 	exec(callback, function(){}, "MobileMessagingCordova", "register", [eventName])
@@ -42,7 +43,7 @@ MobileMessagingCordova.prototype.register = function(eventName, callback) {
  *
  * @name unregister
  * @param {String} eventName
- * @param {Function} callback what will be unregistered
+ * @param {Function} callback will be called when unregistration is complete
  */
 MobileMessagingCordova.prototype.unregister = function(eventName, callback) {
 	exec(callback, function(){}, "MobileMessagingCordova", "unregister", [eventName])
@@ -69,6 +70,18 @@ MobileMessagingCordova.prototype.syncUserData = function(userData, callback, err
  */
 MobileMessagingCordova.prototype.fetchUserData = function(callback, errorCallback) {
 	exec(callback, errorCallback, "MobileMessagingCordova", "fetchUserData", [])
+};
+
+/**
+ * Mark messages as seen
+ *
+ * @name markMessagesSeen
+ * @param {Array} array of identifiers of message to mark as seen
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callback, errorCallback) {
+	exec(callback, errorCallback, "MobileMessagingCordova", "markMessagesSeen", messageIds)
 };
 
 MobileMessaging = new MobileMessagingCordova();

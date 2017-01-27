@@ -1,10 +1,14 @@
 package org.apache.cordova.plugin;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -18,12 +22,13 @@ import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
+import org.infobip.mobile.messaging.api.support.util.StringUtils;
+import org.infobip.mobile.messaging.geo.Area;
+import org.infobip.mobile.messaging.geo.Geo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.InvalidParameterException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,30 +41,34 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-public class MobileMessagingCordova extends CordovaPlugin
-{
+public class MobileMessagingCordova extends CordovaPlugin {
     private static final String TAG = "MobileMessagingCordova";
+
+    private static final int REQ_CODE_LOC_PERMISSION_FOR_INIT = 1;
 
     private static final String FUNCTION_INIT = "init";
     private static final String FUNCTION_REGISTER = "register";
     private static final String FUNCTION_UNREGISTER = "unregister";
     private static final String FUNCTION_SYNC_USER_DATA = "syncUserData";
     private static final String FUNCTION_FETCH_USER_DATA = "fetchUserData";
+    private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
 
     private static final String EVENT_MESSAGE_RECEIVED = "messageReceived";
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
+    private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.MESSAGE_RECEIVED.getKey(), EVENT_MESSAGE_RECEIVED);
         put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
+        put(Event.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
     }};
 
     private final Map<String, Set<CallbackContext>> eventCallbacksMap = new HashMap<String, Set<CallbackContext>>() {{
-        put(EVENT_MESSAGE_RECEIVED, new HashSet<CallbackContext>());
-        put(EVENT_TOKEN_RECEIVED, new HashSet<CallbackContext>());
-        put(EVENT_REGISTRATION_UPDATED, new HashSet<CallbackContext>());
+        for (String event : broadcastEventMap.values()) {
+            put(event, new HashSet<CallbackContext>());
+        }
     }};
 
     private static class Configuration {
@@ -70,14 +79,44 @@ public class MobileMessagingCordova extends CordovaPlugin
 
         String applicationCode;
         AndroidConfiguration android;
+        boolean geofencingEnabled;
+    }
 
-        static Configuration fromJson(String json) {
-            if (json == null) {
-                return null;
-            }
+    private static class InitContext {
+        JSONArray args;
+        CallbackContext callbackContext;
 
-            return new JsonSerializer().deserialize(json, Configuration.class);
+        void reset() {
+            args = null;
+            callbackContext = null;
         }
+
+        boolean isValid() {
+            return args != null || callbackContext != null;
+        }
+    }
+
+    private final InitContext initContext = new InitContext();
+
+    @Override
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
+        super.onRequestPermissionResult(requestCode, permissions, grantResults);
+        if (requestCode != REQ_CODE_LOC_PERMISSION_FOR_INIT) {
+            return;
+        }
+
+        if (!cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            sendCallbackError(initContext.callbackContext, "ACCESS_FINE_LOCATION is not granted, cannot initialize");
+            return;
+        }
+
+        if (!initContext.isValid()) {
+            Log.e(TAG, "Initialization context is not valid, cannot complete initialization");
+            return;
+        }
+
+        init(initContext.args, initContext.callbackContext);
+        initContext.reset();
     }
 
     @Override
@@ -100,37 +139,23 @@ public class MobileMessagingCordova extends CordovaPlugin
         } else if (FUNCTION_FETCH_USER_DATA.equals(action)) {
             fetchUserData(callbackContext);
             return true;
+        } else if (FUNCTION_MARK_MESSAGES_SEEN.equals(action)) {
+            markMessagesSeen(args, callbackContext);
+            return true;
         }
 
         return false;
     }
 
     private void init(JSONArray args, CallbackContext callbackContext) throws JSONException {
-
-        Log.d(TAG, "init: " + args.toString());
-
-        if (args.length() < 1 || args.getJSONObject(0) == null) {
-            Log.e(TAG, "Invalid arguments for init");
-            sendCallbackError(callbackContext, "Invalid arguments for init");
+        Configuration configuration = resolveConfiguration(args);
+        if (configuration.geofencingEnabled && (!cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) ||
+                ActivityCompat.checkSelfPermission(cordova.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            initContext.args = args;
+            initContext.callbackContext = callbackContext;
+            cordova.requestPermission(this, REQ_CODE_LOC_PERMISSION_FOR_INIT, Manifest.permission.ACCESS_FINE_LOCATION);
             return;
         }
-
-        Configuration config = Configuration.fromJson(args.getJSONObject(0).toString());
-        if (config == null || config.applicationCode == null || config.android.senderId == null) {
-            Log.e(TAG, "Configuration is invalid: " + args.getJSONObject(0).toString());
-            sendCallbackError(callbackContext, "Configuration is invalid");
-            return;
-        }
-
-        try {
-            init(config.applicationCode, config.android.senderId);
-            sendCallbackSuccess(callbackContext);
-        } catch (IllegalArgumentException e) {
-            sendCallbackError(callbackContext, e.getMessage());
-        }
-    }
-
-    private void init(String applicationCode, String senderId) throws IllegalArgumentException {
 
         IntentFilter intentFilter = new IntentFilter();
         for (String action : broadcastEventMap.keySet()) {
@@ -143,6 +168,13 @@ public class MobileMessagingCordova extends CordovaPlugin
 
                 String event = broadcastEventMap.get(intent.getAction());
                 if (event == null) {
+                    return;
+                }
+
+                if (Event.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
+                    for (JSONObject geo : geosFromBundle(intent.getExtras())) {
+                        sendCallbackEvent(event, geo);
+                    }
                     return;
                 }
 
@@ -159,60 +191,125 @@ public class MobileMessagingCordova extends CordovaPlugin
             }
         }, intentFilter);
 
-        new MobileMessaging.Builder(cordova.getActivity().getApplication())
-                .withApplicationCode(applicationCode)
-                .withGcmSenderId(senderId)
-                .build();
+        MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
+                .withApplicationCode(configuration.applicationCode)
+                .withGcmSenderId(configuration.android.senderId);
+
+        if (configuration.geofencingEnabled) {
+            builder.withGeofencing();
+        }
+
+        builder.build();
+
+        sendCallbackSuccess(callbackContext);
     }
 
-    private void register(JSONArray args, CallbackContext callbackContext) throws JSONException {
+    private synchronized void register(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        String eventName = resolveEventName(args);
+        eventCallbacksMap.get(eventName).add(callbackContext);
+        sendCallbackNoResult(callbackContext);
+    }
+
+    private synchronized void unregister(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        String eventName = resolveEventName(args);
+        eventCallbacksMap.get(eventName).remove(callbackContext);
+        sendCallbackNoResult(callbackContext);
+    }
+
+    private void syncUserData(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        UserData userData = resolveUserData(args);
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
+                .syncUserData(userData, new MobileMessaging.ResultListener<UserData>() {
+                    @Override
+                    public void onResult(UserData result) {
+                        JSONObject json = UserDataJson.toJSON(result);
+                        sendCallbackSuccess(callbackContext, json);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        sendCallbackError(callbackContext, e.getMessage());
+                    }
+                });
+    }
+
+    private void fetchUserData(final CallbackContext callbackContext) throws JSONException {
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
+                .fetchUserData(new MobileMessaging.ResultListener<UserData>() {
+                    @Override
+                    public void onResult(UserData result) {
+                        JSONObject json = UserDataJson.toJSON(result);
+                        sendCallbackSuccess(callbackContext, json);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        sendCallbackError(callbackContext, e.getMessage());
+                    }
+                });
+    }
+
+    private void markMessagesSeen(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        String messageIds[] = resolveStringArray(args);
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
+                .setMessagesSeen(messageIds);
+        sendCallbackSuccess(callbackContext, args);
+    }
+
+    @NonNull
+    private static Configuration resolveConfiguration(JSONArray args) throws JSONException {
+        if (args.length() < 1 || args.getJSONObject(0) == null) {
+            throw new IllegalArgumentException("Cannot resolve configuration from arguments");
+        }
+
+        Configuration config = new JsonSerializer().deserialize(args.getJSONObject(0).toString(), Configuration.class);
+        if (config == null || config.applicationCode == null || config.android.senderId == null) {
+            throw new IllegalArgumentException("Configuration is invalid");
+        }
+
+        return config;
+    }
+
+    @NonNull
+    private synchronized String resolveEventName(JSONArray args) throws JSONException {
         if (args.length() < 1 || args.getString(0) == null) {
-            Log.e(TAG, "Invalid arguments for register");
-            sendCallbackError(callbackContext, "Invalid arguments for register");
-            return;
+            throw new IllegalArgumentException("Cannot resolve event name from arguments");
         }
 
         String eventName = args.getString(0);
-        try {
-            register(eventName, callbackContext);
-            sendCallbackNoResult(callbackContext);
-        } catch (InvalidParameterException e) {
-            sendCallbackError(callbackContext, e.getMessage());
-        }
-    }
-
-    private synchronized void register(String eventName, CallbackContext callback) throws InvalidParameterException {
         if (!eventCallbacksMap.containsKey(eventName)) {
-            Log.e(TAG, "Not supported event name: " + eventName);
-            throw new InvalidParameterException("Not supported event name: " + eventName);
+            throw new IllegalArgumentException("Not supported event name: " + eventName);
         }
 
-        eventCallbacksMap.get(eventName).add(callback);
+        return eventName;
     }
 
-    private void unregister(JSONArray args, CallbackContext callbackContext) throws JSONException {
+    @NonNull
+    private static UserData resolveUserData(JSONArray args) throws JSONException {
+        if (args.length() < 1 || args.getJSONObject(0) == null) {
+            throw new IllegalArgumentException("Cannot resolve user data from arguments");
+        }
+
+        UserData userData = UserDataJson.fromJSON(args.getJSONObject(0));
+        if (userData == null) {
+            throw new RuntimeException("Cannot deserialize user data from arguments");
+        }
+
+        return userData;
+    }
+
+    @NonNull
+    private static String[] resolveStringArray(JSONArray args) throws JSONException {
         if (args.length() < 1 || args.getString(0) == null) {
-            Log.e(TAG, "Invalid arguments for unregister");
-            sendCallbackError(callbackContext, "Invalid arguments for unregister");
-            return;
+            throw new IllegalArgumentException("Cannot resolve string parameters from arguments");
         }
 
-        String eventName = args.getString(0);
-        try {
-            unregister(eventName, callbackContext);
-            sendCallbackNoResult(callbackContext);
-        } catch (InvalidParameterException e) {
-            sendCallbackError(callbackContext, e.getMessage());
-        }
-    }
-
-    private synchronized void unregister(String eventName, CallbackContext callback) throws InvalidParameterException {
-        if (!eventCallbacksMap.containsKey(eventName)) {
-            Log.e(TAG, "Not supported event name: " + eventName);
-            throw new InvalidParameterException("Not supported event name: " + eventName);
+        String array[] = new String[args.length()];
+        for (int i = 0; i < args.length(); i++) {
+            array[i] = args.getString(i);
         }
 
-        eventCallbacksMap.get(eventName).remove(callback);
+        return array;
     }
 
     private synchronized void sendCallbackEvent(String event, Object object) {
@@ -241,46 +338,6 @@ public class MobileMessagingCordova extends CordovaPlugin
         }
     }
 
-    private void syncUserData(JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        if (args.length() < 1 || args.getJSONObject(0) == null) {
-            Log.e(TAG, "Invalid arguments for setUserData");
-            sendCallbackError(callbackContext, "Invalid arguments for setUserData");
-            return;
-        }
-
-        UserData userData = UserDataJson.fromJSON(args.getJSONObject(0));
-        Log.d(TAG, "syncUserData: " + userData.toString());
-        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
-                .syncUserData(userData, new MobileMessaging.ResultListener<UserData>() {
-                    @Override
-                    public void onResult(UserData result) {
-                        JSONObject json = UserDataJson.toJSON(result);
-                        sendCallbackSuccess(callbackContext, json.toString());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        sendCallbackError(callbackContext, e.getMessage());
-                    }
-                });
-    }
-
-    private void fetchUserData(final CallbackContext callbackContext) throws JSONException {
-        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
-                .fetchUserData(new MobileMessaging.ResultListener<UserData>() {
-                    @Override
-                    public void onResult(UserData result) {
-                        JSONObject json = UserDataJson.toJSON(result);
-                        sendCallbackSuccess(callbackContext, json.toString());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        sendCallbackError(callbackContext, e.getMessage());
-                    }
-                });
-    }
-
     private void sendCallbackError(CallbackContext callback, String message) {
         PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, message);
         callback.sendPluginResult(pluginResult);
@@ -297,8 +354,13 @@ public class MobileMessagingCordova extends CordovaPlugin
         callback.sendPluginResult(pluginResult);
     }
 
-    private void sendCallbackSuccess(CallbackContext callback, String message) {
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, message);
+    private void sendCallbackSuccess(CallbackContext callback, JSONArray objects) {
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, objects);
+        callback.sendPluginResult(pluginResult);
+    }
+
+    private void sendCallbackSuccess(CallbackContext callback, JSONObject object) {
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, object);
         callback.sendPluginResult(pluginResult);
     }
 
@@ -329,6 +391,35 @@ public class MobileMessagingCordova extends CordovaPlugin
         }
     }
 
+    @NonNull
+    private static List<JSONObject> geosFromBundle(Bundle bundle) {
+        Geo geo = Geo.createFrom(bundle);
+        JSONObject message = messageFromBundle(bundle);
+        if (geo == null || geo.getAreasList() == null || geo.getAreasList().isEmpty() || message == null) {
+            return new ArrayList<JSONObject>();
+        }
+
+        List<JSONObject> geos = new ArrayList<JSONObject>();
+        for (final Area area : geo.getAreasList()) {
+            try {
+                geos.add(new JSONObject()
+                        .put("area", new JSONObject()
+                                .put("id", area.getId())
+                                .put("center", new JSONObject()
+                                        .put("lat", area.getLatitude())
+                                        .put("lon", area.getLongitude()))
+                                .put("radius", area.getRadius())
+                                .put("title", area.getTitle()))
+                        .putOpt("message", message));
+            } catch (JSONException e) {
+                Log.w(TAG, "Cannot convert geo to JSON: " + e.getMessage());
+                Log.d(TAG, Log.getStackTraceString(e));
+            }
+        }
+
+        return geos;
+    }
+
     private static class UserDataJson extends UserData {
 
         private static final List<String> predefinedUserDataKeys = new ArrayList<String>() {{
@@ -341,7 +432,7 @@ public class MobileMessagingCordova extends CordovaPlugin
             super(externalUserId, predefinedData, customData);
         }
 
-        static JSONObject toJSON(final UserData userData){
+        static JSONObject toJSON(final UserData userData) {
             try {
                 JSONObject json = new JSONObject();
                 for (String key : predefinedUserDataKeys) {
