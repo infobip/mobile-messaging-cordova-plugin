@@ -76,6 +76,7 @@ onDeviceReady: function() {
         
     MobileMessaging.init({
 			applicationCode: '<your_application_code>',
+			geofencingEnabled: '<true/false>',
 			android: {
 				senderId: '<sender id>'
 			},
