@@ -25,6 +25,7 @@ import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerialize
 import org.infobip.mobile.messaging.api.support.util.StringUtils;
 import org.infobip.mobile.messaging.geo.Area;
 import org.infobip.mobile.messaging.geo.Geo;
+import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -227,7 +228,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(MobileMessagingError e) {
                         sendCallbackError(callbackContext, e.getMessage());
                     }
                 });
@@ -243,7 +244,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(MobileMessagingError e) {
                         sendCallbackError(callbackContext, e.getMessage());
                     }
                 });
