@@ -242,6 +242,21 @@ MobileMessaging.fetchUserData(
     }
 );
 ```
+
+## Mark messages as seen
+Mobile Messaging SDK has an API to mark messages as seen by user. This is usually done when user opens a particular message. Message can be obtained either via "messageReceived" event or together with geo area with "geofenceEntered" event (via geo.message).
+```javascript
+var message = ...;
+
+MobileMessaging.markMessagesSeen([message.messageId], function(messageIds){
+    console.log("message ids marked as seen: " + messageIds);
+}, function(error){
+    console.log(error);
+});
+
+```
+Note that corresponding SDK function accepts array of message IDs as input parameter. You can also set success and error callbacks. Success callback will provide array of message IDs that were marked as seen. Error callback will notify about an error and provide description of error if any. 
+
 ## Geofencing
 It is possible to enable geofencing engine inside Mobile Messaging. In this case "geofencingEnabled" shall be set to true in configuration. Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
 
