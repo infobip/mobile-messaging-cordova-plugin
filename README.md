@@ -3,6 +3,13 @@
 Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in your application and access to the features of [Infobip IP Messaging Platform](https://portal.infobip.com/push/). 
 The document describes library integration steps for your Cordova project.
 
+## Features
+- [Receiving push messages](#messagereceived-event)
+- [Marking messages as seen](#mark-messages-as-seen)
+- [Setting user data for targeting](#synchronizing-user-data)
+- [Geofencing](#geofencing)
+- [Message storage](#message-storage)
+
 ## Requirements
 
 - Cordova installed
@@ -104,6 +111,8 @@ onDeviceReady: function() {
 configuration: {
 	applicationCode: '<Infobip Application Code from the Customer Portal obtained in step 2>',
 	geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
+        messageStorage: '<message storage implementation>',
+	defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
 	android: {
 		senderId: '<Cloud Messaging Sender ID obtained in step 1>'
 	},
@@ -258,7 +267,7 @@ MobileMessaging.markMessagesSeen([message.messageId], function(messageIds){
 Note that corresponding SDK function accepts array of message IDs as input parameter. You can also set success and error callbacks. Success callback will provide array of message IDs that were marked as seen. Error callback will notify about an error and provide description of error if any. 
 
 ## Geofencing
-It is possible to enable geofencing engine inside Mobile Messaging. In this case "geofencingEnabled" shall be set to true in configuration. Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
+It is possible to enable geofencing engine inside Mobile Messaging. In this case "geofencingEnabled" shall be set to true in [initialization configuration](#initialization-configuration). Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
 
 ### Android
 Make sure that location permission is added to android configuration in "config.xml".
@@ -278,3 +287,192 @@ After that Mobile Messaging plugin can be initialized with geofencing enabled. B
 
 ### iOS
 Make sure to include NSLocationWhenInUseUsageDescription and NSLocationAlwaysUsageDescription keys in your app’s Info.plist. These keys let you describe the reason your app accesses the user’s location information. Mobile Messaging library will request location permission by itself. iOS will use the values of these keys in the alert panel displayed to the user when requesting permission to use location services.
+
+## Message storage
+Mobile Messaging SDK for Cordova supports a message storage feature. If the storage is enabled in configuration, then the plugin will save all push messages to the configured message storage. Plugin will handle and save messages that are received both during background and during foreground operation of the app. Two types of message storage configuration are supported: default storage and an external one.
+
+### Default message storage
+Mobile Messaging SDK supports a built-in message storage. "defaultMessageStorage" option shall be set to true in [initialization configuration](#initialization-configuration) to enable it. If default message storage is enabled, then it will be possible to access all the messages received by the library using methods described below.
+
+```javascript
+MobileMessaging.init({
+		applicationCode: '<your_application_code>',
+		defaultMessageStorage: true,
+		android: {
+			senderId: '<sender id>'
+		},
+		ios: {
+			notificationTypes: ['alert', 'badge', 'sound']
+		}
+	},
+	function(error) {
+		console.log('Init error: ' + error);
+	}
+);
+...
+
+// Method "findAll" retrieves all messages from default message storage
+MobileMessaging.defaultMessageStorage().findAll(function(messages){
+    console.log('Currently have ' + messages.length + ' messages in default storage');
+});
+
+// Method "find" retrieves message from the storage using messageId
+MobileMessaging.defaultMessageStorage().find('existing-message-id', function(message) {
+    console.log('Found message by id: ' + JSON.stringify(message));
+});
+
+// Method "deleteAll" will delete all messages from the message storage
+MobileMessaging.defaultMessageStorage().deleteAll(function() {
+    console.log('Deleted all messages')
+});
+
+// Method "delete" will delete message by message id
+MobileMessaging.defaultMessageStorage().delete('existing-message-id', function() {
+    console.log('Deleted all messages')
+});
+
+```
+ > ### Notice
+ > Default message storage is a simple wrapper implementation over Core Data on iOS and SQLite on Android and is currently not designed to support large numbers of received messages. Note that performance of default message storage may decrease over time. It is recommended to use [external message storage](#external-message-storage) to have full control over received messages.
+
+# External message storage
+Mobile Messaging SDK for Cordova can be initialized with a custom external implementation of message storage. In this case the plugin will use the supplied message storage to save all the received messages. This option is recommended because in this case developer has full control over how and where messages are stored and which procedures apply. External message storage has to comply with the interface below in order to be used with Mobile Messaging SDK for Cordova.
+
+```javascript
+var myStorageImplementation = {
+
+    /**
+     * Will be called by the plugin when the message is received and it's time to save it to the storage
+     *
+     * @param {Object} message object to save to storage
+     */
+    save: function(messages) {
+    
+    },
+
+    /**
+     * Will be called by the plugin to find a message by message id
+     *
+     * @param {Function} callback has to be called on completion with one parameter - found message object
+     */
+    find: function(messageId, callback) {
+    
+    },
+
+    /**
+     * Will be called by the plugin to find all messages in the storage
+     *
+     * @param {Function} callback has to be called on completion with one parameter - an array of available messages
+     */
+    findAll: function(callback) {
+    
+    },
+
+    /**
+     * Will be called by the plugin when its time to initialize the storage
+     */
+    start: function() {
+    
+    },
+
+    /**
+     * Will be called by the plugin when its time to deinitialize the storage
+     */
+    stop: function() {
+    
+    }
+}
+
+```
+Then an external message storage has to be supplied with [initialization configuration](#initialization-configuration) so that SDK will be able to use it to store received messages.
+
+```javascript
+MobileMessaging.init({
+		applicationCode: '<your_application_code>',
+		messageStorage: myStorageImplementation,
+		android: {
+			senderId: '<sender id>'
+		},
+		ios: {
+			notificationTypes: ['alert', 'badge', 'sound']
+		}
+	},
+	function(error) {
+		console.log('Init error: ' + error);
+	}
+);
+```
+
+### External message storage implementation with local storage
+This section covers an example implementation of external message storage with the key-value local storage of the underlying web view provided by cordova.
+
+```javascript
+var localStorage = {
+
+    save: function(messages) {
+        console.log('Saving messages: ' + JSON.stringify(messages));
+        for (var i = 0; i < messages.length; i++) {
+            window.localStorage.setItem(messages[i].messageId, JSON.stringify(messages[i]));
+        }
+    },
+
+    find: function(messageId, callback) {
+        console.log('Find message: ' + messageId);
+        var message = window.localStorage.getItem(messageId);
+        if (message) {
+            console.log('Found message: ' + message);
+            callback(JSON.parse(message));
+        } else {
+            callback({});
+        }
+    },
+
+    findAll: function(callback) {
+        console.log('Find all');
+        this.findAllByKeys(0, [], function(messages) {
+            console.log('Found ' + messages.length + ' messages');
+            callback(messages);
+        });
+    },
+
+    start: function() {
+        console.log('Start');
+    },
+
+    stop: function() {
+        console.log('Stop');
+    },
+
+    findAllByKeys: function(ind, foundMessages, callback) {
+        if (ind >= window.localStorage.length) {
+            callback(foundMessages);
+            return;
+        }
+        this.find(window.localStorage.key(ind), function(message) {
+            if (message) {
+                foundMessages.push(message);
+            }
+            storage.findAllByKeys(ind + 1, foundMessages, callback);
+        })
+    }
+}
+```
+
+And Mobile Messaging can be initialized to use this storage as below:
+
+```javascript
+MobileMessaging.init({
+		applicationCode: '<your_application_code>',
+		messageStorage: localStorage,
+		android: {
+			senderId: '<sender id>'
+		},
+		ios: {
+			notificationTypes: ['alert', 'badge', 'sound']
+		}
+	},
+	function(error) {
+		console.log('Init error: ' + error);
+	}
+);
+```

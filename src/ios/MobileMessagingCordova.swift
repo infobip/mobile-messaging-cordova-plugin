@@ -2,10 +2,13 @@
 import Foundation
 import UIKit
 import MobileMessaging
+import Dispatch
 
 class MMConfiguration {
 	let appCode: String
     var geofencingEnabled: Bool = false
+    var messageStorageEnabled: Bool = false
+    var defaultMessageStorage: Bool = false
 	var notificationType: UIUserNotificationType = []
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig["applicationCode"] as? String,
@@ -16,6 +19,14 @@ class MMConfiguration {
 		self.appCode = appCode
         if let geofencingEnabled = rawConfig["geofencingEnabled"] as? Bool {
             self.geofencingEnabled = geofencingEnabled
+        }
+
+        if let defaultMessageStorage = rawConfig["defaultMessageStorage"] as? Bool {
+            self.defaultMessageStorage = defaultMessageStorage
+        }
+        
+        if rawConfig["messageStorage"] != nil {
+            self.messageStorageEnabled = true
         }
 		
 		let notificationTypes = ios["notificationTypes"] as? [String]
@@ -32,10 +43,12 @@ class MMConfiguration {
 
 @objc(MobileMessagingCordova) class MobileMessagingCordova : CDVPlugin {
 	var notificationObservers: [String: AnyObject]?
+    var messageStorageAdapter: MessageStorageAdapter? = nil
 	
 	override func pluginInitialize() {
 		super.pluginInitialize()
 		notificationObservers = [String: AnyObject]()
+        messageStorageAdapter = MessageStorageAdapter(plugin: self)
 	}
 	
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
@@ -47,11 +60,16 @@ class MMConfiguration {
 		}
 		
         MobileMessagingCordovaApplicationDelegate.install()
+        var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)
         if (configuration.geofencingEnabled) {
-            MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)?.withGeofencingService().start()
-        } else {
-            MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)?.start()
+            mobileMessaging = mobileMessaging?.withGeofencingService()
         }
+        if (self.messageStorageAdapter != nil && configuration.messageStorageEnabled) {
+            mobileMessaging = mobileMessaging?.withMessageStorage(self.messageStorageAdapter!)
+        } else if (configuration.defaultMessageStorage) {
+            mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
+        }
+        mobileMessaging?.start()
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
@@ -166,7 +184,61 @@ class MMConfiguration {
         let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: messageIds)
         self.commandDelegate?.send(successResult, callbackId: command.callbackId)
     }
+    
+    func messageStorage_register(_ command: CDVInvokedUrlCommand) {
+        messageStorageAdapter?.register(command)
+    }
 
+    func messageStorage_unregister(_ command: CDVInvokedUrlCommand) {
+        messageStorageAdapter?.unregister(command)
+    }
+
+    func messageStorage_findResult(_ command: CDVInvokedUrlCommand) {
+        messageStorageAdapter?.findResult(command)
+    }
+
+    func defaultMessageStorage_find(_ command: CDVInvokedUrlCommand) {
+        guard let messageId = command.arguments[0] as? String else {
+            let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve messageId")
+            self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+            return
+        }
+        
+        MobileMessaging.defaultMessageStorage?.findMessages(withIds: [messageId], completion: { messages in
+            var result: CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+            if let messages = messages, messages.count > 0 {
+                result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: messages[0].dictionary())
+            }
+            
+            self.commandDelegate?.send(result, callbackId: command.callbackId)
+        })
+    }
+    
+    func defaultMessageStorage_findAll(_ command: CDVInvokedUrlCommand) {
+        MobileMessaging.defaultMessageStorage?.findAllMessages(completion: { messages in
+            let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: messages?.map({$0.dictionary()}))
+            self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+        })
+    }
+    
+    func defaultMessageStorage_delete(_ command: CDVInvokedUrlCommand) {
+        guard let messageId = command.arguments[0] as? String else {
+            let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve messageId")
+            self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+            return
+        }
+        
+        MobileMessaging.defaultMessageStorage?.remove(withIds: [messageId])
+        let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
+        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+    }
+    
+    func defaultMessageStorage_deleteAll(_ command: CDVInvokedUrlCommand) {
+        MobileMessaging.defaultMessageStorage?.removeAllMessages()
+        let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
+        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+    }
+    
 	//MARK: Utils
 	private func unregister(_ mmNotificationName: String) {
 		guard let observer = notificationObservers?[mmNotificationName] else {
@@ -190,7 +262,7 @@ class MMConfiguration {
 }
 
 extension MTMessage {
-	func dictionary() -> [String: Any] {
+	override func dictionary() -> [String: Any] {
 		var result = [String: Any]()
 		result["messageId"] = messageId
 		result["body"] = text
@@ -201,6 +273,41 @@ extension MTMessage {
 		result["originalPayload"] = originalPayload
 		return result
 	}
+}
+
+extension BaseMessage {
+    class func createFrom(dictionary: [String: Any]) -> BaseMessage? {
+        guard let messageId = dictionary["messageId"] as? String,
+            let originalPayload = dictionary["originalPayload"] as? StringKeyPayload,
+            let receivedTimestamp = dictionary["receivedTimestamp"] as? TimeInterval else {
+                return nil
+        }
+        
+        let createdDate = Date(timeIntervalSince1970: receivedTimestamp)
+        return BaseMessage(messageId: messageId, direction: MessageDirection.MT, originalPayload: originalPayload, createdDate: createdDate)
+    }
+    
+    func dictionary() -> [String: Any] {
+        var result = [String: Any]()
+        result["messageId"] = messageId
+        result["receivedTimestamp"] = createdDate.timeIntervalSince1970
+        result["customData"] = originalPayload["customPayload"]
+        result["originalPayload"] = originalPayload
+        
+        if let aps = originalPayload["aps"] as? StringKeyPayload {
+            result["body"] = aps["body"]
+            result["sound"] = aps["sound"]
+        }
+        
+        if let internalData = originalPayload["internalData"] as? StringKeyPayload,
+            let _ = internalData["silent"] as? StringKeyPayload {
+            result["silent"] = true
+        } else if let silent = originalPayload["silent"] as? Bool {
+            result["silent"] = silent
+        }
+        
+        return result
+    }
 }
 
 extension MMUser {
@@ -315,5 +422,111 @@ extension MMRegion {
         result["area"] = area
         result["message"] = message?.dictionary()
         return result
+    }
+}
+
+class MessageStorageAdapter: MessageStorage {
+    var registeredCallbacks = [String: String]();
+    let queue = DispatchQueue(label: "MessageStoreAdapterQueue")
+    let findSemaphore = DispatchSemaphore(value: 0)
+    let plugin: CDVPlugin
+    var foundMessage:BaseMessage?
+    
+    init(plugin: CDVPlugin) {
+        self.plugin = plugin
+    }
+    
+    func start() {
+        sendCallback(for: "messageStorage.start")
+    }
+    
+    func stop() {
+        sendCallback(for: "messageStorage.stop")
+    }
+
+    func insert(incoming messages: [MTMessage]) {
+        sendCallback(for: "messageStorage.save", withArray: messages.map({
+            $0.dictionary()
+        }))
+    }
+
+    func findMessage(withId messageId: MessageId) -> BaseMessage? {
+        queue.sync() {
+            sendCallback(for: "messageStorage.find", withMessage: messageId)
+            findSemaphore.wait(wallTimeout: DispatchWallTime.now() + DispatchTimeInterval.seconds(30))
+        }
+        return foundMessage
+    }
+
+    func insert(outgoing messages: [MOMessage]) {
+        // MO not supported yet
+    }
+
+    func update(messageSeenStatus status: MMSeenStatus, for messageId: MessageId) {
+        // Message seen status not supported
+    }
+    
+    func update(deliveryReportStatus isDelivered: Bool, for messageId: MessageId) {
+        // Delivery report status not supported
+    }
+    
+    func update(messageSentStatus status: MOMessageSentStatus, for messageId: MessageId) {
+        // MO not supported
+    }
+
+    func register(_ command: CDVInvokedUrlCommand) {
+        let callbackId = command.callbackId
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+        guard let event = command.arguments[0] as? String else {
+            plugin.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+            return
+        }
+
+        queue.sync() {
+            registeredCallbacks[event] = callbackId
+        }
+    }
+
+    func unregister(_ command: CDVInvokedUrlCommand) {
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+        guard let event = command.arguments[0] as? String else {
+            plugin.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+            return
+        }
+
+        queue.sync() {
+            registeredCallbacks.removeValue(forKey: event)
+        }
+    }
+
+    func findResult(_ command: CDVInvokedUrlCommand) {
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+        guard let dictionary = command.arguments[0] as? [String: Any] else {
+            plugin.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+            return
+        }
+
+        foundMessage = BaseMessage.createFrom(dictionary: dictionary)
+        findSemaphore.signal()
+    }
+
+    func sendCallback(for method: String, withArray array: [Any] = []) {
+        guard let callbackId = registeredCallbacks[method] else {
+            return
+        }
+
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: array)
+        result?.setKeepCallbackAs(true)
+        plugin.commandDelegate?.send(result, callbackId: callbackId)
+    }
+
+    func sendCallback(for method: String, withMessage string: String) {
+        guard let callbackId = registeredCallbacks[method] else {
+            return
+        }
+
+        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: string)
+        result?.setKeepCallbackAs(true)
+        plugin.commandDelegate?.send(result, callbackId: callbackId)
     }
 }
