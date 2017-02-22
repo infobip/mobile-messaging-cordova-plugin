@@ -350,9 +350,9 @@ Mobile Messaging SDK for Cordova can be initialized with a custom external imple
 var myStorageImplementation = {
 
     /**
-     * Will be called by the plugin when the message is received and it's time to save it to the storage
+     * Will be called by the plugin when messages are received and it's time to save them to the storage
      *
-     * @param {Object} message object to save to storage
+     * @param {Array} array of message objects to save to storage
      */
     save: function(messages) {
     
