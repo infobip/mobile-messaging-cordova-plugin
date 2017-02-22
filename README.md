@@ -341,9 +341,9 @@ MobileMessaging.defaultMessageStorage().delete('existing-message-id', function()
 
 ```
  > ### Notice
- > Default message storage is a simple wrapper implementation over Core Data on iOS and SQLite on Android and is currently not designed to support large numbers of received messages. Note that performance of default message storage may decrease over time. It is recommended to use [external message storage](#external-message-storage) to have full control over received messages.
+ > Default message storage is a simple wrapper implementation over Core Data on iOS and SQLite on Android and is currently not designed to support large numbers of received messages. Note that performance of default message storage may decrease with the increasing number of messages stored inside. It is recommended to use [external message storage](#external-message-storage) to have full control over received messages.
 
-# External message storage
+### External message storage
 Mobile Messaging SDK for Cordova can be initialized with a custom external implementation of message storage. In this case the plugin will use the supplied message storage to save all the received messages. This option is recommended because in this case developer has full control over how and where messages are stored and which procedures apply. External message storage has to comply with the interface below in order to be used with Mobile Messaging SDK for Cordova.
 
 ```javascript
