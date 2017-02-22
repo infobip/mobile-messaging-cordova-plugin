@@ -111,7 +111,7 @@ onDeviceReady: function() {
 configuration: {
 	applicationCode: '<Infobip Application Code from the Customer Portal obtained in step 2>',
 	geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
-        messageStorage: '<message storage implementation>',
+    messageStorage: '<message storage implementation>',
 	defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
 	android: {
 		senderId: '<Cloud Messaging Sender ID obtained in step 1>'
@@ -311,22 +311,30 @@ MobileMessaging.init({
 );
 ...
 
-// Method "findAll" retrieves all messages from default message storage
+/**
+ * Retireves all messages from message storage
+ */
 MobileMessaging.defaultMessageStorage().findAll(function(messages){
     console.log('Currently have ' + messages.length + ' messages in default storage');
 });
 
-// Method "find" retrieves message from the storage using messageId
+//**
+ * Retireves message from the storage using provided message id
+ */
 MobileMessaging.defaultMessageStorage().find('existing-message-id', function(message) {
     console.log('Found message by id: ' + JSON.stringify(message));
 });
 
-// Method "deleteAll" will delete all messages from the message storage
+/**
+ * Deletes all messages
+ */
 MobileMessaging.defaultMessageStorage().deleteAll(function() {
     console.log('Deleted all messages')
 });
 
-// Method "delete" will delete message by message id
+/**
+ * Deletes a messaging with the provided message id
+ */
 MobileMessaging.defaultMessageStorage().delete('existing-message-id', function() {
     console.log('Deleted all messages')
 });
