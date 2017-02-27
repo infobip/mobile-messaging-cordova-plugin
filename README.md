@@ -30,7 +30,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     3. Mark the "Available on Android" checkbox and insert previously obtained GCM Server Key (Server API Key):
     <center><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/GCMAppSetup.png" alt="CUP Settings"/></center>
 
-    4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 certificate you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application):
+    4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 file you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application):
     <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
 
 3. Create new application with Cordova (as described here https://cordova.apache.org/#getstarted).
@@ -247,7 +247,7 @@ MobileMessaging.fetchUserData(
 ```
 
 ## Mark messages as seen
-Mobile Messaging SDK has an API to mark messages as seen by user. This is usually done when user opens a particular message. Message can be obtained either via "messageReceived" event or together with geo area with "geofenceEntered" event (via geo.message).
+Mobile Messaging SDK has an API to mark messages as seen by user. This is usually done when user opens a particular message. Message can be obtained either via `messageReceived` event or together with geo area with `geofenceEntered` event (via geo.message).
 ```javascript
 var message = ...;
 
@@ -260,7 +260,7 @@ MobileMessaging.markMessagesSeen([message.messageId], function(messageIds){
 Note that corresponding SDK function accepts array of message IDs as input parameter. You can also set success and error callbacks. Success callback will provide array of message IDs that were marked as seen. Error callback will notify about an error and provide description of error if any. 
 
 ## Geofencing
-It is possible to enable geofencing engine inside Mobile Messaging. In this case "geofencingEnabled" shall be set to true in [initialization configuration](#initialization-configuration). Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
+It is possible to enable geofencing engine inside Mobile Messaging. In this case `geofencingEnabled` shall be set to true in [initialization configuration](#initialization-configuration). Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
 
 ### Android
 Make sure that location permission is added to android configuration in "config.xml":
@@ -285,7 +285,7 @@ Make sure to include NSLocationWhenInUseUsageDescription and NSLocationAlwaysUsa
 Mobile Messaging SDK for Cordova supports a message storage feature. If the storage is enabled in configuration, then the plugin will save all push messages to the configured message storage. Plugin will handle and save messages that are received both during background and during foreground operation of the app. Two types of message storage configuration are supported: default storage and an external one.
 
 ### Default message storage
-Mobile Messaging SDK supports a built-in message storage. "defaultMessageStorage" option shall be set to true in [initialization configuration](#initialization-configuration) to enable it. If default message storage is enabled, then it will be possible to access all the messages received by the library using methods described below.
+Mobile Messaging SDK supports a built-in message storage. `defaultMessageStorage` option shall be set to true in [initialization configuration](#initialization-configuration) to enable it. If default message storage is enabled, then it will be possible to access all the messages received by the library using methods described below.
 
 ```javascript
 MobileMessaging.init({
