@@ -11,13 +11,15 @@ The document describes library integration steps for your Cordova project.
 - [Message storage](#message-storage)
 
 ## Requirements
-
-- Cordova installed
-- Android or iOS project
-- Cocoapods 1.1.1 or higher installed
+For iOS project:
+- Xcode 8.1+
+- Minimum deployment target 8.4
+- CocoaPods 1.1.1+
+For Android project: 
+- Android Studio
+- API Level: 14 (Android 4.0 - Ice Cream Sandwich)
 
 ## Quick start guide
-
 This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
 
 1. Prepare your push credentials for Android and iOS:
@@ -50,10 +52,12 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         </platform>
         ```
 
-    2. To have the CocoaPods installed, run in terminal:
+    2. To have the CocoaPods installed and the project set up, run in terminal:
         ```bash
         $ cordova build
         ```
+        > ### Note
+        > Note that the build process may fail due to `Error code 65`. It's a known issue https://issues.apache.org/jira/browse/CB-12212. Please use Xcode to build and archive your project.
 
     3. Open workspace and add an Objective-C Bridging Header manually:
     <center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
