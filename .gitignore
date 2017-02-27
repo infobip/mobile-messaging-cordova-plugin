@@ -1,0 +1,5 @@
+# Installed node modules
+/node_modules/
+
+# JUnit reporter results
+/test_results/

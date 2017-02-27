@@ -1,4 +1,4 @@
-var exec = require('cordova/exec'), MobileMessagingCordova = function () {};
+var MobileMessagingCordova = function () {};
 
 /**
  * Starts a new Mobile Messaging session.
@@ -20,10 +20,15 @@ var exec = require('cordova/exec'), MobileMessagingCordova = function () {};
  * 	}
  * @param {Function} error callback
  */
-var configuration;
-MobileMessagingCordova.prototype.init = function(config, error) {
-	configuration = config;
-	var messageStorage = configuration.messageStorage;
+MobileMessagingCordova.prototype.init = function(config, error, cdv) {
+	this.configuration = config;
+	if (cdv) {
+		this.cdv = cdv;
+	} else {
+		this.cdv = cordova;
+	}
+
+	var messageStorage = config.messageStorage;
 	if (messageStorage) {
 		if (typeof messageStorage.start !== 'function') {
 			console.error('Missing messageStorage.start function definition');
@@ -51,13 +56,20 @@ MobileMessagingCordova.prototype.init = function(config, error) {
 			return;
 		}
 
-		exec(messageStorage.start, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.start']);
-		exec(messageStorage.stop, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.stop']);
-		exec(messageStorage.save, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.save']);
-		exec(messageStorage_find, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.find']);
-		exec(messageStorage_findAll, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.findAll']);
+		this.cdv.exec(messageStorage.start, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.start']);
+		this.cdv.exec(messageStorage.stop, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.stop']);
+		this.cdv.exec(messageStorage.save, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.save']);
+		this.cdv.exec(messageStorage_find, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.find']);
+		this.cdv.exec(messageStorage_findAll, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.findAll']);
 	}
-	exec(function(){}, error, 'MobileMessagingCordova', 'init', [config]);
+
+	if (!config.applicationCode) {
+		console.error('No application code provided');
+		error('No application code provided');
+		return;
+	}
+
+	this.cdv.exec(function(){}, error, 'MobileMessagingCordova', 'init', [config]);
 };
 
 /**
@@ -73,7 +85,7 @@ MobileMessagingCordova.prototype.init = function(config, error) {
  * @param {Function} callback will be called when registration is complete
  */
 MobileMessagingCordova.prototype.register = function(eventName, callback) {
-	exec(callback, function(){}, 'MobileMessagingCordova', 'register', [eventName])
+	this.cdv.exec(callback, function(){}, 'MobileMessagingCordova', 'register', [eventName])
 };
 
 /**
@@ -84,7 +96,7 @@ MobileMessagingCordova.prototype.register = function(eventName, callback) {
  * @param {Function} callback will be called when unregistration is complete
  */
 MobileMessagingCordova.prototype.unregister = function(eventName, callback) {
-	exec(callback, function(){}, 'MobileMessagingCordova', 'unregister', [eventName])
+	this.cdv.exec(callback, function(){}, 'MobileMessagingCordova', 'unregister', [eventName])
 };
 
 /**
@@ -96,7 +108,7 @@ MobileMessagingCordova.prototype.unregister = function(eventName, callback) {
  * @param {Function} errorCallback will be called on error
  */
 MobileMessagingCordova.prototype.syncUserData = function(userData, callback, errorCallback) {
-	exec(callback, errorCallback, 'MobileMessagingCordova', 'syncUserData', [userData])
+	this.cdv.exec(callback, errorCallback, 'MobileMessagingCordova', 'syncUserData', [userData])
 };
 
 /**
@@ -107,7 +119,7 @@ MobileMessagingCordova.prototype.syncUserData = function(userData, callback, err
  * @param {Function} errorCallback will be called on error
  */
 MobileMessagingCordova.prototype.fetchUserData = function(callback, errorCallback) {
-	exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchUserData', [])
+	this.cdv.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchUserData', [])
 };
 
 /**
@@ -119,44 +131,46 @@ MobileMessagingCordova.prototype.fetchUserData = function(callback, errorCallbac
  * @param {Function} errorCallback will be called on error
  */
 MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callback, errorCallback) {
-	exec(callback, errorCallback, 'MobileMessagingCordova', 'markMessagesSeen', messageIds)
+	this.cdv.exec(callback, errorCallback, 'MobileMessagingCordova', 'markMessagesSeen', messageIds)
 };
 
 MobileMessagingCordova.prototype.defaultMessageStorage = function() {
-	if (!configuration.defaultMessageStorage) {
+	var config = this.configuration;
+	if (!config.defaultMessageStorage) {
 		return undefined;
 	}
 
 	var defaultMessageStorage = {
 		find: function(messageId, callback) {
-			exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_find', [messageId]);
+			this.cdv.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_find', [messageId]);
 	    },
 
 	    findAll: function(callback) {
-			exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_findAll', []);
+			this.cdv.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_findAll', []);
 	    },
 
 	    delete: function(messageId, callback) {
-			exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_delete', [messageId]);
+			this.cdv.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_delete', [messageId]);
 	    },
 
 	    deleteAll: function(callback) {
-			exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_deleteAll', []);
+			this.cdv.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_deleteAll', []);
 	    }
 	};
 	return defaultMessageStorage;
 };
 
-var messageStorage;
 function messageStorage_find(messageId) {
+	var messageStorage = this.configuration.messageStorage;
 	messageStorage.find(messageId, function(message) {
-		exec(function(){}, function(){}, 'MobileMessagingCordova', 'messageStorage_findResult', [message]);
+		this.cdv.exec(function(){}, function(){}, 'MobileMessagingCordova', 'messageStorage_findResult', [message]);
 	});
 }
 
 function messageStorage_findAll() {
+	var messageStorage = this.configuration.messageStorage;
 	messageStorage.findAll(function(messages) {
-		exec(function(){}, function(){}, 'MobileMessagingCordova', 'messageStorage_findAllResult', messages);
+		this.cdv.exec(function(){}, function(){}, 'MobileMessagingCordova', 'messageStorage_findAllResult', messages);
 	});
 }
 
