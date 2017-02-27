@@ -50,12 +50,12 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         </platform>
         ```
 
-    2. To have the CocoaPods installed run in terminal:
+    2. To have the CocoaPods installed, run in terminal:
         ```bash
         $ cordova build
         ```
 
-    3. Open workspace and add Objective-C Bridging Header manually:
+    3. Open workspace and add an Objective-C Bridging Header manually:
     <center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
 
     4. Change "Use Legacy Swift Language Version" to "NO":
@@ -65,11 +65,11 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
     6. Configure your project to support Push Notifications:
 
-        1. Go to "Capabilities" tab and turn on Push Notifications.
+        1. Go to "Capabilities" tab (target settings) and turn on Push Notifications.
 
-        2. Turn on "Background Modes" and mark the "Remote notifications checkbox".
+        2. Turn on "Background Modes" and mark the "Remote notifications" checkbox.
 
-6. Add code to your project to initialize the library after 'deviceready' event with configuration options and library event listener:
+6. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
     ```javascript
     onDeviceReady: function() {
@@ -126,12 +126,12 @@ MobileMessaging.register('<event name>',
 
 | Event name | Event data | Description |
 | --- | --- | --- |
-| 'messageReceived' | message object | Occurs when new message arrives, see separate section for all available message fields |
-| 'tokenReceived' | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
-| 'registrationUpdated' | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internallId - string for the registered user.|
-| 'geofenceEntered' | geo object |Occurs when device enters a geofence area. |
+| `messageReceived` | message object | Occurs when new message arrives, see separate section for all available message fields |
+| `tokenReceived` | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
+| `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internallId - string for the registered user.|
+| `geofenceEntered` | geo object |Occurs when device enters a geofence area. |
 
-### 'messageReceived' event
+### `messageReceived` event
 ```javascript
 MobileMessaging.register('messageReceived', 
     function(message) {
@@ -157,7 +157,7 @@ message: {
 }
 ```
 
-### 'tokenReceived' event
+### `tokenReceived` event
 ```javascript
 MobileMessaging.register('tokenReceived',
      function(token) {
@@ -166,7 +166,7 @@ MobileMessaging.register('tokenReceived',
 );
 ```
 
-### 'registrationUpdated' event
+### `registrationUpdated` event
 ```javascript
 MobileMessaging.register('registrationUpdated',
      function(internalId) {
@@ -175,7 +175,7 @@ MobileMessaging.register('registrationUpdated',
 );
 ```
 
-### 'geofenceEntered' event
+### `geofenceEntered` event
 ```javascript
 MobileMessaging.register('geofenceEntered',
      function(geo) {
@@ -207,7 +207,7 @@ geo: {
 It is possible to sync user data to the server as well as fetch latest user data from the server.
 
 ### Sync user data
-Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. 'customData' object shall contain all custom fields.
+Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. `customData` object shall contain all custom fields.
 ```javascript
 MobileMessaging.syncUserData({
         externalUserId:'johnsmith',
