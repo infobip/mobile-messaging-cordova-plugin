@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com-infobip-plugins-mobilemessaging"
-	version="0.1.4">
+	version="0.1.5">
 	
 	<name>MobileMessagingCordova</name>
 	
@@ -20,7 +20,7 @@
 		</config-file>
 		
 		<pods-config ios-min-version="8.4" uses-frameworks="true"/>
-		<pod id="MobileMessaging" version="2.3.0"/>
+		<pod id="MobileMessaging" version="2.3.1"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
 	
