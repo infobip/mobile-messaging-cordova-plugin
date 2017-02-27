@@ -18,110 +18,102 @@ The document describes library integration steps for your Cordova project.
 
 ## Quick start guide
 
-This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova.
+This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
 
-1. Prepare your push credentials for Android and iOS
-	1. Get Sender ID and Server API Key for Android ([Cloud Messaging credentials](https://github.com/infobip/mobile-messaging-sdk-android/wiki/Firebase-Cloud-Messaging)).
-	2. Prepare your App ID, provisioning profiles and APNs certificate ([APNs Certificate Guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/APNs-Certificate-guide)).
+1. Prepare your push credentials for Android and iOS:
+    1. Get Sender ID and Server API Key for Android ([Cloud Messaging credentials](https://github.com/infobip/mobile-messaging-sdk-android/wiki/Firebase-Cloud-Messaging)).
+    2. Prepare your App ID, provisioning profiles and APNs certificate ([APNs Certificate Guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/APNs-Certificate-guide)).
 
 2. Prepare your Infobip account (https://portal.infobip.com/push/) to get your Application Code:
     1. [Create new application](https://dev.infobip.com/v1/docs/push-introduction-create-app) on Infobip Push portal.
     2. Navigate to your Application where you will get the Application Code.
-    3. Mark the "Available on Android" checkbox and insert previously obtained GCM Server Key (Server API Key).
+    3. Mark the "Available on Android" checkbox and insert previously obtained GCM Server Key (Server API Key):
     <center><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/GCMAppSetup.png" alt="CUP Settings"/></center>
 
-    4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 certificate you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application).
-	<center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
+    4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 certificate you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application):
+    <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
 
-3. Create new application with Cordova
-    * You can find more info on this link https://cordova.apache.org/#getstarted
+3. Create new application with Cordova (as described here https://cordova.apache.org/#getstarted).
 
-4. Add Mobile Messaging plugin to your project
-	```bash
-	cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --save
-	```
+4. Add MobileMessaging plugin to your project, run in terminal:
+    ```bash
+    $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --save
+    ```
 
-5. Steps to setup iOS project: 
-	1. Change the `config.xml` to add cocoapods support:
+5. Steps to setup iOS project:
+    1. Change the `config.xml` to add CocoaPods support:
+        ```xml
+        <platform name="ios">
+            <!-- Add two following preference entries: -->
+            <preference name="pods_ios_min_version" value="8.4" />
+            <preference name="pods_use_frameworks" value="true" />
+        </platform>
+        ```
 
-	```xml
-	<platform name="ios">
-		<preference name="pods_ios_min_version" value="8.4" />
-		<preference name="pods_use_frameworks" value="true" />
-		...
-		<allow-intent href="itms:*" />
-		<allow-intent href="itms-apps:*" />
-	</platform>
-	```
+    2. To have the CocoaPods installed run in terminal:
+        ```bash
+        $ cordova build
+        ```
 
-	2. To have the cocoaPods installed do 
-	```bash
-	cordova build
-	```
+    3. Open workspace and add Objective-C Bridging Header manually:
+    <center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
 
-	3. Open workspace and add Objective-C Bridging Header manually
-	<center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
+    4. Change "Use Legacy Swift Language Version" to "NO":
+    <center><img src="https://i.gyazo.com/fb5a9e2d6ec994c83ba495ce0dd70b0a.png" alt="Legacy Swift Version"/></center>
 
-	4. Change "Use Legacy Swift Language Version" to "NO"
-	<center><img src="https://i.gyazo.com/fb5a9e2d6ec994c83ba495ce0dd70b0a.png" alt="Legacy Swift Version"/></center>
+    5. Change minimum deployment target version to 8.4.
 
-	5. Change minimum deployment target version to 8.4
+    6. Configure your project to support Push Notifications:
 
-	6. For Swift3 support call 'pod update' manually from command line, inside platforms/ios folder
+        1. Go to "Capabilities" tab and turn on Push Notifications.
 
-	7. Configure your project to support Push Notifications:
+        2. Turn on "Background Modes" and mark the "Remote notifications checkbox".
 
-			i. Click on "Capabilities", then turn on Push Notifications.
+6. Add code to your project to initialize the library after 'deviceready' event with configuration options and library event listener:
 
-			ii. Turn on Background Modes and check the Remote notifications checkbox.
+    ```javascript
+    onDeviceReady: function() {
+        ...
+        MobileMessaging.init({
+                applicationCode: '<your_application_code>',
+                geofencingEnabled: '<true/false>',
+                android: {
+                    senderId: '<sender id>'
+                },
+                ios: {
+                    notificationTypes: ['alert', 'badge', 'sound']
+                }
+            },
+            function(error) {
+                console.log('Init error: ' + error);
+            }
+        );
 
-6. Add code to your project to initialize the library after 'deviceready' event with configuration options and library event listener
+        MobileMessaging.register('messageReceived', 
+            function(message) {
+                console.log('Message Received: ' + message.body);
+            }
+        );
 
-```javascript
-onDeviceReady: function() {
-	...
-        
-    MobileMessaging.init({
-			applicationCode: '<your_application_code>',
-			geofencingEnabled: '<true/false>',
-			android: {
-				senderId: '<sender id>'
-			},
-			ios: {
-				notificationTypes: ['alert', 'badge', 'sound']
-			}
-		},
-		function(error) {
-			console.log('Init error: ' + error);
-		}
-	);
-
-	MobileMessaging.register('messageReceived', 
-		function(message) {
-			console.log('Message Received: ' + message.body);
-		}
-	);
-
- 	...
-}
-```
+        ...
+    }
+    ```
 
 ## Initialization configuration
 ```javascript
 configuration: {
-	applicationCode: '<Infobip Application Code from the Customer Portal obtained in step 2>',
-	geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
+    applicationCode: '<Infobip Application Code from the Customer Portal obtained in step 2>',
+    geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
     messageStorage: '<message storage implementation>',
-	defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
-	android: {
-		senderId: '<Cloud Messaging Sender ID obtained in step 1>'
-	},
-	ios: {
-		notificationTypes: '<notification types to indicate how the app should alert user when push message arrives>'
-	}
+    defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
+    android: {
+        senderId: '<Cloud Messaging Sender ID obtained in step 1>'
+    },
+    ios: {
+        notificationTypes: '<notification types to indicate how the app should alert user when push message arrives>'
+    }
 }
 ```
-
 
 ## Events
 ```javascript
@@ -142,25 +134,26 @@ MobileMessaging.register('<event name>',
 ### 'messageReceived' event
 ```javascript
 MobileMessaging.register('messageReceived', 
-	function(message) {
-		console.log('Message Received: ' + message.body);
-	}
+    function(message) {
+        console.log('Message Received: ' + message.body);
+    }
 );
 ```
-Supported message fields are described below.
+
+Supported message fields are described below:
 ```javascript
 message: {
-	messageId: '<unique message id>',
-	title: '<title, optional>',
-	body: '<message text>',
-	sound: '<notification sound, optional>',
-	vibrate: '<true/false, notification vibration setting (Android only)>',
-	icon: '<notification icon, optional (Android only)>',
-	silent: '<true/false, disables notification for message>',
-	category: '<notification category (Android only)>',
-	receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
-	customData: '<any custom data provided with message>',
-	originalPayload: '<original payload of message (iOS only)>'
+    messageId: '<unique message id>',
+    title: '<title, optional>',
+    body: '<message text>',
+    sound: '<notification sound, optional>',
+    vibrate: '<true/false, notification vibration setting (Android only)>',
+    icon: '<notification icon, optional (Android only)>',
+    silent: '<true/false, disables notification for message>',
+    category: '<notification category (Android only)>',
+    receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
+    customData: '<any custom data provided with message>',
+    originalPayload: '<original payload of message (iOS only)>'
 }
 ```
 
@@ -190,33 +183,34 @@ MobileMessaging.register('geofenceEntered',
      }
 );
 ```
-Supported geo fields are described below.
+
+Supported geo fields are described below:
 ```javascript
 geo: {
-	area: {
-		id: '<area id>',
-		center: {
-			lat: '<area latitude>',
-			lon: '<area longitude>'
-		},
-		radius: '<area radius>',
-		title: '<area title>'
-	},
-	message: {
-		// notification message
-		// same as in 'messageReceived' event
-	}
+    area: {
+        id: '<area id>',
+        center: {
+            lat: '<area latitude>',
+            lon: '<area longitude>'
+        },
+        radius: '<area radius>',
+        title: '<area title>'
+    },
+    message: {
+        // notification message
+        // same as in 'messageReceived' event
+    }
 }
 ```
 
 ## Synchronizing user data
-It is possible to sync user data to the server as well as fetch latest user data from the server
+It is possible to sync user data to the server as well as fetch latest user data from the server.
 
 ### Sync user data
 Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. 'customData' object shall contain all custom fields.
 ```javascript
 MobileMessaging.syncUserData({
-		externalUserId:'johnsmith',
+        externalUserId:'johnsmith',
         firstName:'John',
         lastName:'Smith',
         middleName:'Matthew',
@@ -262,7 +256,6 @@ MobileMessaging.markMessagesSeen([message.messageId], function(messageIds){
 }, function(error){
     console.log(error);
 });
-
 ```
 Note that corresponding SDK function accepts array of message IDs as input parameter. You can also set success and error callbacks. Success callback will provide array of message IDs that were marked as seen. Error callback will notify about an error and provide description of error if any. 
 
@@ -270,16 +263,16 @@ Note that corresponding SDK function accepts array of message IDs as input param
 It is possible to enable geofencing engine inside Mobile Messaging. In this case "geofencingEnabled" shall be set to true in [initialization configuration](#initialization-configuration). Appropriate permissions should be also requested or configured for your application prior to initialization of library. Initialization will fail if there are no appropriate permissions.
 
 ### Android
-Make sure that location permission is added to android configuration in "config.xml".
+Make sure that location permission is added to android configuration in "config.xml":
 ```xml
 <widget ... xmlns:android="http://schemas.android.com/apk/res/android">
-...
+    ...
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         </config-file>
     </platform>
-...
+    ...
 </widget>
 ```
 
@@ -296,18 +289,18 @@ Mobile Messaging SDK supports a built-in message storage. "defaultMessageStorage
 
 ```javascript
 MobileMessaging.init({
-		applicationCode: '<your_application_code>',
-		defaultMessageStorage: true,
-		android: {
-			senderId: '<sender id>'
-		},
-		ios: {
-			notificationTypes: ['alert', 'badge', 'sound']
-		}
-	},
-	function(error) {
-		console.log('Init error: ' + error);
-	}
+        applicationCode: '<your_application_code>',
+        defaultMessageStorage: true,
+        android: {
+            senderId: '<sender id>'
+        },
+        ios: {
+            notificationTypes: ['alert', 'badge', 'sound']
+        }
+    },
+    function(error) {
+        console.log('Init error: ' + error);
+    }
 );
 ...
 
@@ -396,18 +389,18 @@ Then an external message storage has to be supplied with [initialization configu
 
 ```javascript
 MobileMessaging.init({
-		applicationCode: '<your_application_code>',
-		messageStorage: myStorageImplementation,
-		android: {
-			senderId: '<sender id>'
-		},
-		ios: {
-			notificationTypes: ['alert', 'badge', 'sound']
-		}
-	},
-	function(error) {
-		console.log('Init error: ' + error);
-	}
+        applicationCode: '<your_application_code>',
+        messageStorage: myStorageImplementation,
+        android: {
+            senderId: '<sender id>'
+        },
+        ios: {
+            notificationTypes: ['alert', 'badge', 'sound']
+        }
+    },
+    function(error) {
+        console.log('Init error: ' + error);
+    }
 );
 ```
 
@@ -470,17 +463,17 @@ And Mobile Messaging can be initialized to use this storage as below:
 
 ```javascript
 MobileMessaging.init({
-		applicationCode: '<your_application_code>',
-		messageStorage: localStorage,
-		android: {
-			senderId: '<sender id>'
-		},
-		ios: {
-			notificationTypes: ['alert', 'badge', 'sound']
-		}
-	},
-	function(error) {
-		console.log('Init error: ' + error);
-	}
+        applicationCode: '<your_application_code>',
+        messageStorage: localStorage,
+        android: {
+            senderId: '<sender id>'
+        },
+        ios: {
+            notificationTypes: ['alert', 'badge', 'sound']
+        }
+    },
+    function(error) {
+        console.log('Init error: ' + error);
+    }
 );
 ```
