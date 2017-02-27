@@ -3,36 +3,36 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com-infobip-plugins-mobilemessaging"
 	version="0.1.4">
-
-    <name>MobileMessagingCordova</name>
-
+	
+	<name>MobileMessagingCordova</name>
+	
 	<dependency id="cordova-plugin-cocoapod-support"/>
-
-    <js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
-        <clobbers target="mobileMessaging" />
-    </js-module>
-
+	
+	<js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
+		<clobbers target="mobileMessaging" />
+	</js-module>
+	
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
-    		<feature name="MobileMessagingCordova">
+			<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
 			</feature>
 		</config-file>
-
+		
 		<pods-config ios-min-version="8.4" uses-frameworks="true"/>
 		<pod id="MobileMessaging" version="2.3.0"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
-
+	
 	<platform name="android">
 		<config-file target="config.xml" parent="/*">
-	        <feature name="MobileMessagingCordova">
-	            <param name="android-package" value="org.apache.cordova.plugin.MobileMessagingCordova"/>
-	        </feature>
-	    </config-file>
+			<feature name="MobileMessagingCordova">
+				<param name="android-package" value="org.apache.cordova.plugin.MobileMessagingCordova"/>
+			</feature>
+		</config-file>
 		
 		<framework src="src/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
-    	<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
+		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
 	</platform>
-
+	
 </plugin>
