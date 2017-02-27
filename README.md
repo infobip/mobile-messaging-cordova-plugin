@@ -15,6 +15,7 @@ For iOS project:
 - Xcode 8.1+
 - Minimum deployment target 8.4
 - CocoaPods 1.1.1+
+
 For Android project: 
 - Android Studio
 - API Level: 14 (Android 4.0 - Ice Cream Sandwich)
@@ -57,7 +58,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         $ cordova build
         ```
         > ### Note
-        > Note that the build process may fail due to `Error code 65`. It's a known issue https://issues.apache.org/jira/browse/CB-12212. Please use Xcode to build and archive your project.
+        > The build process may fail due to `Error code 65`. It's a known issue https://issues.apache.org/jira/browse/CB-12212. Please use Xcode to build and archive your project.
 
     3. Open workspace and add an Objective-C Bridging Header manually:
     <center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
