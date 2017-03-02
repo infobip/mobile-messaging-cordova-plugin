@@ -7,6 +7,7 @@
 	<name>MobileMessagingCordova</name>
 	
 	<dependency id="cordova-plugin-cocoapod-support"/>
+	<dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
 	
 	<js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
 		<clobbers target="mobileMessaging" />
@@ -18,7 +19,9 @@
 				<param name="ios-package" value="MobileMessagingCordova" />
 			</feature>
 		</config-file>
-		
+		<hook type="after_prepare" src="scripts/fixEntitlementsBuildSetting.js" />
+		<hook type="after_platform_add" src="scripts/fixEntitlementsBuildSetting.js"/>
+		<hook type="after_plugin_add" src="scripts/fixEntitlementsBuildSetting.js"/>
 		<pods-config ios-min-version="8.4" uses-frameworks="true"/>
 		<pod id="MobileMessaging" version="2.3.1"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
