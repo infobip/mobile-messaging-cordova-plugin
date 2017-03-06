@@ -1,13 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	id="com-infobip-plugins-mobilemessaging"
-	version="0.1.6">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="com-infobip-plugins-mobilemessaging" version="0.1.6">
 	
 	<name>MobileMessagingCordova</name>
 	
 	<dependency id="cordova-plugin-cocoapod-support"/>
-	<dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
+	<dependency id="cordova-plugin-add-swift-support"/>
 	
 	<js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
 		<clobbers target="mobileMessaging" />
@@ -15,14 +12,18 @@
 	
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
+	        <preference name="deployment-target" value="8.4" />
+			<preference name="pods_use_frameworks" value="true" />
+			
 			<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
 			</feature>
-		</config-file>		
+		</config-file>
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
-		<pods-config ios-min-version="8.4" uses-frameworks="true"/>
-		<pod id="MobileMessaging" version="2.3.1"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
+
+		<pods-config ios-min-version="8.4" use-frameworks="true"/>
+		<pod name="MobileMessaging" version="2.3.1"/>
 	</platform>
 	
 	<platform name="android">
