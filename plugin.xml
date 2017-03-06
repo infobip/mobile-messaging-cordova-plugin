@@ -8,25 +8,34 @@
 	
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<dependency id="cordova-plugin-add-swift-support"/>
-	
+	<dependency id="cordova-custom-config"/>
+
 	<js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
 		<clobbers target="mobileMessaging" />
 	</js-module>
 	
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
-			<!-- cordova-plugin-cocoapod-support > -->
-	        <preference name="deployment-target" value="8.4" />
-			<preference name="pods_use_frameworks" value="true" />
-			<!-- < cordova-plugin-cocoapod-support -->
 			<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
 			</feature>
+
+			<!-- this entry is to statically preserve entitlements setting that is usually being set by `cordova build` dynamically (which leads to a build error) -->
+			<preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" />
+			<!-- this entry is to set project deployment target -->
+	        <preference name="deployment-target" value="8.4" />
+	        <!-- this entry is for cocoapods to support swift frameworks -->
+	        <preference name="pods_use_frameworks" value="true" />
+	        <!-- this entry is to enable push notifications background mode (highly recommended for MobileMessaging SDK) -->
+	        <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
+	            <array>
+	                <string>remote-notification</string>
+	            </array>
+	        </config-file>
 		</config-file>
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
-		<pods-config ios-min-version="8.4" use-frameworks="true"/>
 		<pod name="MobileMessaging" version="2.3.1"/>
 	</platform>
 	
