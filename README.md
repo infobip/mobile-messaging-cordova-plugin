@@ -41,35 +41,26 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --save
     ```
 
-4. Steps to setup iOS project:
-    1. Change the `config.xml` to add CocoaPods support:
-        ```xml
-        <platform name="ios">
-            <!-- Add two following preference entries under ios platform: -->
-            <preference name="deployment-target" value="8.4" />
-            <preference name="pods_use_frameworks" value="true" />
-        </platform>
-        ```
-
-    2. Update CocoaPods dependencies:
+4. Steps to setup iOS platform:
+    1. Update CocoaPods dependencies:
         ```bash
-        cd platforms/ios
-        pod update
+        $ cd platforms/ios
+        $ pod update
         ```
 
-    3. Run the following command to build your Xcode project:
+    2. Run the following command to build your Xcode project (use your project and scheme names):
         ```bash
         $ xcodebuild -workspace <your project name>.xcworkspace -scheme <your scheme name> -destination 'platform=iOS Simulator,name=iPhone 6 Plus,OS=10.2'
         ```
         > ### Note
         > This step is a workaround for a known Cordova issue: https://issues.apache.org/jira/browse/CB-12212. It is required to run the command only once. As another option, you can use Xcode directly to build and archive your project.
 
-    4. Run the following command to build your entire Cordova project:
+    3. Run the following command to build your entire Cordova project:
         ```bash
         $ cordova build
         ```
 
-    5. Configure your project to support Push Notifications:
+    4. Configure your project to support Push Notifications:
 
         1. Go to "Capabilities" tab (target settings) and turn on Push Notifications.
 

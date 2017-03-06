@@ -5,6 +5,7 @@
 	
 	<dependency id="cordova-plugin-cocoapod-support"/>
 	<dependency id="cordova-plugin-add-swift-support"/>
+	<!-- <dependency id="cordova-custom-config"/> -->
 	
 	<js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
 		<clobbers target="mobileMessaging" />
@@ -12,9 +13,13 @@
 	
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
+			<!-- cordova-plugin-cocoapod-support -->
 	        <preference name="deployment-target" value="8.4" />
 			<preference name="pods_use_frameworks" value="true" />
-			
+
+			<!-- cordova-custom-config -->
+			<!-- <preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" /> -->
+
 			<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
 			</feature>
