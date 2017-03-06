@@ -52,8 +52,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         ```bash
         $ xcodebuild -workspace <your project name>.xcworkspace -scheme <your scheme name> -destination 'platform=iOS Simulator,name=iPhone 6 Plus,OS=10.2'
         ```
+
         > ### Note
-        > This step is a workaround for a known Cordova issue: https://issues.apache.org/jira/browse/CB-12212. It is required to run the command only once. As another option, you can use Xcode directly to build and archive your project.
+        > The command may end up with `** BUILD FAILED **` message - this result may be ignored. This step is a workaround for a known Cordova issue: https://issues.apache.org/jira/browse/CB-12212. It is required to run the command only once. As another option, you can use Xcode directly to build and archive your project.
 
     3. Run the following command to build your entire Cordova project:
         ```bash
