@@ -42,13 +42,13 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     ```
 
 4. Steps to setup iOS platform:
-    1. Update CocoaPods dependencies:
+    1. Go to iOS platform directory and update CocoaPods dependencies from the directory:
         ```bash
         $ cd platforms/ios
         $ pod update
         ```
 
-    2. Run the following command to build your Xcode project (use your project and scheme names):
+    2. Run the following command from the iOS platform directory to build your Xcode project (use your project and scheme names):
         ```bash
         $ xcodebuild -workspace <your project name>.xcworkspace -scheme <your scheme name> -destination 'platform=iOS Simulator,name=iPhone 6 Plus,OS=10.2'
         ```
@@ -56,16 +56,14 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         > ### Note
         > The command may end up with `** BUILD FAILED **` message - this result may be ignored. This step is a workaround for a known Cordova issue: https://issues.apache.org/jira/browse/CB-12212. It is required to run the command only once. As another option, you can use Xcode directly to build and archive your project.
 
-    3. Run the following command to build your entire Cordova project:
+    3. Configure your project to support Push Notifications:
+        1. Go to "Capabilities" tab (target settings) and turn on Push Notifications.
+        2. Turn on "Background Modes" and mark the "Remote notifications" checkbox.
+
+    4. Run the following command to build your entire Cordova project:
         ```bash
         $ cordova build
         ```
-
-    4. Configure your project to support Push Notifications:
-
-        1. Go to "Capabilities" tab (target settings) and turn on Push Notifications.
-
-        2. Turn on "Background Modes" and mark the "Remote notifications" checkbox.
 
 5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
