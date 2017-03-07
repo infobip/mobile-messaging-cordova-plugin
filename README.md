@@ -38,45 +38,40 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 file you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application):
     <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
 
-3. Create new application with Cordova (as described here https://cordova.apache.org/#getstarted).
-
-4. Add MobileMessaging plugin to your project, run in terminal:
+3. Add MobileMessaging plugin to your project, run in terminal:
     ```bash
     $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --save
     ```
 
-5. Steps to setup iOS project:
-    1. Change the `config.xml` to add CocoaPods support:
+4. Steps to setup iOS platform:
+    1. Change the `config.xml` to add CocoaPods support,:
         ```xml
         <platform name="ios">
-            <!-- Add two following preference entries: -->
-            <preference name="pods_ios_min_version" value="8.4" />
+            <!-- Add the following entries under ios platform: -->
+            <preference name="deployment-target" value="8.4" />
             <preference name="pods_use_frameworks" value="true" />
+            <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
+                <array>
+                    <string>remote-notification</string>
+                </array>
+            </config-file>
+            <preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" />
         </platform>
         ```
 
-    2. To have the CocoaPods installed and the project set up, run in terminal:
+    2. Run the following command from the iOS platform directory (`platforms/ios`) to build your Xcode project (*use your project and scheme names as arguments*):
+        ```bash
+        $ sh ../../plugins/com-infobip-plugins-mobilemessaging/scripts/build_ios_workspace.sh -workspace MyProject.xcworkspace -scheme MyProjectScheme
+        ```
+
+    3. Configure your project to enable Push Notifications. Go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
+
+    4. Run the following command to build your entire Cordova project:
         ```bash
         $ cordova build
         ```
-        > ### Note
-        > The build process may fail due to `Error code 65`. It's a known issue https://issues.apache.org/jira/browse/CB-12212. Please use Xcode to build and archive your project.
 
-    3. Open workspace and add an Objective-C Bridging Header manually:
-    <center><img src="https://i.gyazo.com/35c5eb3af1dc841aa030c15250791424.png" alt="Bridging Header setup"/></center>
-
-    4. Change "Use Legacy Swift Language Version" to "NO":
-    <center><img src="https://i.gyazo.com/fb5a9e2d6ec994c83ba495ce0dd70b0a.png" alt="Legacy Swift Version"/></center>
-
-    5. Change minimum deployment target version to 8.4.
-
-    6. Configure your project to support Push Notifications:
-
-        1. Go to "Capabilities" tab (target settings) and turn on Push Notifications.
-
-        2. Turn on "Background Modes" and mark the "Remote notifications" checkbox.
-
-6. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
+5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
     ```javascript
     onDeviceReady: function() {
