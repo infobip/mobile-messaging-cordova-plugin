@@ -31,7 +31,8 @@ DESTINATION="${DESTINATION:=platform=iOS Simulator,name=iPhone 6 Plus,OS=10.2}"
 if [ ! "$WORKSPACE" ] || [ ! "$SCHEME" ]; then
 	echo "Please provide -workspace and -scheme arguments."
 else
-	pod update
-    xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Debug -destination "$DESTINATION" build CONFIGURATION_BUILD_DIR="/Users/andreykadochnikov/"$CORDPROJNAME"/platforms/ios/build/emulator" SHARED_PRECOMPS_DIR="/Users/andreykadochnikov/"$CORDPROJNAME"/platforms/ios/build/sharedpch" > /dev/null
+    cordova prepare > /dev/null
+	pod update > /dev/null
+    xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Debug -destination "$DESTINATION" build > /dev/null
 	echo "Done! Now you can perform \"$ cordova build\"."
 fi
