@@ -13,6 +13,10 @@ The document describes library integration steps for your Cordova project.
 - [Message storage](#message-storage)
 
 ## Requirements
+
+- npm (tested with 4.1.2)
+- node (tested with 7.5.0)
+
 For iOS project:
 - Xcode 8.1+
 - Minimum deployment target 8.4
