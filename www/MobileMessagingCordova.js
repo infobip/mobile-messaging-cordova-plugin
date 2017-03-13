@@ -1,3 +1,21 @@
+var supportedEvents = ["messageReceived", "tokenReceived", "registrationUpdated", "geofenceEntered"];
+var eventHandlers = {};
+
+function execIfExists(parameters) {
+	if (parameters == null || parameters.length == 0) {
+		return;
+	}
+	var handler = eventHandlers[parameters[0]];
+	if (typeof handler !== 'function') {
+		return;
+	} else if (parameters.length > 1) {
+		handler(parameters[1]);
+	}
+};			   
+
+/**
+ * Constructor
+*/
 var MobileMessagingCordova = function () {};
 
 /**
@@ -19,11 +37,19 @@ var MobileMessagingCordova = function () {};
  *       }
  * 	}
  * @param {Function} error callback
- */
-MobileMessagingCordova.prototype.init = function(config, error) {
+ */ 
+MobileMessagingCordova.prototype.init = function(config, onInitSuccess, onInitError) {
+	var _this = this;
+	var messageStorage = config.messageStorage;
+	var _onInitSuccessHandler = onInitSuccess || function() {};
+	var _onInitErrorHandler = onInitError || function() {};
+
 	this.configuration = config;
 
-	var messageStorage = config.messageStorage;
+	var fireSuccessEvent = function() {
+		_onInitSuccessHandler(this);
+	}
+
 	if (messageStorage) {
 		if (typeof messageStorage.start !== 'function') {
 			console.error('Missing messageStorage.start function definition');
@@ -64,7 +90,7 @@ MobileMessagingCordova.prototype.init = function(config, error) {
 		return;
 	}
 
-	cordova.exec(function(){}, error, 'MobileMessagingCordova', 'init', [config]);
+	cordova.exec(fireSuccessEvent, this._onInitErrorHandler, 'MobileMessagingCordova', 'init', [config, supportedEvents]);
 };
 
 /**
@@ -79,9 +105,13 @@ MobileMessagingCordova.prototype.init = function(config, error) {
  * @param {String} eventName
  * @param {Function} callback will be called when registration is complete
  */
-MobileMessagingCordova.prototype.register = function(eventName, callback) {
-	cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'register', [eventName])
+MobileMessagingCordova.prototype.register = function(eventName, handler) {
+   if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
+	   eventHandlers[eventName] = handler;
+   }
 };
+
+MobileMessagingCordova.prototype.on = MobileMessagingCordova.prototype.register;
 
 /**
  * Un register from MobileMessaging library event.
@@ -90,9 +120,11 @@ MobileMessagingCordova.prototype.register = function(eventName, callback) {
  * @param {String} eventName
  * @param {Function} callback will be called when unregistration is complete
  */
-MobileMessagingCordova.prototype.unregister = function(eventName, callback) {
-	cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'unregister', [eventName])
+MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
+	eventHandlers[eventName] = null;
 };
+
+MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregister;
 
 /**
  * Sync user data to the server.
@@ -154,6 +186,8 @@ MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 	};
 	return defaultMessageStorage;
 };
+
+//MobileMessagingCordova.prototype
 
 function messageStorage_find(messageId) {
 	var messageStorage = this.configuration.messageStorage;
