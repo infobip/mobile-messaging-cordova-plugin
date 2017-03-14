@@ -187,7 +187,7 @@ MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 
 //TODO: delete 
 MobileMessagingCordova.prototype.test = function(data) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'test', [data])
+	cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'test', [data])
 };
 
 //MobileMessagingCordova.prototype
