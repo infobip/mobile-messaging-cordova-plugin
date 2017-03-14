@@ -75,46 +75,13 @@ class MMConfiguration {
 			register(forEvents: events, callbackId: command.callbackId)
 		}
 		
-		//test
-//		NotificationCenter.default.post(name: NSNotification.Name(rawValue: MMNotificationMessageReceived), object: nil, userInfo: nil)
-		
-//		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
-//		pluginResult?.setKeepCallbackAs(true)
-//		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 	}
 	
-	private func register(forEvents events: [String], callbackId: String) {
-		let mmNotificationNames = events.flatMap{mmNotificationName(event: $0)}
-		for mmNotificationName in mmNotificationNames {
-			unregister(mmNotificationName)
-			let observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
-				var notificationResult:CDVPluginResult?
-				switch mmNotificationName {
-				case MMNotificationMessageReceived:
-					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message.dictionary())
-					}
-				case MMNotificationDeviceTokenReceived:
-					if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: token)
-					}
-				case MMNotificationRegistrationUpdated:
-					if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: internalId)
-					}
-				case MMNotificationGeographicalRegionDidEnter:
-					if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: region.dictionary())
-					}
-				default: break
-				}
-				
-				if (notificationResult == nil) {
-					notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: ["messageReceived"])
-				}
-				notificationResult?.setKeepCallbackAs(true)
-				self.commandDelegate?.send(notificationResult, callbackId: callbackId)
-			}
+	func startObserving(_ command: CDVInvokedUrlCommand) {
+		if let events = command.arguments[1] as? [String] {
+			register(forEvents: events, callbackId: command.callbackId)
 		}
 	}
 	
@@ -240,6 +207,41 @@ class MMConfiguration {
 		default: break
 		}
 		return nil
+	}
+	
+	private func register(forEvents events: [String], callbackId: String) {
+		let mmNotificationNames = events.flatMap{mmNotificationName(event: $0)}
+		for mmNotificationName in mmNotificationNames {
+			unregister(mmNotificationName)
+			NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
+				var notificationResult:CDVPluginResult?
+				switch mmNotificationName {
+				case MMNotificationMessageReceived:
+					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message.dictionary())
+					}
+				case MMNotificationDeviceTokenReceived:
+					if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: token)
+					}
+				case MMNotificationRegistrationUpdated:
+					if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: internalId)
+					}
+				case MMNotificationGeographicalRegionDidEnter:
+					if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: region.dictionary())
+					}
+				default: break
+				}
+				
+				if (notificationResult == nil) {
+					notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: ["messageReceived"])
+				}
+				notificationResult?.setKeepCallbackAs(true)
+				self.commandDelegate?.send(notificationResult, callbackId: callbackId)
+			}
+		}
 	}
 }
 

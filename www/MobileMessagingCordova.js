@@ -1,7 +1,7 @@
 var supportedEvents = ["messageReceived", "tokenReceived", "registrationUpdated", "geofenceEntered"];
 var eventHandlers = {};
 
-function execIfExists(parameters) {
+function execEventHandlerIfExists(parameters) {
 	if (parameters == null || parameters.length == 0) {
 		return;
 	}
@@ -46,34 +46,34 @@ MobileMessagingCordova.prototype.init = function(config, onInitSuccess, onInitEr
 
 	this.configuration = config;
 
-	var fireSuccessEvent = function() {
-		_onInitSuccessHandler(this);
-	}
+	// var fireSuccessEvent = function() {
+	// 	_onInitSuccessHandler(this);
+	// }
 
 	if (messageStorage) {
 		if (typeof messageStorage.start !== 'function') {
 			console.error('Missing messageStorage.start function definition');
-			error('Missing messageStorage.start function definition');
+			this._onInitErrorHandler('Missing messageStorage.start function definition');
 			return;
 		}
 		if (typeof messageStorage.stop !== 'function') {
 			console.error('Missing messageStorage.stop function definition');
-			error('Missing messageStorage.stop function definition');
+			this._onInitErrorHandler('Missing messageStorage.stop function definition');
 			return;
 		}
 		if (typeof messageStorage.save !== 'function') {
 			console.error('Missing messageStorage.save function definition');
-			error('Missing messageStorage.save function definition');
+			this._onInitErrorHandler('Missing messageStorage.save function definition');
 			return;
 		}
 		if (typeof messageStorage.find !== 'function') {
 			console.error('Missing messageStorage.find function definition');
-			error('Missing messageStorage.find function definition');
+			this._onInitErrorHandler('Missing messageStorage.find function definition');
 			return;
 		}
 		if (typeof messageStorage.findAll !== 'function') {
 			console.error('Missing messageStorage.findAll function definition');
-			error('Missing messageStorage.findAll function definition');
+			this._onInitErrorHandler('Missing messageStorage.findAll function definition');
 			return;
 		}
 
@@ -86,11 +86,12 @@ MobileMessagingCordova.prototype.init = function(config, onInitSuccess, onInitEr
 
 	if (!config.applicationCode) {
 		console.error('No application code provided');
-		error('No application code provided');
+		this._onInitErrorHandler('No application code provided');
 		return;
 	}
 
-	cordova.exec(fireSuccessEvent, this._onInitErrorHandler, 'MobileMessagingCordova', 'init', [config, supportedEvents]);
+	cordova.exec(execEventHandlerIfExists, function(){}, 'MobileMessagingCordova', 'startObserving', [supportedEvents]);
+	cordova.exec(this._onInitSuccessHandler, this._onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
 };
 
 /**
@@ -108,6 +109,7 @@ MobileMessagingCordova.prototype.init = function(config, onInitSuccess, onInitEr
 MobileMessagingCordova.prototype.register = function(eventName, handler) {
    if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
 	   eventHandlers[eventName] = handler;
+	   // var events = eventHandlers[eventName]
    }
 };
 
