@@ -8,8 +8,8 @@ function execEventHandlerIfExists(parameters) {
 	var handler = eventHandlers[parameters[0]];
 	if (typeof handler !== 'function') {
 		return;
-	} else if (parameters.length > 1) {
-		handler(parameters[1]);
+	} else {
+		handler(parameters.length > 1 ? parameters[1] : []);
 	}
 };			   
 
