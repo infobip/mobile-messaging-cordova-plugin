@@ -172,9 +172,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_DEF_MESSAGESTORAGE_DELETEALL.equals(action)) {
             defaultMessageStorage_deleteAll(callbackContext);
             return true;
-        } else if ("test".equals(action)) {
-            test(args, callbackContext);
-            return true;
         }
 
         return false;
@@ -209,15 +206,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
 		sendCallbackSuccessKeepCallback(callbackContext);
 	}
-
-    //TODO: remove it
-    private void test(JSONArray args, final CallbackContext callbackContext) {
-        Intent intent = new Intent(Event.MESSAGE_RECEIVED.getKey());
-        intent.putExtras(BundleMessageMapper.toBundle(new Message(){{
-            setBody("My body");
-        }}));
-        LocalBroadcastManager.getInstance(cordova.getActivity()).sendBroadcast(intent);
-    }
 
 	private void registerReceiver(JSONArray args, final CallbackContext callbackContext) throws JSONException {
 

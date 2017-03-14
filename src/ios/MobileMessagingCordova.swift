@@ -189,20 +189,6 @@ class MMConfiguration {
 		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 	
-	//TODO: remove it after testing
-	func test(_ command: CDVInvokedUrlCommand) {
-		let payload = [
-			"messageId": "m1",
-			"aps": ["alert": ["title": "msg_title", "body": "msg_body"], "badge": 6, "sound": "default"],
-			"internalData": ["internalKey": "internalValue"],
-			"customPayload": ["customKey": "customValue"]
-			] as [String : Any]
-		let message = MTMessage(payload: payload, createdDate: Date())!
-		NotificationCenter.default.post(name: NSNotification.Name(rawValue: MMNotificationMessageReceived), object: nil, userInfo: [MMNotificationKeyMessage: message])
-		let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
-	}
-	
 	//MARK: Utils
 	private func unregister(_ mmNotificationName: String) {
 		guard let observer = notificationObserver else {
