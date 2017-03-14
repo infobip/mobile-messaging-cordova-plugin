@@ -45,10 +45,15 @@ class MMConfiguration {
 @objc(MobileMessagingCordova) class MobileMessagingCordova : CDVPlugin {
 	var notificationObserver: AnyObject?
 	var messageStorageAdapter: MessageStorageAdapter? = nil
+	var mmNotifications : [String: String]?
 	
 	override func pluginInitialize() {
 		super.pluginInitialize()
 		messageStorageAdapter = MessageStorageAdapter(plugin: self)
+		mmNotifications = ["messageReceived": MMNotificationMessageReceived,
+		                   "tokenReceived" :  MMNotificationDeviceTokenReceived,
+		                   "registrationUpdated" :  MMNotificationRegistrationUpdated,
+		                   "geofenceEntered" : MMNotificationGeographicalRegionDidEnter]
 	}
 	
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
@@ -208,16 +213,9 @@ class MMConfiguration {
 		notificationObserver = nil
 	}
 	
-	var mmNotifications = [
-		"messageReceived": MMNotificationMessageReceived,
-		"tokenReceived" :  MMNotificationDeviceTokenReceived,
-		"registrationUpdated" :  MMNotificationRegistrationUpdated,
-		"geofenceEntered" : MMNotificationGeographicalRegionDidEnter
-	]
-	
 	private func register(forEvents events: Set<String>, callbackId: String) {
 		for event in events {
-			if let mmNotificationName = mmNotifications[event] {
+			if let mmNotificationName = mmNotifications?[event] {
 				unregister(mmNotificationName)
 				notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
 					var notificationResult:CDVPluginResult?

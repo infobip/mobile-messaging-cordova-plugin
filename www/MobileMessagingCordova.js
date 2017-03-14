@@ -5,12 +5,17 @@ function execEventHandlerIfExists(parameters) {
 	if (parameters == null || parameters.length == 0) {
 		return;
 	}
-	var handler = eventHandlers[parameters[0]];
-	if (typeof handler !== 'function') {
-		return;
-	} else {
-		handler(parameters.length > 1 ? parameters[1] : []);
-	}
+	var handlers = eventHandlers[parameters[0]] || [];
+	for (i = 0; i < handlers.length; i++) {
+		var handler = handlers[i];
+	  	if (typeof handler !== 'function') {
+			return;
+		} else {
+			setTimeout(function() {
+				handler(parameters.length > 1 ? parameters[1] : []);
+			}, 200);
+		}
+    }
 };			   
 
 /**
@@ -39,7 +44,6 @@ var MobileMessagingCordova = function () {};
  * @param {Function} error callback
  */ 
 MobileMessagingCordova.prototype.init = function(config, onInitError) {
-	var _this = this;
 	var messageStorage = config.messageStorage;
 	var _onInitErrorHandler = onInitError || function() {};
 
@@ -105,6 +109,7 @@ MobileMessagingCordova.prototype.register = function(eventName, handler) {
    if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
 	   var handlers = eventHandlers[eventName] || [];
 	   handlers.push(handler);
+	   eventHandlers[eventName] = handlers;
    }
 };
 
@@ -123,6 +128,7 @@ MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
 	if (index > -1) {
        handlers.splice(index, 1);
     }
+    eventHandlers[eventName] = handlers;
 };
 
 MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregister;
