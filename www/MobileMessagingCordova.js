@@ -46,10 +46,6 @@ MobileMessagingCordova.prototype.init = function(config, onInitSuccess, onInitEr
 
 	this.configuration = config;
 
-	// var fireSuccessEvent = function() {
-	// 	_onInitSuccessHandler(this);
-	// }
-
 	if (messageStorage) {
 		if (typeof messageStorage.start !== 'function') {
 			console.error('Missing messageStorage.start function definition');
@@ -91,7 +87,7 @@ MobileMessagingCordova.prototype.init = function(config, onInitSuccess, onInitEr
 	}
 
 	cordova.exec(execEventHandlerIfExists, function(){}, 'MobileMessagingCordova', 'startObserving', [supportedEvents]);
-	cordova.exec(this._onInitSuccessHandler, this._onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
+	cordova.exec(function() { _onInitSuccessHandler(_this); }, this._onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
 };
 
 /**
@@ -187,6 +183,11 @@ MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 	    }
 	};
 	return defaultMessageStorage;
+};
+
+//TODO: delete 
+MobileMessagingCordova.prototype.test = function(data) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'test', [data])
 };
 
 //MobileMessagingCordova.prototype

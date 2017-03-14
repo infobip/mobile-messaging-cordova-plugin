@@ -71,16 +71,12 @@ class MMConfiguration {
 		}
 		mobileMessaging?.start()
 		
-		if let events = command.arguments[1] as? [String] {
-			register(forEvents: events, callbackId: command.callbackId)
-		}
-		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 	}
 	
 	func startObserving(_ command: CDVInvokedUrlCommand) {
-		if let events = command.arguments[1] as? [String] {
+		if let events = command.arguments[0] as? [String] {
 			register(forEvents: events, callbackId: command.callbackId)
 		}
 	}
@@ -184,6 +180,13 @@ class MMConfiguration {
 	
 	func defaultMessageStorage_deleteAll(_ command: CDVInvokedUrlCommand) {
 		MobileMessaging.defaultMessageStorage?.removeAllMessages()
+		let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
+		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+	}
+	
+	//TODO: remove it after testing
+	func test(_ command: CDVInvokedUrlCommand) {
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: MMNotificationMessageReceived), object: nil, userInfo: nil)
 		let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
