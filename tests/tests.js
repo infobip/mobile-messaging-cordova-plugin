@@ -29,6 +29,13 @@ describe('Initialization', function() {
 			jasmine.any(Function),
 			jasmine.any(Function),
 			'MobileMessagingCordova',
+			'registerReceiver',
+			jasmine.any(Array)
+			)
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
 			'init',
 			[{
 				applicationCode: '12345'
@@ -148,27 +155,37 @@ describe('Base methods', function() {
 		MobileMessaging.init(config, function(err) {});
 	});
 
-	// it('should register', function() {
-	// 	MobileMessaging.register('eventName', function() {});
+    var expectedHandlers = [function() { "1"}, function() { "2"}];
+	it('should register', function() {
+		var supportedEvents = MobileMessaging.supportedEvents;
+		for (i = 0; i < supportedEvents.length; i++) {
+			for (ii = 0; ii < expectedHandlers.length; ii++) {
+        		MobileMessaging.register(supportedEvents[i], expectedHandlers[ii]);
+        	}
+		}
 
-	// 	expect(cordova.exec).toHaveBeenCalledWith(
-	// 		jasmine.any(Function),
-	// 		jasmine.any(Function),
-	// 		'MobileMessagingCordova',
-	// 		'register',
-	// 		['eventName']);
-	// });
+		console.log("should register: Current event handlers" + JSON.stringify(MobileMessaging.eventHandlers, null, 4));
+		for (i = 0; i < supportedEvents.length; i++) {
+			var actualHandlers = MobileMessaging.eventHandlers[supportedEvents[i]];
+			expect(actualHandlers).toEqual(expectedHandlers);
+		}
 
-	// it('should unregister', function() {
-	// 	MobileMessaging.unregister('eventName', function() {});
+	});
 
-	// 	expect(cordova.exec).toHaveBeenCalledWith(
-	// 		jasmine.any(Function),
-	// 		jasmine.any(Function),
-	// 		'MobileMessagingCordova',
-	// 		'unregister',
-	// 		['eventName']);
-	// });
+	it('should unregister', function() {
+	    var supportedEvents = MobileMessaging.supportedEvents;
+		for (i = 0; i < supportedEvents.length; i++) {
+			for (ii = 0; ii < expectedHandlers.length; ii++) {
+        		MobileMessaging.unregister(supportedEvents[i], expectedHandlers[ii]);
+        	}
+		}
+
+		console.log("should unregister: Current event handlers" + JSON.stringify(MobileMessaging.eventHandlers, null, 4));
+		for (i = 0; i < supportedEvents.length; i++) {
+			var actualHandlers = MobileMessaging.eventHandlers[supportedEvents[i]];
+			expect(actualHandlers).toEqual([]);
+		}
+	});
 
 	it('should syncUserData', function() {
 		MobileMessaging.syncUserData({}, function(data) {}, function(err) {});

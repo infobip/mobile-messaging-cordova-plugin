@@ -19,7 +19,10 @@ function execEventHandlerIfExists(parameters) {
 /**
  * Constructor
 */
-var MobileMessagingCordova = function () {};
+var MobileMessagingCordova = function () {
+	this.eventHandlers = eventHandlers
+	this.supportedEvents = supportedEvents
+};
 
 /**
  * Starts a new Mobile Messaging session.
