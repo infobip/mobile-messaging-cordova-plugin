@@ -148,27 +148,27 @@ describe('Base methods', function() {
 		MobileMessaging.init(config, function(err) {});
 	});
 
-	it('should register', function() {
-		MobileMessaging.register('eventName', function() {});
+	// it('should register', function() {
+	// 	MobileMessaging.register('eventName', function() {});
 
-		expect(cordova.exec).toHaveBeenCalledWith(
-			jasmine.any(Function),
-			jasmine.any(Function),
-			'MobileMessagingCordova',
-			'register',
-			['eventName']);
-	});
+	// 	expect(cordova.exec).toHaveBeenCalledWith(
+	// 		jasmine.any(Function),
+	// 		jasmine.any(Function),
+	// 		'MobileMessagingCordova',
+	// 		'register',
+	// 		['eventName']);
+	// });
 
-	it('should unregister', function() {
-		MobileMessaging.unregister('eventName', function() {});
+	// it('should unregister', function() {
+	// 	MobileMessaging.unregister('eventName', function() {});
 
-		expect(cordova.exec).toHaveBeenCalledWith(
-			jasmine.any(Function),
-			jasmine.any(Function),
-			'MobileMessagingCordova',
-			'unregister',
-			['eventName']);
-	});
+	// 	expect(cordova.exec).toHaveBeenCalledWith(
+	// 		jasmine.any(Function),
+	// 		jasmine.any(Function),
+	// 		'MobileMessagingCordova',
+	// 		'unregister',
+	// 		['eventName']);
+	// });
 
 	it('should syncUserData', function() {
 		MobileMessaging.syncUserData({}, function(data) {}, function(err) {});

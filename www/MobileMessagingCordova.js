@@ -52,27 +52,27 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
 	if (messageStorage) {
 		if (typeof messageStorage.start !== 'function') {
 			console.error('Missing messageStorage.start function definition');
-			this._onInitErrorHandler('Missing messageStorage.start function definition');
+			_onInitErrorHandler('Missing messageStorage.start function definition');
 			return;
 		}
 		if (typeof messageStorage.stop !== 'function') {
 			console.error('Missing messageStorage.stop function definition');
-			this._onInitErrorHandler('Missing messageStorage.stop function definition');
+			_onInitErrorHandler('Missing messageStorage.stop function definition');
 			return;
 		}
 		if (typeof messageStorage.save !== 'function') {
 			console.error('Missing messageStorage.save function definition');
-			this._onInitErrorHandler('Missing messageStorage.save function definition');
+			_onInitErrorHandler('Missing messageStorage.save function definition');
 			return;
 		}
 		if (typeof messageStorage.find !== 'function') {
 			console.error('Missing messageStorage.find function definition');
-			this._onInitErrorHandler('Missing messageStorage.find function definition');
+			_onInitErrorHandler('Missing messageStorage.find function definition');
 			return;
 		}
 		if (typeof messageStorage.findAll !== 'function') {
 			console.error('Missing messageStorage.findAll function definition');
-			this._onInitErrorHandler('Missing messageStorage.findAll function definition');
+			_onInitErrorHandler('Missing messageStorage.findAll function definition');
 			return;
 		}
 
@@ -85,12 +85,12 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
 
 	if (!config.applicationCode) {
 		console.error('No application code provided');
-		this._onInitErrorHandler('No application code provided');
+		_onInitErrorHandler('No application code provided');
 		return;
 	}
 
 	cordova.exec(execEventHandlerIfExists, function(){}, 'MobileMessagingCordova', 'startObserving', [supportedEvents]);
-	cordova.exec(function() {}, this._onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
+	cordova.exec(function() {}, _onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
 };
 
 /**
