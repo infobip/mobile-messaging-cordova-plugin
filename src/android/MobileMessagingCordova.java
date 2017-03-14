@@ -140,7 +140,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             init(args, callbackContext);
             return true;
         } else if (FUNCTION_REGISTER_RECEIVER.equals(action)) {
-            startObserving(args, callbackContext);
+            registerReceiver(args, callbackContext);
             return true;
         } else if (FUNCTION_SYNC_USER_DATA.equals(action)) {
             syncUserData(args, callbackContext);
