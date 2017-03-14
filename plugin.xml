@@ -34,7 +34,7 @@
 	        </config-file>
 		</config-file>
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
-		<source-file src="src/ios/MobileMessagingCordova.swift" />cd
+		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
 		<pod name="MobileMessaging" version="2.3.1"/>
 	</platform>

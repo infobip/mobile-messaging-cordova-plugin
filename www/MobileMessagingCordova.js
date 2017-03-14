@@ -195,8 +195,6 @@ MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 	return defaultMessageStorage;
 };
 
-//MobileMessagingCordova.prototype
-
 function messageStorage_find(messageId) {
 	var messageStorage = this.configuration.messageStorage;
 	messageStorage.find(messageId, function(message) {

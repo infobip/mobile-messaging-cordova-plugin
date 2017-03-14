@@ -1,8 +1,7 @@
 
 import Foundation
 import UIKit
-//TODO: remove testable, just for tests
-@testable import MobileMessaging
+import MobileMessaging
 import Dispatch
 
 class MMConfiguration {
