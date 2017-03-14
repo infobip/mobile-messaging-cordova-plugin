@@ -104,7 +104,7 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
  *
  * @name register
  * @param {String} eventName
- * @param {Function} callback will be called when registration is complete
+ * @param {Function} handler will be called when event occurs
  */
 MobileMessagingCordova.prototype.register = function(eventName, handler) {
    if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
@@ -121,7 +121,7 @@ MobileMessagingCordova.prototype.on = MobileMessagingCordova.prototype.register;
  *
  * @name unregister
  * @param {String} eventName
- * @param {Function} callback will be called when unregistration is complete
+ * @param {Function} handler will be unregistered from event
  */
 MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
 	var handlers = eventHandlers[eventName] || [];
