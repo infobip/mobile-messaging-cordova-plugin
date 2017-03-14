@@ -11,9 +11,7 @@ function execEventHandlerIfExists(parameters) {
 	  	if (typeof handler !== 'function') {
 			return;
 		} else {
-			setTimeout(function() {
-				handler(parameters.length > 1 ? parameters[1] : []);
-			}, 200);
+			setTimeout(handler(parameters.length > 1 ? parameters[1] : []), 200);
 		}
     }
 };			   
@@ -89,7 +87,7 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
 		return;
 	}
 
-	cordova.exec(execEventHandlerIfExists, function(){}, 'MobileMessagingCordova', 'startObserving', [supportedEvents]);
+	cordova.exec(execEventHandlerIfExists, function(){}, 'MobileMessagingCordova', 'registerReceiver', [supportedEvents]);
 	cordova.exec(function() {}, _onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
 };
 

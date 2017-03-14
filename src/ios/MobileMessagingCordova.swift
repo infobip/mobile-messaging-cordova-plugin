@@ -80,7 +80,7 @@ class MMConfiguration {
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 	}
 	
-	func startObserving(_ command: CDVInvokedUrlCommand) {
+	func registerReceiver(_ command: CDVInvokedUrlCommand) {
 		if let events = command.arguments[0] as? [String] {
 			register(forEvents: Set(events), callbackId: command.callbackId)
 		}
