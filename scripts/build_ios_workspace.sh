@@ -33,6 +33,6 @@ if [ ! "$WORKSPACE" ] || [ ! "$SCHEME" ]; then
 else
     cordova prepare > /dev/null
 	pod update > /dev/null
-    xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Debug -destination "$DESTINATION" build
+    xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Debug -destination "$DESTINATION" build /dev/null
 	echo "Done! Now you can perform \"$ cordova build\"."
 fi
