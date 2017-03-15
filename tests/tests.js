@@ -29,6 +29,13 @@ describe('Initialization', function() {
 			jasmine.any(Function),
 			jasmine.any(Function),
 			'MobileMessagingCordova',
+			'registerReceiver',
+			jasmine.any(Array)
+			)
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
 			'init',
 			[{
 				applicationCode: '12345'
@@ -131,6 +138,15 @@ describe('Initialization with message storage', function() {
 });
 
 describe('Base methods', function() {
+	var spy1 = jasmine.createSpy('spy1');
+	var spy2 = jasmine.createSpy('spy2');
+
+	var handlersSpies = {
+		  handler1: spy1,
+		  handler2: spy2
+	};
+    var expectedHandlers = [handlersSpies.handler1, handlersSpies.handler2];
+    
 	beforeEach(function() {
 		var config = {
 			applicationCode: '12345',
@@ -147,29 +163,61 @@ describe('Base methods', function() {
 
 		MobileMessaging.init(config, function(err) {});
 	});
-
+    
 	it('should register', function() {
-		MobileMessaging.register('eventName', function() {});
+		var supportedEvents = MobileMessaging.supportedEvents;
+		for (i = 0; i < supportedEvents.length; i++) {
+			for (ii = 0; ii < expectedHandlers.length; ii++) {
+        		MobileMessaging.register(supportedEvents[i], expectedHandlers[ii]);
+        	}
+		}
 
-		expect(cordova.exec).toHaveBeenCalledWith(
-			jasmine.any(Function),
-			jasmine.any(Function),
-			'MobileMessagingCordova',
-			'register',
-			['eventName']);
+		console.log("should register: Current event handlers -" + JSON.stringify(MobileMessaging.eventHandlers, null, 4));
+		for (i = 0; i < supportedEvents.length; i++) {
+			var actualHandlers = MobileMessaging.eventHandlers[supportedEvents[i]];
+			expect(actualHandlers).toEqual(expectedHandlers);
+		}
+
 	});
+	
+	it('should call handler', function() {
+	
+		var actualHandlers = MobileMessaging.eventHandlers['messageReceived'];
+		console.log("should call handler: Actual handlers -" + JSON.stringify(actualHandlers, null, 4));
+		MobileMessaging.init({applicationCode: '12345'}, function() {});
+		expect(cordova.exec).toHaveBeenCalledWith(
+												jasmine.any(Function),
+												jasmine.any(Function),
+												'MobileMessagingCordova',
+												'registerReceiver',
+												jasmine.any(Array)
+		);
+		var args = cordova.exec.calls.argsFor(5); //5 it's the number of exec call of 'registerReceiver'
+		console.log("should call handler: args - " + JSON.stringify(args, null, 4));
+		var handlingCallback = args[0];
+		expect(typeof handlingCallback == 'function');
+		var parameters = {'paramKey': 'paramValue'};
+		handlingCallback(['messageReceived', parameters]);
+		expect(spy1).toHaveBeenCalledWith(parameters);
+		expect(spy2).toHaveBeenCalledWith(parameters);
+	});
+
 
 	it('should unregister', function() {
-		MobileMessaging.unregister('eventName', function() {});
+	    var supportedEvents = MobileMessaging.supportedEvents;
+		for (i = 0; i < supportedEvents.length; i++) {
+			for (ii = 0; ii < expectedHandlers.length; ii++) {
+        		MobileMessaging.unregister(supportedEvents[i], expectedHandlers[ii]);
+        	}
+		}
 
-		expect(cordova.exec).toHaveBeenCalledWith(
-			jasmine.any(Function),
-			jasmine.any(Function),
-			'MobileMessagingCordova',
-			'unregister',
-			['eventName']);
+		console.log("should unregister: Current event handlers -" + JSON.stringify(MobileMessaging.eventHandlers, null, 4));
+		for (i = 0; i < supportedEvents.length; i++) {
+			var actualHandlers = MobileMessaging.eventHandlers[supportedEvents[i]];
+			expect(actualHandlers).toEqual([]);
+		}
 	});
-
+	
 	it('should syncUserData', function() {
 		MobileMessaging.syncUserData({}, function(data) {}, function(err) {});
 
