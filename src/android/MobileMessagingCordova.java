@@ -25,7 +25,6 @@ import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
-import org.infobip.mobile.messaging.dal.bundle.BundleMessageMapper;
 import org.infobip.mobile.messaging.geo.Area;
 import org.infobip.mobile.messaging.geo.Geo;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
@@ -140,7 +139,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             init(args, callbackContext);
             return true;
         } else if (FUNCTION_REGISTER_RECEIVER.equals(action)) {
-            registerReceiver(args, callbackContext);
+            registerReceiver(callbackContext);
             return true;
         } else if (FUNCTION_SYNC_USER_DATA.equals(action)) {
             syncUserData(args, callbackContext);
@@ -207,7 +206,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 		sendCallbackSuccessKeepCallback(callbackContext);
 	}
 
-	private void registerReceiver(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+	private void registerReceiver(final CallbackContext callbackContext) throws JSONException {
 
 		IntentFilter intentFilter = new IntentFilter();
 		for (String action : broadcastEventMap.keySet()) {
@@ -440,20 +439,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
 			return false;
 		}
 
-        PluginResult pluginResult;
         JSONArray parameters = new JSONArray();
         parameters.put(event);
-        if (object instanceof String) {
-            parameters.put((String) object);
-            pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
-        } else if (object instanceof JSONObject) {
-            parameters.put((JSONObject) object);
-            pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
-        } else {
-            Log.e(TAG, "Unsupported callback object type: " + object.getClass().getSimpleName());
-            return false;
-        }
+        parameters.put(object);
 
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
 		pluginResult.setKeepCallback(true);
 		callback.sendPluginResult(pluginResult);
 		return true;
@@ -462,10 +452,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
 	private static void sendCallbackError(CallbackContext callback, String message) {
         sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.ERROR, message));
-    }
-
-    private static void sendCallbackNoResult(CallbackContext callback) {
-        sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.NO_RESULT), true);
     }
 
     private static void sendCallbackSuccessKeepCallback(CallbackContext callback) {
