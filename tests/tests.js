@@ -193,14 +193,13 @@ describe('Base methods', function() {
 												jasmine.any(Array)
 		);
 		var args = cordova.exec.calls.argsFor(5); //5 it's the number of exec call of 'registerReceiver'
+		console.log("should call handler: args - " + JSON.stringify(args, null, 4));
 		var handlingCallback = args[0];
 		expect(typeof handlingCallback == 'function');
-		handlingCallback(['messageReceived']);
-		expect(spy1).toHaveBeenCalled();
-		expect(spy2).toHaveBeenCalled();
-		var spy1Args = spy1.calls.argsFor(0);
-		console.log("should call handler: spy1Args - " + JSON.stringify(spy1Args, null, 4));
-		console.log("should call handler: args - " + JSON.stringify(args, null, 4));
+		var parameters = {'paramKey': 'paramValue'};
+		handlingCallback(['messageReceived', parameters]);
+		expect(spy1).toHaveBeenCalledWith(parameters);
+		expect(spy2).toHaveBeenCalledWith(parameters);
 	});
 
 
