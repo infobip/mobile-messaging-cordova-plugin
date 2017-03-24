@@ -32,7 +32,7 @@ if [ ! "$WORKSPACE" ] || [ ! "$SCHEME" ]; then
 	echo "Please provide -workspace and -scheme arguments."
 else
     cordova prepare
-	pod update 
+	pod update
     xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Debug -destination "$DESTINATION" build
 	echo "Done! Now you can perform \"$ cordova build\"."
 fi
