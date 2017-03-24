@@ -188,8 +188,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
 		MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
 				.withApplicationCode(configuration.applicationCode)
-				.withGcmSenderId(configuration.android.senderId)
-        .withApiUri("https://oneapi.ioinfobip.com");
+				.withGcmSenderId(configuration.android.senderId);
 
 		if (configuration.geofencingEnabled) {
 			//noinspection MissingPermission
