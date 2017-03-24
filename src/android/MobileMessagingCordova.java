@@ -188,7 +188,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
 		MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
 				.withApplicationCode(configuration.applicationCode)
-				.withGcmSenderId(configuration.android.senderId);
+				.withGcmSenderId(configuration.android.senderId)
+        .withApiUri("https://oneapi.ioinfobip.com");
 
 		if (configuration.geofencingEnabled) {
 			//noinspection MissingPermission
@@ -585,7 +586,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                                         .put("lon", area.getLongitude()))
                                 .put("radius", area.getRadius())
                                 .put("title", area.getTitle()))
-                        .putOpt("message", message));
+                        );
             } catch (JSONException e) {
                 Log.w(TAG, "Cannot convert geo to JSON: " + e.getMessage());
                 Log.d(TAG, Log.getStackTraceString(e));
