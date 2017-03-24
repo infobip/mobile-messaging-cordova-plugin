@@ -201,10 +201,6 @@ geo: {
         },
         radius: '<area radius>',
         title: '<area title>'
-    },
-    message: {
-        // notification message
-        // same as in 'messageReceived' event
     }
 }
 ```

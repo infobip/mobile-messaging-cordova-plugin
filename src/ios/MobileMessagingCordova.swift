@@ -391,7 +391,6 @@ extension MMRegion {
 		
 		var result = [String: Any]()
 		result["area"] = area
-		result["message"] = message?.dictionary()
 		return result
 	}
 }

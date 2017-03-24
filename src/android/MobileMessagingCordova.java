@@ -585,7 +585,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                                         .put("lon", area.getLongitude()))
                                 .put("radius", area.getRadius())
                                 .put("title", area.getTitle()))
-                        .putOpt("message", message));
+                        );
             } catch (JSONException e) {
                 Log.w(TAG, "Cannot convert geo to JSON: " + e.getMessage());
                 Log.d(TAG, Log.getStackTraceString(e));
