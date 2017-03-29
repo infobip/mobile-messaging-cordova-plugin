@@ -53,7 +53,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final int REQ_CODE_LOC_PERMISSION_FOR_INIT = 1;
 
     private static final String FUNCTION_INIT = "init";
-	private static final String FUNCTION_REGISTER_RECEIVER = "registerReceiver";
+    private static final String FUNCTION_REGISTER_RECEIVER = "registerReceiver";
     private static final String FUNCTION_SYNC_USER_DATA = "syncUserData";
     private static final String FUNCTION_FETCH_USER_DATA = "fetchUserData";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
@@ -66,6 +66,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_DEF_MESSAGESTORAGE_DELETEALL = "defaultMessageStorage_deleteAll";
 
     private static final String EVENT_MESSAGE_RECEIVED = "messageReceived";
+    private static final String NOTIFICATION_TAPPED = "notificationTapped";
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
@@ -75,6 +76,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.MESSAGE_RECEIVED.getKey(), EVENT_MESSAGE_RECEIVED);
+        put(Event.NOTIFICATION_TAPPED.getKey(), NOTIFICATION_TAPPED);
         put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
         put(Event.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
@@ -176,72 +178,74 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return false;
     }
 
-	private void init(JSONArray args, CallbackContext callbackContext) throws JSONException {
-		Configuration configuration = resolveConfiguration(args);
-		if (configuration.geofencingEnabled && (!cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) ||
-				ActivityCompat.checkSelfPermission(cordova.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-			initContext.args = args;
-			initContext.callbackContext = callbackContext;
-			cordova.requestPermission(this, REQ_CODE_LOC_PERMISSION_FOR_INIT, Manifest.permission.ACCESS_FINE_LOCATION);
-			return;
-		}
+    private void init(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        Configuration configuration = resolveConfiguration(args);
+        if (configuration.geofencingEnabled && (!cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) ||
+                ActivityCompat.checkSelfPermission(cordova.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            initContext.args = args;
+            initContext.callbackContext = callbackContext;
+            cordova.requestPermission(this, REQ_CODE_LOC_PERMISSION_FOR_INIT, Manifest.permission.ACCESS_FINE_LOCATION);
+            return;
+        }
 
-		MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
-				.withApplicationCode(configuration.applicationCode)
-				.withGcmSenderId(configuration.android.senderId);
+        MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
+                .withApplicationCode(configuration.applicationCode)
+                .withGcmSenderId(configuration.android.senderId);
 
-		if (configuration.geofencingEnabled) {
-			//noinspection MissingPermission
-			builder.withGeofencing();
-		}
+        if (configuration.geofencingEnabled) {
+            //noinspection MissingPermission
+            builder.withGeofencing();
+        }
 
-		if (configuration.messageStorage != null) {
-			builder.withMessageStore(MessageStoreAdapter.class);
-		} else if (configuration.defaultMessageStorage) {
-			builder.withMessageStore(SQLiteMessageStore.class);
-		}
+        if (configuration.messageStorage != null) {
+            builder.withMessageStore(MessageStoreAdapter.class);
+        } else if (configuration.defaultMessageStorage) {
+            builder.withMessageStore(SQLiteMessageStore.class);
+        }
 
-		builder.build();
+        builder.build();
 
-		sendCallbackSuccessKeepCallback(callbackContext);
-	}
+        sendCallbackSuccessKeepCallback(callbackContext);
+    }
 
-	private void registerReceiver(final CallbackContext callbackContext) throws JSONException {
+    private void registerReceiver(final CallbackContext callbackContext) throws JSONException {
 
-		IntentFilter intentFilter = new IntentFilter();
-		for (String action : broadcastEventMap.keySet()) {
-			intentFilter.addAction(action);
-		}
+        IntentFilter intentFilter = new IntentFilter();
+        for (String action : broadcastEventMap.keySet()) {
+            intentFilter.addAction(action);
+        }
 
-		LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
+        LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
 
-				String event = broadcastEventMap.get(intent.getAction());
-				if (event == null) {
-					return;
-				}
+                String event = broadcastEventMap.get(intent.getAction());
+                if (event == null) {
+                    return;
+                }
 
-				if (Event.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
-					for (JSONObject geo : geosFromBundle(intent.getExtras())) {
-						sendCallbackEvent(event, geo, callbackContext);
-					}
-					return;
-				}
+                if (Event.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
+                    for (JSONObject geo : geosFromBundle(intent.getExtras())) {
+                        sendCallbackEvent(event, geo, callbackContext);
+                    }
+                    return;
+                }
 
-				Object data = null;
-				if (Event.MESSAGE_RECEIVED.getKey().equals(intent.getAction())) {
-					data = messageBundleToJSON(intent.getExtras());
-				} else if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
-					data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
-				} else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
-					data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
-				}
+                Object data = null;
+                if (Event.MESSAGE_RECEIVED.getKey().equals(intent.getAction())) {
+                    data = messageBundleToJSON(intent.getExtras());
+                } else if (Event.NOTIFICATION_TAPPED.getKey().equals(intent.getAction())) {
+                    data = messageBundleToJSON(intent.getExtras());
+                } else if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
+                    data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
+                } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
+                    data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
+                }
 
-				sendCallbackEvent(event, data, callbackContext);
-			}
-		}, intentFilter);
-	}
+                sendCallbackEvent(event, data, callbackContext);
+            }
+        }, intentFilter);
+    }
 
     private void syncUserData(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final UserData userData = resolveUserData(args);
@@ -434,23 +438,23 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return args.getString(0);
     }
 
-	private synchronized boolean sendCallbackEvent(String event, Object object, CallbackContext callback) {
-		if (event == null || object == null) {
-			return false;
-		}
+    private synchronized boolean sendCallbackEvent(String event, Object object, CallbackContext callback) {
+        if (event == null || object == null) {
+            return false;
+        }
 
         JSONArray parameters = new JSONArray();
         parameters.put(event);
         parameters.put(object);
 
         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
-		pluginResult.setKeepCallback(true);
-		callback.sendPluginResult(pluginResult);
-		return true;
-	}
+        pluginResult.setKeepCallback(true);
+        callback.sendPluginResult(pluginResult);
+        return true;
+    }
 
 
-	private static void sendCallbackError(CallbackContext callback, String message) {
+    private static void sendCallbackError(CallbackContext callback, String message) {
         sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.ERROR, message));
     }
 

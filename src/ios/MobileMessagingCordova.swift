@@ -52,7 +52,8 @@ class MMConfiguration {
 		mmNotifications = ["messageReceived": MMNotificationMessageReceived,
 		                   "tokenReceived" :  MMNotificationDeviceTokenReceived,
 		                   "registrationUpdated" :  MMNotificationRegistrationUpdated,
-		                   "geofenceEntered" : MMNotificationGeographicalRegionDidEnter]
+		                   "geofenceEntered" : MMNotificationGeographicalRegionDidEnter,
+		                   "notificationTapped": MMNotificationMessageTapped]
 	}
 	
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
@@ -220,6 +221,10 @@ class MMConfiguration {
 					case MMNotificationGeographicalRegionDidEnter:
 						if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
 							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, region.dictionary()])
+						}
+					case MMNotificationMessageTapped:
+						if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
 						}
 					default: break
 					}

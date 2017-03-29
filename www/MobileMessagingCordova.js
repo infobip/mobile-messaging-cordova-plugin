@@ -1,4 +1,4 @@
-var supportedEvents = ["messageReceived", "tokenReceived", "registrationUpdated", "geofenceEntered"];
+var supportedEvents = ["messageReceived", 'notificationTapped', "tokenReceived", "registrationUpdated", "geofenceEntered"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
@@ -14,7 +14,7 @@ function execEventHandlerIfExists(parameters) {
 			setTimeout(handler(parameters.length > 1 ? parameters[1] : []), 200);
 		}
     }
-};			   
+};
 
 /**
  * Constructor
@@ -43,7 +43,7 @@ var MobileMessagingCordova = function () {
  *       }
  * 	}
  * @param {Function} error callback
- */ 
+ */
 MobileMessagingCordova.prototype.init = function(config, onInitError) {
 	var messageStorage = config.messageStorage;
 	var _onInitErrorHandler = onInitError || function() {};
@@ -99,6 +99,7 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
  * The following events are supported:
  *
  *   - messageReceived
+ *   - notificationTapped
  *   - registrationUpdated
  *   - tokenReceived (iOS only)
  *
