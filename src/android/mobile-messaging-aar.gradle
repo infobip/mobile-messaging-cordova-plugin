@@ -1,5 +1,5 @@
 dependencies {
-    compile('org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:1.4.6@aar') {
+    compile('org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:1.4.7@aar') {
         transitive = true;
     }
 }
