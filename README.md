@@ -133,6 +133,7 @@ MobileMessaging.register('<event name>',
 | Event name | Event data | Description |
 | --- | --- | --- |
 | `messageReceived` | message object | Occurs when new message arrives, see separate section for all available message fields |
+| `notificationTapped` | message object |Occurs when notification is tapped. |
 | `tokenReceived` | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
 | `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internallId - string for the registered user.|
 | `geofenceEntered` | geo object |Occurs when device enters a geofence area. |
@@ -143,6 +144,15 @@ MobileMessaging.register('messageReceived',
     function(message) {
         console.log('Message Received: ' + message.body);
     }
+);
+```
+
+### `notificationTapped` event
+```javascript
+MobileMessaging.register('notificationTapped',
+     function(message) {
+         console.log('Notification tapped: ' + mesage.body);
+     }
 );
 ```
 
