@@ -95,6 +95,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
         boolean geofencingEnabled;
         Map<String, ?> messageStorage;
         boolean defaultMessageStorage;
+//TODO: configuration needs following attrs:
+//TODO: withoutStoringUserData condition
+//TODO: withoutCarrierInfo condition
+//TODO: withoutSystemInfo condition
     }
 
     private static class InitContext {
@@ -196,7 +200,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
             //noinspection MissingPermission
             builder.withGeofencing();
         }
-
+//TODO: configuration needs following attrs:
+//TODO: withoutStoringUserData condition
+//TODO: withoutCarrierInfo condition
+//TODO: withoutSystemInfo condition
         if (configuration.messageStorage != null) {
             builder.withMessageStore(MessageStoreAdapter.class);
         } else if (configuration.defaultMessageStorage) {

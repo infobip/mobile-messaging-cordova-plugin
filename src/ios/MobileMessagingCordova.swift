@@ -12,6 +12,12 @@ class MMConfiguration {
 	var notificationType: UIUserNotificationType = []
 	var forceCleanup: Bool = false
 	
+	//TODO: configuration needs following attrs:
+	//TODO: withoutStoringUserData condition
+	//TODO: withoutCarrierInfo condition
+	//TODO: withoutSystemInfo condition
+	//TODO: appcode persisting
+
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig["applicationCode"] as? String,
 			let ios = rawConfig["ios"] as? [String: AnyObject] else
@@ -73,6 +79,12 @@ class MMConfiguration {
 		}
 		
 		MobileMessagingCordovaApplicationDelegate.install()
+		
+		//TODO: configuration needs following attrs:
+		//TODO: withoutStoringUserData condition
+		//TODO: withoutCarrierInfo condition
+		//TODO: withoutSystemInfo condition
+		//TODO: appcode persisting
 		
 		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
 		if configuration.geofencingEnabled {
