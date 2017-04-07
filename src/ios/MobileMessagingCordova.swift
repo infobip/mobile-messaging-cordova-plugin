@@ -198,6 +198,23 @@ class MMConfiguration {
 		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 	
+	func setPrivacySettings(_ command: CDVInvokedUrlCommand) {
+		guard let privacySettingsDict = command.arguments[0] as? [String: Bool], let ps = PrivacySettings(dictRepresentation: privacySettingsDict) else {
+			return
+		}
+		MobileMessaging.privacySettings = ps
+	}
+	
+	func getPrivacySettings(_ command: CDVInvokedUrlCommand) {
+		self.commandDelegate.send(
+			CDVPluginResult(
+				status: CDVCommandStatus_OK,
+				messageAs: MobileMessaging.privacySettings.dictionaryRepresentation
+			),
+			callbackId: command.callbackId
+		)
+	}
+	
 	//MARK: Utils
 	private func unregister(_ mmNotificationName: String) {
 		guard let observer = notificationObserver else {
