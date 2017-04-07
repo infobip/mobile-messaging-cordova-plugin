@@ -10,6 +10,7 @@ class MMConfiguration {
 	var messageStorageEnabled: Bool = false
 	var defaultMessageStorage: Bool = false
 	var notificationType: UIUserNotificationType = []
+	var forceCleanup: Bool = false
 	
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig["applicationCode"] as? String,
@@ -21,6 +22,10 @@ class MMConfiguration {
 		self.appCode = appCode
 		if let geofencingEnabled = rawConfig["geofencingEnabled"] as? Bool {
 			self.geofencingEnabled = geofencingEnabled
+		}
+		
+		if let forceCleanup = rawConfig["forceCleanup"] as? Bool {
+			self.forceCleanup = geofenforceCleanupcingEnabled
 		}
 		
 		if let defaultMessageStorage = rawConfig["defaultMessageStorage"] as? Bool {
@@ -68,8 +73,9 @@ class MMConfiguration {
 		}
 		
 		MobileMessagingCordovaApplicationDelegate.install()
-		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)
-		if (configuration.geofencingEnabled) {
+		
+		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
+		if configuration.geofencingEnabled {
 			mobileMessaging = mobileMessaging?.withGeofencingService()
 		}
 		if self.messageStorageAdapter != nil && configuration.messageStorageEnabled {
