@@ -10,10 +10,12 @@ class MMConfiguration {
 	var messageStorageEnabled: Bool = false
 	var defaultMessageStorage: Bool = false
 	var notificationType: UIUserNotificationType = []
+	
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig["applicationCode"] as? String,
-			let ios = rawConfig["ios"] as? [String: AnyObject] else {
-				return nil
+			let ios = rawConfig["ios"] as? [String: AnyObject] else
+		{
+			return nil
 		}
 		
 		self.appCode = appCode
@@ -50,18 +52,19 @@ class MMConfiguration {
 		super.pluginInitialize()
 		messageStorageAdapter = MessageStorageAdapter(plugin: self)
 		mmNotifications = ["messageReceived": MMNotificationMessageReceived,
-		                   "tokenReceived" :  MMNotificationDeviceTokenReceived,
-		                   "registrationUpdated" :  MMNotificationRegistrationUpdated,
-		                   "geofenceEntered" : MMNotificationGeographicalRegionDidEnter,
+		                   "tokenReceived":  MMNotificationDeviceTokenReceived,
+		                   "registrationUpdated":  MMNotificationRegistrationUpdated,
+		                   "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		                   "notificationTapped": MMNotificationMessageTapped]
 	}
 	
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
 		guard let configDict = command.arguments[0] as? [String: AnyObject],
-			let configuration = MMConfiguration(rawConfig: configDict) else {
-				let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
-				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
-				return
+			let configuration = MMConfiguration(rawConfig: configDict) else
+		{
+			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
 		}
 		
 		MobileMessagingCordovaApplicationDelegate.install()
@@ -69,9 +72,9 @@ class MMConfiguration {
 		if (configuration.geofencingEnabled) {
 			mobileMessaging = mobileMessaging?.withGeofencingService()
 		}
-		if (self.messageStorageAdapter != nil && configuration.messageStorageEnabled) {
+		if self.messageStorageAdapter != nil && configuration.messageStorageEnabled {
 			mobileMessaging = mobileMessaging?.withMessageStorage(self.messageStorageAdapter!)
-		} else if (configuration.defaultMessageStorage) {
+		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
 		mobileMessaging?.start()
@@ -201,37 +204,39 @@ class MMConfiguration {
 	
 	private func register(forEvents events: Set<String>, callbackId: String) {
 		for event in events {
-			if let mmNotificationName = mmNotifications?[event] {
-				unregister(mmNotificationName)
-				notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
-					var notificationResult:CDVPluginResult?
-					switch mmNotificationName {
-					case MMNotificationMessageReceived:
-						if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
-						}
-					case MMNotificationDeviceTokenReceived:
-						if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, token])
-						}
-					case MMNotificationRegistrationUpdated:
-						if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, internalId])
-						}
-					case MMNotificationGeographicalRegionDidEnter:
-						if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, region.dictionary()])
-						}
-					case MMNotificationMessageTapped:
-						if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
-						}
-					default: break
+			guard let mmNotificationName = mmNotifications?[event] else {
+				continue
+			}
+
+			unregister(mmNotificationName)
+			notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
+				var notificationResult:CDVPluginResult?
+				switch mmNotificationName {
+				case MMNotificationMessageReceived:
+					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
 					}
-					
-					notificationResult?.setKeepCallbackAs(true)
-					self.commandDelegate?.send(notificationResult, callbackId: callbackId)
+				case MMNotificationDeviceTokenReceived:
+					if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, token])
+					}
+				case MMNotificationRegistrationUpdated:
+					if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, internalId])
+					}
+				case MMNotificationGeographicalRegionDidEnter:
+					if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, region.dictionary()])
+					}
+				case MMNotificationMessageTapped:
+					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
+					}
+				default: break
 				}
+				
+				notificationResult?.setKeepCallbackAs(true)
+				self.commandDelegate?.send(notificationResult, callbackId: callbackId)
 			}
 		}
 	}
@@ -255,8 +260,9 @@ extension BaseMessage {
 	class func createFrom(dictionary: [String: Any]) -> BaseMessage? {
 		guard let messageId = dictionary["messageId"] as? String,
 			let originalPayload = dictionary["originalPayload"] as? StringKeyPayload,
-			let receivedTimestamp = dictionary["receivedTimestamp"] as? TimeInterval else {
-				return nil
+			let receivedTimestamp = dictionary["receivedTimestamp"] as? TimeInterval else
+		{
+			return nil
 		}
 		
 		let createdDate = Date(timeIntervalSince1970: receivedTimestamp)
@@ -287,13 +293,13 @@ extension BaseMessage {
 }
 
 extension MMUser {
-	
-	func dateFormatter() -> DateFormatter {
+
+	static var dateFormatter: DateFormatter = {
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
 		return dateFormatter
-	}
+	}()
 	
 	func predefinedKeysDictionary() -> [MMUserPredefinedDataKeys: String] {
 		return [
@@ -323,7 +329,7 @@ extension MMUser {
 			return
 		}
 		
-		let formatter = dateFormatter()
+		
 		for (key, data) in customData {
 			if data == nil {
 				set(customData: nil, forKey: key)
@@ -338,7 +344,7 @@ extension MMUser {
 				continue
 			}
 			if let string = data as? String {
-				if let date = formatter.date(from: string) {
+				if let date = dateFormatter.date(from: string) {
 					set(customData: CustomUserDataValue(date: date as NSDate), forKey: key)
 				} else {
 					set(customData: CustomUserDataValue(string: string), forKey: key)
@@ -364,13 +370,12 @@ extension MMUser {
 			return result
 		}
 		
-		let formatter = dateFormatter()
 		var customDictionary = [String: Any]()
 		for (key, value) in customData {
 			if let number = value.number {
 				customDictionary[key] = number
 			} else if let date = value.date {
-				customDictionary[key] = formatter.string(from: date as Date)
+				customDictionary[key] = dateFormatter.string(from: date as Date)
 			} else if let string = value.string {
 				customDictionary[key] = string
 			}
@@ -401,7 +406,7 @@ extension MMRegion {
 }
 
 class MessageStorageAdapter: MessageStorage {
-	var registeredCallbacks = [String: String]();
+	var registeredCallbacks = [String: String]()
 	let queue = DispatchQueue(label: "MessageStoreAdapterQueue")
 	let findSemaphore = DispatchSemaphore(value: 0)
 	let plugin: CDVPlugin
