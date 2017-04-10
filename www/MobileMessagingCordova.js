@@ -41,6 +41,12 @@ var MobileMessagingCordova = function () {
  *       ios: {
  *			notificationTypes: ['alert', 'sound', 'badge']
  *       }
+ *		 privacySettings: {
+ *			applicationCodePersistingDisabled: <Boolean>,
+ *			userDataPersistingDisabled: <Boolean>,
+ *			carrierInfoSendingDisabled: <Boolean>,
+ *			systemInfoSendingDisabled: <Boolean>
+ *		}
  * 	}
  * @param {Function} error callback
  */
@@ -168,36 +174,6 @@ MobileMessagingCordova.prototype.fetchUserData = function(callback, errorCallbac
  */
 MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callback, errorCallback) {
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'markMessagesSeen', messageIds)
-};
-
-/**
- * Set privacy settings.
- *
- * @name setPrivacySettings
- * @param {privacySettings} object containing privacy settings in the following format:
- *	{
- *		applicationCodePersistingDisabled: <Boolean>,
- *		userDataPersistingDisabled: <Boolean>,
- *		carrierInfoSendingDisabled: <Boolean>,
- *		systemInfoSendingDisabled: <Boolean>
- *	}
- */
-MobileMessagingCordova.prototype.setPrivacySettings = function(privacySettings) {
-	cordova.exec(null, function(){}, 'MobileMessagingCordova', 'setPrivacySettings', [privacySettings]);
-};
-			   
-/**
- * Get current privacy settings in the following format:
- *	{
- *		applicationCodePersistingDisabled: <Boolean>,
- *		userDataPersistingDisabled: <Boolean>,
- *		carrierInfoSendingDisabled: <Boolean>,
- *		systemInfoSendingDisabled: <Boolean>
- *	}
- * @name getPrivacySettings
- */
-MobileMessagingCordova.prototype.getPrivacySettings = function(callback) {
-	cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'getPrivacySettings', []);
 };
 
 MobileMessagingCordova.prototype.defaultMessageStorage = function() {
