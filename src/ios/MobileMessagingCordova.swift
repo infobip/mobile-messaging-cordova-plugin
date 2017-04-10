@@ -38,7 +38,7 @@ class MMConfiguration {
 		
 		
 		self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].asBoolOr(default: false)
-		self.forceCleanup = rawConfig[MMConfiguration.Keys.forceCleanup].asBoolOr(default: false)
+		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].asBoolOr(default: false)
 		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].asBoolOr(default: false)
 		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
 		
