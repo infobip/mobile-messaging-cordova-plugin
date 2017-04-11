@@ -36,7 +36,7 @@
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
-		<pod name="MobileMessaging" version="2.5.0"/>
+		<pod name="MobileMessaging" version="2.5.1"/>
 	</platform>
 	
 	<platform name="android">
