@@ -5,39 +5,69 @@ import MobileMessaging
 import Dispatch
 
 class MMConfiguration {
+	struct Keys {
+		static let privacySettings = "privacySettings"
+		static let userDataPersistingDisabled = "userDataPersistingDisabled"
+		static let carrierInfoSendingDisabled = "carrierInfoSendingDisabled"
+		static let systemInfoSendingDisabled = "systemInfoSendingDisabled"
+		static let applicationCodePersistingDisabled = "applicationCodePersistingDisabled"
+		static let geofencingEnabled = "geofencingEnabled"
+		static let applicationCode = "applicationCode"
+		static let forceCleanup = "forceCleanup"
+		static let defaultMessageStorage = "defaultMessageStorage"
+		static let notificationTypes = "notificationTypes"
+		static let messageStorage = "messageStorage"
+	}
+	
 	let appCode: String
-	var geofencingEnabled: Bool = false
-	var messageStorageEnabled: Bool = false
-	var defaultMessageStorage: Bool = false
-	var notificationType: UIUserNotificationType = []
+	let geofencingEnabled: Bool
+	let messageStorageEnabled: Bool
+	let defaultMessageStorage: Bool
+	let notificationType: UIUserNotificationType
+	let forceCleanup: Bool
+	let privacySettings: [String: Any]
+	
 	init?(rawConfig: [String: AnyObject]) {
-		guard let appCode = rawConfig["applicationCode"] as? String,
-			let ios = rawConfig["ios"] as? [String: AnyObject] else {
-				return nil
+		guard let appCode = rawConfig[MMConfiguration.Keys.applicationCode] as? String,
+			let ios = rawConfig["ios"] as? [String: AnyObject] else
+		{
+			return nil
 		}
 		
 		self.appCode = appCode
-		if let geofencingEnabled = rawConfig["geofencingEnabled"] as? Bool {
-			self.geofencingEnabled = geofencingEnabled
-		}
 		
-		if let defaultMessageStorage = rawConfig["defaultMessageStorage"] as? Bool {
-			self.defaultMessageStorage = defaultMessageStorage
-		}
 		
-		if rawConfig["messageStorage"] != nil {
-			self.messageStorageEnabled = true
-		}
+		self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].asBoolOr(default: false)
+		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].asBoolOr(default: false)
+		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].asBoolOr(default: false)
+		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
 		
-		let notificationTypes = ios["notificationTypes"] as? [String]
-		notificationTypes?.forEach({ (type) in
-			switch type {
-			case "badge": notificationType.insert(.badge)
-			case "sound": notificationType.insert(.sound)
-			case "alert": notificationType.insert(.alert)
-			default: break
-			}
-		})
+		if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
+			var ps = [String: Any]()
+			ps[MMConfiguration.Keys.userDataPersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.userDataPersistingDisabled].asBoolOr(default: false)
+			ps[MMConfiguration.Keys.carrierInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].asBoolOr(default: false)
+			ps[MMConfiguration.Keys.systemInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].asBoolOr(default: false)
+			ps[MMConfiguration.Keys.applicationCodePersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].asBoolOr(default: false)
+			
+			privacySettings = ps
+		} else {
+			privacySettings = [:]
+		}
+
+		if let notificationTypeNames =  ios[MMConfiguration.Keys.notificationTypes] as? [String] {
+			self.notificationType = notificationTypeNames.reduce([], { (result, notificationTypeName) -> UIUserNotificationType in
+				var result = result
+				switch notificationTypeName {
+				case "badge": result.insert(.badge)
+				case "sound": result.insert(.sound)
+				case "alert": result.insert(.alert)
+				default: break
+				}
+				return result
+			})
+		} else {
+			self.notificationType = []
+		}
 	}
 }
 
@@ -50,28 +80,35 @@ class MMConfiguration {
 		super.pluginInitialize()
 		messageStorageAdapter = MessageStorageAdapter(plugin: self)
 		mmNotifications = ["messageReceived": MMNotificationMessageReceived,
-		                   "tokenReceived" :  MMNotificationDeviceTokenReceived,
-		                   "registrationUpdated" :  MMNotificationRegistrationUpdated,
-		                   "geofenceEntered" : MMNotificationGeographicalRegionDidEnter,
+		                   "tokenReceived":  MMNotificationDeviceTokenReceived,
+		                   "registrationUpdated":  MMNotificationRegistrationUpdated,
+		                   "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		                   "notificationTapped": MMNotificationMessageTapped]
 	}
 	
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
 		guard let configDict = command.arguments[0] as? [String: AnyObject],
-			let configuration = MMConfiguration(rawConfig: configDict) else {
-				let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
-				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
-				return
+			let configuration = MMConfiguration(rawConfig: configDict) else
+		{
+			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
 		}
 		
 		MobileMessagingCordovaApplicationDelegate.install()
-		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType)
-		if (configuration.geofencingEnabled) {
+		
+		MobileMessaging.privacySettings.applicationCodePersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].asBoolOr(default: false)
+		MobileMessaging.privacySettings.systemInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].asBoolOr(default: false)
+		MobileMessaging.privacySettings.carrierInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].asBoolOr(default: false)
+		MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].asBoolOr(default: false)
+		
+		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
+		if configuration.geofencingEnabled {
 			mobileMessaging = mobileMessaging?.withGeofencingService()
 		}
-		if (self.messageStorageAdapter != nil && configuration.messageStorageEnabled) {
+		if self.messageStorageAdapter != nil && configuration.messageStorageEnabled {
 			mobileMessaging = mobileMessaging?.withMessageStorage(self.messageStorageAdapter!)
-		} else if (configuration.defaultMessageStorage) {
+		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
 		mobileMessaging?.start()
@@ -201,37 +238,39 @@ class MMConfiguration {
 	
 	private func register(forEvents events: Set<String>, callbackId: String) {
 		for event in events {
-			if let mmNotificationName = mmNotifications?[event] {
-				unregister(mmNotificationName)
-				notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
-					var notificationResult:CDVPluginResult?
-					switch mmNotificationName {
-					case MMNotificationMessageReceived:
-						if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
-						}
-					case MMNotificationDeviceTokenReceived:
-						if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, token])
-						}
-					case MMNotificationRegistrationUpdated:
-						if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, internalId])
-						}
-					case MMNotificationGeographicalRegionDidEnter:
-						if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, region.dictionary()])
-						}
-					case MMNotificationMessageTapped:
-						if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
-							notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
-						}
-					default: break
+			guard let mmNotificationName = mmNotifications?[event] else {
+				continue
+			}
+
+			unregister(mmNotificationName)
+			notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
+				var notificationResult:CDVPluginResult?
+				switch mmNotificationName {
+				case MMNotificationMessageReceived:
+					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
 					}
-					
-					notificationResult?.setKeepCallbackAs(true)
-					self.commandDelegate?.send(notificationResult, callbackId: callbackId)
+				case MMNotificationDeviceTokenReceived:
+					if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, token])
+					}
+				case MMNotificationRegistrationUpdated:
+					if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, internalId])
+					}
+				case MMNotificationGeographicalRegionDidEnter:
+					if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, region.dictionary()])
+					}
+				case MMNotificationMessageTapped:
+					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
+					}
+				default: break
 				}
+				
+				notificationResult?.setKeepCallbackAs(true)
+				self.commandDelegate?.send(notificationResult, callbackId: callbackId)
 			}
 		}
 	}
@@ -255,8 +294,9 @@ extension BaseMessage {
 	class func createFrom(dictionary: [String: Any]) -> BaseMessage? {
 		guard let messageId = dictionary["messageId"] as? String,
 			let originalPayload = dictionary["originalPayload"] as? StringKeyPayload,
-			let receivedTimestamp = dictionary["receivedTimestamp"] as? TimeInterval else {
-				return nil
+			let receivedTimestamp = dictionary["receivedTimestamp"] as? TimeInterval else
+		{
+			return nil
 		}
 		
 		let createdDate = Date(timeIntervalSince1970: receivedTimestamp)
@@ -287,13 +327,13 @@ extension BaseMessage {
 }
 
 extension MMUser {
-	
-	func dateFormatter() -> DateFormatter {
+
+	static var dateFormatter: DateFormatter = {
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
 		return dateFormatter
-	}
+	}()
 	
 	func predefinedKeysDictionary() -> [MMUserPredefinedDataKeys: String] {
 		return [
@@ -323,7 +363,7 @@ extension MMUser {
 			return
 		}
 		
-		let formatter = dateFormatter()
+		
 		for (key, data) in customData {
 			if data == nil {
 				set(customData: nil, forKey: key)
@@ -338,7 +378,7 @@ extension MMUser {
 				continue
 			}
 			if let string = data as? String {
-				if let date = formatter.date(from: string) {
+				if let date = MMUser.dateFormatter.date(from: string) {
 					set(customData: CustomUserDataValue(date: date as NSDate), forKey: key)
 				} else {
 					set(customData: CustomUserDataValue(string: string), forKey: key)
@@ -364,13 +404,12 @@ extension MMUser {
 			return result
 		}
 		
-		let formatter = dateFormatter()
 		var customDictionary = [String: Any]()
 		for (key, value) in customData {
 			if let number = value.number {
 				customDictionary[key] = number
 			} else if let date = value.date {
-				customDictionary[key] = formatter.string(from: date as Date)
+				customDictionary[key] = MMUser.dateFormatter.string(from: date as Date)
 			} else if let string = value.string {
 				customDictionary[key] = string
 			}
@@ -401,7 +440,7 @@ extension MMRegion {
 }
 
 class MessageStorageAdapter: MessageStorage {
-	var registeredCallbacks = [String: String]();
+	var registeredCallbacks = [String: String]()
 	let queue = DispatchQueue(label: "MessageStoreAdapterQueue")
 	let findSemaphore = DispatchSemaphore(value: 0)
 	let plugin: CDVPlugin
@@ -469,7 +508,7 @@ class MessageStorageAdapter: MessageStorage {
 			return
 		}
 		
-		queue.sync() {
+		queue.sync {
 			registeredCallbacks.removeValue(forKey: event)
 		}
 	}
@@ -503,5 +542,16 @@ class MessageStorageAdapter: MessageStorage {
 		let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: string)
 		result?.setKeepCallbackAs(true)
 		plugin.commandDelegate?.send(result, callbackId: callbackId)
+	}
+}
+
+extension Optional {
+	func asBoolOr(default fallbackValue: Bool) -> Bool {
+		switch self {
+		case .some(let val as Bool):
+			return val
+		default:
+			return fallbackValue
+		}
 	}
 }
