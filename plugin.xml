@@ -18,6 +18,7 @@
 		<config-file target="config.xml" parent="/*">
 			<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
+				<param name="onload" value="true" />
 			</feature>
 
 			<!-- this entry is to statically preserve entitlements setting that is usually being set by `cordova build` dynamically (which leads to a build error) -->

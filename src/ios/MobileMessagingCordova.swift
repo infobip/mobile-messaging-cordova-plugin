@@ -84,6 +84,7 @@ class MMConfiguration {
 		                   "registrationUpdated":  MMNotificationRegistrationUpdated,
 		                   "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		                   "notificationTapped": MMNotificationMessageTapped]
+		NotificationCenter.default.addObserver(self, selector: #selector(MobileMessagingCordova.handleAppDidFinishLaunchingNotification), name: NSNotification.Name.UIApplicationDidFinishLaunching, object: nil)
 	}
 	
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
@@ -112,6 +113,11 @@ class MMConfiguration {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
 		mobileMessaging?.start()
+		
+		if(postAppDidFinishLaunchingNotification) {
+			postAppDidFinishLaunchingNotification = false
+			NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidFinishLaunching, object: nil, userInfo: nil)
+		}
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
@@ -273,6 +279,11 @@ class MMConfiguration {
 				self.commandDelegate?.send(notificationResult, callbackId: callbackId)
 			}
 		}
+	}
+	
+	private func handleAppDidFinishLaunchingNotification() {
+		postAppDidFinishLaunchingNotification = true
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidFinishLaunching, object: nil)
 	}
 }
 
