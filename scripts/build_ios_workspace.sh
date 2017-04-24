@@ -26,7 +26,7 @@ esac
 shift
 done
 
-DESTINATION="${DESTINATION:=platform=iOS Simulator,name=iPhone 6 Plus,OS=10.2}"
+DESTINATION="${DESTINATION:=platform=iOS Simulator,name=iPhone 6 Plus,OS=10.0}"
 
 if [ ! "$WORKSPACE" ] || [ ! "$SCHEME" ]; then
 	echo "Please provide -workspace and -scheme arguments."
