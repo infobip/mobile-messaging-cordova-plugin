@@ -112,6 +112,7 @@ class MMConfiguration {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
 		mobileMessaging?.start()
+		MobileMessaging.sync()
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
