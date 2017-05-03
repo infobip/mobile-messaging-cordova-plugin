@@ -18,7 +18,7 @@ The document describes library integration steps for your Cordova project.
 - node (tested with 7.5.0)
 
 For iOS project:
-- Xcode 8.1+
+- Xcode 8.3.2
 - Minimum deployment target 8.0+
 - CocoaPods 1.1.1+
 
