@@ -199,6 +199,7 @@ struct Notification {
 		cachedNotifications?.forEach {
 			MobileMessaging.didReceiveRemoteNotification($0.userInfo, fetchCompletionHandler: $0.fetchCompletionHandler)
 		}
+		cachedNotifications = []
 	}
 	
 	//MARK: MessageStorage
