@@ -53,7 +53,7 @@ class MMConfiguration {
 		} else {
 			privacySettings = [:]
 		}
-
+		
 		if let notificationTypeNames =  ios[MMConfiguration.Keys.notificationTypes] as? [String] {
 			self.notificationType = notificationTypeNames.reduce([], { (result, notificationTypeName) -> UIUserNotificationType in
 				var result = result
@@ -71,10 +71,17 @@ class MMConfiguration {
 	}
 }
 
-@objc(MobileMessagingCordova) class MobileMessagingCordova : CDVPlugin {
+struct Notification {
+	let userInfo: [AnyHashable: Any]
+	let fetchCompletionHandler: (UIBackgroundFetchResult) -> Void
+}
+
+@objc(MobileMessagingCordova) class MobileMessagingCordova : CDVPlugin, NotificationsCaching {
 	var notificationObserver: AnyObject?
 	var messageStorageAdapter: MessageStorageAdapter? = nil
 	var mmNotifications : [String: String]?
+	var isStarted: Bool = false
+	var cachedNotifications: [Notification]?
 	
 	override func pluginInitialize() {
 		super.pluginInitialize()
@@ -84,6 +91,9 @@ class MMConfiguration {
 		                   "registrationUpdated":  MMNotificationRegistrationUpdated,
 		                   "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		                   "notificationTapped": MMNotificationMessageTapped]
+		cachedNotifications = []
+		
+		MobileMessagingCordovaApplicationDelegate.install(self)
 	}
 	
 	@objc(init:) func start(command: CDVInvokedUrlCommand) {
@@ -94,8 +104,6 @@ class MMConfiguration {
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
-		
-		MobileMessagingCordovaApplicationDelegate.install()
 		
 		MobileMessaging.privacySettings.applicationCodePersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].asBoolOr(default: false)
 		MobileMessaging.privacySettings.systemInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].asBoolOr(default: false)
@@ -111,8 +119,14 @@ class MMConfiguration {
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
+		MobileMessaging.logger?.logLevel = .All
+		MobileMessaging.logger?.logOutput = .Console
+		
 		mobileMessaging?.start()
 		MobileMessaging.sync()
+		
+		isStarted = true
+		handleCachedNotifications()
 		
 		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
 		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
@@ -173,6 +187,21 @@ class MMConfiguration {
 		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 	
+	//MARK: NotificationsCaching
+	func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any]!, fetchCompletionHandler completionHandler: ((UIBackgroundFetchResult) -> Void)!) {
+		guard !isStarted else {
+			return
+		}
+		cachedNotifications?.append(Notification(userInfo: userInfo, fetchCompletionHandler: completionHandler))
+	}
+	
+	func handleCachedNotifications() {
+		cachedNotifications?.forEach {
+			MobileMessaging.didReceiveRemoteNotification($0.userInfo, fetchCompletionHandler: $0.fetchCompletionHandler)
+		}
+	}
+	
+	//MARK: MessageStorage
 	func messageStorage_register(_ command: CDVInvokedUrlCommand) {
 		messageStorageAdapter?.register(command)
 	}
@@ -242,7 +271,7 @@ class MMConfiguration {
 			guard let mmNotificationName = mmNotifications?[event] else {
 				continue
 			}
-
+			
 			unregister(mmNotificationName)
 			notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
 				var notificationResult:CDVPluginResult?
@@ -328,7 +357,7 @@ extension BaseMessage {
 }
 
 extension MMUser {
-
+	
 	static var dateFormatter: DateFormatter = {
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -468,7 +497,7 @@ class MessageStorageAdapter: MessageStorage {
 	func findMessage(withId messageId: MessageId) -> BaseMessage? {
 		queue.sync() {
 			sendCallback(for: "messageStorage.find", withMessage: messageId)
-			findSemaphore.wait(wallTimeout: DispatchWallTime.now() + DispatchTimeInterval.seconds(30))
+			_ = findSemaphore.wait(wallTimeout: DispatchWallTime.now() + DispatchTimeInterval.seconds(30))
 		}
 		return foundMessage
 	}
@@ -509,7 +538,7 @@ class MessageStorageAdapter: MessageStorage {
 			return
 		}
 		
-		queue.sync {
+		_ = queue.sync {
 			registeredCallbacks.removeValue(forKey: event)
 		}
 	}
