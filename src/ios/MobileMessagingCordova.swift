@@ -121,8 +121,6 @@ struct Notification {
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
-		MobileMessaging.logger?.logLevel = .All
-		MobileMessaging.logger?.logOutput = .Console
 		
 		mobileMessaging?.start()
 		MobileMessaging.sync()

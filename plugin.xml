@@ -37,8 +37,8 @@
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
-		<pod name="MobileMessaging" git="ssh://git@git.ib-ci.com:7999/mml/infobip-mobile-messaging-ios" branch="okoroleva-MM-1634-CordovaMessageReceivedEvent" />
-		<pod name="MobileMessaging/Geofencing" git="ssh://git@git.ib-ci.com:7999/mml/infobip-mobile-messaging-ios" branch="okoroleva-MM-1634-CordovaMessageReceivedEvent" />
+		<pod name="MobileMessaging" version="2.5.7" />
+		<pod name="MobileMessaging/Geofencing" version="2.5.7" />
 	</platform>
 	
 	<platform name="android">
