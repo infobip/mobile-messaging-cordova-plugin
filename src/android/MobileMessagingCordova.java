@@ -23,6 +23,7 @@ import org.infobip.mobile.messaging.CustomUserDataValue;
 import org.infobip.mobile.messaging.Event;
 import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
+import org.infobip.mobile.messaging.MobileMessagingLogger;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
 import org.infobip.mobile.messaging.geo.Area;
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,7 +68,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_DEF_MESSAGESTORAGE_DELETEALL = "defaultMessageStorage_deleteAll";
 
     private static final String EVENT_MESSAGE_RECEIVED = "messageReceived";
-    private static final String NOTIFICATION_TAPPED = "notificationTapped";
+    private static final String EVENT_NOTIFICATION_TAPPED = "notificationTapped";
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
@@ -75,12 +77,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
-        put(Event.MESSAGE_RECEIVED.getKey(), EVENT_MESSAGE_RECEIVED);
-        put(Event.NOTIFICATION_TAPPED.getKey(), NOTIFICATION_TAPPED);
         put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
         put(Event.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
     }};
+
+    private static final Map<String, String> messageBroadcastEventMap = new HashMap<String, String>() {{
+        put(Event.MESSAGE_RECEIVED.getKey(), EVENT_MESSAGE_RECEIVED);
+        put(Event.NOTIFICATION_TAPPED.getKey(), EVENT_NOTIFICATION_TAPPED);
+    }};
+
+    private static volatile CallbackContext libraryEventReceiver = null;
 
     private final InitContext initContext = new InitContext();
 
@@ -90,12 +97,19 @@ public class MobileMessagingCordova extends CordovaPlugin {
             String senderId;
         }
 
+        class PrivacySettings {
+            boolean userDataPersistingDisabled;
+            boolean carrierInfoSendingDisabled;
+            boolean systemInfoSendingDisabled;
+        }
+
         String applicationCode;
         AndroidConfiguration android;
         boolean geofencingEnabled;
         Map<String, ?> messageStorage;
         boolean defaultMessageStorage;
-        Map<String, Object> privacySettings;
+        boolean loggingEnabled;
+        PrivacySettings privacySettings = new PrivacySettings();
     }
 
     private static class InitContext {
@@ -109,6 +123,26 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         boolean isValid() {
             return args != null || callbackContext != null;
+        }
+    }
+
+    public static class MessageActionReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String event = messageBroadcastEventMap.get(intent.getAction());
+            if (event == null) {
+                Log.w(TAG, "Cannot process event for broadcast: " + intent.getAction());
+                return;
+            }
+
+            JSONObject message = messageBundleToJSON(intent.getExtras());
+            if (libraryEventReceiver == null) {
+                CacheManager.saveEvent(context, event, message);
+                return;
+            }
+
+            sendCallbackEvent(event, message, libraryEventReceiver);
         }
     }
 
@@ -189,6 +223,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return;
         }
 
+        if (configuration.loggingEnabled) {
+            MobileMessagingLogger.enforce();
+        }
+
         MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
                 .withApplicationCode(configuration.applicationCode)
                 .withGcmSenderId(configuration.android.senderId);
@@ -197,13 +235,13 @@ public class MobileMessagingCordova extends CordovaPlugin {
             //noinspection MissingPermission
             builder.withGeofencing();
         }
-        if (Boolean.TRUE.equals(configuration.privacySettings.get("userDataPersistingDisabled"))) {
+        if (configuration.privacySettings.userDataPersistingDisabled) {
             builder.withoutStoringUserData();
         }
-        if (Boolean.TRUE.equals(configuration.privacySettings.get("carrierInfoSendingDisabled"))) {
+        if (configuration.privacySettings.carrierInfoSendingDisabled) {
             builder.withoutCarrierInfo();
         }
-        if (Boolean.TRUE.equals(configuration.privacySettings.get("systemInfoSendingDisabled"))) {
+        if (configuration.privacySettings.systemInfoSendingDisabled) {
             builder.withoutSystemInfo();
         }
         if (configuration.messageStorage != null) {
@@ -240,12 +278,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     return;
                 }
 
-                Object data = null;
-                if (Event.MESSAGE_RECEIVED.getKey().equals(intent.getAction())) {
-                    data = messageBundleToJSON(intent.getExtras());
-                } else if (Event.NOTIFICATION_TAPPED.getKey().equals(intent.getAction())) {
-                    data = messageBundleToJSON(intent.getExtras());
-                } else if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
+                String data = null;
+                if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
                     data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
                 } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
                     data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
@@ -254,6 +288,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 sendCallbackEvent(event, data, callbackContext);
             }
         }, intentFilter);
+
+        libraryEventReceiver = callbackContext;
+
+        for (CacheManager.Event event : CacheManager.loadEvents(cordova.getActivity())) {
+            sendCallbackEvent(event.type, event.object, callbackContext);
+        }
     }
 
     private void syncUserData(JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -447,7 +487,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return args.getString(0);
     }
 
-    private synchronized boolean sendCallbackEvent(String event, Object object, CallbackContext callback) {
+    private static boolean sendCallbackEvent(String event, Object object, CallbackContext callback) {
         if (event == null || object == null) {
             return false;
         }
@@ -702,6 +742,92 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
     }
 
+    static class CacheManager {
+        private static final String MESSAGES_KEY = TAG + ".cache.messages";
+        private static final String EVENTS_KEY = TAG + ".cache.events";
+        private static final Object cacheLock = new Object();
+        private static final JsonSerializer serializer = new JsonSerializer();
+
+        static class Event {
+            String type;
+            JSONObject object;
+
+            Event(String type, JSONObject object) {
+                this.type = type;
+                this.object = object;
+            }
+
+            @Override
+            public String toString() {
+                return type;
+            }
+        }
+
+        private static void saveMessages(Context context, Message...messages) {
+            List<String> newMessages = new ArrayList<String>(messages.length);
+            for (Message m : messages) {
+                newMessages.add(serializer.serialize(m));
+            }
+            saveStringSet(context, MESSAGES_KEY, new HashSet<String>(newMessages));
+        }
+
+        private static Message[] loadMessages(Context context) {
+            Set<String> set = getAndRemoveStringSet(context, MESSAGES_KEY);
+            List<Message> messages = new ArrayList<Message>(set.size());
+            for (String string : set) {
+                messages.add(serializer.deserialize(string, Message.class));
+            }
+            return messages.toArray(new Message[messages.size()]);
+        }
+
+        private static void saveEvent(Context context, String event, JSONObject object) {
+            String serialized = serializer.serialize(new Event(event, object));
+            saveStringsToSet(context, EVENTS_KEY, serialized);
+        }
+
+        private static Event[] loadEvents(Context context) {
+            Set<String> serialized = getAndRemoveStringSet(context, EVENTS_KEY);
+            List<Event> events = new ArrayList<Event>(serialized.size());
+            for (String s : serialized) {
+                events.add(serializer.deserialize(s, Event.class));
+            }
+            return events.toArray(new Event[events.size()]);
+        }
+
+        private static Set<String> getAndRemoveStringSet(Context context, String key) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            Set<String> set;
+            synchronized (cacheLock) {
+                set = sharedPreferences.getStringSet(key, new HashSet<String>());
+                if (set.isEmpty()) {
+                    return new HashSet<String>();
+                }
+                sharedPreferences
+                        .edit()
+                        .remove(key)
+                        .apply();
+            }
+            return set;
+        }
+
+        private static Set<String> saveStringsToSet(Context context, String key, String...strings) {
+            return saveStringSet(context, key, new HashSet<String>(Arrays.asList(strings)));
+        }
+
+        private static Set<String> saveStringSet(Context context, String key, Set<String> newSet) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            synchronized (cacheLock) {
+                Set<String> set = sharedPreferences.getStringSet(key, new HashSet<String>());
+                newSet.addAll(set);
+                sharedPreferences
+                        .edit()
+                        .putStringSet(key, newSet)
+                        .apply();
+                return set;
+            }
+        }
+    }
+
     /**
      * Message store adapter for JS layer
      */
@@ -709,9 +835,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
     public static class MessageStoreAdapter implements MessageStore {
 
         private static final long SYNC_CALL_TIMEOUT_MS = 30000;
-        private static final String CACHE_KEY = TAG + ".message.cache";
-        private static final Object cacheLock = new Object();
-        private static final JsonSerializer serializer = new JsonSerializer();
         private static final Map<String, CallbackContext> registeredCallbacks = new HashMap<String, CallbackContext>();
         private static final List<JSONArray> findAllResults = new LinkedList<JSONArray>();
 
@@ -734,49 +857,13 @@ public class MobileMessagingCordova extends CordovaPlugin {
         public void save(Context context, Message...messages) {
             if (!saveJS(messages)) {
                 Log.w(TAG, "JS storage not available yet, will cache");
-                saveToCache(context, messages);
+                CacheManager.saveMessages(context, messages);
             }
         }
 
         @Override
         public void deleteAll(Context context) {
             Log.e(TAG, "deleteAll is not implemented because it should not be called from within library");
-        }
-
-        private static void saveToCache(Context context, Message...messages) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            List<String> newMessages = new ArrayList<String>(messages.length);
-            for (Message m : messages) {
-                newMessages.add(serializer.serialize(m));
-            }
-            synchronized (cacheLock) {
-                Set<String> set = sharedPreferences.getStringSet(CACHE_KEY, new HashSet<String>());
-                set.addAll(newMessages);
-                sharedPreferences
-                        .edit()
-                        .putStringSet(CACHE_KEY, set)
-                        .apply();
-            }
-        }
-
-        private static Message[] loadFromCache(Context context) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            Set<String> set;
-            synchronized (cacheLock) {
-                set = sharedPreferences.getStringSet(CACHE_KEY, new HashSet<String>());
-                if (set.isEmpty()) {
-                    return new Message[0];
-                }
-                sharedPreferences
-                        .edit()
-                        .remove(CACHE_KEY)
-                        .apply();
-            }
-            List<Message> messages = new ArrayList<Message>(set.size());
-            for (String string : set) {
-                messages.add(serializer.deserialize(string, Message.class));
-            }
-            return messages.toArray(new Message[messages.size()]);
         }
 
         static void register(Context context, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -795,7 +882,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         private static void provideMessagesFromCache(Context context) {
-            Message messages[] = loadFromCache(context);
+            Message messages[] = CacheManager.loadMessages(context);
             if (messages.length == 0) {
                 return;
             }
@@ -803,7 +890,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             if (saveJS(messages)) {
                 Log.d(TAG, "Saved " + messages.length + " messages from cache");
             } else {
-                saveToCache(context, messages);
+                CacheManager.saveMessages(context, messages);
                 Log.w(TAG, "Cannot save messages from cache, postpone");
             }
         }

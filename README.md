@@ -151,7 +151,7 @@ MobileMessaging.register('messageReceived',
 ```javascript
 MobileMessaging.register('notificationTapped',
      function(message) {
-         console.log('Notification tapped: ' + mesage.body);
+         console.log('Notification tapped: ' + message.body);
      }
 );
 ```
@@ -500,7 +500,6 @@ MobileMessaging.init({
         privacySettings: {
             carrierInfoSendingDisabled: true,
             systemInfoSendingDisabled: true,
-            applicationCodePersistingDisabled: true,
             userDataPersistingDisabled: true
         }
     },
