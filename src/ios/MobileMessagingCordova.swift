@@ -81,7 +81,8 @@ struct Notification {
 	var messageStorageAdapter: MessageStorageAdapter? = nil
 	var mmNotifications : [String: String]?
 	var isStarted: Bool = false
-	var cachedNotifications: [Notification]?
+	var cachedRemoteNotifications: [Notification]?
+	var cachedLocalNotifications: [UILocalNotification]?
 	
 	override func pluginInitialize() {
 		super.pluginInitialize()
@@ -91,7 +92,8 @@ struct Notification {
 		                   "registrationUpdated":  MMNotificationRegistrationUpdated,
 		                   "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		                   "notificationTapped": MMNotificationMessageTapped]
-		cachedNotifications = []
+		cachedRemoteNotifications = []
+		cachedLocalNotifications = []
 		
 		MobileMessagingCordovaApplicationDelegate.install(self)
 	}
@@ -192,14 +194,26 @@ struct Notification {
 		guard !isStarted else {
 			return
 		}
-		cachedNotifications?.append(Notification(userInfo: userInfo, fetchCompletionHandler: completionHandler))
+		cachedRemoteNotifications?.append(Notification(userInfo: userInfo, fetchCompletionHandler: completionHandler))
+	}
+	
+	
+	func didReceive(_ notification: UILocalNotification) {
+		guard !isStarted else {
+			return
+		}
+		cachedLocalNotifications?.append(notification)
 	}
 	
 	func handleCachedNotifications() {
-		cachedNotifications?.forEach {
+		cachedRemoteNotifications?.forEach {
 			MobileMessaging.didReceiveRemoteNotification($0.userInfo, fetchCompletionHandler: $0.fetchCompletionHandler)
 		}
-		cachedNotifications = []
+		cachedLocalNotifications?.forEach {
+			MobileMessaging.didReceiveLocalNotification($0)
+		}
+		cachedRemoteNotifications = []
+		cachedLocalNotifications = []
 	}
 	
 	//MARK: MessageStorage
