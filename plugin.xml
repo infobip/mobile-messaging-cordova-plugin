@@ -18,6 +18,7 @@
 		<config-file target="config.xml" parent="/*">
 			<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
+				<param name="onload" value="true" />
 			</feature>
 
 			<!-- this entry is to statically preserve entitlements setting that is usually being set by `cordova build` dynamically (which leads to a build error) -->
@@ -36,8 +37,8 @@
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
-		<pod name="MobileMessaging" version="2.5.5" />
-		<pod name="MobileMessaging/Geofencing" version="2.5.5" />
+		<pod name="MobileMessaging" version="2.5.7" />
+		<pod name="MobileMessaging/Geofencing" version="2.5.7" />
 	</platform>
 	
 	<platform name="android">
