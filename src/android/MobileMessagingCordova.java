@@ -1,6 +1,7 @@
 package org.apache.cordova.plugin;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,8 @@ import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
 import org.infobip.mobile.messaging.geo.Area;
 import org.infobip.mobile.messaging.geo.Geo;
+import org.infobip.mobile.messaging.geo.GeoEvent;
+import org.infobip.mobile.messaging.geo.MobileGeo;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
@@ -79,7 +82,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
-        put(Event.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
+        put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
     }};
 
     private static final Map<String, String> messageBroadcastEventMap = new HashMap<String, String>() {{
@@ -91,7 +94,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private final InitContext initContext = new InitContext();
 
-    private static final BroadcastReceiver commonLibraryBroadcastRecevier = new BroadcastReceiver() {
+    private static final BroadcastReceiver commonLibraryBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String event = broadcastEventMap.get(intent.getAction());
@@ -99,7 +102,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 return;
             }
 
-            if (Event.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
+            if (GeoEvent.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
                 for (JSONObject geo : geosFromBundle(intent.getExtras())) {
                     if (libraryEventReceiver != null) {
                         sendCallbackEvent(event, geo, libraryEventReceiver);
@@ -200,7 +203,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     @Override
     public void onDestroy() {
         libraryEventReceiver = null;
-        LocalBroadcastManager.getInstance(cordova.getActivity()).unregisterReceiver(commonLibraryBroadcastRecevier);
+        LocalBroadcastManager.getInstance(cordova.getActivity()).unregisterReceiver(commonLibraryBroadcastReceiver);
     }
 
     @Override
@@ -249,6 +252,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return false;
     }
 
+    @SuppressLint("MissingPermission")
     private void init(JSONArray args, CallbackContext callbackContext) throws JSONException {
         Configuration configuration = resolveConfiguration(args);
         if (configuration.geofencingEnabled && (!cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) ||
@@ -267,10 +271,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 .withApplicationCode(configuration.applicationCode)
                 .withGcmSenderId(configuration.android.senderId);
 
-        if (configuration.geofencingEnabled) {
-            //noinspection MissingPermission
-            builder.withGeofencing();
-        }
         if (configuration.privacySettings.userDataPersistingDisabled) {
             builder.withoutStoringUserData();
         }
@@ -288,6 +288,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         builder.build();
 
+        if (configuration.geofencingEnabled) {
+            MobileGeo.getInstance(cordova.getActivity().getApplication()).activateGeofencing();
+        }
+
         sendCallbackSuccessKeepCallback(callbackContext);
     }
 
@@ -300,7 +304,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         libraryEventReceiver = callbackContext;
 
-        LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(commonLibraryBroadcastRecevier, intentFilter);
+        LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(commonLibraryBroadcastReceiver, intentFilter);
 
         for (CacheManager.Event event : CacheManager.loadEvents(cordova.getActivity())) {
             sendCallbackEvent(event.type, event.object, callbackContext);
