@@ -91,6 +91,36 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private final InitContext initContext = new InitContext();
 
+    private static final BroadcastReceiver commonLibraryBroadcastRecevier = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String event = broadcastEventMap.get(intent.getAction());
+            if (event == null) {
+                return;
+            }
+
+            if (Event.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
+                for (JSONObject geo : geosFromBundle(intent.getExtras())) {
+                    if (libraryEventReceiver != null) {
+                        sendCallbackEvent(event, geo, libraryEventReceiver);
+                    }
+                }
+                return;
+            }
+
+            String data = null;
+            if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
+                data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
+            } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
+                data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
+            }
+
+            if (libraryEventReceiver != null) {
+                sendCallbackEvent(event, data, libraryEventReceiver);
+            }
+        }
+    };
+
     private static class Configuration {
 
         class AndroidConfiguration {
@@ -165,6 +195,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         init(initContext.args, initContext.callbackContext);
         initContext.reset();
+    }
+
+    @Override
+    public void onDestroy() {
+        libraryEventReceiver = null;
+        LocalBroadcastManager.getInstance(cordova.getActivity()).unregisterReceiver(commonLibraryBroadcastRecevier);
     }
 
     @Override
@@ -262,34 +298,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             intentFilter.addAction(action);
         }
 
-        LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                String event = broadcastEventMap.get(intent.getAction());
-                if (event == null) {
-                    return;
-                }
-
-                if (Event.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
-                    for (JSONObject geo : geosFromBundle(intent.getExtras())) {
-                        sendCallbackEvent(event, geo, callbackContext);
-                    }
-                    return;
-                }
-
-                String data = null;
-                if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
-                    data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
-                } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
-                    data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
-                }
-
-                sendCallbackEvent(event, data, callbackContext);
-            }
-        }, intentFilter);
-
         libraryEventReceiver = callbackContext;
+
+        LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(commonLibraryBroadcastRecevier, intentFilter);
 
         for (CacheManager.Event event : CacheManager.loadEvents(cordova.getActivity())) {
             sendCallbackEvent(event.type, event.object, callbackContext);
