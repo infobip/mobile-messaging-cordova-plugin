@@ -17,6 +17,7 @@ class MMConfiguration {
 		static let defaultMessageStorage = "defaultMessageStorage"
 		static let notificationTypes = "notificationTypes"
 		static let messageStorage = "messageStorage"
+		static let cordovaPluginVersion = "cordovaPluginVersion"
 	}
 	
 	let appCode: String
@@ -26,6 +27,7 @@ class MMConfiguration {
 	let notificationType: UIUserNotificationType
 	let forceCleanup: Bool
 	let privacySettings: [String: Any]
+	let cordovaPluginVersion: String
 	
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig[MMConfiguration.Keys.applicationCode] as? String,
@@ -37,22 +39,24 @@ class MMConfiguration {
 		self.appCode = appCode
 		
 		
-		self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].asBoolOr(default: false)
-		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].asBoolOr(default: false)
-		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].asBoolOr(default: false)
+		self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].unwrap(orDefault: false)
+		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
+		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
 		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
 		
 		if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
 			var ps = [String: Any]()
-			ps[MMConfiguration.Keys.userDataPersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.userDataPersistingDisabled].asBoolOr(default: false)
-			ps[MMConfiguration.Keys.carrierInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].asBoolOr(default: false)
-			ps[MMConfiguration.Keys.systemInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].asBoolOr(default: false)
-			ps[MMConfiguration.Keys.applicationCodePersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].asBoolOr(default: false)
+			ps[MMConfiguration.Keys.userDataPersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
+			ps[MMConfiguration.Keys.carrierInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].unwrap(orDefault: false)
+			ps[MMConfiguration.Keys.systemInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].unwrap(orDefault: false)
+			ps[MMConfiguration.Keys.applicationCodePersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].unwrap(orDefault: false)
 			
 			privacySettings = ps
 		} else {
 			privacySettings = [:]
 		}
+		
+		self.cordovaPluginVersion = rawConfig[MMConfiguration.Keys.cordovaPluginVersion].unwrap(orDefault: "unknown")
 		
 		if let notificationTypeNames =  ios[MMConfiguration.Keys.notificationTypes] as? [String] {
 			self.notificationType = notificationTypeNames.reduce([], { (result, notificationTypeName) -> UIUserNotificationType in
@@ -107,10 +111,10 @@ struct Notification {
 			return
 		}
 		
-		MobileMessaging.privacySettings.applicationCodePersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].asBoolOr(default: false)
-		MobileMessaging.privacySettings.systemInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].asBoolOr(default: false)
-		MobileMessaging.privacySettings.carrierInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].asBoolOr(default: false)
-		MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].asBoolOr(default: false)
+		MobileMessaging.privacySettings.applicationCodePersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].unwrap(orDefault: false)
+		MobileMessaging.privacySettings.systemInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].unwrap(orDefault: false)
+		MobileMessaging.privacySettings.carrierInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].unwrap(orDefault: false)
+		MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
 		
 		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
 		if configuration.geofencingEnabled {
@@ -121,7 +125,7 @@ struct Notification {
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
-		
+		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
 		mobileMessaging?.start()
 		MobileMessaging.sync()
 		
@@ -589,9 +593,9 @@ class MessageStorageAdapter: MessageStorage {
 }
 
 extension Optional {
-	func asBoolOr(default fallbackValue: Bool) -> Bool {
+	func unwrap<T>(orDefault fallbackValue: T) -> T {
 		switch self {
-		case .some(let val as Bool):
+		case .some(let val as T):
 			return val
 		default:
 			return fallbackValue

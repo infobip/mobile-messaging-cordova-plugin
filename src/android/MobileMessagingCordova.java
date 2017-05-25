@@ -25,6 +25,7 @@ import org.infobip.mobile.messaging.Event;
 import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.MobileMessagingLogger;
+import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
 import org.infobip.mobile.messaging.geo.Area;
@@ -34,6 +35,8 @@ import org.infobip.mobile.messaging.geo.MobileGeo;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
+import org.infobip.mobile.messaging.util.PreferenceHelper;
+import org.infobip.mobile.messaging.util.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -142,6 +145,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         Map<String, ?> messageStorage;
         boolean defaultMessageStorage;
         boolean loggingEnabled;
+        String cordovaPluginVersion = "unknown";
         PrivacySettings privacySettings = new PrivacySettings();
     }
 
@@ -266,6 +270,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
         if (configuration.loggingEnabled) {
             MobileMessagingLogger.enforce();
         }
+
+        PreferenceHelper.saveString(cordova.getActivity().getApplication(), MobileMessagingProperty.SYSTEM_DATA_VERSION_POSTFIX, "cordova " + configuration.cordovaPluginVersion);
 
         MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
                 .withApplicationCode(configuration.applicationCode)

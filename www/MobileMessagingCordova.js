@@ -91,6 +91,8 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
 		cordova.exec(messageStorage_findAll, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.findAll']);
 	}
 
+	config.cordovaPluginVersion = cordova.require("cordova/plugin_list").metadata["com-infobip-plugins-mobilemessaging"];
+
 	if (!config.applicationCode) {
 		console.error('No application code provided');
 		_onInitErrorHandler('No application code provided');

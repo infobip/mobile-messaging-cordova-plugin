@@ -6,6 +6,17 @@
 window.cordova = {
 	exec: function(success, error, object, method, args) {
 		console.log(object + '.' + method + ' with args ' + JSON.stringify(args));
+	},
+
+	require: function(what) {
+		if (what === 'cordova/plugin_list') {
+			return {
+				metadata: {
+					'com-infobip-plugins-mobilemessaging': '1.2.3-test'
+				}
+			}
+		}
+		return undefined
 	}
 };
 
@@ -38,7 +49,8 @@ describe('Initialization', function() {
 			'MobileMessagingCordova',
 			'init',
 			[{
-				applicationCode: '12345'
+				applicationCode: '12345',
+				cordovaPluginVersion: '1.2.3-test'
 			}]);
 	});
 
