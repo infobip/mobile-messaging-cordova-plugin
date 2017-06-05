@@ -73,73 +73,162 @@ class MMConfiguration {
 			self.notificationType = []
 		}
 	}
-}
-
-struct Notification {
-	let userInfo: [AnyHashable: Any]
-	let fetchCompletionHandler: (UIBackgroundFetchResult) -> Void
-}
-
-@objc(MobileMessagingCordova) class MobileMessagingCordova : CDVPlugin, NotificationsCaching {
-	var notificationObserver: AnyObject?
-	var messageStorageAdapter: MessageStorageAdapter? = nil
-	var mmNotifications : [String: String]?
-	var isStarted: Bool = false
-	var cachedRemoteNotifications: [Notification]?
-	var cachedLocalNotifications: [UILocalNotification]?
 	
-	override func pluginInitialize() {
-		super.pluginInitialize()
-		messageStorageAdapter = MessageStorageAdapter(plugin: self)
-		mmNotifications = ["messageReceived": MMNotificationMessageReceived,
-		                   "tokenReceived":  MMNotificationDeviceTokenReceived,
-		                   "registrationUpdated":  MMNotificationRegistrationUpdated,
-		                   "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
-		                   "notificationTapped": MMNotificationMessageTapped]
-		cachedRemoteNotifications = []
-		cachedLocalNotifications = []
-		
-		MobileMessagingCordovaApplicationDelegate.install(self)
+}
+
+fileprivate class MobileMessagingEventsManager {
+	private var plugin: MobileMessagingCordova!
+	private typealias CallbackId = String
+	private typealias CordovaEventName = String
+	private typealias CallbackData = (cordovaCallbackId: CallbackId, cordovaEventName: CordovaEventName)
+	private typealias MMNotificationNameString = String
+	private var notificationCallbacks = [MMNotificationNameString: CallbackData]()
+	private var cachedMobileMessagingNotifications = [Notification]()
+	
+	/// Must be in sync with `supportedEvents` (MobileMessagingCordova.js)
+	private let supportedNotifications: [String: String] = ["messageReceived": MMNotificationMessageReceived,
+	                                                       	"tokenReceived":  MMNotificationDeviceTokenReceived,
+	                                                       	"registrationUpdated":  MMNotificationRegistrationUpdated,
+	                                                       	"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
+	                                                       	"notificationTapped": MMNotificationMessageTapped]
+	
+	init(plugin: MobileMessagingCordova) {
+		self.plugin = plugin
+		setupObservingMMNotifications()
 	}
 	
-	@objc(init:) func start(command: CDVInvokedUrlCommand) {
-		guard let configDict = command.arguments[0] as? [String: AnyObject],
-			let configuration = MMConfiguration(rawConfig: configDict) else
-		{
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
-			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
-			return
+	func start() {
+		cachedMobileMessagingNotifications.forEach { (n) in
+			handleMMNotification(n: n)
 		}
-		
-		MobileMessaging.privacySettings.applicationCodePersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].unwrap(orDefault: false)
-		MobileMessaging.privacySettings.systemInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].unwrap(orDefault: false)
-		MobileMessaging.privacySettings.carrierInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].unwrap(orDefault: false)
-		MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
-		
-		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
-		if configuration.geofencingEnabled {
-			mobileMessaging = mobileMessaging?.withGeofencingService()
-		}
-		if self.messageStorageAdapter != nil && configuration.messageStorageEnabled {
-			mobileMessaging = mobileMessaging?.withMessageStorage(self.messageStorageAdapter!)
-		} else if configuration.defaultMessageStorage {
-			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
-		}
-		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
-		mobileMessaging?.start()
-		MobileMessaging.sync()
-		
-		isStarted = true
-		handleCachedNotifications()
-		
-		let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+		cachedMobileMessagingNotifications = []
+	}
+	
+	func stop() {
+		setupObservingMMNotifications(stopObservations: true)
+		cachedMobileMessagingNotifications = []
 	}
 	
 	func registerReceiver(_ command: CDVInvokedUrlCommand) {
 		if let events = command.arguments[0] as? [String] {
 			register(forEvents: Set(events), callbackId: command.callbackId)
 		}
+	}
+	
+	private func setupObservingMMNotifications(stopObservations: Bool = false) {
+		supportedNotifications.forEach { (kv) in
+			let name = NSNotification.Name(rawValue: kv.value)
+			NotificationCenter.default.removeObserver(self, name: name, object: nil)
+			if !stopObservations {
+				NotificationCenter.default.addObserver(self, selector: #selector(MobileMessagingEventsManager.handleMMNotification(n:)), name: name, object: nil)
+			}
+		}
+	}
+	
+	private func register(forEvents events: Set<String>, callbackId: CallbackId) {
+		events.flatMap({ (cordovaEventName: CordovaEventName) -> (nName: MMNotificationNameString, callbackData: CallbackData)? in
+			guard let mmNotificationNameString = supportedNotifications[cordovaEventName] else {
+				return nil
+			}
+			
+			return (mmNotificationNameString, (callbackId, cordovaEventName))
+		}).forEach({ (notificatinCallbackDataTuple) in
+			self.register(callbackData: notificatinCallbackDataTuple.callbackData, forMMNotificationNameString: notificatinCallbackDataTuple.nName)
+		})
+	}
+	
+	@objc func handleMMNotification(n: Notification) {
+		if plugin.isStarted == false {
+			cachedMobileMessagingNotifications.append(n)
+		}
+		guard let callbackData = notificationCallbacks[n.name.rawValue] else {
+			return
+		}
+		handleMMNotification(cordovaEventName: callbackData.cordovaEventName, callbackId: callbackData.cordovaCallbackId, notification: n)
+	}
+	
+	private func handleMMNotification(cordovaEventName: String, callbackId: String, notification: Notification) {
+		var notificationResult:CDVPluginResult?
+		switch notification.name.rawValue {
+		case MMNotificationMessageReceived:
+			if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary()])
+			}
+		case MMNotificationDeviceTokenReceived:
+			if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, token])
+			}
+		case MMNotificationRegistrationUpdated:
+			if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, internalId])
+			}
+		case MMNotificationGeographicalRegionDidEnter:
+			if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, region.dictionary()])
+			}
+		case MMNotificationMessageTapped:
+			if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary()])
+			}
+		default: break
+		}
+		
+		notificationResult?.setKeepCallbackAs(true)
+		
+		plugin.commandDelegate?.send(notificationResult, callbackId: callbackId)
+	}
+	
+	private func register(callbackData: CallbackData, forMMNotificationNameString mmNotificationNameString: String) {
+		notificationCallbacks[mmNotificationNameString] = callbackData
+	}
+}
+
+
+@objc(MobileMessagingCordova) class MobileMessagingCordova : CDVPlugin {
+	private var messageStorageAdapter: MessageStorageAdapter?
+	private var eventsManager: MobileMessagingEventsManager?
+	fileprivate var isStarted: Bool = false
+	
+	private struct Constants {
+		static let cordovaConfigKey = "com.mobile-messaging.corodovaPluginConfiguration"
+	}
+	
+	override func pluginInitialize() {
+		super.pluginInitialize()
+		self.messageStorageAdapter = MessageStorageAdapter(plugin: self)
+		MobileMessagingCordovaApplicationDelegate.install()
+		self.eventsManager = MobileMessagingEventsManager(plugin: self)
+		performEarlyStartIfPossible()
+	}
+	
+	@objc(init:) func start(command: CDVInvokedUrlCommand) {
+		guard let userConfigDict = command.arguments[0] as? [String: AnyObject],
+			let userConfiguration = MMConfiguration(rawConfig: userConfigDict) else
+		{
+			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
+		}
+		
+		if let cachedConfigDict = UserDefaults.standard.object(forKey: MobileMessagingCordova.Constants.cordovaConfigKey) as? [String: AnyObject], (userConfigDict as NSDictionary) != (cachedConfigDict as NSDictionary)
+		{
+			// this `start(:)` is called from JS, it happens later after `pluginInitialize` called, here we may have most relevant configuration for the plugin. In case the configuration has changes we restart the MobileMessaging library (stop-start)
+			stop()
+			start(configuration: userConfiguration)
+		}
+		
+		// always store the configuration provided by the user
+		UserDefaults.standard.set(userConfigDict, forKey: MobileMessagingCordova.Constants.cordovaConfigKey)
+		
+		// this procedure guarantees delivery for the library events in cases when JavaScript environment set itself up later than real native events happen.
+		eventsManager?.start()
+		
+		isStarted = true
+		commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+	}
+	
+	func registerReceiver(_ command: CDVInvokedUrlCommand) {
+		eventsManager?.registerReceiver(command)
 	}
 	
 	func syncUserData(_ command: CDVInvokedUrlCommand) {
@@ -176,46 +265,19 @@ struct Notification {
 	func markMessagesSeen(_ command: CDVInvokedUrlCommand) {
 		guard let messageIds = command.arguments as? [String] else {
 			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve message ids")
-			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
 		
 		if (messageIds.isEmpty) {
 			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No message ids provided")
-			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
 		
 		MobileMessaging.setSeen(messageIds: messageIds)
 		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: messageIds)
-		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
-	}
-	
-	//MARK: NotificationsCaching
-	func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any]!, fetchCompletionHandler completionHandler: ((UIBackgroundFetchResult) -> Void)!) {
-		guard !isStarted else {
-			return
-		}
-		cachedRemoteNotifications?.append(Notification(userInfo: userInfo, fetchCompletionHandler: completionHandler))
-	}
-	
-	
-	func didReceive(_ notification: UILocalNotification) {
-		guard !isStarted else {
-			return
-		}
-		cachedLocalNotifications?.append(notification)
-	}
-	
-	func handleCachedNotifications() {
-		cachedRemoteNotifications?.forEach {
-			MobileMessaging.didReceiveRemoteNotification($0.userInfo, fetchCompletionHandler: $0.fetchCompletionHandler)
-		}
-		cachedLocalNotifications?.forEach {
-			MobileMessaging.didReceiveLocalNotification($0)
-		}
-		cachedRemoteNotifications = []
-		cachedLocalNotifications = []
+		commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 	
 	//MARK: MessageStorage
@@ -234,7 +296,7 @@ struct Notification {
 	func defaultMessageStorage_find(_ command: CDVInvokedUrlCommand) {
 		guard let messageId = command.arguments[0] as? String else {
 			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve messageId")
-			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
 		
@@ -258,68 +320,56 @@ struct Notification {
 	func defaultMessageStorage_delete(_ command: CDVInvokedUrlCommand) {
 		guard let messageId = command.arguments[0] as? String else {
 			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve messageId")
-			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
 		
 		MobileMessaging.defaultMessageStorage?.remove(withIds: [messageId])
 		let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+		commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 	
 	func defaultMessageStorage_deleteAll(_ command: CDVInvokedUrlCommand) {
 		MobileMessaging.defaultMessageStorage?.removeAllMessages()
 		let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+		commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 	
 	//MARK: Utils
-	private func unregister(_ mmNotificationName: String) {
-		guard let observer = notificationObserver else {
-			return
+	
+	private func performEarlyStartIfPossible() {
+		if let configDict = UserDefaults.standard.object(forKey: MobileMessagingCordova.Constants.cordovaConfigKey) as? [String: AnyObject],
+			let configuration = MMConfiguration(rawConfig: configDict),
+			!isStarted
+		{
+			start(configuration: configuration)
 		}
-		
-		NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: mmNotificationName), object: nil)
-		notificationObserver = nil
 	}
 	
-	private func register(forEvents events: Set<String>, callbackId: String) {
-		for event in events {
-			guard let mmNotificationName = mmNotifications?[event] else {
-				continue
-			}
-			
-			unregister(mmNotificationName)
-			notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: mmNotificationName), object: nil, queue: nil) { (notification) in
-				var notificationResult:CDVPluginResult?
-				switch mmNotificationName {
-				case MMNotificationMessageReceived:
-					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
-					}
-				case MMNotificationDeviceTokenReceived:
-					if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, token])
-					}
-				case MMNotificationRegistrationUpdated:
-					if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, internalId])
-					}
-				case MMNotificationGeographicalRegionDidEnter:
-					if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, region.dictionary()])
-					}
-				case MMNotificationMessageTapped:
-					if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
-						notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [event, message.dictionary()])
-					}
-				default: break
-				}
-				
-				notificationResult?.setKeepCallbackAs(true)
-				self.commandDelegate?.send(notificationResult, callbackId: callbackId)
-			}
+	private func start(configuration: MMConfiguration) {
+		MobileMessaging.privacySettings.applicationCodePersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].unwrap(orDefault: false)
+		MobileMessaging.privacySettings.systemInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].unwrap(orDefault: false)
+		MobileMessaging.privacySettings.carrierInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].unwrap(orDefault: false)
+		MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
+		
+		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
+		if configuration.geofencingEnabled {
+			mobileMessaging = mobileMessaging?.withGeofencingService()
 		}
+		if let storageAdapter = messageStorageAdapter, configuration.messageStorageEnabled {
+			mobileMessaging = mobileMessaging?.withMessageStorage(storageAdapter)
+		} else if configuration.defaultMessageStorage {
+			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
+		}
+		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
+		mobileMessaging?.start()
+		MobileMessaging.sync()
+	}
+	
+	private func stop() {
+		MobileMessaging.stop()
+		eventsManager?.stop()
+		isStarted = false
 	}
 }
 
@@ -409,7 +459,6 @@ extension MMUser {
 		guard let customData = dictionary["customData"] as? [String:AnyObject?] else {
 			return
 		}
-		
 		
 		for (key, data) in customData {
 			if data == nil {
