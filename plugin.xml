@@ -37,8 +37,8 @@
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
-		<pod name="MobileMessaging" version="2.5.9" />
-		<pod name="MobileMessaging/Geofencing" version="2.5.9" />
+		<pod name="MobileMessaging" version="2.6.3" />
+		<pod name="MobileMessaging/Geofencing" version="2.6.3" />
 	</platform>
 	
 	<platform name="android">
