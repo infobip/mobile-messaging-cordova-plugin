@@ -98,6 +98,7 @@ fileprivate class MobileMessagingEventsManager {
 	}
 	
 	func start() {
+		setupObservingMMNotifications()
 		cachedMobileMessagingNotifications.forEach { (n) in
 			handleMMNotification(n: n)
 		}
