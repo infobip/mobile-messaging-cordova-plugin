@@ -231,7 +231,9 @@ fileprivate class MobileMessagingEventsManager {
 	func registerReceiver(_ command: CDVInvokedUrlCommand) {
 		eventsManager?.registerReceiver(command)
 		
-		commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+		let result = CDVPluginResult(status: CDVCommandStatus_OK)
+		result?.setKeepCallbackAs(true)
+		commandDelegate?.send(result, callbackId: command.callbackId)
 	}
 	
 	func syncUserData(_ command: CDVInvokedUrlCommand) {
