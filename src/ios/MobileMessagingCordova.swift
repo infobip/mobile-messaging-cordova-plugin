@@ -18,6 +18,7 @@ class MMConfiguration {
 		static let notificationTypes = "notificationTypes"
 		static let messageStorage = "messageStorage"
 		static let cordovaPluginVersion = "cordovaPluginVersion"
+        static let notificationExtensionAppGroupId = "notificationExtensionAppGroupId"
 	}
 	
 	let appCode: String
@@ -28,6 +29,7 @@ class MMConfiguration {
 	let forceCleanup: Bool
 	let privacySettings: [String: Any]
 	let cordovaPluginVersion: String
+    let notificationExtensionAppGroupId: String?
 	
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig[MMConfiguration.Keys.applicationCode] as? String,
@@ -43,6 +45,7 @@ class MMConfiguration {
 		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
 		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
 		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
+        self.notificationExtensionAppGroupId = rawConfig[MMConfiguration.Keys.notificationExtensionAppGroupId] as? String
 		
 		if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
 			var ps = [String: Any]()
@@ -366,6 +369,9 @@ fileprivate class MobileMessagingEventsManager {
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
+        if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId {
+            mobileMessaging = mobileMessaging?.withAppGroupId(notificationExtensionAppGroupId)
+        }
 		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
 		mobileMessaging?.start()
 		MobileMessaging.sync()
@@ -388,6 +394,7 @@ extension MTMessage {
 		result["receivedTimestamp"] = createdDate.timeIntervalSince1970
 		result["customData"] = customPayload
 		result["originalPayload"] = originalPayload
+        result["contentUrl"] = contentUrl
 		return result
 	}
 }

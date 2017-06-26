@@ -11,6 +11,8 @@ The document describes library integration steps for your Cordova project.
 - [Setting user data for targeting](#synchronizing-user-data)
 - [Geofencing](#geofencing)
 - [Message storage](#message-storage)
+- [Privacy settings](#privacy-settings)
+- [Delivery improvements and rich content notifications](#delivery-improvements-and-rich-content-notifications)
 
 ## Requirements
 
@@ -116,7 +118,8 @@ configuration: {
         senderId: '<Cloud Messaging Sender ID obtained in step 1>'
     },
     ios: {
-        notificationTypes: '<notification types to indicate how the app should alert user when push message arrives>'
+        notificationTypes: '<notification types to indicate how the app should alert user when push message arrives>',
+        notificationExtensionAppGroupId: '<app group id to sync data between main app and notification service extension>' 
     }
 }
 ```
@@ -169,7 +172,8 @@ message: {
     category: '<notification category (Android only)>',
     receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
     customData: '<any custom data provided with message>',
-    originalPayload: '<original payload of message (iOS only)>'
+    originalPayload: '<original payload of message (iOS only)>',
+    contentUrl: '<media content url if media provided>'
 }
 ```
 
@@ -490,8 +494,8 @@ MobileMessaging.init({
 );
 ```
 
-### Privacy settings
-MobileMessaging SDK has several options to provide different levels of users privacy for your application. The settings are represented by `PrivacySettings` object and may be set up as follows:
+## Privacy settings
+Mobile Messaging SDK has several options to provide different levels of users privacy for your application. The settings are represented by `PrivacySettings` object and may be set up as follows:
 ```javascript
 MobileMessaging.init({
         applicationCode: ...,
@@ -513,3 +517,41 @@ MobileMessaging.init({
 - `carrierInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the carrier information to the server. Default value is `false`.
 - `systemInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the system information such as OS version, device model, application version to the server. Default value is `false`.
 - `userDataPersistingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be persisting the [User Data](https://github.com/infobip/mobile-messaging-cordova-plugin#synchronizing-user-data) locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself. Default value is `false`.
+
+## Delivery improvements and rich content notifications
+
+Mobile Messaging SDK provides support for rich content inside push notifications on iOS and Android. Only static images are supported on Android, while iOS supports static images and GIF animations.
+
+SDK supports rich content on Android out of the box. iOS platform **must be** additionally configured for it.
+
+### Enabling notification extension in iOS for rich content and reliable delivery
+
+Additional Notification Service Extension **must be** be configured for iOS platform as described [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Using-Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10). Note that you don't need to configure your main application to pass App Group ID to SDK. Instead you will have to provide `notificationExtensionAppGroupId` as part of your application configuration. Refer to [configuration section](#initialization-configuration) for details.
+
+> ### Notice
+> We highly encourage to configure Notification Service Extension for iOS. Apart from providing support for rich content it also dramatically improves delivery reporting for Push Notification on iOS. Upon implementing Notification Service Extension, SDK will be able to report delivery even when the application is killed.
+
+### Sending content
+
+In order to receive media content through Push messages, you need to create a new campaign on Customer portal or [send a message](https://dev.infobip.com/docs/send-push-notifications) through Push HTTP API
+with `contentUrl` parameter.
+
+<center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/RichNotifCUP.png?raw=true" alt="Rich notification - CUP"/></center>
+
+### Receiving on Android
+
+Provided image will be displayed in the notification drawer where default rich notification’s design correlates with OS version. As of API 16 - Jelly Bean, image downloaded from provided URL will be displayed not only in normal view, but also in expanded, big view. 
+
+<table class="image">
+<tr>
+<td><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/RichNotifAndroid7_1.gif?raw=true" alt="Rich notification - Android 7.1"/></td>
+<td><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/RichNotifAndroid4_4.gif?raw=true" alt="Rich notification - Android 4.4"/></td>
+</tr>
+<caption align="bottom"><b>Preview of rich notifications on Android 7.1 and Android 4.4</b></caption>
+</table>
+
+### Receiving on iOS
+
+Provided content will be displayed on devices with iOS 10.+ in the notification center.
+
+<center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/RichNotifIos10.gif?raw=true" alt="Rich notification - iOS10"/></center>

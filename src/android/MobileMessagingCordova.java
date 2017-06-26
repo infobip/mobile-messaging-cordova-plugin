@@ -585,7 +585,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("category", message.getCategory())
                     .putOpt("from", message.getFrom())
                     .putOpt("receivedTimestamp", message.getReceivedTimestamp())
-                    .putOpt("customPayload", message.getCustomPayload());
+                    .putOpt("customPayload", message.getCustomPayload())
+                    .putOpt("contentUrl", message.getContentUrl());
         } catch (JSONException e) {
             Log.w(TAG, "Cannot convert message to JSON: " + e.getMessage());
             Log.d(TAG, Log.getStackTraceString(e));
