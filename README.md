@@ -67,8 +67,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
     2. Run the following command from the iOS platform directory (`platforms/ios`) to build your Xcode project (*use your project and scheme names as arguments*):
         ```bash
-        $ sh ../../plugins/com-infobip-plugins-mobilemessaging/scripts/build_ios_workspace.sh -workspace MyProject.xcworkspace -scheme MyProjectScheme
+        $ sh ../../plugins/com-infobip-plugins-mobilemessaging/scripts/build_ios_workspace.sh -workspace {MyProjectWorskpace}.xcworkspace -scheme {MyProjectScheme}
         ```
+        Replace *{MyProjectWorkspace}* and *{MyProjectScheme}* with the ones from your project accordingly.
 
     3. Configure your project to enable Push Notifications. Go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
 
