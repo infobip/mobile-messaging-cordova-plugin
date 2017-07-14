@@ -219,7 +219,10 @@ fileprivate class MobileMessagingEventsManager {
 			// this `start(:)` is called from JS, it happens later after `pluginInitialize` called, here we may have most relevant configuration for the plugin. In case the configuration has changes we restart the MobileMessaging library (stop-start)
 			stop()
 			start(configuration: userConfiguration)
-		}
+        } else if UserDefaults.standard.object(forKey: MobileMessagingCordova.Constants.cordovaConfigKey) == nil {
+            // this `start(:)` should be called when there is no cached configuration and library was not started from `pluginInitialize`
+            start(configuration: userConfiguration)
+        }
 		
 		// always store the configuration provided by the user
 		UserDefaults.standard.set(userConfigDict, forKey: MobileMessagingCordova.Constants.cordovaConfigKey)
