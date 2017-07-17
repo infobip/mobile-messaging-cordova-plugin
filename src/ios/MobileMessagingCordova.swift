@@ -398,6 +398,9 @@ extension MTMessage {
 		result["customData"] = customPayload
 		result["originalPayload"] = originalPayload
         result["contentUrl"] = contentUrl
+		result["seen"] = seenStatus != .NotSeen
+		result["seenDate"] = seenDate.timeIntervalSince1970
+		result["geo"] = isGeoMessage
 		return result
 	}
 }
