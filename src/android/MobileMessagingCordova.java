@@ -25,6 +25,7 @@ import org.infobip.mobile.messaging.Event;
 import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.MobileMessagingLogger;
+import org.infobip.mobile.messaging.MobileMessagingCore;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
@@ -586,7 +587,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("from", message.getFrom())
                     .putOpt("receivedTimestamp", message.getReceivedTimestamp())
                     .putOpt("customPayload", message.getCustomPayload())
-                    .putOpt("contentUrl", message.getContentUrl());
+                    .putOpt("contentUrl", message.getContentUrl())
+					.putOpt("seen", message.getSeenTimestamp() != 0)
+					.putOpt("seenDate", message.getSeenTimestamp())
+					.putOpt("geo", MobileMessagingCore.hasGeo(message));
         } catch (JSONException e) {
             Log.w(TAG, "Cannot convert message to JSON: " + e.getMessage());
             Log.d(TAG, Log.getStackTraceString(e));

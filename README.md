@@ -174,7 +174,10 @@ message: {
     receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
     customData: '<any custom data provided with message>',
     originalPayload: '<original payload of message (iOS only)>',
-    contentUrl: '<media content url if media provided>'
+    contentUrl: '<media content url if media provided>',
+	seen: '<true/false, was message seen or not>',
+	seenDate: '<absolute timestamp in milliseconds that indicates when the message was seen>',
+	geo: '<true/false, indicates was message triggered by geo event or not>'
 }
 ```
 
