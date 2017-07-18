@@ -398,8 +398,17 @@ extension MTMessage {
 		result["customData"] = customPayload
 		result["originalPayload"] = originalPayload
         result["contentUrl"] = contentUrl
+		result["seen"] = seenStatus != .NotSeen
+		result["seenDate"] = seenDate?.timeIntervalSince1970
+		result["geo"] = isGeoMessage
 		return result
 	}
+	
+	var isGeoMessage: Bool {
+		let geoAreasDicts = (originalPayload["internalData"] as? [String: Any])?["geo"] as? [[String: Any]]
+		return geoAreasDicts != nil
+	}
+	
 }
 
 extension BaseMessage {

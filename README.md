@@ -46,7 +46,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 3. Add MobileMessaging plugin to your project, run in terminal:
     ```bash
-    $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.2.9 --save
+    $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.3.0 --save
     ```
 
 4. Steps to setup iOS platform:
@@ -174,7 +174,10 @@ message: {
     receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
     customData: '<any custom data provided with message>',
     originalPayload: '<original payload of message (iOS only)>',
-    contentUrl: '<media content url if media provided>'
+    contentUrl: '<media content url if media provided>',
+	seen: '<true/false, was message seen or not>',
+	seenDate: '<absolute timestamp in milliseconds that indicates when the message was seen>',
+	geo: '<true/false, indicates was message triggered by geo event or not>'
 }
 ```
 
