@@ -26,7 +26,7 @@ esac
 shift
 done
 
-DESTINATION="${DESTINATION:=platform=iOS Simulator,name=iPhone 6 Plus,OS=10.0}"
+DESTINATION="${DESTINATION:=generic/platform=iOS Simulator}"
 
 if [ ! "$WORKSPACE" ] || [ ! "$SCHEME" ]; then
 	echo "Please provide -workspace and -scheme arguments."
@@ -34,5 +34,12 @@ else
     cordova prepare > /dev/null
 	pod update > /dev/null
     xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Debug -destination "$DESTINATION" build > /dev/null
+
+if [ $? != 0 ]
+then
+echo "Error: check \"$ xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -configuration Debug -destination "$DESTINATION" build\" result"
+exit 1
+fi
+
 	echo "Done! Now you can perform \"$ cordova build\"."
 fi
