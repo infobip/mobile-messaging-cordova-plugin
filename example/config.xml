@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.infobip.mobilemessaging.example" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>CordovaMobilePushDemo</name>
+    <description>
+        A sample Cordova mobile push demo.
+    </description>
+    <author email="andrey.berezhnoy@infobip.com" href="http://infobip.com">
+        Mobile Messaing Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="ios">
+        <preference name="deployment-target" value="8.4" />
+        <preference name="pods_use_frameworks" value="true" />
+        <config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
+            <array>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
+        <preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" />
+    </platform>
+    <icon src="res/icon.png" />
+    <engine name="android" spec="^6.2.3" />
+    <engine name="browser" spec="^4.1.0" />
+    <engine name="ios" spec="^4.4.0" />
+    <plugin name="com-infobip-plugins-mobilemessaging" spec=".." />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
+</widget>

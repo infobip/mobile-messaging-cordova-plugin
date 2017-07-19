@@ -3,3 +3,12 @@
 
 # JUnit reporter results
 /test_results/
+
+# Cordova Mobile Push Demo
+/example/node_modules/
+/example/plugins/
+/example/platforms/
+
+# IDEA
+/example/.idea/
+.idea/

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" />
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' gap://ready ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'" />-->
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/icons.css" />
+        <title>Cordova Mobile Push Demo</title>
+    </head>
+    <body>
+        <!-- layout -->
+        <div class="app">
+            <div class="head">
+                <span class="title"></span>
+            </div>
+            <div class="content"></div>
+            <div class="navi"></div>
+        </div>
+
+        <!-- components -->
+
+        <div class="dialog-busy" style="display: none;">
+            <div class="bg"></div>
+            <div class="content">
+                <div class="loading"></div>
+            </div>
+        </div>
+
+        <!-- templates -->
+
+        <div id="screen-inbox" class="template screen inbox">
+            <div class="no-messages">You have no messages yet...</div>
+        </div>
+
+        <div id="screen-settings" class="template screen settings">
+            <form class="user-data">
+                <h3>External user id</h3>
+                <div class="field">
+                    <div class="caption">External user id:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="externalUserId" title="External user id" />
+                    </div>
+                </div>
+                <h3>Predefined user data</h3>
+                <div class="field">
+                    <div class="caption">MSISDN:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="msisdn" title="MSISDN" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="caption">Email:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="email" title="Email" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="caption">Landline number:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="telephone" title="Landline number" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="caption">First name:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="firstName" title="First name" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="caption">Last name:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="lastName" title="Last name" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="caption">Middle name:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="middleName" title="Middle name" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="caption">Gender (M/F):</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="gender" title="Gender (M/F)" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="caption">Birthdate:</div>
+                    <div class="input">
+                        <div class="title"></div>
+                        <input type="text" name="birthdate" title="Birthdate" />
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 15px;">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <ul id="list" class="template list"></ul>
+        <li id="list-item" class="template list-item">
+            <!--<span class="mark"></span>-->
+            <div class="button-right"><i class="icon icon-info"></i></div>
+            <div class="time"></div>
+            <div class="message"></div>
+        </li>
+
+        <div id="navi-button" class="template navi-button">
+            <div style="margin-top: 0.5em;"><i class="icon"></i></div>
+            <div class="text" style="margin-top: 5px;"></div>
+        </div>
+
+        <!-- scripts -->
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/scope.js"></script>
+        <script type="text/javascript" src="js/mm-mock.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/layout/layout.js"></script>
+        <script type="text/javascript" src="js/inbox/list.js"></script>
+        <script type="text/javascript" src="js/inbox/screen-inbox.js"></script>
+        <script type="text/javascript" src="js/settings/screen-settings.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>
