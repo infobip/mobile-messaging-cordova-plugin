@@ -172,7 +172,7 @@ message: {
     silent: '<true/false, disables notification for message>',
     category: '<notification category (Android only)>',
     receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
-    customData: '<any custom data provided with message>',
+    customPayload: '<any custom data provided with message>',
     originalPayload: '<original payload of message (iOS only)>',
     contentUrl: '<media content url if media provided>',
 	seen: '<true/false, was message seen or not>',

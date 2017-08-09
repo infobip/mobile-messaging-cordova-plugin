@@ -78,6 +78,13 @@
                     utils.log('Init error: ' + error);
                 }
             );
+
+            MobileMessaging.register("notificationTapped", function(message) {
+                if (message.customPayload && message.customPayload.url) {
+                    var url = message.customPayload.url;
+                    cordova.InAppBrowser.open(url, "_blank", "location=yes");
+                }
+            });
         }
     };
 
