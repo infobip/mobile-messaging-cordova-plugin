@@ -46,7 +46,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 3. Add MobileMessaging plugin to your project, run in terminal:
     ```bash
-    $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.3.0 --save
+    $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.3.1 --save
     ```
 
 4. Steps to setup iOS platform:
