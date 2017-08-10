@@ -559,3 +559,23 @@ Provided image will be displayed in the notification drawer where default rich n
 Provided content will be displayed on devices with iOS 10.+ in the notification center.
 
 <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/RichNotifIos10.gif?raw=true" alt="Rich notification - iOS10"/></center>
+
+### FAQ
+
+#### How to open application webView on message tap
+- Install "cordova-plugin-inappbrowser" plugin
+- Register event handler for notification tapping in MobileMessaging
+```javascript
+MobileMessaging.register("notificationTapped", function(message) {
+  if (message.customPayload && message.customPayload.url) {
+    var url = message.customPayload.url;
+    cordova.InAppBrowser.open(url, "_blank", "location=yes");
+  }
+});
+```
+- Now you can send push message with custom payload and "url" field through api or portal
+```json
+"customPayload":{
+   "url": "http://infobip.com/"
+}
+```
