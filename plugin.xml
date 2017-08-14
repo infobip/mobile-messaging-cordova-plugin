@@ -35,7 +35,6 @@
 	                <string>remote-notification</string>
 	            </array>
 	        </config-file>
-		</config-file>
 		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
 	
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
