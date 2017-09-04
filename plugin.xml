@@ -24,7 +24,7 @@
 			</feature>
 
 			<!-- this entry is to statically preserve entitlements setting that is usually being set by `cordova build` dynamically (which leads to a build error) -->
-			<preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" />
+			<!-- <preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" /> -->
 			<!-- this entry is to set project deployment target -->
 	        <preference name="deployment-target" value="8.4" />
 	        <!-- this entry is for cocoapods to support swift frameworks -->
