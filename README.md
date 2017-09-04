@@ -61,7 +61,6 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
                     <string>remote-notification</string>
                 </array>
             </config-file>
-            <preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" />
         </platform>
         ```
 
