@@ -18,18 +18,18 @@ class MMConfiguration {
 		static let notificationTypes = "notificationTypes"
 		static let messageStorage = "messageStorage"
 		static let cordovaPluginVersion = "cordovaPluginVersion"
-        static let notificationExtensionAppGroupId = "notificationExtensionAppGroupId"
+		static let notificationExtensionAppGroupId = "notificationExtensionAppGroupId"
 	}
 	
 	let appCode: String
 	let geofencingEnabled: Bool
 	let messageStorageEnabled: Bool
 	let defaultMessageStorage: Bool
-	let notificationType: UIUserNotificationType
+	let notificationType: UserNotificationType
 	let forceCleanup: Bool
 	let privacySettings: [String: Any]
 	let cordovaPluginVersion: String
-    let notificationExtensionAppGroupId: String?
+	let notificationExtensionAppGroupId: String?
 	
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig[MMConfiguration.Keys.applicationCode] as? String,
@@ -45,7 +45,7 @@ class MMConfiguration {
 		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
 		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
 		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
-        self.notificationExtensionAppGroupId = rawConfig[MMConfiguration.Keys.notificationExtensionAppGroupId] as? String
+		self.notificationExtensionAppGroupId = rawConfig[MMConfiguration.Keys.notificationExtensionAppGroupId] as? String
 		
 		if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
 			var ps = [String: Any]()
@@ -62,18 +62,20 @@ class MMConfiguration {
 		self.cordovaPluginVersion = rawConfig[MMConfiguration.Keys.cordovaPluginVersion].unwrap(orDefault: "unknown")
 		
 		if let notificationTypeNames =  ios[MMConfiguration.Keys.notificationTypes] as? [String] {
-			self.notificationType = notificationTypeNames.reduce([], { (result, notificationTypeName) -> UIUserNotificationType in
+			let options = notificationTypeNames.reduce([], { (result, notificationTypeName) -> [UserNotificationType] in
 				var result = result
 				switch notificationTypeName {
-				case "badge": result.insert(.badge)
-				case "sound": result.insert(.sound)
-				case "alert": result.insert(.alert)
+				case "badge": result.append(UserNotificationType.badge)
+				case "sound": result.append(UserNotificationType.sound)
+				case "alert": result.append(UserNotificationType.alert)
 				default: break
 				}
 				return result
 			})
+			
+			self.notificationType = UserNotificationType(options: options)
 		} else {
-			self.notificationType = []
+			self.notificationType = UserNotificationType.none
 		}
 	}
 	
@@ -90,10 +92,10 @@ fileprivate class MobileMessagingEventsManager {
 	
 	/// Must be in sync with `supportedEvents` (MobileMessagingCordova.js)
 	private let supportedNotifications: [String: String] = ["messageReceived": MMNotificationMessageReceived,
-	                                                       	"tokenReceived":  MMNotificationDeviceTokenReceived,
-	                                                       	"registrationUpdated":  MMNotificationRegistrationUpdated,
-	                                                       	"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
-	                                                       	"notificationTapped": MMNotificationMessageTapped]
+	                                                        "tokenReceived":  MMNotificationDeviceTokenReceived,
+	                                                        "registrationUpdated":  MMNotificationRegistrationUpdated,
+	                                                        "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
+	                                                        "notificationTapped": MMNotificationMessageTapped]
 	
 	init(plugin: MobileMessagingCordova) {
 		self.plugin = plugin
@@ -219,10 +221,10 @@ fileprivate class MobileMessagingEventsManager {
 			// this `start(:)` is called from JS, it happens later after `pluginInitialize` called, here we may have most relevant configuration for the plugin. In case the configuration has changes we restart the MobileMessaging library (stop-start)
 			stop()
 			start(configuration: userConfiguration)
-        } else if UserDefaults.standard.object(forKey: MobileMessagingCordova.Constants.cordovaConfigKey) == nil {
-            // this `start(:)` should be called when there is no cached configuration and library was not started from `pluginInitialize`
-            start(configuration: userConfiguration)
-        }
+		} else if UserDefaults.standard.object(forKey: MobileMessagingCordova.Constants.cordovaConfigKey) == nil {
+			// this `start(:)` should be called when there is no cached configuration and library was not started from `pluginInitialize`
+			start(configuration: userConfiguration)
+		}
 		
 		// always store the configuration provided by the user
 		UserDefaults.standard.set(userConfigDict, forKey: MobileMessagingCordova.Constants.cordovaConfigKey)
@@ -372,9 +374,9 @@ fileprivate class MobileMessagingEventsManager {
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
-        if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId {
-            mobileMessaging = mobileMessaging?.withAppGroupId(notificationExtensionAppGroupId)
-        }
+		if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId {
+			mobileMessaging = mobileMessaging?.withAppGroupId(notificationExtensionAppGroupId)
+		}
 		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
 		mobileMessaging?.start()
 		MobileMessaging.sync()
@@ -394,10 +396,10 @@ extension MTMessage {
 		result["body"] = text
 		result["sound"] = sound
 		result["silent"] = isSilent
-		result["receivedTimestamp"] = createdDate.timeIntervalSince1970
+		result["receivedTimestamp"] = sendDateTime
 		result["customData"] = customPayload
 		result["originalPayload"] = originalPayload
-        result["contentUrl"] = contentUrl
+		result["contentUrl"] = contentUrl
 		result["seen"] = seenStatus != .NotSeen
 		result["seenDate"] = seenDate?.timeIntervalSince1970
 		result["geo"] = isGeoMessage
@@ -414,20 +416,17 @@ extension MTMessage {
 extension BaseMessage {
 	class func createFrom(dictionary: [String: Any]) -> BaseMessage? {
 		guard let messageId = dictionary["messageId"] as? String,
-			let originalPayload = dictionary["originalPayload"] as? StringKeyPayload,
-			let receivedTimestamp = dictionary["receivedTimestamp"] as? TimeInterval else
+			let originalPayload = dictionary["originalPayload"] as? StringKeyPayload else
 		{
 			return nil
 		}
 		
-		let createdDate = Date(timeIntervalSince1970: receivedTimestamp)
-		return BaseMessage(messageId: messageId, direction: MessageDirection.MT, originalPayload: originalPayload, createdDate: createdDate)
+		return BaseMessage(messageId: messageId, direction: MessageDirection.MT, originalPayload: originalPayload)
 	}
 	
 	func dictionary() -> [String: Any] {
 		var result = [String: Any]()
 		result["messageId"] = messageId
-		result["receivedTimestamp"] = createdDate.timeIntervalSince1970
 		result["customData"] = originalPayload["customPayload"]
 		result["originalPayload"] = originalPayload
 		
@@ -578,34 +577,34 @@ class MessageStorageAdapter: MessageStorage {
 		sendCallback(for: "messageStorage.stop")
 	}
 	
-	func insert(incoming messages: [MTMessage]) {
+	func insert(outgoing messages: [MOMessage], completion: @escaping () -> Void) {
+		// MO not supported yet
+	}
+	
+	func insert(incoming messages: [MTMessage], completion: @escaping () -> Void) {
 		sendCallback(for: "messageStorage.save", withArray: messages.map({
 			$0.dictionary()
 		}))
 	}
 	
+	func update(messageSeenStatus status: MMSeenStatus, for messageId: MessageId, completion: @escaping () -> Void) {
+		// Message seen status not supported
+	}
+	
+	func update(deliveryReportStatus isDelivered: Bool, for messageId: MessageId, completion: @escaping () -> Void) {
+		// Delivery report status not supported
+	}
+	
+	func update(messageSentStatus status: MOMessageSentStatus, for messageId: MessageId, completion: @escaping () -> Void) {
+		// MO not supported
+	}
+
 	func findMessage(withId messageId: MessageId) -> BaseMessage? {
 		queue.sync() {
 			sendCallback(for: "messageStorage.find", withMessage: messageId)
 			_ = findSemaphore.wait(wallTimeout: DispatchWallTime.now() + DispatchTimeInterval.seconds(30))
 		}
 		return foundMessage
-	}
-	
-	func insert(outgoing messages: [MOMessage]) {
-		// MO not supported yet
-	}
-	
-	func update(messageSeenStatus status: MMSeenStatus, for messageId: MessageId) {
-		// Message seen status not supported
-	}
-	
-	func update(deliveryReportStatus isDelivered: Bool, for messageId: MessageId) {
-		// Delivery report status not supported
-	}
-	
-	func update(messageSentStatus status: MOMessageSentStatus, for messageId: MessageId) {
-		// MO not supported
 	}
 	
 	func register(_ command: CDVInvokedUrlCommand) {
@@ -675,3 +674,4 @@ extension Optional {
 		}
 	}
 }
+
