@@ -6,7 +6,6 @@
 	
 	<name>MobileMessagingCordova</name>
 	
-	<dependency id="cordova-plugin-cocoapod-support"/>
 	<dependency id="cordova-plugin-add-swift-support"/>
 	<dependency id="cordova-custom-config"/>
 
@@ -23,12 +22,9 @@
 				<param name="onload" value="true" />
 			</feature>
 
-			<!-- this entry is to statically preserve entitlements setting that is usually being set by `cordova build` dynamically (which leads to a build error) -->
-			<!-- <preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" /> -->
 			<!-- this entry is to set project deployment target -->
 	        <preference name="deployment-target" value="8.4" />
-	        <!-- this entry is for cocoapods to support swift frameworks -->
-	        <preference name="pods_use_frameworks" value="true" />
+
 	        <!-- this entry is to enable push notifications background mode (highly recommended for MobileMessaging SDK) -->
 	        <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
 	            <array>
@@ -36,12 +32,11 @@
 	            </array>
 	        </config-file>
 		</config-file>
-		<hook type="before_compile" src="scripts/fixEntitlementsBuildSetting.js"/>
-	
-		<source-file src="src/ios/MobileMessagingCordova.swift" />
 
-		<pod name="MobileMessaging" version="2.6.5" />
-		<pod name="MobileMessaging/Geofencing" version="2.6.5" />
+		<hook type="before_build" src="scripts/fixEntitlementsBuildSetting.js"/>
+		<hook type="before_run" src="scripts/fixEntitlementsBuildSetting.js"/>
+
+		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
 	
 	<platform name="android">
