@@ -13,7 +13,7 @@ sed -E -e 'H;1h;$!d;x' -e 's@version\=\"[^"\s]*\"@version="'$1'"@' -i '' plugin.
 npm --no-git-tag-version --force version $1
 
 # Update version in README.md
-sed -E -e 'H;1h;$!d;x' -e 's@mobile-messaging-cordova-plugin\.git#.*\-\-save@mobile-messaging-cordova-plugin\.git#'$1' \-\-save@' -i '' README.md
+sed -E -e 'H;1h;$!d;x' -e 's@mobile-messaging-cordova-plugin\.git#.*\-\-save@mobile-messaging-cordova-plugin\.git#'$1' \-\-nofetch \-\-save@' -i '' README.md
 
 if [ -z "$2" ]
 then
