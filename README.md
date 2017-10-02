@@ -48,13 +48,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.3.2 --save
     ```
 
-4. Steps to setup iOS platform:
-    1. Configure your project to enable Push Notifications. Go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
-
-    2. Run the following command to build your entire Cordova project:
-        ```bash
-        $ cordova build
-        ```
+4. Configure your iOS project to enable Push Notifications. Go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
 
 5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
