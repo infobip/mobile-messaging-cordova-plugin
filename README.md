@@ -15,14 +15,13 @@ The document describes library integration steps for your Cordova project.
 - [Delivery improvements and rich content notifications](#delivery-improvements-and-rich-content-notifications)
 
 ## Requirements
-
+- Cordova 6.5.0 (`sudo npm install -g cordova@6.5.0`)
 - npm (tested with 4.1.2)
 - node (tested with 7.5.0)
 
 For iOS project:
-- Xcode 8.3.2
+- Xcode 9.0+
 - Minimum deployment target 8.0+
-- CocoaPods 1.1.1+
 
 For Android project: 
 - Android Studio
@@ -50,29 +49,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     ```
 
 4. Steps to setup iOS platform:
-    1. Change the `config.xml` to add CocoaPods support,:
-        ```xml
-        <platform name="ios">
-            <!-- Add the following entries under ios platform: -->
-            <preference name="deployment-target" value="8.4" />
-            <preference name="pods_use_frameworks" value="true" />
-            <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
-                <array>
-                    <string>remote-notification</string>
-                </array>
-            </config-file>
-        </platform>
-        ```
+    1. Configure your project to enable Push Notifications. Go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
 
-    2. Run the following command from the iOS platform directory (`platforms/ios`) to build your Xcode project (*use your project and scheme names as arguments*):
-        ```bash
-        $ sh ../../plugins/com-infobip-plugins-mobilemessaging/scripts/build_ios_workspace.sh -workspace {MyProjectWorskpace}.xcworkspace -scheme {MyProjectScheme}
-        ```
-        Replace *{MyProjectWorkspace}* and *{MyProjectScheme}* with the ones from your project accordingly.
-
-    3. Configure your project to enable Push Notifications. Go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
-
-    4. Run the following command to build your entire Cordova project:
+    2. Run the following command to build your entire Cordova project:
         ```bash
         $ cordova build
         ```
