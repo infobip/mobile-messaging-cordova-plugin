@@ -55,7 +55,7 @@
 	        </receiver>
 		</config-file>
 		
-		<framework src="src/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
+		<framework src="libs/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
 		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
 	</platform>
 	
