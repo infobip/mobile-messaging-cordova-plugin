@@ -1,0 +1,387 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "KeychainSwift"
+provides-nominal:
+- "15MobileMessaging13KeychainSwiftC"
+provides-member:
+- ["15MobileMessaging13KeychainSwiftC", ""]
+provides-dynamic-lookup:
+depends-top-level:
+- !private "!"
+- !private "=="
+- !private "??"
+- !private "AnyObject"
+- !private "Array"
+- "AssignmentPrecedence"
+- "Bool"
+- "BooleanLiteralType"
+- !private "CFDictionary"
+- "CastingPrecedence"
+- "Data"
+- "KeychainSwift"
+- "KeychainSwiftAccessOptions"
+- !private "KeychainSwiftConstants"
+- !private "NSString"
+- "OSStatus"
+- !private "SecItemAdd"
+- !private "SecItemCopyMatching"
+- !private "SecItemDelete"
+- "String"
+- "StringLiteralType"
+- "TernaryPrecedence"
+- !private "UInt8"
+- !private "UnsafeMutablePointer"
+- !private "kCFBooleanTrue"
+- !private "kSecAttrSynchronizableAny"
+- !private "kSecClass"
+- !private "kSecClassGenericPassword"
+- !private "kSecMatchLimitOne"
+- "noErr"
+- !private "withUnsafeMutablePointer"
+depends-member:
+- !private ["s23BidirectionalCollectionP", "Encoding"]
+- !private ["s23BidirectionalCollectionP", "data"]
+- !private ["s23BidirectionalCollectionP", "first"]
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "Encoding"]
+- !private ["s7CVarArgP", "data"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s10CollectionP", "Encoding"]
+- !private ["s10CollectionP", "data"]
+- !private ["s10CollectionP", "first"]
+- ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "Encoding"]
+- !private ["s10ComparableP", "data"]
+- ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "Encoding"]
+- !private ["s28CustomDebugStringConvertibleP", "data"]
+- !private ["s28CustomDebugStringConvertibleP", "first"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "data"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "Encoding"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "data"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "Encoding"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "data"]
+- !private ["s17CustomReflectableP", "first"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "Encoding"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "data"]
+- !private ["s23CustomStringConvertibleP", "first"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "rawValue"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "utf8"]
+- !private ["10Foundation4DataV", "first"]
+- !private ["10Foundation4DataV", "init"]
+- !private ["s9DecodableP", "Encoding"]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "data"]
+- !private ["s9DecodableP", "first"]
+- ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s10DictionaryV", "subscript"]
+- !private ["s9EncodableP", "Encoding"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "data"]
+- !private ["s9EncodableP", "first"]
+- ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "subscript"]
+- !private ["SS10FoundationE8EncodingV", "rawValue"]
+- !private ["SS10FoundationE8EncodingV", "utf8"]
+- !private ["s9EquatableP", "Encoding"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "data"]
+- !private ["s9EquatableP", "defaultOption"]
+- !private ["s9EquatableP", "first"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "rawValue"]
+- !private ["s9EquatableP", "utf8"]
+- !private ["s9EquatableP", "value"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "Encoding"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "data"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "Encoding"]
+- !private ["s26ExpressibleByStringLiteralP", "data"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "Encoding"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "data"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "Encoding"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "data"]
+- !private ["s8HashableP", "defaultOption"]
+- !private ["s8HashableP", "first"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "rawValue"]
+- !private ["s8HashableP", "utf8"]
+- !private ["s8HashableP", "value"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "Encoding"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "data"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["15MobileMessaging13KeychainSwiftC", "AnyObject"]
+- ["15MobileMessaging13KeychainSwiftC", "Bool"]
+- !private ["15MobileMessaging13KeychainSwiftC", "CFDictionary"]
+- ["15MobileMessaging13KeychainSwiftC", "Data"]
+- ["15MobileMessaging13KeychainSwiftC", "KeychainSwiftAccessOptions"]
+- !private ["15MobileMessaging13KeychainSwiftC", "KeychainSwiftConstants"]
+- !private ["15MobileMessaging13KeychainSwiftC", "NSString"]
+- ["15MobileMessaging13KeychainSwiftC", "OSStatus"]
+- !private ["15MobileMessaging13KeychainSwiftC", "SecItemAdd"]
+- !private ["15MobileMessaging13KeychainSwiftC", "SecItemCopyMatching"]
+- !private ["15MobileMessaging13KeychainSwiftC", "SecItemDelete"]
+- ["15MobileMessaging13KeychainSwiftC", "String"]
+- !private ["15MobileMessaging13KeychainSwiftC", "UInt8"]
+- !private ["15MobileMessaging13KeychainSwiftC", "UnsafeMutablePointer"]
+- ["15MobileMessaging13KeychainSwiftC", "accessGroup"]
+- ["15MobileMessaging13KeychainSwiftC", "addAccessGroupWhenPresent"]
+- ["15MobileMessaging13KeychainSwiftC", "addSynchronizableIfRequired"]
+- ["15MobileMessaging13KeychainSwiftC", "clear"]
+- ["15MobileMessaging13KeychainSwiftC", "deinit"]
+- ["15MobileMessaging13KeychainSwiftC", "delete"]
+- ["15MobileMessaging13KeychainSwiftC", "get"]
+- ["15MobileMessaging13KeychainSwiftC", "getBool"]
+- ["15MobileMessaging13KeychainSwiftC", "getData"]
+- ["15MobileMessaging13KeychainSwiftC", "init"]
+- !private ["15MobileMessaging13KeychainSwiftC", "kCFBooleanTrue"]
+- !private ["15MobileMessaging13KeychainSwiftC", "kSecAttrSynchronizableAny"]
+- !private ["15MobileMessaging13KeychainSwiftC", "kSecClass"]
+- !private ["15MobileMessaging13KeychainSwiftC", "kSecClassGenericPassword"]
+- !private ["15MobileMessaging13KeychainSwiftC", "kSecMatchLimitOne"]
+- ["15MobileMessaging13KeychainSwiftC", "keyPrefix"]
+- ["15MobileMessaging13KeychainSwiftC", "keyWithPrefix"]
+- ["15MobileMessaging13KeychainSwiftC", "lastQueryParameters"]
+- ["15MobileMessaging13KeychainSwiftC", "lastResultCode"]
+- ["15MobileMessaging13KeychainSwiftC", "noErr"]
+- ["15MobileMessaging13KeychainSwiftC", "set"]
+- ["15MobileMessaging13KeychainSwiftC", "synchronizable"]
+- !private ["15MobileMessaging13KeychainSwiftC", "withUnsafeMutablePointer"]
+- !private ["15MobileMessaging26KeychainSwiftAccessOptionsO", "defaultOption"]
+- !private ["15MobileMessaging26KeychainSwiftAccessOptionsO", "value"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "accessGroup"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "accessible"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "attrAccount"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "attrSynchronizable"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "klass"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "matchLimit"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "returnData"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "valueData"]
+- !private ["s25LosslessStringConvertibleP", "Encoding"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "data"]
+- ["s25LosslessStringConvertibleP", "init"]
+- !private ["s10MirrorPathP", "Encoding"]
+- !private ["s10MirrorPathP", "data"]
+- ["s10MirrorPathP", "init"]
+- !private ["s17MutableCollectionP", "first"]
+- !private ["s17MutableCollectionP", "init"]
+- !private ["So8NSCodingP", "data"]
+- ["So8NSCodingP", "init"]
+- !private ["So9NSCopyingP", "data"]
+- ["So9NSCopyingP", "init"]
+- !private ["So21NSItemProviderReadingP", "data"]
+- ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "data"]
+- ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "data"]
+- ["So16NSMutableCopyingP", "init"]
+- !private ["So8NSObjectC", "data"]
+- !private ["So16NSObjectProtocolP", "data"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So14NSSecureCodingP", "data"]
+- ["So14NSSecureCodingP", "init"]
+- !private ["So8NSStringC", "data"]
+- ["So8NSStringC", "init"]
+- !private ["s22RandomAccessCollectionP", "first"]
+- !private ["s22RandomAccessCollectionP", "init"]
+- !private ["s26RangeReplaceableCollectionP", "Encoding"]
+- !private ["s26RangeReplaceableCollectionP", "data"]
+- !private ["s26RangeReplaceableCollectionP", "first"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s16RawRepresentableP", "rawValue"]
+- !private ["s16RawRepresentableP", "utf8"]
+- !private ["10Foundation20ReferenceConvertibleP", "first"]
+- !private ["10Foundation20ReferenceConvertibleP", "init"]
+- !private ["s8SequenceP", "Encoding"]
+- !private ["s8SequenceP", "data"]
+- !private ["s8SequenceP", "first"]
+- ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s10StrideableP", "init"]
+- !private ["SS", "Encoding"]
+- !private ["SS", "data"]
+- ["SS", "init"]
+- !private ["s14StringProtocolP", "Encoding"]
+- !private ["s14StringProtocolP", "data"]
+- ["s14StringProtocolP", "init"]
+- !private ["s16TextOutputStreamP", "Encoding"]
+- !private ["s16TextOutputStreamP", "data"]
+- ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "Encoding"]
+- !private ["s20TextOutputStreamableP", "data"]
+- ["s20TextOutputStreamableP", "init"]
+- !private ["Sp", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "data"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s23_BidirectionalIndexableP", "Encoding"]
+- !private ["s23_BidirectionalIndexableP", "data"]
+- !private ["s23_BidirectionalIndexableP", "first"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "Encoding"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "data"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "Encoding"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "data"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "Encoding"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "data"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "Encoding"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "data"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "Encoding"]
+- !private ["s33_ExpressibleByStringInterpolationP", "data"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "data"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "Encoding"]
+- !private ["s10_IndexableP", "data"]
+- !private ["s10_IndexableP", "first"]
+- ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "Encoding"]
+- !private ["s14_IndexableBaseP", "data"]
+- !private ["s14_IndexableBaseP", "first"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "data"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["s17_MutableIndexableP", "first"]
+- !private ["s17_MutableIndexableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "Encoding"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "data"]
+- !private ["s21_ObjectiveCBridgeableP", "first"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- !private ["s8_PointerP", "init"]
+- !private ["s22_RandomAccessIndexableP", "first"]
+- !private ["s22_RandomAccessIndexableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "Encoding"]
+- !private ["s26_RangeReplaceableIndexableP", "data"]
+- !private ["s26_RangeReplaceableIndexableP", "first"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s11_StrideableP", "init"]
+- !private ["s16_SwiftStringViewP", "Encoding"]
+- !private ["s16_SwiftStringViewP", "data"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- "s23BidirectionalCollectionP"
+- !private "Sb"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "10Foundation4DataV"
+- "s9DecodableP"
+- !private "s10DictionaryV"
+- "s9EncodableP"
+- !private "SS10FoundationE8EncodingV"
+- "s9EquatableP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "15MobileMessaging13KeychainSwiftC"
+- !private "15MobileMessaging26KeychainSwiftAccessOptionsO"
+- !private "15MobileMessaging22KeychainSwiftConstantsV"
+- "s25LosslessStringConvertibleP"
+- "s10MirrorPathP"
+- !private "s17MutableCollectionP"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- !private "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- !private "s22RandomAccessCollectionP"
+- "s26RangeReplaceableCollectionP"
+- !private "s16RawRepresentableP"
+- !private "10Foundation20ReferenceConvertibleP"
+- "s8SequenceP"
+- !private "s10StrideableP"
+- "SS"
+- "s14StringProtocolP"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- !private "Sp"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- "s23_BidirectionalIndexableP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- "s21_ObjectiveCBridgeableP"
+- !private "s8_PointerP"
+- !private "s22_RandomAccessIndexableP"
+- "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "8a14b1c002fd88466ad52d4b2f5be716"

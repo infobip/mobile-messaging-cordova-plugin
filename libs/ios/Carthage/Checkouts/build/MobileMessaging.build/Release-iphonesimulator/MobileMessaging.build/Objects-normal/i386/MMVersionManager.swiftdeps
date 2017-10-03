@@ -1,0 +1,639 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "VersionNumbersComparisonError"
+- "VersionManager"
+provides-nominal:
+- "15MobileMessaging29VersionNumbersComparisonErrorO"
+- "15MobileMessaging14VersionManagerC"
+provides-member:
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", ""]
+- ["SS", ""]
+- ["15MobileMessaging14VersionManagerC", ""]
+- ["SS", "compareVersionNumbers"]
+provides-dynamic-lookup:
+depends-top-level:
+- !private "!="
+- "*"
+- !private "..<"
+- !private "<"
+- "=="
+- !private ">"
+- !private "??"
+- "AssignmentPrecedence"
+- "Bool"
+- !private "BooleanLiteralType"
+- "CastingPrecedence"
+- "ComparisonResult"
+- "Date"
+- "Double"
+- "Error"
+- !private "Int"
+- "LibraryVersionResponse"
+- "LibraryVersionResult"
+- !private "MMLogDebug"
+- !private "MMLogError"
+- !private "MMLogLevel"
+- !private "MMLogWarn"
+- !private "MobileMessaging"
+- !private "NSLog"
+- "RemoteAPIManager"
+- "String"
+- !private "StringLiteralType"
+- !private "UnicodeScalarType"
+- !private "UserDefaults"
+- !private "VersionCheck"
+- "VersionManager"
+- "VersionNumbersComparisonError"
+- "Void"
+- !private "mobileMessagingVersion"
+- !private "||"
+depends-member:
+- !private ["Sa", "count"]
+- !private ["Sa", "subscript"]
+- !private ["s23BidirectionalCollectionP", "Int"]
+- !private ["s23BidirectionalCollectionP", "VersionNumbersComparisonError"]
+- !private ["s23BidirectionalCollectionP", "compareVersionNumbers"]
+- !private ["s23BidirectionalCollectionP", "components"]
+- !private ["s23BidirectionalCollectionP", "count"]
+- !private ["s23BidirectionalCollectionP", "init"]
+- !private ["s23BidirectionalCollectionP", "subscript"]
+- !private ["s13BinaryIntegerP", "hashValue"]
+- !private ["s13BinaryIntegerP", "init"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "Int"]
+- !private ["s7CVarArgP", "VersionNumbersComparisonError"]
+- !private ["s7CVarArgP", "compareVersionNumbers"]
+- !private ["s7CVarArgP", "components"]
+- !private ["s7CVarArgP", "count"]
+- !private ["s7CVarArgP", "date"]
+- !private ["s7CVarArgP", "hashValue"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "logger"]
+- !private ["s7CVarArgP", "object"]
+- !private ["s7CVarArgP", "set"]
+- !private ["s7CVarArgP", "standard"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s7CVarArgP", "synchronize"]
+- !private ["s10CollectionP", "Int"]
+- !private ["s10CollectionP", "VersionNumbersComparisonError"]
+- !private ["s10CollectionP", "compareVersionNumbers"]
+- !private ["s10CollectionP", "components"]
+- !private ["s10CollectionP", "count"]
+- !private ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "Int"]
+- !private ["s10ComparableP", "VersionNumbersComparisonError"]
+- !private ["s10ComparableP", "addingTimeInterval"]
+- !private ["s10ComparableP", "compare"]
+- !private ["s10ComparableP", "compareVersionNumbers"]
+- !private ["s10ComparableP", "components"]
+- !private ["s10ComparableP", "hashValue"]
+- !private ["s10ComparableP", "init"]
+- !private ["SC16ComparisonResultO", "orderedAscending"]
+- !private ["SC16ComparisonResultO", "orderedDescending"]
+- !private ["SC16ComparisonResultO", "orderedSame"]
+- !private ["s28CustomDebugStringConvertibleP", "Int"]
+- !private ["s28CustomDebugStringConvertibleP", "VersionNumbersComparisonError"]
+- !private ["s28CustomDebugStringConvertibleP", "addingTimeInterval"]
+- !private ["s28CustomDebugStringConvertibleP", "compare"]
+- !private ["s28CustomDebugStringConvertibleP", "compareVersionNumbers"]
+- !private ["s28CustomDebugStringConvertibleP", "components"]
+- !private ["s28CustomDebugStringConvertibleP", "count"]
+- !private ["s28CustomDebugStringConvertibleP", "date"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "logger"]
+- !private ["s28CustomDebugStringConvertibleP", "object"]
+- !private ["s28CustomDebugStringConvertibleP", "set"]
+- !private ["s28CustomDebugStringConvertibleP", "standard"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "synchronize"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "compareVersionNumbers"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "components"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "Int"]
+- !private ["s29CustomPlaygroundQuickLookableP", "VersionNumbersComparisonError"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "addingTimeInterval"]
+- !private ["s29CustomPlaygroundQuickLookableP", "compare"]
+- !private ["s29CustomPlaygroundQuickLookableP", "compareVersionNumbers"]
+- !private ["s29CustomPlaygroundQuickLookableP", "components"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hashValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "Int"]
+- !private ["s17CustomReflectableP", "VersionNumbersComparisonError"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "addingTimeInterval"]
+- !private ["s17CustomReflectableP", "compare"]
+- !private ["s17CustomReflectableP", "compareVersionNumbers"]
+- !private ["s17CustomReflectableP", "components"]
+- !private ["s17CustomReflectableP", "count"]
+- !private ["s17CustomReflectableP", "hashValue"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "Int"]
+- !private ["s23CustomStringConvertibleP", "VersionNumbersComparisonError"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "addingTimeInterval"]
+- !private ["s23CustomStringConvertibleP", "compare"]
+- !private ["s23CustomStringConvertibleP", "compareVersionNumbers"]
+- !private ["s23CustomStringConvertibleP", "components"]
+- !private ["s23CustomStringConvertibleP", "count"]
+- !private ["s23CustomStringConvertibleP", "date"]
+- !private ["s23CustomStringConvertibleP", "hashValue"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "logger"]
+- !private ["s23CustomStringConvertibleP", "object"]
+- !private ["s23CustomStringConvertibleP", "set"]
+- !private ["s23CustomStringConvertibleP", "standard"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "synchronize"]
+- !private ["10Foundation4DateV", "addingTimeInterval"]
+- !private ["10Foundation4DateV", "compare"]
+- !private ["s9DecodableP", "Int"]
+- !private ["s9DecodableP", "VersionNumbersComparisonError"]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "addingTimeInterval"]
+- !private ["s9DecodableP", "compare"]
+- !private ["s9DecodableP", "compareVersionNumbers"]
+- !private ["s9DecodableP", "components"]
+- !private ["s9DecodableP", "count"]
+- !private ["s9DecodableP", "hashValue"]
+- !private ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s9EncodableP", "Int"]
+- !private ["s9EncodableP", "VersionNumbersComparisonError"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "addingTimeInterval"]
+- !private ["s9EncodableP", "compare"]
+- !private ["s9EncodableP", "compareVersionNumbers"]
+- !private ["s9EncodableP", "components"]
+- !private ["s9EncodableP", "count"]
+- !private ["s9EncodableP", "hashValue"]
+- !private ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "subscript"]
+- !private ["s9EquatableP", "Int"]
+- !private ["s9EquatableP", "Off"]
+- !private ["s9EquatableP", "VersionNumbersComparisonError"]
+- ["s9EquatableP", "_code"]
+- ["s9EquatableP", "_domain"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- ["s9EquatableP", "_getEmbeddedNSError"]
+- ["s9EquatableP", "_userInfo"]
+- !private ["s9EquatableP", "addingTimeInterval"]
+- !private ["s9EquatableP", "compare"]
+- !private ["s9EquatableP", "compareVersionNumbers"]
+- !private ["s9EquatableP", "components"]
+- !private ["s9EquatableP", "date"]
+- ["s9EquatableP", "hashValue"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "invalidParameters"]
+- !private ["s9EquatableP", "logger"]
+- !private ["s9EquatableP", "object"]
+- !private ["s9EquatableP", "orderedAscending"]
+- !private ["s9EquatableP", "orderedDescending"]
+- !private ["s9EquatableP", "orderedSame"]
+- !private ["s9EquatableP", "set"]
+- !private ["s9EquatableP", "standard"]
+- !private ["s9EquatableP", "synchronize"]
+- ["s9EquatableP", ""]
+- ["s5ErrorP", "_code"]
+- ["s5ErrorP", "_domain"]
+- ["s5ErrorP", "_getEmbeddedNSError"]
+- ["s5ErrorP", "_userInfo"]
+- ["s5ErrorP", "hashValue"]
+- !private ["s5ErrorP", "invalidParameters"]
+- ["s5ErrorP", ""]
+- !private ["s25ExpressibleByArrayLiteralP", "count"]
+- !private ["s25ExpressibleByArrayLiteralP", "subscript"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "Int"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "VersionNumbersComparisonError"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "compareVersionNumbers"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "components"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "hashValue"]
+- !private ["s27ExpressibleByIntegerLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "Int"]
+- !private ["s26ExpressibleByStringLiteralP", "VersionNumbersComparisonError"]
+- !private ["s26ExpressibleByStringLiteralP", "compareVersionNumbers"]
+- !private ["s26ExpressibleByStringLiteralP", "components"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "Int"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "VersionNumbersComparisonError"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "compareVersionNumbers"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "components"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s17FixedWidthIntegerP", "hashValue"]
+- !private ["s17FixedWidthIntegerP", "init"]
+- !private ["s8HashableP", "Int"]
+- !private ["s8HashableP", "Off"]
+- !private ["s8HashableP", "VersionNumbersComparisonError"]
+- ["s8HashableP", "_code"]
+- ["s8HashableP", "_domain"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- ["s8HashableP", "_getEmbeddedNSError"]
+- ["s8HashableP", "_userInfo"]
+- !private ["s8HashableP", "addingTimeInterval"]
+- !private ["s8HashableP", "compare"]
+- !private ["s8HashableP", "compareVersionNumbers"]
+- !private ["s8HashableP", "components"]
+- !private ["s8HashableP", "date"]
+- ["s8HashableP", "hashValue"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "invalidParameters"]
+- !private ["s8HashableP", "logger"]
+- !private ["s8HashableP", "object"]
+- !private ["s8HashableP", "orderedAscending"]
+- !private ["s8HashableP", "orderedDescending"]
+- !private ["s8HashableP", "orderedSame"]
+- !private ["s8HashableP", "set"]
+- !private ["s8HashableP", "standard"]
+- !private ["s8HashableP", "synchronize"]
+- ["s8HashableP", ""]
+- !private ["Si", "hashValue"]
+- !private ["Si", "init"]
+- !private ["15MobileMessaging13JSONDecodableP", "libraryVersion"]
+- !private ["15MobileMessaging13JSONDecodableP", "updateUrl"]
+- !private ["15MobileMessaging13JSONEncodableP", "addingTimeInterval"]
+- !private ["15MobileMessaging13JSONEncodableP", "compare"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "Int"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "VersionNumbersComparisonError"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "compareVersionNumbers"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "components"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hashValue"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["15MobileMessaging22LibraryVersionResponseV", "libraryVersion"]
+- !private ["15MobileMessaging22LibraryVersionResponseV", "updateUrl"]
+- !private ["s25LosslessStringConvertibleP", "Int"]
+- !private ["s25LosslessStringConvertibleP", "VersionNumbersComparisonError"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "compareVersionNumbers"]
+- !private ["s25LosslessStringConvertibleP", "components"]
+- !private ["s25LosslessStringConvertibleP", "hashValue"]
+- !private ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging6MMDateC", "now"]
+- !private ["15MobileMessaging10MMLogLevelO", "Off"]
+- !private ["15MobileMessaging10MMLogLevelO", "deinit"]
+- !private ["15MobileMessaging9MMLoggingP", "logLevel"]
+- !private ["s10MirrorPathP", "Int"]
+- !private ["s10MirrorPathP", "VersionNumbersComparisonError"]
+- !private ["s10MirrorPathP", "compareVersionNumbers"]
+- !private ["s10MirrorPathP", "components"]
+- !private ["s10MirrorPathP", "hashValue"]
+- !private ["s10MirrorPathP", "init"]
+- !private ["15MobileMessagingAAC", "date"]
+- !private ["15MobileMessagingAAC", "logger"]
+- !private ["s17MutableCollectionP", "count"]
+- !private ["s17MutableCollectionP", "subscript"]
+- !private ["So8NSCodingP", "compareVersionNumbers"]
+- !private ["So8NSCodingP", "components"]
+- !private ["So8NSCodingP", "init"]
+- !private ["So9NSCopyingP", "compareVersionNumbers"]
+- !private ["So9NSCopyingP", "components"]
+- !private ["So9NSCopyingP", "init"]
+- !private ["So21NSItemProviderReadingP", "compareVersionNumbers"]
+- !private ["So21NSItemProviderReadingP", "components"]
+- !private ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "compareVersionNumbers"]
+- !private ["So21NSItemProviderWritingP", "components"]
+- !private ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "compareVersionNumbers"]
+- !private ["So16NSMutableCopyingP", "components"]
+- !private ["So16NSMutableCopyingP", "init"]
+- !private ["So8NSObjectC", "compareVersionNumbers"]
+- !private ["So8NSObjectC", "components"]
+- !private ["So8NSObjectC", "date"]
+- !private ["So8NSObjectC", "logger"]
+- !private ["So8NSObjectC", "object"]
+- !private ["So8NSObjectC", "set"]
+- !private ["So8NSObjectC", "standard"]
+- !private ["So8NSObjectC", "synchronize"]
+- !private ["So16NSObjectProtocolP", "compareVersionNumbers"]
+- !private ["So16NSObjectProtocolP", "components"]
+- !private ["So16NSObjectProtocolP", "date"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "logger"]
+- !private ["So16NSObjectProtocolP", "object"]
+- !private ["So16NSObjectProtocolP", "set"]
+- !private ["So16NSObjectProtocolP", "standard"]
+- !private ["So16NSObjectProtocolP", "synchronize"]
+- !private ["So14NSSecureCodingP", "compareVersionNumbers"]
+- !private ["So14NSSecureCodingP", "components"]
+- !private ["So14NSSecureCodingP", "init"]
+- !private ["So8NSStringC", "compareVersionNumbers"]
+- !private ["So8NSStringC", "components"]
+- !private ["So8NSStringC", "init"]
+- !private ["s7NumericP", "hashValue"]
+- !private ["s7NumericP", "init"]
+- !private ["s22RandomAccessCollectionP", "count"]
+- !private ["s22RandomAccessCollectionP", "subscript"]
+- !private ["s26RangeReplaceableCollectionP", "Int"]
+- !private ["s26RangeReplaceableCollectionP", "VersionNumbersComparisonError"]
+- !private ["s26RangeReplaceableCollectionP", "compareVersionNumbers"]
+- !private ["s26RangeReplaceableCollectionP", "components"]
+- !private ["s26RangeReplaceableCollectionP", "count"]
+- !private ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s26RangeReplaceableCollectionP", "subscript"]
+- !private ["s16RawRepresentableP", "Off"]
+- !private ["s16RawRepresentableP", "orderedAscending"]
+- !private ["s16RawRepresentableP", "orderedDescending"]
+- !private ["s16RawRepresentableP", "orderedSame"]
+- !private ["10Foundation20ReferenceConvertibleP", "addingTimeInterval"]
+- !private ["10Foundation20ReferenceConvertibleP", "compare"]
+- !private ["15MobileMessaging16RemoteAPIManagerC", "fetchRecentLibraryVersion"]
+- !private ["15MobileMessaging6ResultO", "error"]
+- !private ["15MobileMessaging6ResultO", "value"]
+- !private ["s8SequenceP", "Int"]
+- !private ["s8SequenceP", "VersionNumbersComparisonError"]
+- !private ["s8SequenceP", "compareVersionNumbers"]
+- !private ["s8SequenceP", "components"]
+- !private ["s8SequenceP", "count"]
+- !private ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s13SignedIntegerP", "hashValue"]
+- !private ["s13SignedIntegerP", "init"]
+- !private ["s13SignedNumericP", "hashValue"]
+- !private ["s13SignedNumericP", "init"]
+- !private ["s10StrideableP", "hashValue"]
+- !private ["s10StrideableP", "init"]
+- ["SS", "ComparisonResult"]
+- !private ["SS", "Int"]
+- ["SS", "String"]
+- !private ["SS", "VersionNumbersComparisonError"]
+- ["SS", "compareVersionNumbers"]
+- !private ["SS", "components"]
+- !private ["SS", "init"]
+- !private ["s14StringProtocolP", "Int"]
+- !private ["s14StringProtocolP", "VersionNumbersComparisonError"]
+- !private ["s14StringProtocolP", "compareVersionNumbers"]
+- !private ["s14StringProtocolP", "components"]
+- !private ["s14StringProtocolP", "init"]
+- !private ["s16TextOutputStreamP", "Int"]
+- !private ["s16TextOutputStreamP", "VersionNumbersComparisonError"]
+- !private ["s16TextOutputStreamP", "compareVersionNumbers"]
+- !private ["s16TextOutputStreamP", "components"]
+- !private ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "Int"]
+- !private ["s20TextOutputStreamableP", "VersionNumbersComparisonError"]
+- !private ["s20TextOutputStreamableP", "compareVersionNumbers"]
+- !private ["s20TextOutputStreamableP", "components"]
+- !private ["s20TextOutputStreamableP", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "compareVersionNumbers"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "components"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["So12UserDefaultsC", "object"]
+- !private ["So12UserDefaultsC", "set"]
+- !private ["So12UserDefaultsC", "standard"]
+- !private ["So12UserDefaultsC", "synchronize"]
+- !private ["15MobileMessaging12VersionCheckV", "lastCheckDateKey"]
+- ["15MobileMessaging14VersionManagerC", "Bool"]
+- !private ["15MobileMessaging14VersionManagerC", "ComparisonResult"]
+- ["15MobileMessaging14VersionManagerC", "Date"]
+- ["15MobileMessaging14VersionManagerC", "Double"]
+- ["15MobileMessaging14VersionManagerC", "LibraryVersionResponse"]
+- ["15MobileMessaging14VersionManagerC", "LibraryVersionResult"]
+- !private ["15MobileMessaging14VersionManagerC", "MMLogDebug"]
+- !private ["15MobileMessaging14VersionManagerC", "MMLogError"]
+- !private ["15MobileMessaging14VersionManagerC", "MMLogLevel"]
+- !private ["15MobileMessaging14VersionManagerC", "MMLogWarn"]
+- !private ["15MobileMessaging14VersionManagerC", "MobileMessaging"]
+- !private ["15MobileMessaging14VersionManagerC", "NSLog"]
+- ["15MobileMessaging14VersionManagerC", "RemoteAPIManager"]
+- ["15MobileMessaging14VersionManagerC", "String"]
+- !private ["15MobileMessaging14VersionManagerC", "UserDefaults"]
+- !private ["15MobileMessaging14VersionManagerC", "VersionCheck"]
+- ["15MobileMessaging14VersionManagerC", "Void"]
+- ["15MobileMessaging14VersionManagerC", "defaultTimeout"]
+- ["15MobileMessaging14VersionManagerC", "deinit"]
+- ["15MobileMessaging14VersionManagerC", "handleResult"]
+- ["15MobileMessaging14VersionManagerC", "handleUpToDateCase"]
+- ["15MobileMessaging14VersionManagerC", "init"]
+- ["15MobileMessaging14VersionManagerC", "lastCheckDate"]
+- !private ["15MobileMessaging14VersionManagerC", "mobileMessagingVersion"]
+- ["15MobileMessaging14VersionManagerC", "remoteApiManager"]
+- ["15MobileMessaging14VersionManagerC", "shouldShowNewVersionWarning"]
+- ["15MobileMessaging14VersionManagerC", "showNewVersionWarning"]
+- ["15MobileMessaging14VersionManagerC", "validateVersion"]
+- ["15MobileMessaging14VersionManagerC", "waitUntilItsTime"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "__derived_enum_equals"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "_code"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "_domain"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "_getEmbeddedNSError"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "_userInfo"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "deinit"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "hashValue"]
+- ["15MobileMessaging29VersionNumbersComparisonErrorO", "invalidParameters"]
+- !private ["s14_ArrayProtocolP", "count"]
+- !private ["s14_ArrayProtocolP", "subscript"]
+- !private ["s23_BidirectionalIndexableP", "Int"]
+- !private ["s23_BidirectionalIndexableP", "VersionNumbersComparisonError"]
+- !private ["s23_BidirectionalIndexableP", "compareVersionNumbers"]
+- !private ["s23_BidirectionalIndexableP", "components"]
+- !private ["s23_BidirectionalIndexableP", "count"]
+- !private ["s23_BidirectionalIndexableP", "init"]
+- !private ["s23_BidirectionalIndexableP", "subscript"]
+- !private ["s18_BitwiseOperationsP", "hashValue"]
+- !private ["s18_BitwiseOperationsP", "init"]
+- !private ["s24_DestructorSafeContainerP", "count"]
+- !private ["s24_DestructorSafeContainerP", "subscript"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "Int"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "VersionNumbersComparisonError"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "compareVersionNumbers"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "components"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "hashValue"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "Int"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "VersionNumbersComparisonError"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "compareVersionNumbers"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "components"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "Int"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "VersionNumbersComparisonError"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "compareVersionNumbers"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "components"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "Int"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "VersionNumbersComparisonError"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "compareVersionNumbers"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "components"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "Int"]
+- !private ["s33_ExpressibleByStringInterpolationP", "VersionNumbersComparisonError"]
+- !private ["s33_ExpressibleByStringInterpolationP", "compareVersionNumbers"]
+- !private ["s33_ExpressibleByStringInterpolationP", "components"]
+- !private ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "compareVersionNumbers"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "components"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "Int"]
+- !private ["s10_IndexableP", "VersionNumbersComparisonError"]
+- !private ["s10_IndexableP", "compareVersionNumbers"]
+- !private ["s10_IndexableP", "components"]
+- !private ["s10_IndexableP", "count"]
+- !private ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "Int"]
+- !private ["s14_IndexableBaseP", "VersionNumbersComparisonError"]
+- !private ["s14_IndexableBaseP", "compareVersionNumbers"]
+- !private ["s14_IndexableBaseP", "components"]
+- !private ["s14_IndexableBaseP", "count"]
+- !private ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "compareVersionNumbers"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "components"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "date"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "logger"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "object"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "set"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "standard"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "synchronize"]
+- !private ["s17_MutableIndexableP", "count"]
+- !private ["s17_MutableIndexableP", "subscript"]
+- !private ["s21_ObjectiveCBridgeableP", "Int"]
+- !private ["s21_ObjectiveCBridgeableP", "VersionNumbersComparisonError"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "addingTimeInterval"]
+- !private ["s21_ObjectiveCBridgeableP", "compare"]
+- !private ["s21_ObjectiveCBridgeableP", "compareVersionNumbers"]
+- !private ["s21_ObjectiveCBridgeableP", "components"]
+- !private ["s21_ObjectiveCBridgeableP", "count"]
+- !private ["s21_ObjectiveCBridgeableP", "hashValue"]
+- !private ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- !private ["s22_RandomAccessIndexableP", "count"]
+- !private ["s22_RandomAccessIndexableP", "subscript"]
+- !private ["s26_RangeReplaceableIndexableP", "Int"]
+- !private ["s26_RangeReplaceableIndexableP", "VersionNumbersComparisonError"]
+- !private ["s26_RangeReplaceableIndexableP", "compareVersionNumbers"]
+- !private ["s26_RangeReplaceableIndexableP", "components"]
+- !private ["s26_RangeReplaceableIndexableP", "count"]
+- !private ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "subscript"]
+- !private ["s11_StrideableP", "hashValue"]
+- !private ["s11_StrideableP", "init"]
+- !private ["s16_SwiftStringViewP", "Int"]
+- !private ["s16_SwiftStringViewP", "VersionNumbersComparisonError"]
+- !private ["s16_SwiftStringViewP", "compareVersionNumbers"]
+- !private ["s16_SwiftStringViewP", "components"]
+- !private ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "Sa"
+- !private "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- !private "Sb"
+- !private "s7CVarArgP"
+- !private "s10CollectionP"
+- !private "s10ComparableP"
+- !private "SC16ComparisonResultO"
+- !private "s28CustomDebugStringConvertibleP"
+- !private "15MobileMessaging27CustomPayloadSupportedTypesP"
+- !private "s29CustomPlaygroundQuickLookableP"
+- !private "s17CustomReflectableP"
+- !private "s23CustomStringConvertibleP"
+- !private "10Foundation4DateV"
+- !private "s9DecodableP"
+- !private "s9EncodableP"
+- "s9EquatableP"
+- "s5ErrorP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s27ExpressibleByIntegerLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "s17FixedWidthIntegerP"
+- "s8HashableP"
+- !private "Si"
+- !private "15MobileMessaging13JSONDecodableP"
+- !private "15MobileMessaging13JSONEncodableP"
+- !private "15MobileMessaging17JSONSubscriptTypeP"
+- !private "15MobileMessaging22LibraryVersionResponseV"
+- !private "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging6MMDateC"
+- !private "15MobileMessaging10MMLogLevelO"
+- !private "15MobileMessaging9MMLoggingP"
+- !private "s10MirrorPathP"
+- !private "15MobileMessagingAAC"
+- !private "s17MutableCollectionP"
+- !private "So8NSCodingP"
+- !private "So9NSCopyingP"
+- !private "So21NSItemProviderReadingP"
+- !private "So21NSItemProviderWritingP"
+- !private "So16NSMutableCopyingP"
+- !private "So8NSObjectC"
+- !private "So16NSObjectProtocolP"
+- !private "So14NSSecureCodingP"
+- !private "So8NSStringC"
+- !private "s7NumericP"
+- !private "s22RandomAccessCollectionP"
+- !private "s26RangeReplaceableCollectionP"
+- !private "s16RawRepresentableP"
+- !private "10Foundation20ReferenceConvertibleP"
+- !private "15MobileMessaging16RemoteAPIManagerC"
+- !private "15MobileMessaging6ResultO"
+- !private "s8SequenceP"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s10StrideableP"
+- "SS"
+- !private "s14StringProtocolP"
+- !private "s16TextOutputStreamP"
+- !private "s20TextOutputStreamableP"
+- !private "15MobileMessaging23UserDataFoundationTypesP"
+- !private "So12UserDefaultsC"
+- !private "15MobileMessaging12VersionCheckV"
+- "15MobileMessaging14VersionManagerC"
+- "15MobileMessaging29VersionNumbersComparisonErrorO"
+- !private "s14_ArrayProtocolP"
+- !private "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s33_ExpressibleByStringInterpolationP"
+- !private "s35_HasCustomAnyHashableRepresentationP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- !private "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- !private "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- !private "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- !private "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "05d50b9b98e75dfc47e6733833e567f2"

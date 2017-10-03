@@ -1,0 +1,619 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "MobileMessagingAppDelegate"
+provides-nominal:
+- "15MobileMessaging0aB11AppDelegateC"
+provides-member:
+- ["15MobileMessaging0aB11AppDelegateC", ""]
+provides-dynamic-lookup:
+- "appGroupId"
+- "application"
+- "applicationCode"
+- "interactiveNotificationCategories"
+- "userNotificationType"
+depends-top-level:
+- !private "!"
+- !private "&&"
+- "AnyHashable"
+- "AssignmentPrecedence"
+- "Bool"
+- !private "BooleanLiteralType"
+- "Data"
+- !private "MobileMessaging"
+- "MobileMessagingAppDelegate"
+- "NotificationCategory"
+- "Set"
+- "String"
+- !private "StringLiteralType"
+- "UIApplication"
+- "UIApplicationDelegate"
+- "UIApplicationLaunchOptionsKey"
+- "UIBackgroundFetchResult"
+- !private "UIDevice"
+- "UILocalNotification"
+- "UIResponder"
+- "UserNotificationType"
+- "Void"
+- !private "fatalError"
+- !private "isTestingProcessRunning"
+depends-member:
+- !private ["s23BidirectionalCollectionP", "init"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "IS_IOS_BEFORE_10"]
+- !private ["s7CVarArgP", "MobileMessaging"]
+- !private ["s7CVarArgP", "UIDevice"]
+- !private ["s7CVarArgP", "appGroupId"]
+- ["s7CVarArgP", "application"]
+- !private ["s7CVarArgP", "applicationCode"]
+- ["s7CVarArgP", "applicationDidBecomeActive"]
+- ["s7CVarArgP", "applicationDidEnterBackground"]
+- ["s7CVarArgP", "applicationDidFinishLaunching"]
+- ["s7CVarArgP", "applicationDidReceiveMemoryWarning"]
+- ["s7CVarArgP", "applicationProtectedDataDidBecomeAvailable"]
+- ["s7CVarArgP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["s7CVarArgP", "applicationShouldRequestHealthAuthorization"]
+- ["s7CVarArgP", "applicationSignificantTimeChange"]
+- ["s7CVarArgP", "applicationWillEnterForeground"]
+- ["s7CVarArgP", "applicationWillResignActive"]
+- ["s7CVarArgP", "applicationWillTerminate"]
+- !private ["s7CVarArgP", "current"]
+- !private ["s7CVarArgP", "didReceiveLocalNotification"]
+- !private ["s7CVarArgP", "didReceiveRemoteNotification"]
+- !private ["s7CVarArgP", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["s7CVarArgP", "fatalError"]
+- !private ["s7CVarArgP", "handleActionWithIdentifier"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "interactiveNotificationCategories"]
+- !private ["s7CVarArgP", "isTestingProcessRunning"]
+- !private ["s7CVarArgP", "mm_application"]
+- !private ["s7CVarArgP", "start"]
+- !private ["s7CVarArgP", "userNotificationType"]
+- ["s7CVarArgP", "window"]
+- !private ["s7CVarArgP", "withAppGroupId"]
+- !private ["s7CVarArgP", "withApplicationCode"]
+- !private ["s7CVarArgP", "withInteractiveNotificationCategories"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "init"]
+- !private ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "IS_IOS_BEFORE_10"]
+- !private ["s28CustomDebugStringConvertibleP", "MobileMessaging"]
+- !private ["s28CustomDebugStringConvertibleP", "UIDevice"]
+- !private ["s28CustomDebugStringConvertibleP", "appGroupId"]
+- ["s28CustomDebugStringConvertibleP", "application"]
+- !private ["s28CustomDebugStringConvertibleP", "applicationCode"]
+- ["s28CustomDebugStringConvertibleP", "applicationDidBecomeActive"]
+- ["s28CustomDebugStringConvertibleP", "applicationDidEnterBackground"]
+- ["s28CustomDebugStringConvertibleP", "applicationDidFinishLaunching"]
+- ["s28CustomDebugStringConvertibleP", "applicationDidReceiveMemoryWarning"]
+- ["s28CustomDebugStringConvertibleP", "applicationProtectedDataDidBecomeAvailable"]
+- ["s28CustomDebugStringConvertibleP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["s28CustomDebugStringConvertibleP", "applicationShouldRequestHealthAuthorization"]
+- ["s28CustomDebugStringConvertibleP", "applicationSignificantTimeChange"]
+- ["s28CustomDebugStringConvertibleP", "applicationWillEnterForeground"]
+- ["s28CustomDebugStringConvertibleP", "applicationWillResignActive"]
+- ["s28CustomDebugStringConvertibleP", "applicationWillTerminate"]
+- !private ["s28CustomDebugStringConvertibleP", "current"]
+- !private ["s28CustomDebugStringConvertibleP", "didReceiveLocalNotification"]
+- !private ["s28CustomDebugStringConvertibleP", "didReceiveRemoteNotification"]
+- !private ["s28CustomDebugStringConvertibleP", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["s28CustomDebugStringConvertibleP", "fatalError"]
+- !private ["s28CustomDebugStringConvertibleP", "handleActionWithIdentifier"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "interactiveNotificationCategories"]
+- !private ["s28CustomDebugStringConvertibleP", "isTestingProcessRunning"]
+- !private ["s28CustomDebugStringConvertibleP", "mm_application"]
+- !private ["s28CustomDebugStringConvertibleP", "start"]
+- !private ["s28CustomDebugStringConvertibleP", "userNotificationType"]
+- ["s28CustomDebugStringConvertibleP", "window"]
+- !private ["s28CustomDebugStringConvertibleP", "withAppGroupId"]
+- !private ["s28CustomDebugStringConvertibleP", "withApplicationCode"]
+- !private ["s28CustomDebugStringConvertibleP", "withInteractiveNotificationCategories"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s23CustomStringConvertibleP", "IS_IOS_BEFORE_10"]
+- !private ["s23CustomStringConvertibleP", "MobileMessaging"]
+- !private ["s23CustomStringConvertibleP", "UIDevice"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "appGroupId"]
+- ["s23CustomStringConvertibleP", "application"]
+- !private ["s23CustomStringConvertibleP", "applicationCode"]
+- ["s23CustomStringConvertibleP", "applicationDidBecomeActive"]
+- ["s23CustomStringConvertibleP", "applicationDidEnterBackground"]
+- ["s23CustomStringConvertibleP", "applicationDidFinishLaunching"]
+- ["s23CustomStringConvertibleP", "applicationDidReceiveMemoryWarning"]
+- ["s23CustomStringConvertibleP", "applicationProtectedDataDidBecomeAvailable"]
+- ["s23CustomStringConvertibleP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["s23CustomStringConvertibleP", "applicationShouldRequestHealthAuthorization"]
+- ["s23CustomStringConvertibleP", "applicationSignificantTimeChange"]
+- ["s23CustomStringConvertibleP", "applicationWillEnterForeground"]
+- ["s23CustomStringConvertibleP", "applicationWillResignActive"]
+- ["s23CustomStringConvertibleP", "applicationWillTerminate"]
+- !private ["s23CustomStringConvertibleP", "current"]
+- !private ["s23CustomStringConvertibleP", "didReceiveLocalNotification"]
+- !private ["s23CustomStringConvertibleP", "didReceiveRemoteNotification"]
+- !private ["s23CustomStringConvertibleP", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["s23CustomStringConvertibleP", "fatalError"]
+- !private ["s23CustomStringConvertibleP", "handleActionWithIdentifier"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "interactiveNotificationCategories"]
+- !private ["s23CustomStringConvertibleP", "isTestingProcessRunning"]
+- !private ["s23CustomStringConvertibleP", "mm_application"]
+- !private ["s23CustomStringConvertibleP", "start"]
+- !private ["s23CustomStringConvertibleP", "userNotificationType"]
+- ["s23CustomStringConvertibleP", "window"]
+- !private ["s23CustomStringConvertibleP", "withAppGroupId"]
+- !private ["s23CustomStringConvertibleP", "withApplicationCode"]
+- !private ["s23CustomStringConvertibleP", "withInteractiveNotificationCategories"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "init"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "init"]
+- !private ["s9EquatableP", "IS_IOS_BEFORE_10"]
+- !private ["s9EquatableP", "MobileMessaging"]
+- !private ["s9EquatableP", "UIDevice"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "appGroupId"]
+- ["s9EquatableP", "application"]
+- !private ["s9EquatableP", "applicationCode"]
+- ["s9EquatableP", "applicationDidBecomeActive"]
+- ["s9EquatableP", "applicationDidEnterBackground"]
+- ["s9EquatableP", "applicationDidFinishLaunching"]
+- ["s9EquatableP", "applicationDidReceiveMemoryWarning"]
+- ["s9EquatableP", "applicationProtectedDataDidBecomeAvailable"]
+- ["s9EquatableP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["s9EquatableP", "applicationShouldRequestHealthAuthorization"]
+- ["s9EquatableP", "applicationSignificantTimeChange"]
+- ["s9EquatableP", "applicationWillEnterForeground"]
+- ["s9EquatableP", "applicationWillResignActive"]
+- ["s9EquatableP", "applicationWillTerminate"]
+- !private ["s9EquatableP", "current"]
+- !private ["s9EquatableP", "didReceiveLocalNotification"]
+- !private ["s9EquatableP", "didReceiveRemoteNotification"]
+- !private ["s9EquatableP", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["s9EquatableP", "fatalError"]
+- !private ["s9EquatableP", "handleActionWithIdentifier"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "interactiveNotificationCategories"]
+- !private ["s9EquatableP", "isTestingProcessRunning"]
+- !private ["s9EquatableP", "mm_application"]
+- !private ["s9EquatableP", "start"]
+- !private ["s9EquatableP", "userNotificationType"]
+- ["s9EquatableP", "window"]
+- !private ["s9EquatableP", "withAppGroupId"]
+- !private ["s9EquatableP", "withApplicationCode"]
+- !private ["s9EquatableP", "withInteractiveNotificationCategories"]
+- ["s9EquatableP", ""]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "IS_IOS_BEFORE_10"]
+- !private ["s8HashableP", "MobileMessaging"]
+- !private ["s8HashableP", "UIDevice"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "appGroupId"]
+- ["s8HashableP", "application"]
+- !private ["s8HashableP", "applicationCode"]
+- ["s8HashableP", "applicationDidBecomeActive"]
+- ["s8HashableP", "applicationDidEnterBackground"]
+- ["s8HashableP", "applicationDidFinishLaunching"]
+- ["s8HashableP", "applicationDidReceiveMemoryWarning"]
+- ["s8HashableP", "applicationProtectedDataDidBecomeAvailable"]
+- ["s8HashableP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["s8HashableP", "applicationShouldRequestHealthAuthorization"]
+- ["s8HashableP", "applicationSignificantTimeChange"]
+- ["s8HashableP", "applicationWillEnterForeground"]
+- ["s8HashableP", "applicationWillResignActive"]
+- ["s8HashableP", "applicationWillTerminate"]
+- !private ["s8HashableP", "current"]
+- !private ["s8HashableP", "didReceiveLocalNotification"]
+- !private ["s8HashableP", "didReceiveRemoteNotification"]
+- !private ["s8HashableP", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["s8HashableP", "fatalError"]
+- !private ["s8HashableP", "handleActionWithIdentifier"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "interactiveNotificationCategories"]
+- !private ["s8HashableP", "isTestingProcessRunning"]
+- !private ["s8HashableP", "mm_application"]
+- !private ["s8HashableP", "start"]
+- !private ["s8HashableP", "userNotificationType"]
+- ["s8HashableP", "window"]
+- !private ["s8HashableP", "withAppGroupId"]
+- !private ["s8HashableP", "withApplicationCode"]
+- !private ["s8HashableP", "withInteractiveNotificationCategories"]
+- ["s8HashableP", ""]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "init"]
+- !private ["s10MirrorPathP", "init"]
+- !private ["15MobileMessagingAAC", "didReceiveLocalNotification"]
+- !private ["15MobileMessagingAAC", "didReceiveRemoteNotification"]
+- !private ["15MobileMessagingAAC", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["15MobileMessagingAAC", "handleActionWithIdentifier"]
+- !private ["15MobileMessagingAAC", "start"]
+- !private ["15MobileMessagingAAC", "withAppGroupId"]
+- !private ["15MobileMessagingAAC", "withApplicationCode"]
+- !private ["15MobileMessagingAAC", "withInteractiveNotificationCategories"]
+- ["15MobileMessaging0aB11AppDelegateC", "AnyHashable"]
+- ["15MobileMessaging0aB11AppDelegateC", "Bool"]
+- ["15MobileMessaging0aB11AppDelegateC", "Data"]
+- !private ["15MobileMessaging0aB11AppDelegateC", "MobileMessaging"]
+- ["15MobileMessaging0aB11AppDelegateC", "NotificationCategory"]
+- ["15MobileMessaging0aB11AppDelegateC", "Set"]
+- ["15MobileMessaging0aB11AppDelegateC", "String"]
+- ["15MobileMessaging0aB11AppDelegateC", "UIApplication"]
+- ["15MobileMessaging0aB11AppDelegateC", "UIApplicationLaunchOptionsKey"]
+- ["15MobileMessaging0aB11AppDelegateC", "UIBackgroundFetchResult"]
+- !private ["15MobileMessaging0aB11AppDelegateC", "UIDevice"]
+- ["15MobileMessaging0aB11AppDelegateC", "UILocalNotification"]
+- ["15MobileMessaging0aB11AppDelegateC", "UserNotificationType"]
+- ["15MobileMessaging0aB11AppDelegateC", "Void"]
+- ["15MobileMessaging0aB11AppDelegateC", "appGroupId"]
+- ["15MobileMessaging0aB11AppDelegateC", "application"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationCode"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationDidBecomeActive"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationDidEnterBackground"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationDidFinishLaunching"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationDidReceiveMemoryWarning"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationProtectedDataDidBecomeAvailable"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationProtectedDataWillBecomeUnavailable"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationShouldRequestHealthAuthorization"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationSignificantTimeChange"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationWillEnterForeground"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationWillResignActive"]
+- ["15MobileMessaging0aB11AppDelegateC", "applicationWillTerminate"]
+- ["15MobileMessaging0aB11AppDelegateC", "deinit"]
+- !private ["15MobileMessaging0aB11AppDelegateC", "fatalError"]
+- ["15MobileMessaging0aB11AppDelegateC", "init"]
+- ["15MobileMessaging0aB11AppDelegateC", "interactiveNotificationCategories"]
+- !private ["15MobileMessaging0aB11AppDelegateC", "isTestingProcessRunning"]
+- ["15MobileMessaging0aB11AppDelegateC", "mm_application"]
+- ["15MobileMessaging0aB11AppDelegateC", "userNotificationType"]
+- ["15MobileMessaging0aB11AppDelegateC", "window"]
+- !private ["So8NSCodingP", "init"]
+- !private ["So9NSCopyingP", "init"]
+- !private ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "init"]
+- ["So8NSObjectC", "AnyHashable"]
+- ["So8NSObjectC", "Bool"]
+- ["So8NSObjectC", "Data"]
+- !private ["So8NSObjectC", "IS_IOS_BEFORE_10"]
+- !private ["So8NSObjectC", "MobileMessaging"]
+- ["So8NSObjectC", "NotificationCategory"]
+- ["So8NSObjectC", "Set"]
+- ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "UIApplication"]
+- ["So8NSObjectC", "UIApplicationLaunchOptionsKey"]
+- ["So8NSObjectC", "UIBackgroundFetchResult"]
+- !private ["So8NSObjectC", "UIDevice"]
+- ["So8NSObjectC", "UILocalNotification"]
+- ["So8NSObjectC", "UserNotificationType"]
+- ["So8NSObjectC", "Void"]
+- ["So8NSObjectC", "appGroupId"]
+- ["So8NSObjectC", "application"]
+- ["So8NSObjectC", "applicationCode"]
+- ["So8NSObjectC", "applicationDidBecomeActive"]
+- ["So8NSObjectC", "applicationDidEnterBackground"]
+- ["So8NSObjectC", "applicationDidFinishLaunching"]
+- ["So8NSObjectC", "applicationDidReceiveMemoryWarning"]
+- ["So8NSObjectC", "applicationProtectedDataDidBecomeAvailable"]
+- ["So8NSObjectC", "applicationProtectedDataWillBecomeUnavailable"]
+- ["So8NSObjectC", "applicationShouldRequestHealthAuthorization"]
+- ["So8NSObjectC", "applicationSignificantTimeChange"]
+- ["So8NSObjectC", "applicationWillEnterForeground"]
+- ["So8NSObjectC", "applicationWillResignActive"]
+- ["So8NSObjectC", "applicationWillTerminate"]
+- !private ["So8NSObjectC", "current"]
+- !private ["So8NSObjectC", "didReceiveLocalNotification"]
+- !private ["So8NSObjectC", "didReceiveRemoteNotification"]
+- !private ["So8NSObjectC", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["So8NSObjectC", "fatalError"]
+- !private ["So8NSObjectC", "handleActionWithIdentifier"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "interactiveNotificationCategories"]
+- !private ["So8NSObjectC", "isTestingProcessRunning"]
+- ["So8NSObjectC", "mm_application"]
+- !private ["So8NSObjectC", "start"]
+- ["So8NSObjectC", "userNotificationType"]
+- ["So8NSObjectC", "window"]
+- !private ["So8NSObjectC", "withAppGroupId"]
+- !private ["So8NSObjectC", "withApplicationCode"]
+- !private ["So8NSObjectC", "withInteractiveNotificationCategories"]
+- !private ["So16NSObjectProtocolP", "IS_IOS_BEFORE_10"]
+- !private ["So16NSObjectProtocolP", "MobileMessaging"]
+- !private ["So16NSObjectProtocolP", "UIDevice"]
+- !private ["So16NSObjectProtocolP", "appGroupId"]
+- ["So16NSObjectProtocolP", "application"]
+- !private ["So16NSObjectProtocolP", "applicationCode"]
+- ["So16NSObjectProtocolP", "applicationDidBecomeActive"]
+- ["So16NSObjectProtocolP", "applicationDidEnterBackground"]
+- ["So16NSObjectProtocolP", "applicationDidFinishLaunching"]
+- ["So16NSObjectProtocolP", "applicationDidReceiveMemoryWarning"]
+- ["So16NSObjectProtocolP", "applicationProtectedDataDidBecomeAvailable"]
+- ["So16NSObjectProtocolP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["So16NSObjectProtocolP", "applicationShouldRequestHealthAuthorization"]
+- ["So16NSObjectProtocolP", "applicationSignificantTimeChange"]
+- ["So16NSObjectProtocolP", "applicationWillEnterForeground"]
+- ["So16NSObjectProtocolP", "applicationWillResignActive"]
+- ["So16NSObjectProtocolP", "applicationWillTerminate"]
+- !private ["So16NSObjectProtocolP", "current"]
+- !private ["So16NSObjectProtocolP", "didReceiveLocalNotification"]
+- !private ["So16NSObjectProtocolP", "didReceiveRemoteNotification"]
+- !private ["So16NSObjectProtocolP", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["So16NSObjectProtocolP", "fatalError"]
+- !private ["So16NSObjectProtocolP", "handleActionWithIdentifier"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "interactiveNotificationCategories"]
+- !private ["So16NSObjectProtocolP", "isTestingProcessRunning"]
+- !private ["So16NSObjectProtocolP", "mm_application"]
+- !private ["So16NSObjectProtocolP", "start"]
+- !private ["So16NSObjectProtocolP", "userNotificationType"]
+- ["So16NSObjectProtocolP", "window"]
+- !private ["So16NSObjectProtocolP", "withAppGroupId"]
+- !private ["So16NSObjectProtocolP", "withApplicationCode"]
+- !private ["So16NSObjectProtocolP", "withInteractiveNotificationCategories"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSSecureCodingP", "init"]
+- !private ["So8NSStringC", "init"]
+- ["15MobileMessaging20NotificationCategoryC", "deinit"]
+- !private ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s8SequenceP", "init"]
+- !private ["s12StaticStringV", "init"]
+- !private ["SS", "init"]
+- !private ["s14StringProtocolP", "init"]
+- !private ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "init"]
+- !private ["So21UIApplicationDelegateP", "MobileMessaging"]
+- !private ["So21UIApplicationDelegateP", "UIDevice"]
+- !private ["So21UIApplicationDelegateP", "appGroupId"]
+- ["So21UIApplicationDelegateP", "application"]
+- !private ["So21UIApplicationDelegateP", "applicationCode"]
+- ["So21UIApplicationDelegateP", "applicationDidBecomeActive"]
+- ["So21UIApplicationDelegateP", "applicationDidEnterBackground"]
+- ["So21UIApplicationDelegateP", "applicationDidFinishLaunching"]
+- ["So21UIApplicationDelegateP", "applicationDidReceiveMemoryWarning"]
+- ["So21UIApplicationDelegateP", "applicationProtectedDataDidBecomeAvailable"]
+- ["So21UIApplicationDelegateP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["So21UIApplicationDelegateP", "applicationShouldRequestHealthAuthorization"]
+- ["So21UIApplicationDelegateP", "applicationSignificantTimeChange"]
+- ["So21UIApplicationDelegateP", "applicationWillEnterForeground"]
+- ["So21UIApplicationDelegateP", "applicationWillResignActive"]
+- ["So21UIApplicationDelegateP", "applicationWillTerminate"]
+- !private ["So21UIApplicationDelegateP", "fatalError"]
+- !private ["So21UIApplicationDelegateP", "interactiveNotificationCategories"]
+- !private ["So21UIApplicationDelegateP", "isTestingProcessRunning"]
+- !private ["So21UIApplicationDelegateP", "mm_application"]
+- !private ["So21UIApplicationDelegateP", "userNotificationType"]
+- ["So21UIApplicationDelegateP", "window"]
+- ["So21UIApplicationDelegateP", ""]
+- !private ["So8UIDeviceC", "IS_IOS_BEFORE_10"]
+- !private ["So8UIDeviceC", "current"]
+- !private ["So30UIPasteConfigurationSupportingP", "MobileMessaging"]
+- !private ["So30UIPasteConfigurationSupportingP", "UIDevice"]
+- !private ["So30UIPasteConfigurationSupportingP", "appGroupId"]
+- ["So30UIPasteConfigurationSupportingP", "application"]
+- !private ["So30UIPasteConfigurationSupportingP", "applicationCode"]
+- ["So30UIPasteConfigurationSupportingP", "applicationDidBecomeActive"]
+- ["So30UIPasteConfigurationSupportingP", "applicationDidEnterBackground"]
+- ["So30UIPasteConfigurationSupportingP", "applicationDidFinishLaunching"]
+- ["So30UIPasteConfigurationSupportingP", "applicationDidReceiveMemoryWarning"]
+- ["So30UIPasteConfigurationSupportingP", "applicationProtectedDataDidBecomeAvailable"]
+- ["So30UIPasteConfigurationSupportingP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["So30UIPasteConfigurationSupportingP", "applicationShouldRequestHealthAuthorization"]
+- ["So30UIPasteConfigurationSupportingP", "applicationSignificantTimeChange"]
+- ["So30UIPasteConfigurationSupportingP", "applicationWillEnterForeground"]
+- ["So30UIPasteConfigurationSupportingP", "applicationWillResignActive"]
+- ["So30UIPasteConfigurationSupportingP", "applicationWillTerminate"]
+- !private ["So30UIPasteConfigurationSupportingP", "fatalError"]
+- !private ["So30UIPasteConfigurationSupportingP", "init"]
+- !private ["So30UIPasteConfigurationSupportingP", "interactiveNotificationCategories"]
+- !private ["So30UIPasteConfigurationSupportingP", "isTestingProcessRunning"]
+- !private ["So30UIPasteConfigurationSupportingP", "mm_application"]
+- !private ["So30UIPasteConfigurationSupportingP", "userNotificationType"]
+- ["So30UIPasteConfigurationSupportingP", "window"]
+- ["So30UIPasteConfigurationSupportingP", ""]
+- ["So11UIResponderC", "AnyHashable"]
+- ["So11UIResponderC", "Bool"]
+- ["So11UIResponderC", "Data"]
+- !private ["So11UIResponderC", "MobileMessaging"]
+- ["So11UIResponderC", "NotificationCategory"]
+- ["So11UIResponderC", "Set"]
+- ["So11UIResponderC", "String"]
+- ["So11UIResponderC", "UIApplication"]
+- ["So11UIResponderC", "UIApplicationLaunchOptionsKey"]
+- ["So11UIResponderC", "UIBackgroundFetchResult"]
+- !private ["So11UIResponderC", "UIDevice"]
+- ["So11UIResponderC", "UILocalNotification"]
+- ["So11UIResponderC", "UserNotificationType"]
+- ["So11UIResponderC", "Void"]
+- ["So11UIResponderC", "appGroupId"]
+- ["So11UIResponderC", "application"]
+- ["So11UIResponderC", "applicationCode"]
+- ["So11UIResponderC", "applicationDidBecomeActive"]
+- ["So11UIResponderC", "applicationDidEnterBackground"]
+- ["So11UIResponderC", "applicationDidFinishLaunching"]
+- ["So11UIResponderC", "applicationDidReceiveMemoryWarning"]
+- ["So11UIResponderC", "applicationProtectedDataDidBecomeAvailable"]
+- ["So11UIResponderC", "applicationProtectedDataWillBecomeUnavailable"]
+- ["So11UIResponderC", "applicationShouldRequestHealthAuthorization"]
+- ["So11UIResponderC", "applicationSignificantTimeChange"]
+- ["So11UIResponderC", "applicationWillEnterForeground"]
+- ["So11UIResponderC", "applicationWillResignActive"]
+- ["So11UIResponderC", "applicationWillTerminate"]
+- !private ["So11UIResponderC", "fatalError"]
+- ["So11UIResponderC", "init"]
+- ["So11UIResponderC", "interactiveNotificationCategories"]
+- !private ["So11UIResponderC", "isTestingProcessRunning"]
+- ["So11UIResponderC", "mm_application"]
+- ["So11UIResponderC", "userNotificationType"]
+- ["So11UIResponderC", "window"]
+- ["So11UIResponderC", ""]
+- !private ["So30UIResponderStandardEditActionsP", "MobileMessaging"]
+- !private ["So30UIResponderStandardEditActionsP", "UIDevice"]
+- !private ["So30UIResponderStandardEditActionsP", "appGroupId"]
+- ["So30UIResponderStandardEditActionsP", "application"]
+- !private ["So30UIResponderStandardEditActionsP", "applicationCode"]
+- ["So30UIResponderStandardEditActionsP", "applicationDidBecomeActive"]
+- ["So30UIResponderStandardEditActionsP", "applicationDidEnterBackground"]
+- ["So30UIResponderStandardEditActionsP", "applicationDidFinishLaunching"]
+- ["So30UIResponderStandardEditActionsP", "applicationDidReceiveMemoryWarning"]
+- ["So30UIResponderStandardEditActionsP", "applicationProtectedDataDidBecomeAvailable"]
+- ["So30UIResponderStandardEditActionsP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["So30UIResponderStandardEditActionsP", "applicationShouldRequestHealthAuthorization"]
+- ["So30UIResponderStandardEditActionsP", "applicationSignificantTimeChange"]
+- ["So30UIResponderStandardEditActionsP", "applicationWillEnterForeground"]
+- ["So30UIResponderStandardEditActionsP", "applicationWillResignActive"]
+- ["So30UIResponderStandardEditActionsP", "applicationWillTerminate"]
+- !private ["So30UIResponderStandardEditActionsP", "fatalError"]
+- !private ["So30UIResponderStandardEditActionsP", "init"]
+- !private ["So30UIResponderStandardEditActionsP", "interactiveNotificationCategories"]
+- !private ["So30UIResponderStandardEditActionsP", "isTestingProcessRunning"]
+- !private ["So30UIResponderStandardEditActionsP", "mm_application"]
+- !private ["So30UIResponderStandardEditActionsP", "userNotificationType"]
+- ["So30UIResponderStandardEditActionsP", "window"]
+- ["So30UIResponderStandardEditActionsP", ""]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s23_BidirectionalIndexableP", "init"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "init"]
+- !private ["s14_IndexableBaseP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "IS_IOS_BEFORE_10"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MobileMessaging"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UIDevice"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "appGroupId"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "application"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "applicationCode"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationDidBecomeActive"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationDidEnterBackground"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationDidFinishLaunching"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationDidReceiveMemoryWarning"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationProtectedDataDidBecomeAvailable"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationProtectedDataWillBecomeUnavailable"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationShouldRequestHealthAuthorization"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationSignificantTimeChange"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationWillEnterForeground"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationWillResignActive"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "applicationWillTerminate"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "current"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "didReceiveLocalNotification"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "didReceiveRemoteNotification"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "didRegisterForRemoteNotificationsWithDeviceToken"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "fatalError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "handleActionWithIdentifier"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "interactiveNotificationCategories"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isTestingProcessRunning"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_application"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "start"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "userNotificationType"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "window"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "withAppGroupId"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "withApplicationCode"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "withInteractiveNotificationCategories"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "s23BidirectionalCollectionP"
+- !private "Sb"
+- "s7CVarArgP"
+- !private "s10CollectionP"
+- !private "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- !private "15MobileMessaging27CustomPayloadSupportedTypesP"
+- !private "s29CustomPlaygroundQuickLookableP"
+- !private "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "s9DecodableP"
+- !private "s9EncodableP"
+- "s9EquatableP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- !private "15MobileMessaging17JSONSubscriptTypeP"
+- !private "s25LosslessStringConvertibleP"
+- !private "s10MirrorPathP"
+- !private "15MobileMessagingAAC"
+- "15MobileMessaging0aB11AppDelegateC"
+- !private "So8NSCodingP"
+- !private "So9NSCopyingP"
+- !private "So21NSItemProviderReadingP"
+- !private "So21NSItemProviderWritingP"
+- !private "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- !private "So14NSSecureCodingP"
+- !private "So8NSStringC"
+- "15MobileMessaging20NotificationCategoryC"
+- !private "s26RangeReplaceableCollectionP"
+- !private "s8SequenceP"
+- !private "s12StaticStringV"
+- !private "SS"
+- !private "s14StringProtocolP"
+- !private "s16TextOutputStreamP"
+- !private "s20TextOutputStreamableP"
+- "So21UIApplicationDelegateP"
+- !private "So8UIDeviceC"
+- "So30UIPasteConfigurationSupportingP"
+- "So11UIResponderC"
+- "So30UIResponderStandardEditActionsP"
+- !private "15MobileMessaging23UserDataFoundationTypesP"
+- !private "s23_BidirectionalIndexableP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s33_ExpressibleByStringInterpolationP"
+- !private "s35_HasCustomAnyHashableRepresentationP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s21_ObjectiveCBridgeableP"
+- !private "s26_RangeReplaceableIndexableP"
+- !private "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "d3491edacf73b00716cf588837f76060"

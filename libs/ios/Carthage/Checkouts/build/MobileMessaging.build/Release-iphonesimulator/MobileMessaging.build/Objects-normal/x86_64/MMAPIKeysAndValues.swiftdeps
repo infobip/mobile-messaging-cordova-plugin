@@ -1,0 +1,293 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "APIKeys"
+- "APIHeaders"
+- "VersionCheck"
+- "PushRegistration"
+- "SystemDataKeys"
+- "GeoReportingAPIKeys"
+- "InternalDataKeys"
+- "AttachmentsKeys"
+- "DeliveryReport"
+- "APNSPayloadKeys"
+- "APIValues"
+provides-nominal:
+- "15MobileMessaging7APIKeysV"
+- "15MobileMessaging10APIHeadersV"
+- "15MobileMessaging12VersionCheckV"
+- "15MobileMessaging16PushRegistrationV"
+- "15MobileMessaging14SystemDataKeysV"
+- "15MobileMessaging19GeoReportingAPIKeysV"
+- "15MobileMessaging16InternalDataKeysV"
+- "15MobileMessaging15AttachmentsKeysV"
+- "15MobileMessaging14DeliveryReportV"
+- "15MobileMessaging15APNSPayloadKeysV"
+- "15MobileMessaging9APIValuesV"
+provides-member:
+- ["15MobileMessaging7APIKeysV", ""]
+- ["15MobileMessaging10APIHeadersV", ""]
+- ["15MobileMessaging12VersionCheckV", ""]
+- ["15MobileMessaging16PushRegistrationV", ""]
+- ["15MobileMessaging14SystemDataKeysV", ""]
+- ["15MobileMessaging19GeoReportingAPIKeysV", ""]
+- ["15MobileMessaging16InternalDataKeysV", ""]
+- ["15MobileMessaging15AttachmentsKeysV", ""]
+- ["15MobileMessaging14DeliveryReportV", ""]
+- ["15MobileMessaging15APNSPayloadKeysV", ""]
+- ["15MobileMessaging9APIValuesV", ""]
+provides-dynamic-lookup:
+depends-top-level:
+- "APIHeaders"
+- "APIKeys"
+- "APIValues"
+- "APNSPayloadKeys"
+- "AttachmentsKeys"
+- "DeliveryReport"
+- "GeoReportingAPIKeys"
+- "InternalDataKeys"
+- "PushRegistration"
+- "StringLiteralType"
+- "SystemDataKeys"
+- "UnicodeScalarType"
+- "VersionCheck"
+depends-member:
+- ["15MobileMessaging10APIHeadersV", "foreground"]
+- ["15MobileMessaging10APIHeadersV", "init"]
+- ["15MobileMessaging10APIHeadersV", "pushRegistrationId"]
+- ["15MobileMessaging7APIKeysV", "init"]
+- ["15MobileMessaging7APIKeysV", "kArchiveMsgIds"]
+- ["15MobileMessaging7APIKeysV", "kBackendErrorDomain"]
+- ["15MobileMessaging7APIKeysV", "kDLRMsgIds"]
+- ["15MobileMessaging7APIKeysV", "kErrorMessageId"]
+- ["15MobileMessaging7APIKeysV", "kErrorText"]
+- ["15MobileMessaging7APIKeysV", "kMOBulkId"]
+- ["15MobileMessaging7APIKeysV", "kMOCustomPayload"]
+- ["15MobileMessaging7APIKeysV", "kMODestination"]
+- ["15MobileMessaging7APIKeysV", "kMOFailedMOMessageIDs"]
+- ["15MobileMessaging7APIKeysV", "kMOFrom"]
+- ["15MobileMessaging7APIKeysV", "kMOInitialMessageId"]
+- ["15MobileMessaging7APIKeysV", "kMOMessageId"]
+- ["15MobileMessaging7APIKeysV", "kMOMessageSentStatusCode"]
+- ["15MobileMessaging7APIKeysV", "kMOMessages"]
+- ["15MobileMessaging7APIKeysV", "kMOText"]
+- ["15MobileMessaging7APIKeysV", "kMessageIDs"]
+- ["15MobileMessaging7APIKeysV", "kMessageId"]
+- ["15MobileMessaging7APIKeysV", "kRequestError"]
+- ["15MobileMessaging7APIKeysV", "kSeenMessages"]
+- ["15MobileMessaging7APIKeysV", "kSeenTimestampDelta"]
+- ["15MobileMessaging7APIKeysV", "kServiceException"]
+- ["15MobileMessaging7APIKeysV", "kUserDataCustomUserData"]
+- ["15MobileMessaging7APIKeysV", "kUserDataExternalUserId"]
+- ["15MobileMessaging7APIKeysV", "kUserDataFailures"]
+- ["15MobileMessaging7APIKeysV", "kUserDataPredefinedUserData"]
+- ["15MobileMessaging9APIValuesV", "init"]
+- ["15MobileMessaging9APIValuesV", "platformType"]
+- ["15MobileMessaging9APIValuesV", "prodBaseURLString"]
+- ["15MobileMessaging15APNSPayloadKeysV", "alert"]
+- ["15MobileMessaging15APNSPayloadKeysV", "aps"]
+- ["15MobileMessaging15APNSPayloadKeysV", "badge"]
+- ["15MobileMessaging15APNSPayloadKeysV", "body"]
+- ["15MobileMessaging15APNSPayloadKeysV", "contentAvailable"]
+- ["15MobileMessaging15APNSPayloadKeysV", "customPayload"]
+- ["15MobileMessaging15APNSPayloadKeysV", "init"]
+- ["15MobileMessaging15APNSPayloadKeysV", "internalData"]
+- ["15MobileMessaging15APNSPayloadKeysV", "messageId"]
+- ["15MobileMessaging15APNSPayloadKeysV", "payloads"]
+- ["15MobileMessaging15APNSPayloadKeysV", "sound"]
+- ["15MobileMessaging15APNSPayloadKeysV", "title"]
+- ["15MobileMessaging15AttachmentsKeysV", "init"]
+- ["15MobileMessaging15AttachmentsKeysV", "type"]
+- ["15MobileMessaging15AttachmentsKeysV", "url"]
+- ["s23BidirectionalCollectionP", "init"]
+- ["s7CVarArgP", "init"]
+- ["s10CollectionP", "init"]
+- ["s10ComparableP", "init"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- ["s17CustomReflectableP", "init"]
+- ["s23CustomStringConvertibleP", "init"]
+- ["s9DecodableP", "init"]
+- ["15MobileMessaging14DeliveryReportV", "dlrMessageIds"]
+- ["15MobileMessaging14DeliveryReportV", "init"]
+- ["s9EncodableP", "init"]
+- ["s9EquatableP", "init"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "campaignId"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "event"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "finishedCampaignIds"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "geoAreaId"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "init"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "messageId"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "messageIdsMap"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "messages"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "reports"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "sdkMessageId"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "suspendedCampaignIds"]
+- ["15MobileMessaging19GeoReportingAPIKeysV", "timestampDelta"]
+- ["s8HashableP", "init"]
+- ["15MobileMessaging16InternalDataKeysV", "attachments"]
+- ["15MobileMessaging16InternalDataKeysV", "bulkId"]
+- ["15MobileMessaging16InternalDataKeysV", "deliveryTime"]
+- ["15MobileMessaging16InternalDataKeysV", "event"]
+- ["15MobileMessaging16InternalDataKeysV", "geo"]
+- ["15MobileMessaging16InternalDataKeysV", "init"]
+- ["15MobileMessaging16InternalDataKeysV", "messageType"]
+- ["15MobileMessaging16InternalDataKeysV", "messageTypeGeo"]
+- ["15MobileMessaging16InternalDataKeysV", "sendDateTime"]
+- ["15MobileMessaging16InternalDataKeysV", "silent"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- ["s25LosslessStringConvertibleP", "init"]
+- ["s10MirrorPathP", "init"]
+- ["So8NSCodingP", "init"]
+- ["So9NSCopyingP", "init"]
+- ["So21NSItemProviderReadingP", "init"]
+- ["So21NSItemProviderWritingP", "init"]
+- ["So16NSMutableCopyingP", "init"]
+- ["So16NSObjectProtocolP", "init"]
+- ["So14NSSecureCodingP", "init"]
+- ["So8NSStringC", "init"]
+- ["15MobileMessaging16PushRegistrationV", "deviceToken"]
+- ["15MobileMessaging16PushRegistrationV", "expiredInternalId"]
+- ["15MobileMessaging16PushRegistrationV", "init"]
+- ["15MobileMessaging16PushRegistrationV", "internalId"]
+- ["15MobileMessaging16PushRegistrationV", "isEnabled"]
+- ["15MobileMessaging16PushRegistrationV", "platform"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- ["s8SequenceP", "init"]
+- ["SS", "init"]
+- ["s14StringProtocolP", "init"]
+- ["15MobileMessaging14SystemDataKeysV", "appVer"]
+- ["15MobileMessaging14SystemDataKeysV", "deviceManufacturer"]
+- ["15MobileMessaging14SystemDataKeysV", "deviceModel"]
+- ["15MobileMessaging14SystemDataKeysV", "deviceSecure"]
+- ["15MobileMessaging14SystemDataKeysV", "geofencingServiceEnabled"]
+- ["15MobileMessaging14SystemDataKeysV", "init"]
+- ["15MobileMessaging14SystemDataKeysV", "notificationsEnabled"]
+- ["15MobileMessaging14SystemDataKeysV", "osVer"]
+- ["15MobileMessaging14SystemDataKeysV", "sdkVersion"]
+- ["s16TextOutputStreamP", "init"]
+- ["s20TextOutputStreamableP", "init"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- ["15MobileMessaging12VersionCheckV", "init"]
+- ["15MobileMessaging12VersionCheckV", "lastCheckDateKey"]
+- ["15MobileMessaging12VersionCheckV", "libraryVersion"]
+- ["15MobileMessaging12VersionCheckV", "libraryVersionUpdateUrl"]
+- ["15MobileMessaging12VersionCheckV", "platformType"]
+- ["s23_BidirectionalIndexableP", "init"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- ["s10_IndexableP", "init"]
+- ["s14_IndexableBaseP", "init"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- "15MobileMessaging10APIHeadersV"
+- "15MobileMessaging7APIKeysV"
+- "15MobileMessaging9APIValuesV"
+- "15MobileMessaging15APNSPayloadKeysV"
+- "15MobileMessaging15AttachmentsKeysV"
+- "s23BidirectionalCollectionP"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "s9DecodableP"
+- "15MobileMessaging14DeliveryReportV"
+- "s9EncodableP"
+- "s9EquatableP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- "15MobileMessaging19GeoReportingAPIKeysV"
+- "s8HashableP"
+- "15MobileMessaging16InternalDataKeysV"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "s25LosslessStringConvertibleP"
+- "s10MirrorPathP"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- "15MobileMessaging16PushRegistrationV"
+- "s26RangeReplaceableCollectionP"
+- "s8SequenceP"
+- "SS"
+- "s14StringProtocolP"
+- "15MobileMessaging14SystemDataKeysV"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- "15MobileMessaging12VersionCheckV"
+- "s23_BidirectionalIndexableP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- "s21_ObjectiveCBridgeableP"
+- "s26_RangeReplaceableIndexableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "eeccf11e0111284d64d6a101a9aad5c0"

@@ -1,0 +1,652 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "MMInternalErrorDomain"
+- "MMInternalErrorType"
+provides-nominal:
+- "15MobileMessaging19MMInternalErrorTypeO"
+provides-member:
+- ["15MobileMessaging19MMInternalErrorTypeO", ""]
+- ["So7NSErrorC", ""]
+- ["So7NSErrorC", "mm_message"]
+- ["So7NSErrorC", "mm_code"]
+- ["So7NSErrorC", "mm_isRetryable"]
+- ["So7NSErrorC", "init"]
+provides-dynamic-lookup:
+- "mm_code"
+- "mm_isRetryable"
+- "mm_message"
+depends-top-level:
+- !private "!="
+- !private "&&"
+- !private "..<"
+- "=="
+- !private "AFURLResponseSerializationErrorDomain"
+- !private "APIKeys"
+- "AssignmentPrecedence"
+- "Bool"
+- "CastingPrecedence"
+- "Error"
+- "Int"
+- "MMInternalErrorDomain"
+- "MMInternalErrorType"
+- !private "MobileMessaging"
+- "NSError"
+- !private "NSLocalizedDescriptionKey"
+- !private "NSLocalizedString"
+- !private "NSURLErrorBadServerResponse"
+- !private "NSURLErrorCancelled"
+- !private "NSURLErrorCannotConnectToHost"
+- !private "NSURLErrorCannotDecodeContentData"
+- !private "NSURLErrorCannotDecodeRawData"
+- !private "NSURLErrorCannotFindHost"
+- !private "NSURLErrorCannotParseResponse"
+- !private "NSURLErrorDNSLookupFailed"
+- !private "NSURLErrorDomain"
+- !private "NSURLErrorNetworkConnectionLost"
+- !private "NSURLErrorNotConnectedToInternet"
+- !private "NSURLErrorResourceUnavailable"
+- !private "NSURLErrorTimedOut"
+- !private "NSURLErrorUnknown"
+- !private "Set"
+- "String"
+- "StringLiteralType"
+- !private "||"
+depends-member:
+- !private ["15MobileMessaging7APIKeysV", "kErrorMessageId"]
+- !private ["15MobileMessaging7APIKeysV", "kErrorText"]
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["s13BinaryIntegerP", "hashValue"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "AFURLResponseSerializationErrorDomain"]
+- !private ["s7CVarArgP", "APIKeys"]
+- !private ["s7CVarArgP", "MMInternalErrorDomain"]
+- !private ["s7CVarArgP", "NSURLErrorBadServerResponse"]
+- !private ["s7CVarArgP", "NSURLErrorCancelled"]
+- !private ["s7CVarArgP", "NSURLErrorCannotConnectToHost"]
+- !private ["s7CVarArgP", "NSURLErrorCannotDecodeContentData"]
+- !private ["s7CVarArgP", "NSURLErrorCannotDecodeRawData"]
+- !private ["s7CVarArgP", "NSURLErrorCannotFindHost"]
+- !private ["s7CVarArgP", "NSURLErrorCannotParseResponse"]
+- !private ["s7CVarArgP", "NSURLErrorDNSLookupFailed"]
+- !private ["s7CVarArgP", "NSURLErrorDomain"]
+- !private ["s7CVarArgP", "NSURLErrorNetworkConnectionLost"]
+- !private ["s7CVarArgP", "NSURLErrorNotConnectedToInternet"]
+- !private ["s7CVarArgP", "NSURLErrorResourceUnavailable"]
+- !private ["s7CVarArgP", "NSURLErrorTimedOut"]
+- !private ["s7CVarArgP", "NSURLErrorUnknown"]
+- !private ["s7CVarArgP", "Set"]
+- !private ["s7CVarArgP", "code"]
+- !private ["s7CVarArgP", "contains"]
+- !private ["s7CVarArgP", "currentInstallation"]
+- !private ["s7CVarArgP", "deviceToken"]
+- !private ["s7CVarArgP", "domain"]
+- !private ["s7CVarArgP", "hashValue"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "insert"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s7CVarArgP", "userInfo"]
+- !private ["s10CollectionP", "contains"]
+- ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "insert"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "hashValue"]
+- ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "AFURLResponseSerializationErrorDomain"]
+- !private ["s28CustomDebugStringConvertibleP", "APIKeys"]
+- !private ["s28CustomDebugStringConvertibleP", "MMInternalErrorDomain"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorBadServerResponse"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorCancelled"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorCannotConnectToHost"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorCannotDecodeContentData"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorCannotDecodeRawData"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorCannotFindHost"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorCannotParseResponse"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorDNSLookupFailed"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorDomain"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorNetworkConnectionLost"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorNotConnectedToInternet"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorResourceUnavailable"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorTimedOut"]
+- !private ["s28CustomDebugStringConvertibleP", "NSURLErrorUnknown"]
+- !private ["s28CustomDebugStringConvertibleP", "Set"]
+- !private ["s28CustomDebugStringConvertibleP", "code"]
+- !private ["s28CustomDebugStringConvertibleP", "contains"]
+- !private ["s28CustomDebugStringConvertibleP", "currentInstallation"]
+- !private ["s28CustomDebugStringConvertibleP", "deviceToken"]
+- !private ["s28CustomDebugStringConvertibleP", "domain"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "insert"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "userInfo"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hashValue"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "contains"]
+- !private ["s17CustomReflectableP", "hashValue"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "insert"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "AFURLResponseSerializationErrorDomain"]
+- !private ["s23CustomStringConvertibleP", "APIKeys"]
+- !private ["s23CustomStringConvertibleP", "MMInternalErrorDomain"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorBadServerResponse"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorCancelled"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorCannotConnectToHost"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorCannotDecodeContentData"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorCannotDecodeRawData"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorCannotFindHost"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorCannotParseResponse"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorDNSLookupFailed"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorDomain"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorNetworkConnectionLost"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorNotConnectedToInternet"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorResourceUnavailable"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorTimedOut"]
+- !private ["s23CustomStringConvertibleP", "NSURLErrorUnknown"]
+- !private ["s23CustomStringConvertibleP", "Set"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "code"]
+- !private ["s23CustomStringConvertibleP", "contains"]
+- !private ["s23CustomStringConvertibleP", "currentInstallation"]
+- !private ["s23CustomStringConvertibleP", "deviceToken"]
+- !private ["s23CustomStringConvertibleP", "domain"]
+- !private ["s23CustomStringConvertibleP", "hashValue"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "insert"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "userInfo"]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "contains"]
+- !private ["s9DecodableP", "hashValue"]
+- ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "insert"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s10DictionaryV", "subscript"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "contains"]
+- !private ["s9EncodableP", "hashValue"]
+- ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "insert"]
+- !private ["s9EncodableP", "subscript"]
+- !private ["s9EquatableP", "AFURLResponseSerializationErrorDomain"]
+- !private ["s9EquatableP", "APIKeys"]
+- !private ["s9EquatableP", "MMInternalErrorDomain"]
+- !private ["s9EquatableP", "MobileMessaging"]
+- !private ["s9EquatableP", "NSLocalizedDescriptionKey"]
+- !private ["s9EquatableP", "NSLocalizedString"]
+- !private ["s9EquatableP", "NSURLErrorBadServerResponse"]
+- !private ["s9EquatableP", "NSURLErrorCancelled"]
+- !private ["s9EquatableP", "NSURLErrorCannotConnectToHost"]
+- !private ["s9EquatableP", "NSURLErrorCannotDecodeContentData"]
+- !private ["s9EquatableP", "NSURLErrorCannotDecodeRawData"]
+- !private ["s9EquatableP", "NSURLErrorCannotFindHost"]
+- !private ["s9EquatableP", "NSURLErrorCannotParseResponse"]
+- !private ["s9EquatableP", "NSURLErrorDNSLookupFailed"]
+- !private ["s9EquatableP", "NSURLErrorDomain"]
+- !private ["s9EquatableP", "NSURLErrorNetworkConnectionLost"]
+- !private ["s9EquatableP", "NSURLErrorNotConnectedToInternet"]
+- !private ["s9EquatableP", "NSURLErrorResourceUnavailable"]
+- !private ["s9EquatableP", "NSURLErrorTimedOut"]
+- !private ["s9EquatableP", "NSURLErrorUnknown"]
+- ["s9EquatableP", "NoRegistration"]
+- !private ["s9EquatableP", "Set"]
+- ["s9EquatableP", "StorageInitializationError"]
+- ["s9EquatableP", "UnknownError"]
+- ["s9EquatableP", "_code"]
+- ["s9EquatableP", "_domain"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- ["s9EquatableP", "_getEmbeddedNSError"]
+- ["s9EquatableP", "_userInfo"]
+- !private ["s9EquatableP", "code"]
+- !private ["s9EquatableP", "contains"]
+- !private ["s9EquatableP", "currentInstallation"]
+- !private ["s9EquatableP", "deviceToken"]
+- !private ["s9EquatableP", "domain"]
+- !private ["s9EquatableP", "errorCode"]
+- ["s9EquatableP", "hashValue"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "insert"]
+- !private ["s9EquatableP", "userInfo"]
+- ["s9EquatableP", ""]
+- !private ["s5ErrorP", "AFURLResponseSerializationErrorDomain"]
+- !private ["s5ErrorP", "APIKeys"]
+- !private ["s5ErrorP", "MMInternalErrorDomain"]
+- !private ["s5ErrorP", "MobileMessaging"]
+- !private ["s5ErrorP", "NSLocalizedDescriptionKey"]
+- !private ["s5ErrorP", "NSLocalizedString"]
+- !private ["s5ErrorP", "NSURLErrorBadServerResponse"]
+- !private ["s5ErrorP", "NSURLErrorCancelled"]
+- !private ["s5ErrorP", "NSURLErrorCannotConnectToHost"]
+- !private ["s5ErrorP", "NSURLErrorCannotDecodeContentData"]
+- !private ["s5ErrorP", "NSURLErrorCannotDecodeRawData"]
+- !private ["s5ErrorP", "NSURLErrorCannotFindHost"]
+- !private ["s5ErrorP", "NSURLErrorCannotParseResponse"]
+- !private ["s5ErrorP", "NSURLErrorDNSLookupFailed"]
+- !private ["s5ErrorP", "NSURLErrorDomain"]
+- !private ["s5ErrorP", "NSURLErrorNetworkConnectionLost"]
+- !private ["s5ErrorP", "NSURLErrorNotConnectedToInternet"]
+- !private ["s5ErrorP", "NSURLErrorResourceUnavailable"]
+- !private ["s5ErrorP", "NSURLErrorTimedOut"]
+- !private ["s5ErrorP", "NSURLErrorUnknown"]
+- ["s5ErrorP", "NoRegistration"]
+- !private ["s5ErrorP", "Set"]
+- ["s5ErrorP", "StorageInitializationError"]
+- ["s5ErrorP", "UnknownError"]
+- ["s5ErrorP", "_code"]
+- ["s5ErrorP", "_domain"]
+- ["s5ErrorP", "_getEmbeddedNSError"]
+- ["s5ErrorP", "_userInfo"]
+- !private ["s5ErrorP", "code"]
+- !private ["s5ErrorP", "domain"]
+- !private ["s5ErrorP", "errorCode"]
+- ["s5ErrorP", "hashValue"]
+- !private ["s5ErrorP", "init"]
+- !private ["s5ErrorP", "userInfo"]
+- ["s5ErrorP", ""]
+- !private ["s25ExpressibleByArrayLiteralP", "contains"]
+- !private ["s25ExpressibleByArrayLiteralP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "insert"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "hashValue"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s17FixedWidthIntegerP", "hashValue"]
+- !private ["s8HashableP", "AFURLResponseSerializationErrorDomain"]
+- !private ["s8HashableP", "APIKeys"]
+- !private ["s8HashableP", "MMInternalErrorDomain"]
+- !private ["s8HashableP", "MobileMessaging"]
+- !private ["s8HashableP", "NSLocalizedDescriptionKey"]
+- !private ["s8HashableP", "NSLocalizedString"]
+- !private ["s8HashableP", "NSURLErrorBadServerResponse"]
+- !private ["s8HashableP", "NSURLErrorCancelled"]
+- !private ["s8HashableP", "NSURLErrorCannotConnectToHost"]
+- !private ["s8HashableP", "NSURLErrorCannotDecodeContentData"]
+- !private ["s8HashableP", "NSURLErrorCannotDecodeRawData"]
+- !private ["s8HashableP", "NSURLErrorCannotFindHost"]
+- !private ["s8HashableP", "NSURLErrorCannotParseResponse"]
+- !private ["s8HashableP", "NSURLErrorDNSLookupFailed"]
+- !private ["s8HashableP", "NSURLErrorDomain"]
+- !private ["s8HashableP", "NSURLErrorNetworkConnectionLost"]
+- !private ["s8HashableP", "NSURLErrorNotConnectedToInternet"]
+- !private ["s8HashableP", "NSURLErrorResourceUnavailable"]
+- !private ["s8HashableP", "NSURLErrorTimedOut"]
+- !private ["s8HashableP", "NSURLErrorUnknown"]
+- ["s8HashableP", "NoRegistration"]
+- !private ["s8HashableP", "Set"]
+- ["s8HashableP", "StorageInitializationError"]
+- ["s8HashableP", "UnknownError"]
+- ["s8HashableP", "_code"]
+- ["s8HashableP", "_domain"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- ["s8HashableP", "_getEmbeddedNSError"]
+- ["s8HashableP", "_userInfo"]
+- !private ["s8HashableP", "code"]
+- !private ["s8HashableP", "contains"]
+- !private ["s8HashableP", "currentInstallation"]
+- !private ["s8HashableP", "deviceToken"]
+- !private ["s8HashableP", "domain"]
+- !private ["s8HashableP", "errorCode"]
+- ["s8HashableP", "hashValue"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "insert"]
+- !private ["s8HashableP", "userInfo"]
+- ["s8HashableP", ""]
+- !private ["Si", "hashValue"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hashValue"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "hashValue"]
+- ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging14MMInstallationC", "deviceToken"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "Int"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "MobileMessaging"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "NSLocalizedDescriptionKey"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "NSLocalizedString"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "NoRegistration"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "StorageInitializationError"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "String"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "UnknownError"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "__derived_enum_equals"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "_code"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "_domain"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "_getEmbeddedNSError"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "_userInfo"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "deinit"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "errorCode"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "hashValue"]
+- ["15MobileMessaging19MMInternalErrorTypeO", "userInfo"]
+- !private ["s10MirrorPathP", "hashValue"]
+- ["s10MirrorPathP", "init"]
+- !private ["15MobileMessagingAAC", "currentInstallation"]
+- !private ["So8NSCodingP", "AFURLResponseSerializationErrorDomain"]
+- !private ["So8NSCodingP", "APIKeys"]
+- !private ["So8NSCodingP", "MMInternalErrorDomain"]
+- !private ["So8NSCodingP", "NSURLErrorBadServerResponse"]
+- !private ["So8NSCodingP", "NSURLErrorCancelled"]
+- !private ["So8NSCodingP", "NSURLErrorCannotConnectToHost"]
+- !private ["So8NSCodingP", "NSURLErrorCannotDecodeContentData"]
+- !private ["So8NSCodingP", "NSURLErrorCannotDecodeRawData"]
+- !private ["So8NSCodingP", "NSURLErrorCannotFindHost"]
+- !private ["So8NSCodingP", "NSURLErrorCannotParseResponse"]
+- !private ["So8NSCodingP", "NSURLErrorDNSLookupFailed"]
+- !private ["So8NSCodingP", "NSURLErrorDomain"]
+- !private ["So8NSCodingP", "NSURLErrorNetworkConnectionLost"]
+- !private ["So8NSCodingP", "NSURLErrorNotConnectedToInternet"]
+- !private ["So8NSCodingP", "NSURLErrorResourceUnavailable"]
+- !private ["So8NSCodingP", "NSURLErrorTimedOut"]
+- !private ["So8NSCodingP", "NSURLErrorUnknown"]
+- !private ["So8NSCodingP", "Set"]
+- !private ["So8NSCodingP", "code"]
+- !private ["So8NSCodingP", "domain"]
+- ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "userInfo"]
+- !private ["So9NSCopyingP", "AFURLResponseSerializationErrorDomain"]
+- !private ["So9NSCopyingP", "APIKeys"]
+- !private ["So9NSCopyingP", "MMInternalErrorDomain"]
+- !private ["So9NSCopyingP", "NSURLErrorBadServerResponse"]
+- !private ["So9NSCopyingP", "NSURLErrorCancelled"]
+- !private ["So9NSCopyingP", "NSURLErrorCannotConnectToHost"]
+- !private ["So9NSCopyingP", "NSURLErrorCannotDecodeContentData"]
+- !private ["So9NSCopyingP", "NSURLErrorCannotDecodeRawData"]
+- !private ["So9NSCopyingP", "NSURLErrorCannotFindHost"]
+- !private ["So9NSCopyingP", "NSURLErrorCannotParseResponse"]
+- !private ["So9NSCopyingP", "NSURLErrorDNSLookupFailed"]
+- !private ["So9NSCopyingP", "NSURLErrorDomain"]
+- !private ["So9NSCopyingP", "NSURLErrorNetworkConnectionLost"]
+- !private ["So9NSCopyingP", "NSURLErrorNotConnectedToInternet"]
+- !private ["So9NSCopyingP", "NSURLErrorResourceUnavailable"]
+- !private ["So9NSCopyingP", "NSURLErrorTimedOut"]
+- !private ["So9NSCopyingP", "NSURLErrorUnknown"]
+- !private ["So9NSCopyingP", "Set"]
+- !private ["So9NSCopyingP", "code"]
+- !private ["So9NSCopyingP", "domain"]
+- ["So9NSCopyingP", "init"]
+- !private ["So9NSCopyingP", "userInfo"]
+- !private ["So7NSErrorC", "AFURLResponseSerializationErrorDomain"]
+- !private ["So7NSErrorC", "APIKeys"]
+- ["So7NSErrorC", "Bool"]
+- !private ["So7NSErrorC", "Int"]
+- !private ["So7NSErrorC", "MMInternalErrorDomain"]
+- ["So7NSErrorC", "MMInternalErrorType"]
+- !private ["So7NSErrorC", "NSURLErrorBadServerResponse"]
+- !private ["So7NSErrorC", "NSURLErrorCancelled"]
+- !private ["So7NSErrorC", "NSURLErrorCannotConnectToHost"]
+- !private ["So7NSErrorC", "NSURLErrorCannotDecodeContentData"]
+- !private ["So7NSErrorC", "NSURLErrorCannotDecodeRawData"]
+- !private ["So7NSErrorC", "NSURLErrorCannotFindHost"]
+- !private ["So7NSErrorC", "NSURLErrorCannotParseResponse"]
+- !private ["So7NSErrorC", "NSURLErrorDNSLookupFailed"]
+- !private ["So7NSErrorC", "NSURLErrorDomain"]
+- !private ["So7NSErrorC", "NSURLErrorNetworkConnectionLost"]
+- !private ["So7NSErrorC", "NSURLErrorNotConnectedToInternet"]
+- !private ["So7NSErrorC", "NSURLErrorResourceUnavailable"]
+- !private ["So7NSErrorC", "NSURLErrorTimedOut"]
+- !private ["So7NSErrorC", "NSURLErrorUnknown"]
+- !private ["So7NSErrorC", "Set"]
+- ["So7NSErrorC", "String"]
+- !private ["So7NSErrorC", "code"]
+- !private ["So7NSErrorC", "domain"]
+- ["So7NSErrorC", "init"]
+- ["So7NSErrorC", "mm_code"]
+- ["So7NSErrorC", "mm_isRetryable"]
+- ["So7NSErrorC", "mm_message"]
+- !private ["So7NSErrorC", "userInfo"]
+- ["So21NSItemProviderReadingP", "init"]
+- ["So21NSItemProviderWritingP", "init"]
+- ["So16NSMutableCopyingP", "init"]
+- !private ["So8NSObjectC", "AFURLResponseSerializationErrorDomain"]
+- !private ["So8NSObjectC", "APIKeys"]
+- ["So8NSObjectC", "Bool"]
+- !private ["So8NSObjectC", "Int"]
+- !private ["So8NSObjectC", "MMInternalErrorDomain"]
+- ["So8NSObjectC", "MMInternalErrorType"]
+- !private ["So8NSObjectC", "NSURLErrorBadServerResponse"]
+- !private ["So8NSObjectC", "NSURLErrorCancelled"]
+- !private ["So8NSObjectC", "NSURLErrorCannotConnectToHost"]
+- !private ["So8NSObjectC", "NSURLErrorCannotDecodeContentData"]
+- !private ["So8NSObjectC", "NSURLErrorCannotDecodeRawData"]
+- !private ["So8NSObjectC", "NSURLErrorCannotFindHost"]
+- !private ["So8NSObjectC", "NSURLErrorCannotParseResponse"]
+- !private ["So8NSObjectC", "NSURLErrorDNSLookupFailed"]
+- !private ["So8NSObjectC", "NSURLErrorDomain"]
+- !private ["So8NSObjectC", "NSURLErrorNetworkConnectionLost"]
+- !private ["So8NSObjectC", "NSURLErrorNotConnectedToInternet"]
+- !private ["So8NSObjectC", "NSURLErrorResourceUnavailable"]
+- !private ["So8NSObjectC", "NSURLErrorTimedOut"]
+- !private ["So8NSObjectC", "NSURLErrorUnknown"]
+- !private ["So8NSObjectC", "Set"]
+- ["So8NSObjectC", "String"]
+- !private ["So8NSObjectC", "code"]
+- !private ["So8NSObjectC", "currentInstallation"]
+- !private ["So8NSObjectC", "deviceToken"]
+- !private ["So8NSObjectC", "domain"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "mm_code"]
+- ["So8NSObjectC", "mm_isRetryable"]
+- ["So8NSObjectC", "mm_message"]
+- !private ["So8NSObjectC", "userInfo"]
+- !private ["So16NSObjectProtocolP", "AFURLResponseSerializationErrorDomain"]
+- !private ["So16NSObjectProtocolP", "APIKeys"]
+- !private ["So16NSObjectProtocolP", "MMInternalErrorDomain"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorBadServerResponse"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorCancelled"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorCannotConnectToHost"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorCannotDecodeContentData"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorCannotDecodeRawData"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorCannotFindHost"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorCannotParseResponse"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorDNSLookupFailed"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorDomain"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorNetworkConnectionLost"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorNotConnectedToInternet"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorResourceUnavailable"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorTimedOut"]
+- !private ["So16NSObjectProtocolP", "NSURLErrorUnknown"]
+- !private ["So16NSObjectProtocolP", "Set"]
+- !private ["So16NSObjectProtocolP", "code"]
+- !private ["So16NSObjectProtocolP", "currentInstallation"]
+- !private ["So16NSObjectProtocolP", "deviceToken"]
+- !private ["So16NSObjectProtocolP", "domain"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "userInfo"]
+- !private ["So14NSSecureCodingP", "AFURLResponseSerializationErrorDomain"]
+- !private ["So14NSSecureCodingP", "APIKeys"]
+- !private ["So14NSSecureCodingP", "MMInternalErrorDomain"]
+- !private ["So14NSSecureCodingP", "NSURLErrorBadServerResponse"]
+- !private ["So14NSSecureCodingP", "NSURLErrorCancelled"]
+- !private ["So14NSSecureCodingP", "NSURLErrorCannotConnectToHost"]
+- !private ["So14NSSecureCodingP", "NSURLErrorCannotDecodeContentData"]
+- !private ["So14NSSecureCodingP", "NSURLErrorCannotDecodeRawData"]
+- !private ["So14NSSecureCodingP", "NSURLErrorCannotFindHost"]
+- !private ["So14NSSecureCodingP", "NSURLErrorCannotParseResponse"]
+- !private ["So14NSSecureCodingP", "NSURLErrorDNSLookupFailed"]
+- !private ["So14NSSecureCodingP", "NSURLErrorDomain"]
+- !private ["So14NSSecureCodingP", "NSURLErrorNetworkConnectionLost"]
+- !private ["So14NSSecureCodingP", "NSURLErrorNotConnectedToInternet"]
+- !private ["So14NSSecureCodingP", "NSURLErrorResourceUnavailable"]
+- !private ["So14NSSecureCodingP", "NSURLErrorTimedOut"]
+- !private ["So14NSSecureCodingP", "NSURLErrorUnknown"]
+- !private ["So14NSSecureCodingP", "Set"]
+- !private ["So14NSSecureCodingP", "code"]
+- !private ["So14NSSecureCodingP", "domain"]
+- ["So14NSSecureCodingP", "init"]
+- !private ["So14NSSecureCodingP", "userInfo"]
+- ["So8NSStringC", "init"]
+- !private ["s7NumericP", "hashValue"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s8SequenceP", "contains"]
+- ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "insert"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s3SetV", "contains"]
+- !private ["s3SetV", "init"]
+- !private ["s3SetV", "insert"]
+- !private ["s10SetAlgebraP", "contains"]
+- !private ["s10SetAlgebraP", "init"]
+- !private ["s10SetAlgebraP", "insert"]
+- !private ["s13SignedIntegerP", "hashValue"]
+- !private ["s13SignedNumericP", "hashValue"]
+- !private ["s10StrideableP", "hashValue"]
+- ["SS", "init"]
+- ["s14StringProtocolP", "init"]
+- ["s16TextOutputStreamP", "init"]
+- ["s20TextOutputStreamableP", "init"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s18_BitwiseOperationsP", "hashValue"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "hashValue"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "contains"]
+- ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "insert"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "contains"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "insert"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "AFURLResponseSerializationErrorDomain"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "APIKeys"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMInternalErrorDomain"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorBadServerResponse"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorCancelled"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorCannotConnectToHost"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorCannotDecodeContentData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorCannotDecodeRawData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorCannotFindHost"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorCannotParseResponse"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorDNSLookupFailed"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorDomain"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorNetworkConnectionLost"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorNotConnectedToInternet"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorResourceUnavailable"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorTimedOut"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSURLErrorUnknown"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "Set"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "code"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "currentInstallation"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "deviceToken"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "domain"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "userInfo"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "contains"]
+- !private ["s21_ObjectiveCBridgeableP", "hashValue"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "insert"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s11_StrideableP", "hashValue"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "15MobileMessaging7APIKeysV"
+- "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- !private "Sb"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "s9DecodableP"
+- !private "s10DictionaryV"
+- "s9EncodableP"
+- "s9EquatableP"
+- "s5ErrorP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s27ExpressibleByIntegerLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "s17FixedWidthIntegerP"
+- "s8HashableP"
+- !private "Si"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging14MMInstallationC"
+- "15MobileMessaging19MMInternalErrorTypeO"
+- "s10MirrorPathP"
+- !private "15MobileMessagingAAC"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- "So7NSErrorC"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- !private "s7NumericP"
+- "s26RangeReplaceableCollectionP"
+- "s8SequenceP"
+- !private "s3SetV"
+- !private "s10SetAlgebraP"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s10StrideableP"
+- "SS"
+- "s14StringProtocolP"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- "s21_ObjectiveCBridgeableP"
+- "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "9d24b5099d6c623766b9c7227364af25"

@@ -1,0 +1,344 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "MMApplicationListener"
+provides-nominal:
+- "15MobileMessaging21MMApplicationListenerC"
+provides-member:
+- ["15MobileMessaging21MMApplicationListenerC", ""]
+provides-dynamic-lookup:
+- "handleAppDidFinishLaunchingNotification"
+- "handleAppWillEnterForegroundNotification"
+- "handleGeoServiceDidStartNotification"
+depends-top-level:
+- !private "=="
+- "AssignmentPrecedence"
+- "MMApplicationListener"
+- !private "MMNotificationGeoServiceDidStart"
+- "MobileMessaging"
+- !private "NSNotification"
+- "NSObject"
+- "Notification"
+- !private "NotificationCenter"
+- !private "StringLiteralType"
+- !private "UIApplicationLaunchOptionsKey"
+depends-member:
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "MMApplicationListener"]
+- !private ["s7CVarArgP", "MMNotificationGeoServiceDidStart"]
+- !private ["s7CVarArgP", "NSNotification"]
+- !private ["s7CVarArgP", "Name"]
+- !private ["s7CVarArgP", "NotificationCenter"]
+- !private ["s7CVarArgP", "UIApplicationLaunchOptionsKey"]
+- !private ["s7CVarArgP", "addObserver"]
+- !private ["s7CVarArgP", "currentInstallation"]
+- !private ["s7CVarArgP", "default"]
+- !private ["s7CVarArgP", "handleAppDidFinishLaunchingNotification"]
+- !private ["s7CVarArgP", "handleAppWillEnterForegroundNotification"]
+- !private ["s7CVarArgP", "handleGeoServiceDidStartNotification"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "mmContext"]
+- !private ["s7CVarArgP", "removeObserver"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s7CVarArgP", "sync"]
+- !private ["s7CVarArgP", "syncSystemDataWithServer"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "MMApplicationListener"]
+- !private ["s28CustomDebugStringConvertibleP", "MMNotificationGeoServiceDidStart"]
+- !private ["s28CustomDebugStringConvertibleP", "NSNotification"]
+- !private ["s28CustomDebugStringConvertibleP", "Name"]
+- !private ["s28CustomDebugStringConvertibleP", "NotificationCenter"]
+- !private ["s28CustomDebugStringConvertibleP", "UIApplicationLaunchOptionsKey"]
+- !private ["s28CustomDebugStringConvertibleP", "addObserver"]
+- !private ["s28CustomDebugStringConvertibleP", "currentInstallation"]
+- !private ["s28CustomDebugStringConvertibleP", "default"]
+- !private ["s28CustomDebugStringConvertibleP", "handleAppDidFinishLaunchingNotification"]
+- !private ["s28CustomDebugStringConvertibleP", "handleAppWillEnterForegroundNotification"]
+- !private ["s28CustomDebugStringConvertibleP", "handleGeoServiceDidStartNotification"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "mmContext"]
+- !private ["s28CustomDebugStringConvertibleP", "removeObserver"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "sync"]
+- !private ["s28CustomDebugStringConvertibleP", "syncSystemDataWithServer"]
+- !private ["s28CustomDebugStringConvertibleP", "userInfo"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s17CustomReflectableP", "userInfo"]
+- !private ["s23CustomStringConvertibleP", "MMApplicationListener"]
+- !private ["s23CustomStringConvertibleP", "MMNotificationGeoServiceDidStart"]
+- !private ["s23CustomStringConvertibleP", "NSNotification"]
+- !private ["s23CustomStringConvertibleP", "Name"]
+- !private ["s23CustomStringConvertibleP", "NotificationCenter"]
+- !private ["s23CustomStringConvertibleP", "UIApplicationLaunchOptionsKey"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "addObserver"]
+- !private ["s23CustomStringConvertibleP", "currentInstallation"]
+- !private ["s23CustomStringConvertibleP", "default"]
+- !private ["s23CustomStringConvertibleP", "handleAppDidFinishLaunchingNotification"]
+- !private ["s23CustomStringConvertibleP", "handleAppWillEnterForegroundNotification"]
+- !private ["s23CustomStringConvertibleP", "handleGeoServiceDidStartNotification"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "mmContext"]
+- !private ["s23CustomStringConvertibleP", "removeObserver"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "sync"]
+- !private ["s23CustomStringConvertibleP", "syncSystemDataWithServer"]
+- !private ["s23CustomStringConvertibleP", "userInfo"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s10DictionaryV", "subscript"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "subscript"]
+- !private ["s9EquatableP", "MMApplicationListener"]
+- !private ["s9EquatableP", "MMNotificationGeoServiceDidStart"]
+- !private ["s9EquatableP", "NSNotification"]
+- !private ["s9EquatableP", "Name"]
+- !private ["s9EquatableP", "NotificationCenter"]
+- !private ["s9EquatableP", "UIApplicationDidFinishLaunching"]
+- !private ["s9EquatableP", "UIApplicationLaunchOptionsKey"]
+- !private ["s9EquatableP", "UIApplicationWillEnterForeground"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "addObserver"]
+- !private ["s9EquatableP", "currentInstallation"]
+- !private ["s9EquatableP", "default"]
+- !private ["s9EquatableP", "handleAppDidFinishLaunchingNotification"]
+- !private ["s9EquatableP", "handleAppWillEnterForegroundNotification"]
+- !private ["s9EquatableP", "handleGeoServiceDidStartNotification"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "mmContext"]
+- !private ["s9EquatableP", "remoteNotification"]
+- !private ["s9EquatableP", "removeObserver"]
+- !private ["s9EquatableP", "sync"]
+- !private ["s9EquatableP", "syncSystemDataWithServer"]
+- !private ["s9EquatableP", "userInfo"]
+- ["s9EquatableP", ""]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "MMApplicationListener"]
+- !private ["s8HashableP", "MMNotificationGeoServiceDidStart"]
+- !private ["s8HashableP", "NSNotification"]
+- !private ["s8HashableP", "Name"]
+- !private ["s8HashableP", "NotificationCenter"]
+- !private ["s8HashableP", "UIApplicationDidFinishLaunching"]
+- !private ["s8HashableP", "UIApplicationLaunchOptionsKey"]
+- !private ["s8HashableP", "UIApplicationWillEnterForeground"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "addObserver"]
+- !private ["s8HashableP", "currentInstallation"]
+- !private ["s8HashableP", "default"]
+- !private ["s8HashableP", "handleAppDidFinishLaunchingNotification"]
+- !private ["s8HashableP", "handleAppWillEnterForegroundNotification"]
+- !private ["s8HashableP", "handleGeoServiceDidStartNotification"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "mmContext"]
+- !private ["s8HashableP", "remoteNotification"]
+- !private ["s8HashableP", "removeObserver"]
+- !private ["s8HashableP", "sync"]
+- !private ["s8HashableP", "syncSystemDataWithServer"]
+- !private ["s8HashableP", "userInfo"]
+- ["s8HashableP", ""]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["15MobileMessaging21MMApplicationListenerC", "MMApplicationListener"]
+- !private ["15MobileMessaging21MMApplicationListenerC", "MMNotificationGeoServiceDidStart"]
+- ["15MobileMessaging21MMApplicationListenerC", "MobileMessaging"]
+- !private ["15MobileMessaging21MMApplicationListenerC", "NSNotification"]
+- ["15MobileMessaging21MMApplicationListenerC", "Notification"]
+- !private ["15MobileMessaging21MMApplicationListenerC", "NotificationCenter"]
+- !private ["15MobileMessaging21MMApplicationListenerC", "UIApplicationLaunchOptionsKey"]
+- ["15MobileMessaging21MMApplicationListenerC", "deinit"]
+- ["15MobileMessaging21MMApplicationListenerC", "handleAppDidFinishLaunchingNotification"]
+- ["15MobileMessaging21MMApplicationListenerC", "handleAppWillEnterForegroundNotification"]
+- ["15MobileMessaging21MMApplicationListenerC", "handleGeoServiceDidStartNotification"]
+- ["15MobileMessaging21MMApplicationListenerC", "init"]
+- !private ["15MobileMessaging21MMApplicationListenerC", "mmContext"]
+- !private ["15MobileMessaging14MMInstallationC", "syncSystemDataWithServer"]
+- !private ["15MobileMessagingAAC", "currentInstallation"]
+- !private ["15MobileMessagingAAC", "sync"]
+- !private ["So8NSCodingP", "Name"]
+- !private ["So9NSCopyingP", "Name"]
+- !private ["So14NSNotificationC", "Name"]
+- !private ["So8NSObjectC", "MMApplicationListener"]
+- !private ["So8NSObjectC", "MMNotificationGeoServiceDidStart"]
+- ["So8NSObjectC", "MobileMessaging"]
+- !private ["So8NSObjectC", "NSNotification"]
+- !private ["So8NSObjectC", "Name"]
+- ["So8NSObjectC", "Notification"]
+- !private ["So8NSObjectC", "NotificationCenter"]
+- !private ["So8NSObjectC", "UIApplicationLaunchOptionsKey"]
+- !private ["So8NSObjectC", "addObserver"]
+- !private ["So8NSObjectC", "currentInstallation"]
+- !private ["So8NSObjectC", "default"]
+- ["So8NSObjectC", "handleAppDidFinishLaunchingNotification"]
+- ["So8NSObjectC", "handleAppWillEnterForegroundNotification"]
+- ["So8NSObjectC", "handleGeoServiceDidStartNotification"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "mmContext"]
+- !private ["So8NSObjectC", "removeObserver"]
+- !private ["So8NSObjectC", "sync"]
+- !private ["So8NSObjectC", "syncSystemDataWithServer"]
+- ["So8NSObjectC", ""]
+- !private ["So16NSObjectProtocolP", "MMApplicationListener"]
+- !private ["So16NSObjectProtocolP", "MMNotificationGeoServiceDidStart"]
+- !private ["So16NSObjectProtocolP", "NSNotification"]
+- !private ["So16NSObjectProtocolP", "Name"]
+- !private ["So16NSObjectProtocolP", "NotificationCenter"]
+- !private ["So16NSObjectProtocolP", "UIApplicationLaunchOptionsKey"]
+- !private ["So16NSObjectProtocolP", "addObserver"]
+- !private ["So16NSObjectProtocolP", "currentInstallation"]
+- !private ["So16NSObjectProtocolP", "default"]
+- !private ["So16NSObjectProtocolP", "handleAppDidFinishLaunchingNotification"]
+- !private ["So16NSObjectProtocolP", "handleAppWillEnterForegroundNotification"]
+- !private ["So16NSObjectProtocolP", "handleGeoServiceDidStartNotification"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "mmContext"]
+- !private ["So16NSObjectProtocolP", "removeObserver"]
+- !private ["So16NSObjectProtocolP", "sync"]
+- !private ["So16NSObjectProtocolP", "syncSystemDataWithServer"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSNotificationC4NameV", "UIApplicationDidFinishLaunching"]
+- !private ["So14NSNotificationC4NameV", "UIApplicationWillEnterForeground"]
+- !private ["So14NSNotificationC4NameV", "init"]
+- !private ["10Foundation12NotificationV", "userInfo"]
+- !private ["So18NotificationCenterC", "addObserver"]
+- !private ["So18NotificationCenterC", "default"]
+- !private ["So18NotificationCenterC", "removeObserver"]
+- !private ["s16RawRepresentableP", "UIApplicationDidFinishLaunching"]
+- !private ["s16RawRepresentableP", "UIApplicationWillEnterForeground"]
+- !private ["s16RawRepresentableP", "init"]
+- !private ["s16RawRepresentableP", "remoteNotification"]
+- !private ["10Foundation20ReferenceConvertibleP", "userInfo"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s12StaticStringV", "init"]
+- !private ["SC29UIApplicationLaunchOptionsKeyV", "remoteNotification"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "Name"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMApplicationListener"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMNotificationGeoServiceDidStart"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSNotification"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "Name"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NotificationCenter"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UIApplicationLaunchOptionsKey"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "addObserver"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "currentInstallation"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "default"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "handleAppDidFinishLaunchingNotification"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "handleAppWillEnterForegroundNotification"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "handleGeoServiceDidStartNotification"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mmContext"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "removeObserver"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "sync"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "syncSystemDataWithServer"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s21_ObjectiveCBridgeableP", "UIApplicationDidFinishLaunching"]
+- !private ["s21_ObjectiveCBridgeableP", "UIApplicationWillEnterForeground"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "remoteNotification"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- !private ["s21_ObjectiveCBridgeableP", "userInfo"]
+- !private ["s20_SwiftNewtypeWrapperP", "UIApplicationDidFinishLaunching"]
+- !private ["s20_SwiftNewtypeWrapperP", "UIApplicationWillEnterForeground"]
+- !private ["s20_SwiftNewtypeWrapperP", "init"]
+- !private ["s20_SwiftNewtypeWrapperP", "remoteNotification"]
+depends-nominal:
+- !private "Sb"
+- "s7CVarArgP"
+- !private "s10CollectionP"
+- "s28CustomDebugStringConvertibleP"
+- !private "s29CustomPlaygroundQuickLookableP"
+- !private "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "s9DecodableP"
+- !private "s10DictionaryV"
+- !private "s9EncodableP"
+- "s9EquatableP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- !private "s25LosslessStringConvertibleP"
+- "15MobileMessaging21MMApplicationListenerC"
+- !private "15MobileMessaging14MMInstallationC"
+- !private "15MobileMessagingAAC"
+- !private "So8NSCodingP"
+- !private "So9NSCopyingP"
+- !private "So14NSNotificationC"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- !private "So14NSNotificationC4NameV"
+- !private "10Foundation12NotificationV"
+- !private "So18NotificationCenterC"
+- !private "s16RawRepresentableP"
+- !private "10Foundation20ReferenceConvertibleP"
+- !private "s8SequenceP"
+- !private "s12StaticStringV"
+- !private "SC29UIApplicationLaunchOptionsKeyV"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s35_HasCustomAnyHashableRepresentationP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s21_ObjectiveCBridgeableP"
+- !private "s20_SwiftNewtypeWrapperP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "2384a05b6f0b819f4e6662b16e559554"

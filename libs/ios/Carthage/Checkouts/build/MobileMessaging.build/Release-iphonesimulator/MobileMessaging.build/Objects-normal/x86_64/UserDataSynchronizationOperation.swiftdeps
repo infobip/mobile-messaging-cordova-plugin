@@ -1,0 +1,1095 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "UserDataSynchronizationOperation"
+- "CustomUserData"
+- "UserDataServiceTypes"
+- "UserDataFoundationTypes"
+- "CustomUserDataValue"
+provides-nominal:
+- "15MobileMessaging32UserDataSynchronizationOperationC"
+- "15MobileMessaging14CustomUserDataV"
+- "15MobileMessaging20UserDataServiceTypesO"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- "So6NSDateC"
+- "So8NSNumberC"
+- "So8NSStringC"
+- "So6NSNullC"
+- "15MobileMessaging19CustomUserDataValueC"
+provides-member:
+- ["15MobileMessaging32UserDataSynchronizationOperationC", ""]
+- ["15MobileMessaging14CustomUserDataV", ""]
+- ["15MobileMessaging20UserDataServiceTypesO", ""]
+- ["15MobileMessaging23UserDataFoundationTypesP", ""]
+- ["So6NSDateC", ""]
+- ["So8NSNumberC", ""]
+- ["So8NSStringC", ""]
+- ["So6NSNullC", ""]
+- ["15MobileMessaging19CustomUserDataValueC", ""]
+provides-dynamic-lookup:
+- "dataValue"
+- "date"
+- "execute"
+- "finishBlock"
+- "finished"
+- "isInteger"
+- "jsonDictRepresentation"
+- "mmContext"
+- "number"
+- "string"
+- "user"
+depends-top-level:
+- !private "!"
+- !private "!="
+- "=="
+- !private "??"
+- "AnyObject"
+- "AssignmentPrecedence"
+- "Bool"
+- !private "BooleanLiteralType"
+- "CastingPrecedence"
+- "CustomUserData"
+- "CustomUserDataValue"
+- !private "Date"
+- !private "DateStaticFormatters"
+- !private "Dictionary"
+- "DictionaryRepresentable"
+- "DictionaryRepresentation"
+- "Double"
+- "ExpressibleByFloatLiteral"
+- "ExpressibleByIntegerLiteral"
+- "ExpressibleByStringLiteral"
+- "Int"
+- !private "MMInternalErrorType"
+- !private "MMLogDebug"
+- !private "MMLogError"
+- !private "MMNotificationUserDataSynced"
+- "MMUser"
+- "MobileMessaging"
+- "NSDate"
+- "NSError"
+- "NSNull"
+- "NSNumber"
+- "NSObject"
+- "NSString"
+- !private "NotificationCenter"
+- "Operation"
+- "String"
+- "StringLiteralType"
+- "TernaryPrecedence"
+- !private "UserDataDictionary"
+- "UserDataFoundationTypes"
+- "UserDataServiceTypes"
+- !private "UserDataSyncResult"
+- "UserDataSynchronizationOperation"
+- "Void"
+- !private "floor"
+- !private "~="
+depends-member:
+- !private ["Sa", "first"]
+- !private ["Sa", "reduce"]
+- !private ["s23BidirectionalCollectionP", "first"]
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["s23BidirectionalCollectionP", "reduce"]
+- !private ["s13BinaryIntegerP", "hashValue"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["So8CAActionP", "init"]
+- !private ["s7CVarArgP", "CustomUserDataValue"]
+- !private ["s7CVarArgP", "DateStaticFormatters"]
+- ["s7CVarArgP", "ExtendedGraphemeClusterLiteralType"]
+- ["s7CVarArgP", "FloatLiteralType"]
+- ["s7CVarArgP", "IntegerLiteralType"]
+- !private ["s7CVarArgP", "MMInternalErrorType"]
+- !private ["s7CVarArgP", "MMLogDebug"]
+- !private ["s7CVarArgP", "MMLogError"]
+- !private ["s7CVarArgP", "MMNotificationUserDataSynced"]
+- !private ["s7CVarArgP", "NSError"]
+- !private ["s7CVarArgP", "NSNumber"]
+- !private ["s7CVarArgP", "NotificationCenter"]
+- !private ["s7CVarArgP", "String"]
+- ["s7CVarArgP", "StringLiteralType"]
+- ["s7CVarArgP", "UnicodeScalarLiteralType"]
+- !private ["s7CVarArgP", "UserDataServiceTypes"]
+- !private ["s7CVarArgP", "customData"]
+- !private ["s7CVarArgP", "dataType"]
+- !private ["s7CVarArgP", "dataValue"]
+- !private ["s7CVarArgP", "date"]
+- !private ["s7CVarArgP", "doubleValue"]
+- !private ["s7CVarArgP", "externalId"]
+- !private ["s7CVarArgP", "fetchUserData"]
+- !private ["s7CVarArgP", "finishBlock"]
+- !private ["s7CVarArgP", "finishWithError"]
+- !private ["s7CVarArgP", "first"]
+- !private ["s7CVarArgP", "floor"]
+- !private ["s7CVarArgP", "handleResult"]
+- !private ["s7CVarArgP", "hashValue"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "intValue"]
+- !private ["s7CVarArgP", "isCancelled"]
+- !private ["s7CVarArgP", "isInteger"]
+- !private ["s7CVarArgP", "jsonDictRepresentation"]
+- !private ["s7CVarArgP", "mmContext"]
+- !private ["s7CVarArgP", "mm_postNotificationFromMainThread"]
+- !private ["s7CVarArgP", "onlyFetching"]
+- !private ["s7CVarArgP", "persist"]
+- !private ["s7CVarArgP", "predefinedData"]
+- !private ["s7CVarArgP", "pushRegistrationId"]
+- !private ["s7CVarArgP", "rawPredefinedData"]
+- !private ["s7CVarArgP", "reduce"]
+- !private ["s7CVarArgP", "remoteApiManager"]
+- !private ["s7CVarArgP", "resetNeedToSync"]
+- !private ["s7CVarArgP", "sendUserDataIfNeeded"]
+- !private ["s7CVarArgP", "string"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s7CVarArgP", "syncUserData"]
+- !private ["s7CVarArgP", "user"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "first"]
+- ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "reduce"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "hashValue"]
+- ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "CustomUserDataValue"]
+- !private ["s28CustomDebugStringConvertibleP", "DateStaticFormatters"]
+- ["s28CustomDebugStringConvertibleP", "ExtendedGraphemeClusterLiteralType"]
+- ["s28CustomDebugStringConvertibleP", "FloatLiteralType"]
+- ["s28CustomDebugStringConvertibleP", "IntegerLiteralType"]
+- !private ["s28CustomDebugStringConvertibleP", "MMInternalErrorType"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLogDebug"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLogError"]
+- !private ["s28CustomDebugStringConvertibleP", "MMNotificationUserDataSynced"]
+- !private ["s28CustomDebugStringConvertibleP", "NSError"]
+- !private ["s28CustomDebugStringConvertibleP", "NSNumber"]
+- !private ["s28CustomDebugStringConvertibleP", "NotificationCenter"]
+- !private ["s28CustomDebugStringConvertibleP", "String"]
+- ["s28CustomDebugStringConvertibleP", "StringLiteralType"]
+- ["s28CustomDebugStringConvertibleP", "UnicodeScalarLiteralType"]
+- !private ["s28CustomDebugStringConvertibleP", "UserDataServiceTypes"]
+- !private ["s28CustomDebugStringConvertibleP", "customData"]
+- !private ["s28CustomDebugStringConvertibleP", "dataType"]
+- !private ["s28CustomDebugStringConvertibleP", "dataValue"]
+- !private ["s28CustomDebugStringConvertibleP", "date"]
+- !private ["s28CustomDebugStringConvertibleP", "doubleValue"]
+- !private ["s28CustomDebugStringConvertibleP", "externalId"]
+- !private ["s28CustomDebugStringConvertibleP", "fetchUserData"]
+- !private ["s28CustomDebugStringConvertibleP", "finishBlock"]
+- !private ["s28CustomDebugStringConvertibleP", "finishWithError"]
+- !private ["s28CustomDebugStringConvertibleP", "first"]
+- !private ["s28CustomDebugStringConvertibleP", "floor"]
+- !private ["s28CustomDebugStringConvertibleP", "handleResult"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "intValue"]
+- !private ["s28CustomDebugStringConvertibleP", "isCancelled"]
+- !private ["s28CustomDebugStringConvertibleP", "isInteger"]
+- !private ["s28CustomDebugStringConvertibleP", "jsonDictRepresentation"]
+- !private ["s28CustomDebugStringConvertibleP", "mmContext"]
+- !private ["s28CustomDebugStringConvertibleP", "mm_postNotificationFromMainThread"]
+- !private ["s28CustomDebugStringConvertibleP", "number"]
+- !private ["s28CustomDebugStringConvertibleP", "onlyFetching"]
+- !private ["s28CustomDebugStringConvertibleP", "persist"]
+- !private ["s28CustomDebugStringConvertibleP", "predefinedData"]
+- !private ["s28CustomDebugStringConvertibleP", "pushRegistrationId"]
+- !private ["s28CustomDebugStringConvertibleP", "rawPredefinedData"]
+- !private ["s28CustomDebugStringConvertibleP", "reduce"]
+- !private ["s28CustomDebugStringConvertibleP", "remoteApiManager"]
+- !private ["s28CustomDebugStringConvertibleP", "resetNeedToSync"]
+- !private ["s28CustomDebugStringConvertibleP", "sendUserDataIfNeeded"]
+- !private ["s28CustomDebugStringConvertibleP", "string"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "syncUserData"]
+- !private ["s28CustomDebugStringConvertibleP", "user"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "doubleValue"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "intValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hashValue"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "date"]
+- !private ["s17CustomReflectableP", "first"]
+- !private ["s17CustomReflectableP", "hashValue"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "number"]
+- !private ["s17CustomReflectableP", "reduce"]
+- !private ["s17CustomReflectableP", "string"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "CustomUserDataValue"]
+- !private ["s23CustomStringConvertibleP", "DateStaticFormatters"]
+- ["s23CustomStringConvertibleP", "ExtendedGraphemeClusterLiteralType"]
+- ["s23CustomStringConvertibleP", "FloatLiteralType"]
+- ["s23CustomStringConvertibleP", "IntegerLiteralType"]
+- !private ["s23CustomStringConvertibleP", "MMInternalErrorType"]
+- !private ["s23CustomStringConvertibleP", "MMLogDebug"]
+- !private ["s23CustomStringConvertibleP", "MMLogError"]
+- !private ["s23CustomStringConvertibleP", "MMNotificationUserDataSynced"]
+- !private ["s23CustomStringConvertibleP", "NSError"]
+- !private ["s23CustomStringConvertibleP", "NSNumber"]
+- !private ["s23CustomStringConvertibleP", "NotificationCenter"]
+- !private ["s23CustomStringConvertibleP", "String"]
+- ["s23CustomStringConvertibleP", "StringLiteralType"]
+- ["s23CustomStringConvertibleP", "UnicodeScalarLiteralType"]
+- !private ["s23CustomStringConvertibleP", "UserDataServiceTypes"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "customData"]
+- !private ["s23CustomStringConvertibleP", "dataType"]
+- !private ["s23CustomStringConvertibleP", "dataValue"]
+- !private ["s23CustomStringConvertibleP", "date"]
+- !private ["s23CustomStringConvertibleP", "doubleValue"]
+- !private ["s23CustomStringConvertibleP", "externalId"]
+- !private ["s23CustomStringConvertibleP", "fetchUserData"]
+- !private ["s23CustomStringConvertibleP", "finishBlock"]
+- !private ["s23CustomStringConvertibleP", "finishWithError"]
+- !private ["s23CustomStringConvertibleP", "first"]
+- !private ["s23CustomStringConvertibleP", "floor"]
+- !private ["s23CustomStringConvertibleP", "handleResult"]
+- !private ["s23CustomStringConvertibleP", "hashValue"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "intValue"]
+- !private ["s23CustomStringConvertibleP", "isCancelled"]
+- !private ["s23CustomStringConvertibleP", "isInteger"]
+- !private ["s23CustomStringConvertibleP", "jsonDictRepresentation"]
+- !private ["s23CustomStringConvertibleP", "mmContext"]
+- !private ["s23CustomStringConvertibleP", "mm_postNotificationFromMainThread"]
+- !private ["s23CustomStringConvertibleP", "onlyFetching"]
+- !private ["s23CustomStringConvertibleP", "persist"]
+- !private ["s23CustomStringConvertibleP", "predefinedData"]
+- !private ["s23CustomStringConvertibleP", "pushRegistrationId"]
+- !private ["s23CustomStringConvertibleP", "rawPredefinedData"]
+- !private ["s23CustomStringConvertibleP", "reduce"]
+- !private ["s23CustomStringConvertibleP", "remoteApiManager"]
+- !private ["s23CustomStringConvertibleP", "resetNeedToSync"]
+- !private ["s23CustomStringConvertibleP", "sendUserDataIfNeeded"]
+- !private ["s23CustomStringConvertibleP", "string"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "syncUserData"]
+- !private ["s23CustomStringConvertibleP", "user"]
+- ["s23CustomStringConvertibleP", ""]
+- ["15MobileMessaging14CustomUserDataV", "AnyObject"]
+- ["15MobileMessaging14CustomUserDataV", "CustomUserDataValue"]
+- ["15MobileMessaging14CustomUserDataV", "DictionaryRepresentation"]
+- !private ["15MobileMessaging14CustomUserDataV", "NSDate"]
+- !private ["15MobileMessaging14CustomUserDataV", "NSNull"]
+- !private ["15MobileMessaging14CustomUserDataV", "NSNumber"]
+- !private ["15MobileMessaging14CustomUserDataV", "NSString"]
+- ["15MobileMessaging14CustomUserDataV", "String"]
+- ["15MobileMessaging14CustomUserDataV", "UserDataFoundationTypes"]
+- ["15MobileMessaging14CustomUserDataV", "dataKey"]
+- ["15MobileMessaging14CustomUserDataV", "dataValue"]
+- ["15MobileMessaging14CustomUserDataV", "deinit"]
+- ["15MobileMessaging14CustomUserDataV", "dictionaryRepresentation"]
+- ["15MobileMessaging14CustomUserDataV", "init"]
+- ["15MobileMessaging14CustomUserDataV", "mapToCoreDataCompatibleDictionary"]
+- ["15MobileMessaging19CustomUserDataValueC", "AnyObject"]
+- ["15MobileMessaging19CustomUserDataValueC", "Bool"]
+- !private ["15MobileMessaging19CustomUserDataValueC", "CustomUserDataValue"]
+- !private ["15MobileMessaging19CustomUserDataValueC", "Date"]
+- !private ["15MobileMessaging19CustomUserDataValueC", "DateStaticFormatters"]
+- ["15MobileMessaging19CustomUserDataValueC", "Double"]
+- ["15MobileMessaging19CustomUserDataValueC", "ExtendedGraphemeClusterLiteralType"]
+- ["15MobileMessaging19CustomUserDataValueC", "FloatLiteralType"]
+- ["15MobileMessaging19CustomUserDataValueC", "Int"]
+- ["15MobileMessaging19CustomUserDataValueC", "IntegerLiteralType"]
+- ["15MobileMessaging19CustomUserDataValueC", "NSDate"]
+- ["15MobileMessaging19CustomUserDataValueC", "NSNull"]
+- ["15MobileMessaging19CustomUserDataValueC", "NSNumber"]
+- !private ["15MobileMessaging19CustomUserDataValueC", "NSString"]
+- ["15MobileMessaging19CustomUserDataValueC", "String"]
+- ["15MobileMessaging19CustomUserDataValueC", "StringLiteralType"]
+- ["15MobileMessaging19CustomUserDataValueC", "UnicodeScalarLiteralType"]
+- ["15MobileMessaging19CustomUserDataValueC", "UserDataFoundationTypes"]
+- ["15MobileMessaging19CustomUserDataValueC", "UserDataServiceTypes"]
+- ["15MobileMessaging19CustomUserDataValueC", "dataType"]
+- ["15MobileMessaging19CustomUserDataValueC", "dataValue"]
+- ["15MobileMessaging19CustomUserDataValueC", "date"]
+- ["15MobileMessaging19CustomUserDataValueC", "deinit"]
+- ["15MobileMessaging19CustomUserDataValueC", "double"]
+- !private ["15MobileMessaging19CustomUserDataValueC", "floor"]
+- ["15MobileMessaging19CustomUserDataValueC", "init"]
+- ["15MobileMessaging19CustomUserDataValueC", "integer"]
+- ["15MobileMessaging19CustomUserDataValueC", "isInteger"]
+- ["15MobileMessaging19CustomUserDataValueC", "jsonDictRepresentation"]
+- ["15MobileMessaging19CustomUserDataValueC", "number"]
+- ["15MobileMessaging19CustomUserDataValueC", "string"]
+- !private ["So13DateFormatterC", "date"]
+- !private ["So13DateFormatterC", "string"]
+- !private ["15MobileMessaging20DateStaticFormattersV", "ISO8601SecondsFormatter"]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "date"]
+- !private ["s9DecodableP", "first"]
+- !private ["s9DecodableP", "hashValue"]
+- ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "number"]
+- !private ["s9DecodableP", "reduce"]
+- !private ["s9DecodableP", "string"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s10DictionaryV", "first"]
+- !private ["s10DictionaryV", "init"]
+- !private ["s10DictionaryV", "subscript"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "AnyObject"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "CustomUserDataValue"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "NSNull"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "String"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "dataKey"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "dataValue"]
+- ["15MobileMessaging23DictionaryRepresentableP", "dictionaryRepresentation"]
+- ["15MobileMessaging23DictionaryRepresentableP", "init"]
+- ["15MobileMessaging23DictionaryRepresentableP", ""]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "date"]
+- !private ["s9EncodableP", "first"]
+- !private ["s9EncodableP", "hashValue"]
+- ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "number"]
+- !private ["s9EncodableP", "reduce"]
+- !private ["s9EncodableP", "string"]
+- !private ["s9EncodableP", "subscript"]
+- !private ["s9EquatableP", "CustomUserDataValue"]
+- !private ["s9EquatableP", "DateStaticFormatters"]
+- ["s9EquatableP", "ExtendedGraphemeClusterLiteralType"]
+- ["s9EquatableP", "FloatLiteralType"]
+- ["s9EquatableP", "IntegerLiteralType"]
+- !private ["s9EquatableP", "MMInternalErrorType"]
+- !private ["s9EquatableP", "MMLogDebug"]
+- !private ["s9EquatableP", "MMLogError"]
+- !private ["s9EquatableP", "MMNotificationUserDataSynced"]
+- !private ["s9EquatableP", "NSError"]
+- !private ["s9EquatableP", "NSNumber"]
+- !private ["s9EquatableP", "NoRegistration"]
+- !private ["s9EquatableP", "NotificationCenter"]
+- ["s9EquatableP", "RawValue"]
+- !private ["s9EquatableP", "String"]
+- ["s9EquatableP", "StringLiteralType"]
+- ["s9EquatableP", "UnicodeScalarLiteralType"]
+- !private ["s9EquatableP", "UserDataServiceTypes"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "customData"]
+- !private ["s9EquatableP", "dataType"]
+- !private ["s9EquatableP", "dataValue"]
+- ["s9EquatableP", "date"]
+- !private ["s9EquatableP", "doubleValue"]
+- !private ["s9EquatableP", "externalId"]
+- !private ["s9EquatableP", "fetchUserData"]
+- !private ["s9EquatableP", "finishBlock"]
+- !private ["s9EquatableP", "finishWithError"]
+- !private ["s9EquatableP", "floor"]
+- !private ["s9EquatableP", "handleResult"]
+- ["s9EquatableP", "hashValue"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "intValue"]
+- !private ["s9EquatableP", "isCancelled"]
+- !private ["s9EquatableP", "isInteger"]
+- !private ["s9EquatableP", "jsonDictRepresentation"]
+- !private ["s9EquatableP", "mmContext"]
+- !private ["s9EquatableP", "mm_postNotificationFromMainThread"]
+- ["s9EquatableP", "number"]
+- !private ["s9EquatableP", "onlyFetching"]
+- !private ["s9EquatableP", "persist"]
+- !private ["s9EquatableP", "predefinedData"]
+- !private ["s9EquatableP", "pushRegistrationId"]
+- !private ["s9EquatableP", "rawPredefinedData"]
+- ["s9EquatableP", "rawValue"]
+- !private ["s9EquatableP", "remoteApiManager"]
+- !private ["s9EquatableP", "resetNeedToSync"]
+- !private ["s9EquatableP", "sendUserDataIfNeeded"]
+- ["s9EquatableP", "string"]
+- !private ["s9EquatableP", "syncUserData"]
+- !private ["s9EquatableP", "user"]
+- ["s9EquatableP", ""]
+- !private ["s5ErrorP", "NoRegistration"]
+- !private ["s5ErrorP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "first"]
+- !private ["s25ExpressibleByArrayLiteralP", "reduce"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s27ExpressibleByBooleanLiteralP", "doubleValue"]
+- !private ["s27ExpressibleByBooleanLiteralP", "init"]
+- !private ["s27ExpressibleByBooleanLiteralP", "intValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "first"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "init"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "CustomUserDataValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "DateStaticFormatters"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "ExtendedGraphemeClusterLiteralType"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "FloatLiteralType"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "IntegerLiteralType"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "NSNumber"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "StringLiteralType"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "UnicodeScalarLiteralType"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "UserDataServiceTypes"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "dataType"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "dataValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "floor"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "isInteger"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "jsonDictRepresentation"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", ""]
+- !private ["s25ExpressibleByFloatLiteralP", "CustomUserDataValue"]
+- !private ["s25ExpressibleByFloatLiteralP", "DateStaticFormatters"]
+- ["s25ExpressibleByFloatLiteralP", "ExtendedGraphemeClusterLiteralType"]
+- ["s25ExpressibleByFloatLiteralP", "FloatLiteralType"]
+- ["s25ExpressibleByFloatLiteralP", "IntegerLiteralType"]
+- !private ["s25ExpressibleByFloatLiteralP", "NSNumber"]
+- ["s25ExpressibleByFloatLiteralP", "StringLiteralType"]
+- ["s25ExpressibleByFloatLiteralP", "UnicodeScalarLiteralType"]
+- !private ["s25ExpressibleByFloatLiteralP", "UserDataServiceTypes"]
+- !private ["s25ExpressibleByFloatLiteralP", "dataType"]
+- !private ["s25ExpressibleByFloatLiteralP", "dataValue"]
+- !private ["s25ExpressibleByFloatLiteralP", "doubleValue"]
+- !private ["s25ExpressibleByFloatLiteralP", "floor"]
+- ["s25ExpressibleByFloatLiteralP", "init"]
+- !private ["s25ExpressibleByFloatLiteralP", "intValue"]
+- !private ["s25ExpressibleByFloatLiteralP", "isInteger"]
+- !private ["s25ExpressibleByFloatLiteralP", "jsonDictRepresentation"]
+- ["s25ExpressibleByFloatLiteralP", ""]
+- !private ["s27ExpressibleByIntegerLiteralP", "CustomUserDataValue"]
+- !private ["s27ExpressibleByIntegerLiteralP", "DateStaticFormatters"]
+- ["s27ExpressibleByIntegerLiteralP", "ExtendedGraphemeClusterLiteralType"]
+- ["s27ExpressibleByIntegerLiteralP", "FloatLiteralType"]
+- ["s27ExpressibleByIntegerLiteralP", "IntegerLiteralType"]
+- !private ["s27ExpressibleByIntegerLiteralP", "NSNumber"]
+- ["s27ExpressibleByIntegerLiteralP", "StringLiteralType"]
+- ["s27ExpressibleByIntegerLiteralP", "UnicodeScalarLiteralType"]
+- !private ["s27ExpressibleByIntegerLiteralP", "UserDataServiceTypes"]
+- !private ["s27ExpressibleByIntegerLiteralP", "dataType"]
+- !private ["s27ExpressibleByIntegerLiteralP", "dataValue"]
+- !private ["s27ExpressibleByIntegerLiteralP", "doubleValue"]
+- !private ["s27ExpressibleByIntegerLiteralP", "floor"]
+- !private ["s27ExpressibleByIntegerLiteralP", "hashValue"]
+- ["s27ExpressibleByIntegerLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "intValue"]
+- !private ["s27ExpressibleByIntegerLiteralP", "isInteger"]
+- !private ["s27ExpressibleByIntegerLiteralP", "jsonDictRepresentation"]
+- ["s27ExpressibleByIntegerLiteralP", ""]
+- !private ["s23ExpressibleByNilLiteralP", "date"]
+- !private ["s23ExpressibleByNilLiteralP", "number"]
+- !private ["s23ExpressibleByNilLiteralP", "string"]
+- !private ["s26ExpressibleByStringLiteralP", "CustomUserDataValue"]
+- !private ["s26ExpressibleByStringLiteralP", "DateStaticFormatters"]
+- ["s26ExpressibleByStringLiteralP", "ExtendedGraphemeClusterLiteralType"]
+- ["s26ExpressibleByStringLiteralP", "FloatLiteralType"]
+- ["s26ExpressibleByStringLiteralP", "IntegerLiteralType"]
+- !private ["s26ExpressibleByStringLiteralP", "NSNumber"]
+- ["s26ExpressibleByStringLiteralP", "StringLiteralType"]
+- ["s26ExpressibleByStringLiteralP", "UnicodeScalarLiteralType"]
+- !private ["s26ExpressibleByStringLiteralP", "UserDataServiceTypes"]
+- !private ["s26ExpressibleByStringLiteralP", "dataType"]
+- !private ["s26ExpressibleByStringLiteralP", "dataValue"]
+- !private ["s26ExpressibleByStringLiteralP", "floor"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "isInteger"]
+- !private ["s26ExpressibleByStringLiteralP", "jsonDictRepresentation"]
+- ["s26ExpressibleByStringLiteralP", ""]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "CustomUserDataValue"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "DateStaticFormatters"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "ExtendedGraphemeClusterLiteralType"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "FloatLiteralType"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "IntegerLiteralType"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "NSNumber"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "StringLiteralType"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "UnicodeScalarLiteralType"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "UserDataServiceTypes"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "dataType"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "dataValue"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "floor"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "isInteger"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "jsonDictRepresentation"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", ""]
+- !private ["s17FixedWidthIntegerP", "hashValue"]
+- !private ["So9FormatterC", "date"]
+- !private ["So9FormatterC", "string"]
+- !private ["s8HashableP", "CustomUserDataValue"]
+- !private ["s8HashableP", "DateStaticFormatters"]
+- ["s8HashableP", "ExtendedGraphemeClusterLiteralType"]
+- ["s8HashableP", "FloatLiteralType"]
+- ["s8HashableP", "IntegerLiteralType"]
+- !private ["s8HashableP", "MMInternalErrorType"]
+- !private ["s8HashableP", "MMLogDebug"]
+- !private ["s8HashableP", "MMLogError"]
+- !private ["s8HashableP", "MMNotificationUserDataSynced"]
+- !private ["s8HashableP", "NSError"]
+- !private ["s8HashableP", "NSNumber"]
+- !private ["s8HashableP", "NoRegistration"]
+- !private ["s8HashableP", "NotificationCenter"]
+- ["s8HashableP", "RawValue"]
+- !private ["s8HashableP", "String"]
+- ["s8HashableP", "StringLiteralType"]
+- ["s8HashableP", "UnicodeScalarLiteralType"]
+- !private ["s8HashableP", "UserDataServiceTypes"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "customData"]
+- !private ["s8HashableP", "dataType"]
+- !private ["s8HashableP", "dataValue"]
+- ["s8HashableP", "date"]
+- !private ["s8HashableP", "doubleValue"]
+- !private ["s8HashableP", "externalId"]
+- !private ["s8HashableP", "fetchUserData"]
+- !private ["s8HashableP", "finishBlock"]
+- !private ["s8HashableP", "finishWithError"]
+- !private ["s8HashableP", "floor"]
+- !private ["s8HashableP", "handleResult"]
+- ["s8HashableP", "hashValue"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "intValue"]
+- !private ["s8HashableP", "isCancelled"]
+- !private ["s8HashableP", "isInteger"]
+- !private ["s8HashableP", "jsonDictRepresentation"]
+- !private ["s8HashableP", "mmContext"]
+- !private ["s8HashableP", "mm_postNotificationFromMainThread"]
+- ["s8HashableP", "number"]
+- !private ["s8HashableP", "onlyFetching"]
+- !private ["s8HashableP", "persist"]
+- !private ["s8HashableP", "predefinedData"]
+- !private ["s8HashableP", "pushRegistrationId"]
+- !private ["s8HashableP", "rawPredefinedData"]
+- ["s8HashableP", "rawValue"]
+- !private ["s8HashableP", "remoteApiManager"]
+- !private ["s8HashableP", "resetNeedToSync"]
+- !private ["s8HashableP", "sendUserDataIfNeeded"]
+- ["s8HashableP", "string"]
+- !private ["s8HashableP", "syncUserData"]
+- !private ["s8HashableP", "user"]
+- ["s8HashableP", ""]
+- !private ["Si", "hashValue"]
+- !private ["15MobileMessaging13JSONDecodableP", "customData"]
+- !private ["15MobileMessaging13JSONDecodableP", "error"]
+- !private ["15MobileMessaging13JSONDecodableP", "foundationError"]
+- !private ["15MobileMessaging13JSONDecodableP", "predefinedData"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hashValue"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "hashValue"]
+- ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "NoRegistration"]
+- !private ["15MobileMessaging6MMUserC", "customData"]
+- !private ["15MobileMessaging6MMUserC", "externalId"]
+- !private ["15MobileMessaging6MMUserC", "persist"]
+- !private ["15MobileMessaging6MMUserC", "predefinedData"]
+- !private ["15MobileMessaging6MMUserC", "pushRegistrationId"]
+- !private ["15MobileMessaging6MMUserC", "rawPredefinedData"]
+- !private ["15MobileMessaging6MMUserC", "resetNeedToSync"]
+- !private ["s10MirrorPathP", "hashValue"]
+- ["s10MirrorPathP", "init"]
+- !private ["15MobileMessagingAAC", "remoteApiManager"]
+- !private ["s17MutableCollectionP", "first"]
+- !private ["s17MutableCollectionP", "reduce"]
+- !private ["So8NSCodingP", "date"]
+- !private ["So8NSCodingP", "doubleValue"]
+- ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "intValue"]
+- !private ["So8NSCodingP", "string"]
+- !private ["So9NSCopyingP", "date"]
+- !private ["So9NSCopyingP", "doubleValue"]
+- ["So9NSCopyingP", "init"]
+- !private ["So9NSCopyingP", "intValue"]
+- !private ["So9NSCopyingP", "string"]
+- ["So6NSDateC", "deinit"]
+- !private ["So7NSErrorC", "init"]
+- !private ["So20NSFetchRequestResultP", "doubleValue"]
+- !private ["So20NSFetchRequestResultP", "init"]
+- !private ["So20NSFetchRequestResultP", "intValue"]
+- ["So21NSItemProviderReadingP", "init"]
+- ["So21NSItemProviderWritingP", "init"]
+- ["So16NSMutableCopyingP", "init"]
+- ["So6NSNullC", "deinit"]
+- !private ["So6NSNullC", "init"]
+- ["So8NSNumberC", "deinit"]
+- !private ["So8NSNumberC", "doubleValue"]
+- !private ["So8NSNumberC", "init"]
+- !private ["So8NSNumberC", "intValue"]
+- ["So8NSObjectC", "AnyObject"]
+- ["So8NSObjectC", "Bool"]
+- !private ["So8NSObjectC", "CustomUserData"]
+- !private ["So8NSObjectC", "CustomUserDataValue"]
+- !private ["So8NSObjectC", "Date"]
+- !private ["So8NSObjectC", "DateStaticFormatters"]
+- ["So8NSObjectC", "Double"]
+- ["So8NSObjectC", "ExtendedGraphemeClusterLiteralType"]
+- ["So8NSObjectC", "FloatLiteralType"]
+- ["So8NSObjectC", "Int"]
+- ["So8NSObjectC", "IntegerLiteralType"]
+- !private ["So8NSObjectC", "MMInternalErrorType"]
+- !private ["So8NSObjectC", "MMLogDebug"]
+- !private ["So8NSObjectC", "MMLogError"]
+- !private ["So8NSObjectC", "MMNotificationUserDataSynced"]
+- ["So8NSObjectC", "MMUser"]
+- ["So8NSObjectC", "MobileMessaging"]
+- ["So8NSObjectC", "NSDate"]
+- ["So8NSObjectC", "NSError"]
+- ["So8NSObjectC", "NSNull"]
+- ["So8NSObjectC", "NSNumber"]
+- !private ["So8NSObjectC", "NSString"]
+- !private ["So8NSObjectC", "NotificationCenter"]
+- ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "StringLiteralType"]
+- ["So8NSObjectC", "UnicodeScalarLiteralType"]
+- !private ["So8NSObjectC", "UserDataDictionary"]
+- ["So8NSObjectC", "UserDataFoundationTypes"]
+- ["So8NSObjectC", "UserDataServiceTypes"]
+- !private ["So8NSObjectC", "UserDataSyncResult"]
+- ["So8NSObjectC", "Void"]
+- !private ["So8NSObjectC", "customData"]
+- ["So8NSObjectC", "dataType"]
+- ["So8NSObjectC", "dataValue"]
+- ["So8NSObjectC", "date"]
+- ["So8NSObjectC", "double"]
+- !private ["So8NSObjectC", "doubleValue"]
+- ["So8NSObjectC", "execute"]
+- !private ["So8NSObjectC", "externalId"]
+- ["So8NSObjectC", "fetchUserData"]
+- ["So8NSObjectC", "finishBlock"]
+- !private ["So8NSObjectC", "finishWithError"]
+- ["So8NSObjectC", "finished"]
+- !private ["So8NSObjectC", "floor"]
+- ["So8NSObjectC", "handleResult"]
+- ["So8NSObjectC", "init"]
+- !private ["So8NSObjectC", "intValue"]
+- ["So8NSObjectC", "integer"]
+- !private ["So8NSObjectC", "isCancelled"]
+- ["So8NSObjectC", "isInteger"]
+- ["So8NSObjectC", "jsonDictRepresentation"]
+- ["So8NSObjectC", "mmContext"]
+- !private ["So8NSObjectC", "mm_postNotificationFromMainThread"]
+- ["So8NSObjectC", "number"]
+- ["So8NSObjectC", "onlyFetching"]
+- !private ["So8NSObjectC", "persist"]
+- !private ["So8NSObjectC", "predefinedData"]
+- !private ["So8NSObjectC", "pushRegistrationId"]
+- !private ["So8NSObjectC", "rawPredefinedData"]
+- !private ["So8NSObjectC", "remoteApiManager"]
+- !private ["So8NSObjectC", "resetNeedToSync"]
+- ["So8NSObjectC", "sendUserDataIfNeeded"]
+- ["So8NSObjectC", "string"]
+- ["So8NSObjectC", "syncUserData"]
+- ["So8NSObjectC", "user"]
+- ["So8NSObjectC", ""]
+- !private ["So16NSObjectProtocolP", "CustomUserDataValue"]
+- !private ["So16NSObjectProtocolP", "DateStaticFormatters"]
+- ["So16NSObjectProtocolP", "ExtendedGraphemeClusterLiteralType"]
+- ["So16NSObjectProtocolP", "FloatLiteralType"]
+- ["So16NSObjectProtocolP", "IntegerLiteralType"]
+- !private ["So16NSObjectProtocolP", "MMInternalErrorType"]
+- !private ["So16NSObjectProtocolP", "MMLogDebug"]
+- !private ["So16NSObjectProtocolP", "MMLogError"]
+- !private ["So16NSObjectProtocolP", "MMNotificationUserDataSynced"]
+- !private ["So16NSObjectProtocolP", "NSError"]
+- !private ["So16NSObjectProtocolP", "NSNumber"]
+- !private ["So16NSObjectProtocolP", "NotificationCenter"]
+- !private ["So16NSObjectProtocolP", "String"]
+- ["So16NSObjectProtocolP", "StringLiteralType"]
+- ["So16NSObjectProtocolP", "UnicodeScalarLiteralType"]
+- !private ["So16NSObjectProtocolP", "UserDataServiceTypes"]
+- !private ["So16NSObjectProtocolP", "customData"]
+- !private ["So16NSObjectProtocolP", "dataType"]
+- !private ["So16NSObjectProtocolP", "dataValue"]
+- !private ["So16NSObjectProtocolP", "date"]
+- !private ["So16NSObjectProtocolP", "doubleValue"]
+- !private ["So16NSObjectProtocolP", "externalId"]
+- !private ["So16NSObjectProtocolP", "fetchUserData"]
+- !private ["So16NSObjectProtocolP", "finishBlock"]
+- !private ["So16NSObjectProtocolP", "finishWithError"]
+- !private ["So16NSObjectProtocolP", "floor"]
+- !private ["So16NSObjectProtocolP", "handleResult"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "intValue"]
+- !private ["So16NSObjectProtocolP", "isCancelled"]
+- !private ["So16NSObjectProtocolP", "isInteger"]
+- !private ["So16NSObjectProtocolP", "jsonDictRepresentation"]
+- !private ["So16NSObjectProtocolP", "mmContext"]
+- !private ["So16NSObjectProtocolP", "mm_postNotificationFromMainThread"]
+- !private ["So16NSObjectProtocolP", "onlyFetching"]
+- !private ["So16NSObjectProtocolP", "persist"]
+- !private ["So16NSObjectProtocolP", "predefinedData"]
+- !private ["So16NSObjectProtocolP", "pushRegistrationId"]
+- !private ["So16NSObjectProtocolP", "rawPredefinedData"]
+- !private ["So16NSObjectProtocolP", "remoteApiManager"]
+- !private ["So16NSObjectProtocolP", "resetNeedToSync"]
+- !private ["So16NSObjectProtocolP", "sendUserDataIfNeeded"]
+- !private ["So16NSObjectProtocolP", "string"]
+- !private ["So16NSObjectProtocolP", "syncUserData"]
+- !private ["So16NSObjectProtocolP", "user"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSSecureCodingP", "doubleValue"]
+- ["So14NSSecureCodingP", "init"]
+- !private ["So14NSSecureCodingP", "intValue"]
+- ["So8NSStringC", "deinit"]
+- ["So8NSStringC", "init"]
+- !private ["So7NSValueC", "doubleValue"]
+- !private ["So7NSValueC", "intValue"]
+- !private ["So18NotificationCenterC", "mm_postNotificationFromMainThread"]
+- !private ["s7NumericP", "hashValue"]
+- ["15MobileMessaging9OperationC", "Bool"]
+- !private ["15MobileMessaging9OperationC", "CustomUserData"]
+- !private ["15MobileMessaging9OperationC", "CustomUserDataValue"]
+- !private ["15MobileMessaging9OperationC", "MMInternalErrorType"]
+- !private ["15MobileMessaging9OperationC", "MMLogDebug"]
+- !private ["15MobileMessaging9OperationC", "MMLogError"]
+- !private ["15MobileMessaging9OperationC", "MMNotificationUserDataSynced"]
+- ["15MobileMessaging9OperationC", "MMUser"]
+- ["15MobileMessaging9OperationC", "MobileMessaging"]
+- ["15MobileMessaging9OperationC", "NSError"]
+- !private ["15MobileMessaging9OperationC", "NotificationCenter"]
+- !private ["15MobileMessaging9OperationC", "String"]
+- !private ["15MobileMessaging9OperationC", "UserDataDictionary"]
+- !private ["15MobileMessaging9OperationC", "UserDataSyncResult"]
+- ["15MobileMessaging9OperationC", "Void"]
+- ["15MobileMessaging9OperationC", "execute"]
+- ["15MobileMessaging9OperationC", "fetchUserData"]
+- ["15MobileMessaging9OperationC", "finishBlock"]
+- !private ["15MobileMessaging9OperationC", "finishWithError"]
+- ["15MobileMessaging9OperationC", "finished"]
+- ["15MobileMessaging9OperationC", "handleResult"]
+- ["15MobileMessaging9OperationC", "init"]
+- !private ["15MobileMessaging9OperationC", "isCancelled"]
+- ["15MobileMessaging9OperationC", "mmContext"]
+- ["15MobileMessaging9OperationC", "onlyFetching"]
+- ["15MobileMessaging9OperationC", "sendUserDataIfNeeded"]
+- ["15MobileMessaging9OperationC", "syncUserData"]
+- ["15MobileMessaging9OperationC", "user"]
+- ["15MobileMessaging9OperationC", ""]
+- ["So9OperationC", "Bool"]
+- !private ["So9OperationC", "CustomUserData"]
+- !private ["So9OperationC", "CustomUserDataValue"]
+- !private ["So9OperationC", "MMInternalErrorType"]
+- !private ["So9OperationC", "MMLogDebug"]
+- !private ["So9OperationC", "MMLogError"]
+- !private ["So9OperationC", "MMNotificationUserDataSynced"]
+- ["So9OperationC", "MMUser"]
+- ["So9OperationC", "MobileMessaging"]
+- ["So9OperationC", "NSError"]
+- !private ["So9OperationC", "NotificationCenter"]
+- !private ["So9OperationC", "String"]
+- !private ["So9OperationC", "UserDataDictionary"]
+- !private ["So9OperationC", "UserDataSyncResult"]
+- ["So9OperationC", "Void"]
+- ["So9OperationC", "execute"]
+- ["So9OperationC", "fetchUserData"]
+- ["So9OperationC", "finishBlock"]
+- !private ["So9OperationC", "finishWithError"]
+- ["So9OperationC", "finished"]
+- ["So9OperationC", "handleResult"]
+- ["So9OperationC", "init"]
+- !private ["So9OperationC", "isCancelled"]
+- ["So9OperationC", "mmContext"]
+- ["So9OperationC", "onlyFetching"]
+- ["So9OperationC", "sendUserDataIfNeeded"]
+- ["So9OperationC", "syncUserData"]
+- ["So9OperationC", "user"]
+- !private ["Sq", "date"]
+- !private ["Sq", "number"]
+- !private ["Sq", "string"]
+- !private ["s22RandomAccessCollectionP", "first"]
+- !private ["s22RandomAccessCollectionP", "reduce"]
+- !private ["s26RangeReplaceableCollectionP", "first"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s26RangeReplaceableCollectionP", "reduce"]
+- ["s16RawRepresentableP", "RawValue"]
+- ["s16RawRepresentableP", "date"]
+- ["s16RawRepresentableP", "hashValue"]
+- ["s16RawRepresentableP", "init"]
+- ["s16RawRepresentableP", "number"]
+- ["s16RawRepresentableP", "rawValue"]
+- ["s16RawRepresentableP", "string"]
+- ["s16RawRepresentableP", ""]
+- !private ["15MobileMessaging16RemoteAPIManagerC", "fetchUserData"]
+- !private ["15MobileMessaging16RemoteAPIManagerC", "syncUserData"]
+- !private ["15MobileMessaging12RequestErrorV", "foundationError"]
+- !private ["15MobileMessaging6ResultO", "Cancel"]
+- !private ["15MobileMessaging6ResultO", "Failure"]
+- !private ["15MobileMessaging6ResultO", "Success"]
+- !private ["15MobileMessaging6ResultO", "error"]
+- !private ["15MobileMessaging6ResultO", "value"]
+- !private ["s8SequenceP", "first"]
+- ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "reduce"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s13SignedIntegerP", "hashValue"]
+- !private ["s13SignedNumericP", "hashValue"]
+- !private ["s12StaticStringV", "init"]
+- !private ["s10StrideableP", "hashValue"]
+- ["SS", "init"]
+- ["s14StringProtocolP", "init"]
+- ["s16TextOutputStreamP", "init"]
+- ["s20TextOutputStreamableP", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "doubleValue"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "intValue"]
+- ["15MobileMessaging23UserDataFoundationTypesP", ""]
+- ["15MobileMessaging20UserDataServiceTypesO", "RawValue"]
+- ["15MobileMessaging20UserDataServiceTypesO", "date"]
+- ["15MobileMessaging20UserDataServiceTypesO", "deinit"]
+- ["15MobileMessaging20UserDataServiceTypesO", "hashValue"]
+- ["15MobileMessaging20UserDataServiceTypesO", "init"]
+- ["15MobileMessaging20UserDataServiceTypesO", "number"]
+- ["15MobileMessaging20UserDataServiceTypesO", "rawValue"]
+- ["15MobileMessaging20UserDataServiceTypesO", "string"]
+- !private ["15MobileMessaging20UserDataSyncResponseV", "customData"]
+- !private ["15MobileMessaging20UserDataSyncResponseV", "error"]
+- !private ["15MobileMessaging20UserDataSyncResponseV", "predefinedData"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "Bool"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "CustomUserData"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "CustomUserDataValue"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "MMInternalErrorType"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "MMLogDebug"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "MMLogError"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "MMNotificationUserDataSynced"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "MMUser"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "MobileMessaging"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "NSError"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "NotificationCenter"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "String"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "UserDataDictionary"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "UserDataSyncResult"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "Void"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "deinit"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "execute"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "fetchUserData"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "finishBlock"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "finishWithError"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "finished"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "handleResult"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "init"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "isCancelled"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "mmContext"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "onlyFetching"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "sendUserDataIfNeeded"]
+- !private ["15MobileMessaging32UserDataSynchronizationOperationC", "syncUserData"]
+- ["15MobileMessaging32UserDataSynchronizationOperationC", "user"]
+- !private ["s14_ArrayProtocolP", "first"]
+- !private ["s14_ArrayProtocolP", "reduce"]
+- !private ["s23_BidirectionalIndexableP", "first"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s23_BidirectionalIndexableP", "reduce"]
+- !private ["s18_BitwiseOperationsP", "hashValue"]
+- !private ["s24_DestructorSafeContainerP", "first"]
+- !private ["s24_DestructorSafeContainerP", "reduce"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "hashValue"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "doubleValue"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "intValue"]
+- !private ["s10_IndexableP", "first"]
+- ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "reduce"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "first"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "reduce"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "CustomUserDataValue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "DateStaticFormatters"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "ExtendedGraphemeClusterLiteralType"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "FloatLiteralType"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "IntegerLiteralType"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMInternalErrorType"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLogDebug"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLogError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMNotificationUserDataSynced"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSNumber"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NotificationCenter"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "String"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "StringLiteralType"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "UnicodeScalarLiteralType"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UserDataServiceTypes"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "customData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "dataType"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "dataValue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "date"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "doubleValue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "externalId"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "fetchUserData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finishBlock"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finishWithError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "floor"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "handleResult"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "intValue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isCancelled"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isInteger"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "jsonDictRepresentation"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mmContext"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_postNotificationFromMainThread"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "onlyFetching"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "persist"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "predefinedData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "pushRegistrationId"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "rawPredefinedData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "remoteApiManager"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "resetNeedToSync"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "sendUserDataIfNeeded"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "string"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "syncUserData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "user"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s17_MutableIndexableP", "first"]
+- !private ["s17_MutableIndexableP", "reduce"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "date"]
+- !private ["s21_ObjectiveCBridgeableP", "first"]
+- !private ["s21_ObjectiveCBridgeableP", "hashValue"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "number"]
+- !private ["s21_ObjectiveCBridgeableP", "reduce"]
+- !private ["s21_ObjectiveCBridgeableP", "string"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- !private ["s22_RandomAccessIndexableP", "first"]
+- !private ["s22_RandomAccessIndexableP", "reduce"]
+- !private ["s26_RangeReplaceableIndexableP", "first"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "reduce"]
+- !private ["s11_StrideableP", "hashValue"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "Sa"
+- "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- !private "Sb"
+- !private "So8CAActionP"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "15MobileMessaging14CustomUserDataV"
+- "15MobileMessaging19CustomUserDataValueC"
+- !private "So13DateFormatterC"
+- !private "15MobileMessaging20DateStaticFormattersV"
+- "s9DecodableP"
+- !private "s10DictionaryV"
+- "15MobileMessaging23DictionaryRepresentableP"
+- "s9EncodableP"
+- "s9EquatableP"
+- !private "s5ErrorP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- "s25ExpressibleByFloatLiteralP"
+- "s27ExpressibleByIntegerLiteralP"
+- !private "s23ExpressibleByNilLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "s17FixedWidthIntegerP"
+- !private "So9FormatterC"
+- "s8HashableP"
+- !private "Si"
+- !private "15MobileMessaging13JSONDecodableP"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging19MMInternalErrorTypeO"
+- !private "15MobileMessaging6MMUserC"
+- "s10MirrorPathP"
+- !private "15MobileMessagingAAC"
+- !private "s17MutableCollectionP"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- "So6NSDateC"
+- !private "So7NSErrorC"
+- !private "So20NSFetchRequestResultP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- "So6NSNullC"
+- "So8NSNumberC"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- !private "So7NSValueC"
+- !private "So18NotificationCenterC"
+- !private "s7NumericP"
+- "15MobileMessaging9OperationC"
+- "So9OperationC"
+- !private "Sq"
+- !private "s22RandomAccessCollectionP"
+- "s26RangeReplaceableCollectionP"
+- "s16RawRepresentableP"
+- !private "15MobileMessaging16RemoteAPIManagerC"
+- !private "15MobileMessaging12RequestErrorV"
+- !private "15MobileMessaging6ResultO"
+- "s8SequenceP"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s12StaticStringV"
+- !private "s10StrideableP"
+- "SS"
+- "s14StringProtocolP"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- "15MobileMessaging20UserDataServiceTypesO"
+- !private "15MobileMessaging20UserDataSyncResponseV"
+- "15MobileMessaging32UserDataSynchronizationOperationC"
+- !private "s14_ArrayProtocolP"
+- "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "6020b2c7ea7914062019a0b9fd939223"

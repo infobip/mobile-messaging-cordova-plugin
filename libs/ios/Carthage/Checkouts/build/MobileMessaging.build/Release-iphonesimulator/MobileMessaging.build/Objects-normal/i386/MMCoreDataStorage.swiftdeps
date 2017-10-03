@@ -1,0 +1,573 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "MMStorageType"
+- "MMStoreOptions"
+- "MMStorageSettings"
+- "MMCoreDataStorage"
+provides-nominal:
+- "15MobileMessaging13MMStorageTypeO"
+- "15MobileMessaging17MMStorageSettingsV"
+- "15MobileMessaging17MMCoreDataStorageC"
+provides-member:
+- ["15MobileMessaging13MMStorageTypeO", ""]
+- ["15MobileMessaging17MMStorageSettingsV", ""]
+- ["15MobileMessaging17MMCoreDataStorageC", ""]
+provides-dynamic-lookup:
+depends-top-level:
+- !private "!="
+- !private "&&"
+- "=="
+- !private "??"
+- "AnyHashable"
+- "AssignmentPrecedence"
+- !private "BooleanLiteralType"
+- "Bundle"
+- !private "FileManager"
+- "MMCoreDataStorage"
+- "MMDefaultMessageStorage"
+- !private "MMInternalErrorType"
+- !private "MMLogError"
+- "MMStorageSettings"
+- "MMStorageType"
+- "MMStoreOptions"
+- !private "NSCocoaErrorDomain"
+- !private "NSError"
+- !private "NSInMemoryStoreType"
+- !private "NSInferMappingModelAutomaticallyOption"
+- "NSManagedObjectContext"
+- "NSManagedObjectModel"
+- !private "NSMergeByPropertyStoreTrumpMergePolicy"
+- !private "NSMigratePersistentStoresAutomaticallyOption"
+- !private "NSMigrationError"
+- !private "NSMigrationMissingSourceModelError"
+- "NSPersistentStore"
+- !private "NSPersistentStoreConnectionPoolMaxSizeKey"
+- "NSPersistentStoreCoordinator"
+- !private "NSPersistentStoreIncompatibleVersionHashError"
+- !private "NSSQLiteStoreType"
+- !private "NSSearchPathForDirectoriesInDomains"
+- !private "NSTemporaryDirectory"
+- "String"
+- "StringLiteralType"
+- !private "URL"
+- !private "||"
+depends-member:
+- !private ["Sa", "first"]
+- !private ["s23BidirectionalCollectionP", "first"]
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["s13BinaryIntegerP", "hashValue"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["So6BundleC", "init"]
+- !private ["So6BundleC", "path"]
+- !private ["s7CVarArgP", "MM_removePersistentStoreFiles"]
+- !private ["s7CVarArgP", "MM_removePersistentStoreFilesAtURL"]
+- !private ["s7CVarArgP", "addPersistentStore"]
+- !private ["s7CVarArgP", "code"]
+- !private ["s7CVarArgP", "coreDataStorage"]
+- !private ["s7CVarArgP", "createDirectory"]
+- !private ["s7CVarArgP", "default"]
+- !private ["s7CVarArgP", "domain"]
+- !private ["s7CVarArgP", "fileExists"]
+- !private ["s7CVarArgP", "first"]
+- !private ["s7CVarArgP", "hashValue"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "mergePolicy"]
+- !private ["s7CVarArgP", "path"]
+- !private ["s7CVarArgP", "persistentStoreCoordinator"]
+- !private ["s7CVarArgP", "remove"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s7CVarArgP", "undoManager"]
+- !private ["s10CollectionP", "first"]
+- ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "hashValue"]
+- ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "MM_removePersistentStoreFiles"]
+- !private ["s28CustomDebugStringConvertibleP", "MM_removePersistentStoreFilesAtURL"]
+- !private ["s28CustomDebugStringConvertibleP", "addPersistentStore"]
+- !private ["s28CustomDebugStringConvertibleP", "appendingPathComponent"]
+- !private ["s28CustomDebugStringConvertibleP", "code"]
+- !private ["s28CustomDebugStringConvertibleP", "coreDataStorage"]
+- !private ["s28CustomDebugStringConvertibleP", "createDirectory"]
+- !private ["s28CustomDebugStringConvertibleP", "default"]
+- !private ["s28CustomDebugStringConvertibleP", "domain"]
+- !private ["s28CustomDebugStringConvertibleP", "fileExists"]
+- !private ["s28CustomDebugStringConvertibleP", "first"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "mergePolicy"]
+- !private ["s28CustomDebugStringConvertibleP", "path"]
+- !private ["s28CustomDebugStringConvertibleP", "persistentStoreCoordinator"]
+- !private ["s28CustomDebugStringConvertibleP", "remove"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "undoManager"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "appendingPathComponent"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hashValue"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "path"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "first"]
+- !private ["s17CustomReflectableP", "hashValue"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "MM_removePersistentStoreFiles"]
+- !private ["s23CustomStringConvertibleP", "MM_removePersistentStoreFilesAtURL"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "addPersistentStore"]
+- !private ["s23CustomStringConvertibleP", "appendingPathComponent"]
+- !private ["s23CustomStringConvertibleP", "code"]
+- !private ["s23CustomStringConvertibleP", "coreDataStorage"]
+- !private ["s23CustomStringConvertibleP", "createDirectory"]
+- !private ["s23CustomStringConvertibleP", "default"]
+- !private ["s23CustomStringConvertibleP", "domain"]
+- !private ["s23CustomStringConvertibleP", "fileExists"]
+- !private ["s23CustomStringConvertibleP", "first"]
+- !private ["s23CustomStringConvertibleP", "hashValue"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "mergePolicy"]
+- !private ["s23CustomStringConvertibleP", "path"]
+- !private ["s23CustomStringConvertibleP", "persistentStoreCoordinator"]
+- !private ["s23CustomStringConvertibleP", "remove"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "undoManager"]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "appendingPathComponent"]
+- !private ["s9DecodableP", "first"]
+- !private ["s9DecodableP", "hashValue"]
+- ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "path"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s10DictionaryV", "subscript"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "appendingPathComponent"]
+- !private ["s9EncodableP", "first"]
+- !private ["s9EncodableP", "hashValue"]
+- ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "path"]
+- !private ["s9EncodableP", "subscript"]
+- ["s9EquatableP", "InMemory"]
+- !private ["s9EquatableP", "MM_removePersistentStoreFiles"]
+- !private ["s9EquatableP", "MM_removePersistentStoreFilesAtURL"]
+- ["s9EquatableP", "SQLite"]
+- !private ["s9EquatableP", "StorageInitializationError"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "addPersistentStore"]
+- !private ["s9EquatableP", "appendingPathComponent"]
+- !private ["s9EquatableP", "applicationSupportDirectory"]
+- !private ["s9EquatableP", "code"]
+- !private ["s9EquatableP", "coreDataStorage"]
+- !private ["s9EquatableP", "createDirectory"]
+- !private ["s9EquatableP", "default"]
+- !private ["s9EquatableP", "domain"]
+- !private ["s9EquatableP", "fileExists"]
+- ["s9EquatableP", "hashValue"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "mainQueueConcurrencyType"]
+- !private ["s9EquatableP", "mergePolicy"]
+- !private ["s9EquatableP", "path"]
+- !private ["s9EquatableP", "persistentStoreCoordinator"]
+- !private ["s9EquatableP", "privateQueueConcurrencyType"]
+- !private ["s9EquatableP", "remove"]
+- !private ["s9EquatableP", "undoManager"]
+- !private ["s9EquatableP", "userDomainMask"]
+- ["s9EquatableP", ""]
+- !private ["s5ErrorP", "StorageInitializationError"]
+- !private ["s5ErrorP", "code"]
+- !private ["s5ErrorP", "domain"]
+- !private ["s25ExpressibleByArrayLiteralP", "first"]
+- !private ["s25ExpressibleByArrayLiteralP", "userDomainMask"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "hashValue"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["So11FileManagerC", "createDirectory"]
+- !private ["So11FileManagerC", "default"]
+- !private ["So11FileManagerC", "fileExists"]
+- !private ["s17FixedWidthIntegerP", "hashValue"]
+- ["s8HashableP", "InMemory"]
+- !private ["s8HashableP", "MM_removePersistentStoreFiles"]
+- !private ["s8HashableP", "MM_removePersistentStoreFilesAtURL"]
+- ["s8HashableP", "SQLite"]
+- !private ["s8HashableP", "StorageInitializationError"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "addPersistentStore"]
+- !private ["s8HashableP", "appendingPathComponent"]
+- !private ["s8HashableP", "applicationSupportDirectory"]
+- !private ["s8HashableP", "code"]
+- !private ["s8HashableP", "coreDataStorage"]
+- !private ["s8HashableP", "createDirectory"]
+- !private ["s8HashableP", "default"]
+- !private ["s8HashableP", "domain"]
+- !private ["s8HashableP", "fileExists"]
+- ["s8HashableP", "hashValue"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "mainQueueConcurrencyType"]
+- !private ["s8HashableP", "mergePolicy"]
+- !private ["s8HashableP", "path"]
+- !private ["s8HashableP", "persistentStoreCoordinator"]
+- !private ["s8HashableP", "privateQueueConcurrencyType"]
+- !private ["s8HashableP", "remove"]
+- !private ["s8HashableP", "undoManager"]
+- ["s8HashableP", ""]
+- !private ["Si", "hashValue"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hashValue"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "hashValue"]
+- ["s25LosslessStringConvertibleP", "init"]
+- ["15MobileMessaging17MMCoreDataStorageC", "Bundle"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "FileManager"]
+- ["15MobileMessaging17MMCoreDataStorageC", "MMCoreDataStorage"]
+- ["15MobileMessaging17MMCoreDataStorageC", "MMDefaultMessageStorage"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "MMInternalErrorType"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "MMLogError"]
+- ["15MobileMessaging17MMCoreDataStorageC", "MMStorageSettings"]
+- ["15MobileMessaging17MMCoreDataStorageC", "MMStorageType"]
+- ["15MobileMessaging17MMCoreDataStorageC", "MMStoreOptions"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSCocoaErrorDomain"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSError"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSInMemoryStoreType"]
+- ["15MobileMessaging17MMCoreDataStorageC", "NSManagedObjectContext"]
+- ["15MobileMessaging17MMCoreDataStorageC", "NSManagedObjectModel"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSMergeByPropertyStoreTrumpMergePolicy"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSMigrationError"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSMigrationMissingSourceModelError"]
+- ["15MobileMessaging17MMCoreDataStorageC", "NSPersistentStore"]
+- ["15MobileMessaging17MMCoreDataStorageC", "NSPersistentStoreCoordinator"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSPersistentStoreIncompatibleVersionHashError"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSSQLiteStoreType"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSSearchPathForDirectoriesInDomains"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "NSTemporaryDirectory"]
+- ["15MobileMessaging17MMCoreDataStorageC", "String"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "URL"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "_mainThreadManagedObjectContext"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "_managedObjectModel"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "_persistentStore"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "_persistentStoreCoordinator"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "addPersistentStoreWithPath"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "databaseFileName"]
+- ["15MobileMessaging17MMCoreDataStorageC", "deinit"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "didNotAddPersistentStoreWithPath"]
+- ["15MobileMessaging17MMCoreDataStorageC", "drop"]
+- ["15MobileMessaging17MMCoreDataStorageC", "dropStorages"]
+- ["15MobileMessaging17MMCoreDataStorageC", "init"]
+- ["15MobileMessaging17MMCoreDataStorageC", "mainThreadManagedObjectContext"]
+- ["15MobileMessaging17MMCoreDataStorageC", "makeInMemoryStorage"]
+- ["15MobileMessaging17MMCoreDataStorageC", "makeInternalStorage"]
+- ["15MobileMessaging17MMCoreDataStorageC", "makeSQLiteInternalStorage"]
+- ["15MobileMessaging17MMCoreDataStorageC", "makeSQLiteMessageStorage"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "managedObjectModel"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "managedObjectModelBundle"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "managedObjectModelName"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "newPersistentStoreCoordinator"]
+- ["15MobileMessaging17MMCoreDataStorageC", "newPrivateContext"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "persistentStoreCoordinator"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "persistentStoreDirectory"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "preparePersistentStoreCoordinator"]
+- !private ["15MobileMessaging17MMCoreDataStorageC", "storeOptions"]
+- !private ["15MobileMessaging23MMDefaultMessageStorageC", "coreDataStorage"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "StorageInitializationError"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "deinit"]
+- ["15MobileMessaging17MMStorageSettingsV", "MMStorageSettings"]
+- ["15MobileMessaging17MMStorageSettingsV", "MMStoreOptions"]
+- !private ["15MobileMessaging17MMStorageSettingsV", "NSInferMappingModelAutomaticallyOption"]
+- !private ["15MobileMessaging17MMStorageSettingsV", "NSMigratePersistentStoresAutomaticallyOption"]
+- !private ["15MobileMessaging17MMStorageSettingsV", "NSPersistentStoreConnectionPoolMaxSizeKey"]
+- ["15MobileMessaging17MMStorageSettingsV", "SQLiteInternalStorageSettings"]
+- ["15MobileMessaging17MMStorageSettingsV", "SQLiteMessageStorageSettings"]
+- ["15MobileMessaging17MMStorageSettingsV", "String"]
+- ["15MobileMessaging17MMStorageSettingsV", "databaseFileName"]
+- ["15MobileMessaging17MMStorageSettingsV", "inMemoryStoreSettings"]
+- ["15MobileMessaging17MMStorageSettingsV", "init"]
+- ["15MobileMessaging17MMStorageSettingsV", "modelName"]
+- ["15MobileMessaging17MMStorageSettingsV", "storageOptions"]
+- ["15MobileMessaging17MMStorageSettingsV", "storeOptions"]
+- ["15MobileMessaging13MMStorageTypeO", "InMemory"]
+- ["15MobileMessaging13MMStorageTypeO", "SQLite"]
+- ["15MobileMessaging13MMStorageTypeO", "__derived_enum_equals"]
+- ["15MobileMessaging13MMStorageTypeO", "deinit"]
+- ["15MobileMessaging13MMStorageTypeO", "hashValue"]
+- !private ["15MobileMessaging14MessageStorageP", "coreDataStorage"]
+- !private ["15MobileMessaging21MessageStorageFindersP", "coreDataStorage"]
+- !private ["15MobileMessaging22MessageStorageRemoversP", "coreDataStorage"]
+- !private ["s10MirrorPathP", "hashValue"]
+- ["s10MirrorPathP", "init"]
+- !private ["s17MutableCollectionP", "first"]
+- !private ["So8NSCodingP", "code"]
+- !private ["So8NSCodingP", "domain"]
+- ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "mergePolicy"]
+- !private ["So8NSCodingP", "persistentStoreCoordinator"]
+- !private ["So8NSCodingP", "undoManager"]
+- !private ["So9NSCopyingP", "code"]
+- !private ["So9NSCopyingP", "domain"]
+- ["So9NSCopyingP", "init"]
+- !private ["So7NSErrorC", "code"]
+- !private ["So7NSErrorC", "domain"]
+- !private ["So17NSFastEnumerationP", "init"]
+- ["So21NSItemProviderReadingP", "init"]
+- ["So21NSItemProviderWritingP", "init"]
+- !private ["So9NSLockingP", "addPersistentStore"]
+- !private ["So9NSLockingP", "init"]
+- !private ["So9NSLockingP", "mergePolicy"]
+- !private ["So9NSLockingP", "persistentStoreCoordinator"]
+- !private ["So9NSLockingP", "remove"]
+- !private ["So9NSLockingP", "undoManager"]
+- !private ["So22NSManagedObjectContextC", "init"]
+- !private ["So22NSManagedObjectContextC", "mergePolicy"]
+- !private ["So22NSManagedObjectContextC", "persistentStoreCoordinator"]
+- !private ["So22NSManagedObjectContextC", "undoManager"]
+- !private ["SC37NSManagedObjectContextConcurrencyTypeO", "mainQueueConcurrencyType"]
+- !private ["SC37NSManagedObjectContextConcurrencyTypeO", "privateQueueConcurrencyType"]
+- !private ["So20NSManagedObjectModelC", "init"]
+- ["So16NSMutableCopyingP", "init"]
+- !private ["So8NSObjectC", "MM_removePersistentStoreFiles"]
+- !private ["So8NSObjectC", "MM_removePersistentStoreFilesAtURL"]
+- !private ["So8NSObjectC", "addPersistentStore"]
+- !private ["So8NSObjectC", "code"]
+- !private ["So8NSObjectC", "coreDataStorage"]
+- !private ["So8NSObjectC", "createDirectory"]
+- !private ["So8NSObjectC", "default"]
+- !private ["So8NSObjectC", "domain"]
+- !private ["So8NSObjectC", "fileExists"]
+- !private ["So8NSObjectC", "init"]
+- !private ["So8NSObjectC", "mergePolicy"]
+- !private ["So8NSObjectC", "path"]
+- !private ["So8NSObjectC", "persistentStoreCoordinator"]
+- !private ["So8NSObjectC", "remove"]
+- !private ["So8NSObjectC", "undoManager"]
+- !private ["So16NSObjectProtocolP", "MM_removePersistentStoreFiles"]
+- !private ["So16NSObjectProtocolP", "MM_removePersistentStoreFilesAtURL"]
+- !private ["So16NSObjectProtocolP", "addPersistentStore"]
+- !private ["So16NSObjectProtocolP", "code"]
+- !private ["So16NSObjectProtocolP", "coreDataStorage"]
+- !private ["So16NSObjectProtocolP", "createDirectory"]
+- !private ["So16NSObjectProtocolP", "default"]
+- !private ["So16NSObjectProtocolP", "domain"]
+- !private ["So16NSObjectProtocolP", "fileExists"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "mergePolicy"]
+- !private ["So16NSObjectProtocolP", "path"]
+- !private ["So16NSObjectProtocolP", "persistentStoreCoordinator"]
+- !private ["So16NSObjectProtocolP", "remove"]
+- !private ["So16NSObjectProtocolP", "undoManager"]
+- !private ["So17NSPersistentStoreC", "MM_removePersistentStoreFiles"]
+- !private ["So17NSPersistentStoreC", "MM_removePersistentStoreFilesAtURL"]
+- !private ["So28NSPersistentStoreCoordinatorC", "addPersistentStore"]
+- !private ["So28NSPersistentStoreCoordinatorC", "init"]
+- !private ["So28NSPersistentStoreCoordinatorC", "remove"]
+- !private ["So14NSSecureCodingP", "code"]
+- !private ["So14NSSecureCodingP", "domain"]
+- ["So14NSSecureCodingP", "init"]
+- ["So8NSStringC", "init"]
+- !private ["s7NumericP", "hashValue"]
+- !private ["s9OptionSetP", "userDomainMask"]
+- !private ["s22RandomAccessCollectionP", "first"]
+- !private ["s26RangeReplaceableCollectionP", "first"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s16RawRepresentableP", "applicationSupportDirectory"]
+- !private ["s16RawRepresentableP", "mainQueueConcurrencyType"]
+- !private ["s16RawRepresentableP", "privateQueueConcurrencyType"]
+- !private ["s16RawRepresentableP", "userDomainMask"]
+- !private ["10Foundation20ReferenceConvertibleP", "appendingPathComponent"]
+- !private ["10Foundation20ReferenceConvertibleP", "init"]
+- !private ["10Foundation20ReferenceConvertibleP", "path"]
+- !private ["So11FileManagerC19SearchPathDirectoryO", "applicationSupportDirectory"]
+- !private ["So11FileManagerC20SearchPathDomainMaskV", "userDomainMask"]
+- !private ["s8SequenceP", "first"]
+- ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s10SetAlgebraP", "userDomainMask"]
+- !private ["s13SignedIntegerP", "hashValue"]
+- !private ["s13SignedNumericP", "hashValue"]
+- !private ["s10StrideableP", "hashValue"]
+- ["SS", "init"]
+- ["s14StringProtocolP", "init"]
+- ["s16TextOutputStreamP", "init"]
+- ["s20TextOutputStreamableP", "init"]
+- !private ["10Foundation3URLV", "appendingPathComponent"]
+- !private ["10Foundation3URLV", "init"]
+- !private ["10Foundation3URLV", "path"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s14_ArrayProtocolP", "first"]
+- !private ["s23_BidirectionalIndexableP", "first"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s18_BitwiseOperationsP", "hashValue"]
+- !private ["s24_DestructorSafeContainerP", "first"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "hashValue"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s34_ExpressibleByFileReferenceLiteralP", "appendingPathComponent"]
+- !private ["s34_ExpressibleByFileReferenceLiteralP", "init"]
+- !private ["s34_ExpressibleByFileReferenceLiteralP", "path"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "first"]
+- ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "first"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MM_removePersistentStoreFiles"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MM_removePersistentStoreFilesAtURL"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "addPersistentStore"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "code"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "coreDataStorage"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "createDirectory"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "default"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "domain"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "fileExists"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mergePolicy"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "path"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "persistentStoreCoordinator"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "remove"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "undoManager"]
+- !private ["s17_MutableIndexableP", "first"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "appendingPathComponent"]
+- !private ["s21_ObjectiveCBridgeableP", "first"]
+- !private ["s21_ObjectiveCBridgeableP", "hashValue"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "path"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- !private ["s22_RandomAccessIndexableP", "first"]
+- !private ["s26_RangeReplaceableIndexableP", "first"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s11_StrideableP", "hashValue"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "Sa"
+- "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- !private "Sb"
+- !private "So6BundleC"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "s9DecodableP"
+- !private "s10DictionaryV"
+- "s9EncodableP"
+- "s9EquatableP"
+- !private "s5ErrorP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s27ExpressibleByIntegerLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "So11FileManagerC"
+- !private "s17FixedWidthIntegerP"
+- "s8HashableP"
+- !private "Si"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "s25LosslessStringConvertibleP"
+- "15MobileMessaging17MMCoreDataStorageC"
+- !private "15MobileMessaging23MMDefaultMessageStorageC"
+- !private "15MobileMessaging19MMInternalErrorTypeO"
+- "15MobileMessaging17MMStorageSettingsV"
+- "15MobileMessaging13MMStorageTypeO"
+- !private "15MobileMessaging14MessageStorageP"
+- !private "15MobileMessaging21MessageStorageFindersP"
+- !private "15MobileMessaging22MessageStorageRemoversP"
+- "s10MirrorPathP"
+- !private "s17MutableCollectionP"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- !private "So7NSErrorC"
+- !private "So17NSFastEnumerationP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- !private "So9NSLockingP"
+- !private "So22NSManagedObjectContextC"
+- !private "SC37NSManagedObjectContextConcurrencyTypeO"
+- !private "So20NSManagedObjectModelC"
+- "So16NSMutableCopyingP"
+- !private "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- !private "So17NSPersistentStoreC"
+- !private "So28NSPersistentStoreCoordinatorC"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- !private "s7NumericP"
+- !private "s9OptionSetP"
+- !private "s22RandomAccessCollectionP"
+- "s26RangeReplaceableCollectionP"
+- !private "s16RawRepresentableP"
+- !private "10Foundation20ReferenceConvertibleP"
+- !private "So11FileManagerC19SearchPathDirectoryO"
+- !private "So11FileManagerC20SearchPathDomainMaskV"
+- "s8SequenceP"
+- !private "s10SetAlgebraP"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s10StrideableP"
+- "SS"
+- "s14StringProtocolP"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- !private "10Foundation3URLV"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- !private "s14_ArrayProtocolP"
+- "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s34_ExpressibleByFileReferenceLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "5a25673068e0445420dd2c1bb5c52b63"

@@ -1,0 +1,117 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+provides-nominal:
+provides-member:
+- ["15MobileMessaging20MessageManagedObjectC", ""]
+- ["15MobileMessaging20MessageManagedObjectC", "creationDate"]
+- ["15MobileMessaging20MessageManagedObjectC", "messageId"]
+- ["15MobileMessaging20MessageManagedObjectC", "reportSent"]
+- ["15MobileMessaging20MessageManagedObjectC", "seenDate"]
+- ["15MobileMessaging20MessageManagedObjectC", "payload"]
+- ["15MobileMessaging20MessageManagedObjectC", "messageTypeValue"]
+- ["15MobileMessaging20MessageManagedObjectC", "seenStatusValue"]
+- ["15MobileMessaging20MessageManagedObjectC", "isSilent"]
+- ["15MobileMessaging20MessageManagedObjectC", "campaignStateValue"]
+- ["15MobileMessaging20MessageManagedObjectC", "campaignId"]
+- ["15MobileMessaging20MessageManagedObjectC", "deliveryReportedDate"]
+provides-dynamic-lookup:
+- "campaignId"
+- "campaignStateValue"
+- "creationDate"
+- "deliveryReportedDate"
+- "isSilent"
+- "messageId"
+- "messageTypeValue"
+- "payload"
+- "reportSent"
+- "seenDate"
+- "seenStatusValue"
+depends-top-level:
+- "Bool"
+- "Date"
+- "DictionaryRepresentation"
+- "Int16"
+- "MessageManagedObject"
+- "String"
+depends-member:
+- ["15MobileMessaging20MessageManagedObjectC", "Bool"]
+- ["15MobileMessaging20MessageManagedObjectC", "Date"]
+- ["15MobileMessaging20MessageManagedObjectC", "DictionaryRepresentation"]
+- ["15MobileMessaging20MessageManagedObjectC", "Int16"]
+- ["15MobileMessaging20MessageManagedObjectC", "String"]
+- ["15MobileMessaging20MessageManagedObjectC", "campaignId"]
+- ["15MobileMessaging20MessageManagedObjectC", "campaignStateValue"]
+- ["15MobileMessaging20MessageManagedObjectC", "creationDate"]
+- ["15MobileMessaging20MessageManagedObjectC", "deliveryReportedDate"]
+- ["15MobileMessaging20MessageManagedObjectC", "isSilent"]
+- ["15MobileMessaging20MessageManagedObjectC", "messageId"]
+- ["15MobileMessaging20MessageManagedObjectC", "messageTypeValue"]
+- ["15MobileMessaging20MessageManagedObjectC", "payload"]
+- ["15MobileMessaging20MessageManagedObjectC", "reportSent"]
+- ["15MobileMessaging20MessageManagedObjectC", "seenDate"]
+- ["15MobileMessaging20MessageManagedObjectC", "seenStatusValue"]
+- ["So15NSManagedObjectC", "Bool"]
+- ["So15NSManagedObjectC", "Date"]
+- ["So15NSManagedObjectC", "DictionaryRepresentation"]
+- ["So15NSManagedObjectC", "Int16"]
+- ["So15NSManagedObjectC", "String"]
+- ["So15NSManagedObjectC", "campaignId"]
+- ["So15NSManagedObjectC", "campaignStateValue"]
+- ["So15NSManagedObjectC", "creationDate"]
+- ["So15NSManagedObjectC", "deliveryReportedDate"]
+- ["So15NSManagedObjectC", "isSilent"]
+- ["So15NSManagedObjectC", "messageId"]
+- ["So15NSManagedObjectC", "messageTypeValue"]
+- ["So15NSManagedObjectC", "payload"]
+- ["So15NSManagedObjectC", "reportSent"]
+- ["So15NSManagedObjectC", "seenDate"]
+- ["So15NSManagedObjectC", "seenStatusValue"]
+- ["So8NSObjectC", "Bool"]
+- ["So8NSObjectC", "Date"]
+- ["So8NSObjectC", "DictionaryRepresentation"]
+- ["So8NSObjectC", "Int16"]
+- ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "campaignId"]
+- ["So8NSObjectC", "campaignStateValue"]
+- ["So8NSObjectC", "creationDate"]
+- ["So8NSObjectC", "deliveryReportedDate"]
+- ["So8NSObjectC", "isSilent"]
+- ["So8NSObjectC", "messageId"]
+- ["So8NSObjectC", "messageTypeValue"]
+- ["So8NSObjectC", "payload"]
+- ["So8NSObjectC", "reportSent"]
+- ["So8NSObjectC", "seenDate"]
+- ["So8NSObjectC", "seenStatusValue"]
+depends-nominal:
+- "15MobileMessaging20MessageManagedObjectC"
+- "So15NSManagedObjectC"
+- "So8NSObjectC"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "3249fe8d42b228b5375cf88d75a6f595"

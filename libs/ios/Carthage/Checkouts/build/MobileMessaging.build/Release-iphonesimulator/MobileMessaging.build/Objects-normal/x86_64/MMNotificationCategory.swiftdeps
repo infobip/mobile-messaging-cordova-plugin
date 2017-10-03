@@ -1,0 +1,765 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "NotificationCategory"
+- "NotificationCategoryOptions"
+- "NotificationCategories"
+- "NotificationCategoryConstants"
+provides-nominal:
+- "15MobileMessaging20NotificationCategoryC"
+- "15MobileMessaging27NotificationCategoryOptionsC"
+- "15MobileMessaging22NotificationCategoriesV"
+- "15MobileMessaging29NotificationCategoryConstantsV"
+provides-member:
+- ["15MobileMessaging20NotificationCategoryC", ""]
+- ["15MobileMessaging27NotificationCategoryOptionsC", ""]
+- ["s3SetV", ""]
+- ["15MobileMessaging22NotificationCategoriesV", ""]
+- ["15MobileMessaging29NotificationCategoryConstantsV", ""]
+- ["s3SetV", "uiUserNotificationCategories"]
+- ["s3SetV", "unNotificationCategories"]
+provides-dynamic-lookup:
+- "actions"
+- "allowInCarPlay"
+- "contains"
+- "customDismissAction"
+- "hash"
+- "identifier"
+- "intentIdentifiers"
+- "isEqual"
+- "options"
+- "rawValue"
+- "uiUserNotificationCategory"
+- "unUserNotificationCategory"
+depends-top-level:
+- !private "!"
+- !private "!="
+- !private "&"
+- "<<"
+- !private "=="
+- !private "??"
+- !private "Array"
+- "AssignmentPrecedence"
+- "Bool"
+- !private "BooleanLiteralType"
+- !private "Bundle"
+- "CastingPrecedence"
+- "Int"
+- !private "NSArray"
+- "NSObject"
+- "NotificationAction"
+- "NotificationCategories"
+- "NotificationCategory"
+- "NotificationCategoryConstants"
+- "NotificationCategoryOptions"
+- "Set"
+- "String"
+- "StringLiteralType"
+- !private "UIMutableUserNotificationCategory"
+- "UIUserNotificationCategory"
+- "UNNotificationCategory"
+- !private "UNNotificationCategoryOptions"
+- !private "|"
+depends-member:
+- !private ["Sa", "contains"]
+- !private ["Sa", "flatMap"]
+- !private ["Sa", "isEmpty"]
+- !private ["Sa", "map"]
+- !private ["Sa", "reduce"]
+- !private ["s23BidirectionalCollectionP", "contains"]
+- !private ["s23BidirectionalCollectionP", "flatMap"]
+- !private ["s23BidirectionalCollectionP", "hasPrefix"]
+- !private ["s23BidirectionalCollectionP", "hash"]
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["s23BidirectionalCollectionP", "isEmpty"]
+- !private ["s23BidirectionalCollectionP", "map"]
+- !private ["s23BidirectionalCollectionP", "reduce"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["So6BundleC", "init"]
+- !private ["So6BundleC", "path"]
+- !private ["s7CVarArgP", "NotificationAction"]
+- ["s7CVarArgP", "NotificationCategory"]
+- !private ["s7CVarArgP", "NotificationCategoryConstants"]
+- ["s7CVarArgP", "NotificationCategoryOptions"]
+- !private ["s7CVarArgP", "Set"]
+- !private ["s7CVarArgP", "UIMutableUserNotificationCategory"]
+- !private ["s7CVarArgP", "UNNotificationCategory"]
+- !private ["s7CVarArgP", "actions"]
+- !private ["s7CVarArgP", "allowInCarPlay"]
+- !private ["s7CVarArgP", "contains"]
+- !private ["s7CVarArgP", "customDismissAction"]
+- !private ["s7CVarArgP", "flatMap"]
+- !private ["s7CVarArgP", "hasPrefix"]
+- !private ["s7CVarArgP", "hash"]
+- !private ["s7CVarArgP", "identifier"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "intentIdentifiers"]
+- !private ["s7CVarArgP", "isEmpty"]
+- !private ["s7CVarArgP", "map"]
+- !private ["s7CVarArgP", "options"]
+- !private ["s7CVarArgP", "path"]
+- !private ["s7CVarArgP", "rawValue"]
+- !private ["s7CVarArgP", "reduce"]
+- !private ["s7CVarArgP", "setActions"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s7CVarArgP", "uiUserNotificationAction"]
+- !private ["s7CVarArgP", "uiUserNotificationCategory"]
+- !private ["s7CVarArgP", "unUserNotificationAction"]
+- !private ["s7CVarArgP", "unUserNotificationCategory"]
+- ["s7CVarArgP", ""]
+- ["s10CollectionP", "NotificationCategory"]
+- !private ["s10CollectionP", "Set"]
+- !private ["s10CollectionP", "contains"]
+- !private ["s10CollectionP", "flatMap"]
+- !private ["s10CollectionP", "hasPrefix"]
+- !private ["s10CollectionP", "hash"]
+- ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "isEmpty"]
+- !private ["s10CollectionP", "map"]
+- !private ["s10CollectionP", "reduce"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "hasPrefix"]
+- !private ["s10ComparableP", "hash"]
+- ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "NotificationAction"]
+- ["s28CustomDebugStringConvertibleP", "NotificationCategory"]
+- !private ["s28CustomDebugStringConvertibleP", "NotificationCategoryConstants"]
+- ["s28CustomDebugStringConvertibleP", "NotificationCategoryOptions"]
+- !private ["s28CustomDebugStringConvertibleP", "Set"]
+- !private ["s28CustomDebugStringConvertibleP", "UIMutableUserNotificationCategory"]
+- !private ["s28CustomDebugStringConvertibleP", "UNNotificationCategory"]
+- !private ["s28CustomDebugStringConvertibleP", "actions"]
+- !private ["s28CustomDebugStringConvertibleP", "allowInCarPlay"]
+- !private ["s28CustomDebugStringConvertibleP", "contains"]
+- !private ["s28CustomDebugStringConvertibleP", "customDismissAction"]
+- !private ["s28CustomDebugStringConvertibleP", "flatMap"]
+- !private ["s28CustomDebugStringConvertibleP", "hasPrefix"]
+- !private ["s28CustomDebugStringConvertibleP", "hash"]
+- !private ["s28CustomDebugStringConvertibleP", "identifier"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "intentIdentifiers"]
+- !private ["s28CustomDebugStringConvertibleP", "isEmpty"]
+- !private ["s28CustomDebugStringConvertibleP", "map"]
+- !private ["s28CustomDebugStringConvertibleP", "options"]
+- !private ["s28CustomDebugStringConvertibleP", "path"]
+- !private ["s28CustomDebugStringConvertibleP", "rawValue"]
+- !private ["s28CustomDebugStringConvertibleP", "reduce"]
+- !private ["s28CustomDebugStringConvertibleP", "setActions"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "uiUserNotificationAction"]
+- !private ["s28CustomDebugStringConvertibleP", "uiUserNotificationCategory"]
+- !private ["s28CustomDebugStringConvertibleP", "unUserNotificationAction"]
+- !private ["s28CustomDebugStringConvertibleP", "unUserNotificationCategory"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "hasPrefix"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "hash"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hasPrefix"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hash"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- ["s17CustomReflectableP", "NotificationCategory"]
+- !private ["s17CustomReflectableP", "Set"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "contains"]
+- !private ["s17CustomReflectableP", "flatMap"]
+- !private ["s17CustomReflectableP", "hasPrefix"]
+- !private ["s17CustomReflectableP", "hash"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "isEmpty"]
+- !private ["s17CustomReflectableP", "map"]
+- !private ["s17CustomReflectableP", "reduce"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "NotificationAction"]
+- ["s23CustomStringConvertibleP", "NotificationCategory"]
+- !private ["s23CustomStringConvertibleP", "NotificationCategoryConstants"]
+- ["s23CustomStringConvertibleP", "NotificationCategoryOptions"]
+- !private ["s23CustomStringConvertibleP", "Set"]
+- !private ["s23CustomStringConvertibleP", "UIMutableUserNotificationCategory"]
+- !private ["s23CustomStringConvertibleP", "UNNotificationCategory"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "actions"]
+- !private ["s23CustomStringConvertibleP", "allowInCarPlay"]
+- !private ["s23CustomStringConvertibleP", "contains"]
+- !private ["s23CustomStringConvertibleP", "customDismissAction"]
+- !private ["s23CustomStringConvertibleP", "flatMap"]
+- !private ["s23CustomStringConvertibleP", "hasPrefix"]
+- !private ["s23CustomStringConvertibleP", "hash"]
+- !private ["s23CustomStringConvertibleP", "identifier"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "intentIdentifiers"]
+- !private ["s23CustomStringConvertibleP", "isEmpty"]
+- !private ["s23CustomStringConvertibleP", "map"]
+- !private ["s23CustomStringConvertibleP", "options"]
+- !private ["s23CustomStringConvertibleP", "path"]
+- !private ["s23CustomStringConvertibleP", "rawValue"]
+- !private ["s23CustomStringConvertibleP", "reduce"]
+- !private ["s23CustomStringConvertibleP", "setActions"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "uiUserNotificationAction"]
+- !private ["s23CustomStringConvertibleP", "uiUserNotificationCategory"]
+- !private ["s23CustomStringConvertibleP", "unUserNotificationAction"]
+- !private ["s23CustomStringConvertibleP", "unUserNotificationCategory"]
+- ["s23CustomStringConvertibleP", ""]
+- ["s9DecodableP", "NotificationCategory"]
+- !private ["s9DecodableP", "Set"]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "contains"]
+- !private ["s9DecodableP", "flatMap"]
+- !private ["s9DecodableP", "hasPrefix"]
+- !private ["s9DecodableP", "hash"]
+- ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "isEmpty"]
+- !private ["s9DecodableP", "map"]
+- !private ["s9DecodableP", "reduce"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s10DictionaryV", "subscript"]
+- ["s9EncodableP", "NotificationCategory"]
+- !private ["s9EncodableP", "Set"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "contains"]
+- !private ["s9EncodableP", "flatMap"]
+- !private ["s9EncodableP", "hasPrefix"]
+- !private ["s9EncodableP", "hash"]
+- ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "isEmpty"]
+- !private ["s9EncodableP", "map"]
+- !private ["s9EncodableP", "reduce"]
+- !private ["s9EncodableP", "subscript"]
+- !private ["s9EquatableP", "NotificationAction"]
+- ["s9EquatableP", "NotificationCategory"]
+- !private ["s9EquatableP", "NotificationCategoryConstants"]
+- ["s9EquatableP", "NotificationCategoryOptions"]
+- !private ["s9EquatableP", "Set"]
+- !private ["s9EquatableP", "UIMutableUserNotificationCategory"]
+- !private ["s9EquatableP", "UNNotificationCategory"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "actions"]
+- !private ["s9EquatableP", "allowInCarPlay"]
+- !private ["s9EquatableP", "customDismissAction"]
+- !private ["s9EquatableP", "default"]
+- !private ["s9EquatableP", "hasPrefix"]
+- !private ["s9EquatableP", "hash"]
+- !private ["s9EquatableP", "identifier"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "insert"]
+- !private ["s9EquatableP", "intentIdentifiers"]
+- !private ["s9EquatableP", "map"]
+- !private ["s9EquatableP", "minimal"]
+- !private ["s9EquatableP", "options"]
+- !private ["s9EquatableP", "path"]
+- !private ["s9EquatableP", "rawValue"]
+- !private ["s9EquatableP", "setActions"]
+- !private ["s9EquatableP", "uiUserNotificationAction"]
+- !private ["s9EquatableP", "uiUserNotificationCategory"]
+- !private ["s9EquatableP", "unUserNotificationAction"]
+- !private ["s9EquatableP", "unUserNotificationCategory"]
+- ["s9EquatableP", ""]
+- ["s25ExpressibleByArrayLiteralP", "NotificationCategory"]
+- !private ["s25ExpressibleByArrayLiteralP", "Set"]
+- !private ["s25ExpressibleByArrayLiteralP", "allowInCarPlay"]
+- !private ["s25ExpressibleByArrayLiteralP", "contains"]
+- !private ["s25ExpressibleByArrayLiteralP", "customDismissAction"]
+- !private ["s25ExpressibleByArrayLiteralP", "flatMap"]
+- !private ["s25ExpressibleByArrayLiteralP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "insert"]
+- !private ["s25ExpressibleByArrayLiteralP", "isEmpty"]
+- !private ["s25ExpressibleByArrayLiteralP", "map"]
+- !private ["s25ExpressibleByArrayLiteralP", "reduce"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "hasPrefix"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "hash"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "hasPrefix"]
+- !private ["s26ExpressibleByStringLiteralP", "hash"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "hasPrefix"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "hash"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "NotificationAction"]
+- ["s8HashableP", "NotificationCategory"]
+- !private ["s8HashableP", "NotificationCategoryConstants"]
+- ["s8HashableP", "NotificationCategoryOptions"]
+- !private ["s8HashableP", "Set"]
+- !private ["s8HashableP", "UIMutableUserNotificationCategory"]
+- !private ["s8HashableP", "UNNotificationCategory"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "actions"]
+- !private ["s8HashableP", "allowInCarPlay"]
+- !private ["s8HashableP", "customDismissAction"]
+- !private ["s8HashableP", "default"]
+- !private ["s8HashableP", "hasPrefix"]
+- !private ["s8HashableP", "hash"]
+- !private ["s8HashableP", "identifier"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "intentIdentifiers"]
+- !private ["s8HashableP", "map"]
+- !private ["s8HashableP", "minimal"]
+- !private ["s8HashableP", "options"]
+- !private ["s8HashableP", "path"]
+- !private ["s8HashableP", "rawValue"]
+- !private ["s8HashableP", "setActions"]
+- !private ["s8HashableP", "uiUserNotificationAction"]
+- !private ["s8HashableP", "uiUserNotificationCategory"]
+- !private ["s8HashableP", "unUserNotificationAction"]
+- !private ["s8HashableP", "unUserNotificationCategory"]
+- ["s8HashableP", ""]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hasPrefix"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hash"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "hasPrefix"]
+- !private ["s25LosslessStringConvertibleP", "hash"]
+- ["s25LosslessStringConvertibleP", "init"]
+- !private ["s10MirrorPathP", "hasPrefix"]
+- !private ["s10MirrorPathP", "hash"]
+- ["s10MirrorPathP", "init"]
+- !private ["s17MutableCollectionP", "contains"]
+- !private ["s17MutableCollectionP", "flatMap"]
+- !private ["s17MutableCollectionP", "isEmpty"]
+- !private ["s17MutableCollectionP", "map"]
+- !private ["s17MutableCollectionP", "reduce"]
+- !private ["So7NSArrayC", "init"]
+- !private ["So8NSCodingP", "hasPrefix"]
+- !private ["So8NSCodingP", "hash"]
+- !private ["So8NSCodingP", "identifier"]
+- ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "setActions"]
+- !private ["So9NSCopyingP", "hasPrefix"]
+- !private ["So9NSCopyingP", "hash"]
+- !private ["So9NSCopyingP", "identifier"]
+- ["So9NSCopyingP", "init"]
+- !private ["So9NSCopyingP", "setActions"]
+- !private ["So17NSFastEnumerationP", "init"]
+- !private ["So21NSItemProviderReadingP", "hasPrefix"]
+- !private ["So21NSItemProviderReadingP", "hash"]
+- ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "hasPrefix"]
+- !private ["So21NSItemProviderWritingP", "hash"]
+- ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "hasPrefix"]
+- !private ["So16NSMutableCopyingP", "hash"]
+- !private ["So16NSMutableCopyingP", "identifier"]
+- ["So16NSMutableCopyingP", "init"]
+- !private ["So16NSMutableCopyingP", "setActions"]
+- ["So8NSObjectC", "Bool"]
+- ["So8NSObjectC", "Int"]
+- ["So8NSObjectC", "NotificationAction"]
+- !private ["So8NSObjectC", "NotificationCategory"]
+- !private ["So8NSObjectC", "NotificationCategoryConstants"]
+- ["So8NSObjectC", "NotificationCategoryOptions"]
+- ["So8NSObjectC", "PredefinedCategoryPlistDict"]
+- ["So8NSObjectC", "String"]
+- !private ["So8NSObjectC", "UIMutableUserNotificationCategory"]
+- ["So8NSObjectC", "UIUserNotificationCategory"]
+- ["So8NSObjectC", "UNNotificationCategory"]
+- !private ["So8NSObjectC", "UNNotificationCategoryOptions"]
+- ["So8NSObjectC", "actions"]
+- ["So8NSObjectC", "allowInCarPlay"]
+- ["So8NSObjectC", "contains"]
+- ["So8NSObjectC", "customDismissAction"]
+- !private ["So8NSObjectC", "hasPrefix"]
+- ["So8NSObjectC", "hash"]
+- ["So8NSObjectC", "identifier"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "intentIdentifiers"]
+- ["So8NSObjectC", "isEqual"]
+- ["So8NSObjectC", "options"]
+- !private ["So8NSObjectC", "path"]
+- ["So8NSObjectC", "rawValue"]
+- !private ["So8NSObjectC", "setActions"]
+- !private ["So8NSObjectC", "uiUserNotificationAction"]
+- ["So8NSObjectC", "uiUserNotificationCategory"]
+- !private ["So8NSObjectC", "unUserNotificationAction"]
+- ["So8NSObjectC", "unUserNotificationCategory"]
+- ["So8NSObjectC", ""]
+- !private ["So16NSObjectProtocolP", "NotificationAction"]
+- !private ["So16NSObjectProtocolP", "NotificationCategoryConstants"]
+- ["So16NSObjectProtocolP", "NotificationCategoryOptions"]
+- !private ["So16NSObjectProtocolP", "UIMutableUserNotificationCategory"]
+- !private ["So16NSObjectProtocolP", "UNNotificationCategory"]
+- !private ["So16NSObjectProtocolP", "actions"]
+- !private ["So16NSObjectProtocolP", "allowInCarPlay"]
+- !private ["So16NSObjectProtocolP", "customDismissAction"]
+- !private ["So16NSObjectProtocolP", "hasPrefix"]
+- !private ["So16NSObjectProtocolP", "hash"]
+- !private ["So16NSObjectProtocolP", "identifier"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "intentIdentifiers"]
+- !private ["So16NSObjectProtocolP", "options"]
+- !private ["So16NSObjectProtocolP", "path"]
+- !private ["So16NSObjectProtocolP", "rawValue"]
+- !private ["So16NSObjectProtocolP", "setActions"]
+- !private ["So16NSObjectProtocolP", "uiUserNotificationAction"]
+- !private ["So16NSObjectProtocolP", "uiUserNotificationCategory"]
+- !private ["So16NSObjectProtocolP", "unUserNotificationAction"]
+- !private ["So16NSObjectProtocolP", "unUserNotificationCategory"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSSecureCodingP", "hasPrefix"]
+- !private ["So14NSSecureCodingP", "hash"]
+- !private ["So14NSSecureCodingP", "identifier"]
+- ["So14NSSecureCodingP", "init"]
+- !private ["So14NSSecureCodingP", "setActions"]
+- !private ["So8NSStringC", "hasPrefix"]
+- !private ["So8NSStringC", "hash"]
+- ["So8NSStringC", "init"]
+- !private ["15MobileMessaging18NotificationActionC", "init"]
+- !private ["15MobileMessaging18NotificationActionC", "uiUserNotificationAction"]
+- !private ["15MobileMessaging18NotificationActionC", "unUserNotificationAction"]
+- !private ["15MobileMessaging22NotificationCategoriesV", "Bundle"]
+- !private ["15MobileMessaging22NotificationCategoriesV", "NSArray"]
+- ["15MobileMessaging22NotificationCategoriesV", "NotificationCategory"]
+- !private ["15MobileMessaging22NotificationCategoriesV", "NotificationCategoryConstants"]
+- ["15MobileMessaging22NotificationCategoriesV", "Set"]
+- ["15MobileMessaging22NotificationCategoriesV", "String"]
+- ["15MobileMessaging22NotificationCategoriesV", "init"]
+- ["15MobileMessaging22NotificationCategoriesV", "path"]
+- ["15MobileMessaging22NotificationCategoriesV", "predefinedCategories"]
+- ["15MobileMessaging20NotificationCategoryC", "Bool"]
+- ["15MobileMessaging20NotificationCategoryC", "Int"]
+- ["15MobileMessaging20NotificationCategoryC", "NotificationAction"]
+- !private ["15MobileMessaging20NotificationCategoryC", "NotificationCategory"]
+- !private ["15MobileMessaging20NotificationCategoryC", "NotificationCategoryConstants"]
+- ["15MobileMessaging20NotificationCategoryC", "NotificationCategoryOptions"]
+- ["15MobileMessaging20NotificationCategoryC", "PredefinedCategoryPlistDict"]
+- ["15MobileMessaging20NotificationCategoryC", "String"]
+- !private ["15MobileMessaging20NotificationCategoryC", "UIMutableUserNotificationCategory"]
+- ["15MobileMessaging20NotificationCategoryC", "UIUserNotificationCategory"]
+- ["15MobileMessaging20NotificationCategoryC", "UNNotificationCategory"]
+- !private ["15MobileMessaging20NotificationCategoryC", "UNNotificationCategoryOptions"]
+- ["15MobileMessaging20NotificationCategoryC", "actions"]
+- ["15MobileMessaging20NotificationCategoryC", "deinit"]
+- ["15MobileMessaging20NotificationCategoryC", "hash"]
+- ["15MobileMessaging20NotificationCategoryC", "identifier"]
+- ["15MobileMessaging20NotificationCategoryC", "init"]
+- ["15MobileMessaging20NotificationCategoryC", "intentIdentifiers"]
+- ["15MobileMessaging20NotificationCategoryC", "isEqual"]
+- ["15MobileMessaging20NotificationCategoryC", "options"]
+- ["15MobileMessaging20NotificationCategoryC", "uiUserNotificationCategory"]
+- ["15MobileMessaging20NotificationCategoryC", "unUserNotificationCategory"]
+- ["15MobileMessaging29NotificationCategoryConstantsV", "actions"]
+- ["15MobileMessaging29NotificationCategoryConstantsV", "categoryNamePrefix"]
+- ["15MobileMessaging29NotificationCategoryConstantsV", "identifier"]
+- ["15MobileMessaging29NotificationCategoryConstantsV", "init"]
+- ["15MobileMessaging29NotificationCategoryConstantsV", "plistName"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "Bool"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "Int"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "NotificationCategoryOptions"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "allowInCarPlay"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "contains"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "customDismissAction"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "deinit"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "init"]
+- ["15MobileMessaging27NotificationCategoryOptionsC", "rawValue"]
+- !private ["s9OptionSetP", "allowInCarPlay"]
+- !private ["s9OptionSetP", "customDismissAction"]
+- !private ["s9OptionSetP", "insert"]
+- !private ["s22RandomAccessCollectionP", "contains"]
+- !private ["s22RandomAccessCollectionP", "flatMap"]
+- !private ["s22RandomAccessCollectionP", "isEmpty"]
+- !private ["s22RandomAccessCollectionP", "map"]
+- !private ["s22RandomAccessCollectionP", "reduce"]
+- !private ["s26RangeReplaceableCollectionP", "contains"]
+- !private ["s26RangeReplaceableCollectionP", "flatMap"]
+- !private ["s26RangeReplaceableCollectionP", "hasPrefix"]
+- !private ["s26RangeReplaceableCollectionP", "hash"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s26RangeReplaceableCollectionP", "isEmpty"]
+- !private ["s26RangeReplaceableCollectionP", "map"]
+- !private ["s26RangeReplaceableCollectionP", "reduce"]
+- !private ["s16RawRepresentableP", "allowInCarPlay"]
+- !private ["s16RawRepresentableP", "customDismissAction"]
+- !private ["s16RawRepresentableP", "default"]
+- !private ["s16RawRepresentableP", "insert"]
+- !private ["s16RawRepresentableP", "minimal"]
+- ["s8SequenceP", "NotificationCategory"]
+- !private ["s8SequenceP", "Set"]
+- !private ["s8SequenceP", "contains"]
+- !private ["s8SequenceP", "flatMap"]
+- !private ["s8SequenceP", "hasPrefix"]
+- !private ["s8SequenceP", "hash"]
+- ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "isEmpty"]
+- !private ["s8SequenceP", "map"]
+- !private ["s8SequenceP", "reduce"]
+- !private ["s8SequenceP", "subscript"]
+- ["s3SetV", "NotificationCategory"]
+- ["s3SetV", "Set"]
+- ["s3SetV", "UIUserNotificationCategory"]
+- ["s3SetV", "UNNotificationCategory"]
+- !private ["s3SetV", "init"]
+- !private ["s3SetV", "map"]
+- ["s3SetV", "uiUserNotificationCategories"]
+- ["s3SetV", "unNotificationCategories"]
+- ["s10SetAlgebraP", "NotificationCategory"]
+- !private ["s10SetAlgebraP", "Set"]
+- !private ["s10SetAlgebraP", "allowInCarPlay"]
+- !private ["s10SetAlgebraP", "customDismissAction"]
+- !private ["s10SetAlgebraP", "init"]
+- !private ["s10SetAlgebraP", "insert"]
+- !private ["s10SetAlgebraP", "map"]
+- !private ["s12StaticStringV", "init"]
+- !private ["SS", "hasPrefix"]
+- !private ["SS", "hash"]
+- ["SS", "init"]
+- !private ["s14StringProtocolP", "hasPrefix"]
+- !private ["s14StringProtocolP", "hash"]
+- ["s14StringProtocolP", "init"]
+- !private ["s16TextOutputStreamP", "hasPrefix"]
+- !private ["s16TextOutputStreamP", "hash"]
+- ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "hasPrefix"]
+- !private ["s20TextOutputStreamableP", "hash"]
+- ["s20TextOutputStreamableP", "init"]
+- !private ["So33UIMutableUserNotificationCategoryC", "identifier"]
+- !private ["So33UIMutableUserNotificationCategoryC", "init"]
+- !private ["So33UIMutableUserNotificationCategoryC", "setActions"]
+- !private ["SC31UIUserNotificationActionContextO", "default"]
+- !private ["SC31UIUserNotificationActionContextO", "minimal"]
+- !private ["So26UIUserNotificationCategoryC", "identifier"]
+- !private ["So26UIUserNotificationCategoryC", "init"]
+- !private ["So26UIUserNotificationCategoryC", "setActions"]
+- !private ["So22UNNotificationCategoryC", "init"]
+- !private ["SC29UNNotificationCategoryOptionsV", "allowInCarPlay"]
+- !private ["SC29UNNotificationCategoryOptionsV", "customDismissAction"]
+- !private ["SC29UNNotificationCategoryOptionsV", "insert"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "hasPrefix"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "hash"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s14_ArrayProtocolP", "contains"]
+- !private ["s14_ArrayProtocolP", "flatMap"]
+- !private ["s14_ArrayProtocolP", "isEmpty"]
+- !private ["s14_ArrayProtocolP", "map"]
+- !private ["s14_ArrayProtocolP", "reduce"]
+- !private ["s23_BidirectionalIndexableP", "contains"]
+- !private ["s23_BidirectionalIndexableP", "flatMap"]
+- !private ["s23_BidirectionalIndexableP", "hasPrefix"]
+- !private ["s23_BidirectionalIndexableP", "hash"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s23_BidirectionalIndexableP", "isEmpty"]
+- !private ["s23_BidirectionalIndexableP", "map"]
+- !private ["s23_BidirectionalIndexableP", "reduce"]
+- !private ["s24_DestructorSafeContainerP", "contains"]
+- !private ["s24_DestructorSafeContainerP", "flatMap"]
+- !private ["s24_DestructorSafeContainerP", "isEmpty"]
+- !private ["s24_DestructorSafeContainerP", "map"]
+- !private ["s24_DestructorSafeContainerP", "reduce"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "hasPrefix"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "hash"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "hasPrefix"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "hash"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "hasPrefix"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "hash"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "hasPrefix"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "hash"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "hasPrefix"]
+- !private ["s33_ExpressibleByStringInterpolationP", "hash"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "hasPrefix"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "hash"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- ["s10_IndexableP", "NotificationCategory"]
+- !private ["s10_IndexableP", "Set"]
+- !private ["s10_IndexableP", "contains"]
+- !private ["s10_IndexableP", "flatMap"]
+- !private ["s10_IndexableP", "hasPrefix"]
+- !private ["s10_IndexableP", "hash"]
+- ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "isEmpty"]
+- !private ["s10_IndexableP", "map"]
+- !private ["s10_IndexableP", "reduce"]
+- !private ["s10_IndexableP", "subscript"]
+- ["s14_IndexableBaseP", "NotificationCategory"]
+- !private ["s14_IndexableBaseP", "Set"]
+- !private ["s14_IndexableBaseP", "contains"]
+- !private ["s14_IndexableBaseP", "flatMap"]
+- !private ["s14_IndexableBaseP", "hasPrefix"]
+- !private ["s14_IndexableBaseP", "hash"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "isEmpty"]
+- !private ["s14_IndexableBaseP", "map"]
+- !private ["s14_IndexableBaseP", "reduce"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NotificationAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NotificationCategoryConstants"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "NotificationCategoryOptions"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UIMutableUserNotificationCategory"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UNNotificationCategory"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "actions"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "allowInCarPlay"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "customDismissAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "hasPrefix"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "hash"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "identifier"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "intentIdentifiers"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "options"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "path"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "rawValue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "setActions"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "uiUserNotificationAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "uiUserNotificationCategory"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "unUserNotificationAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "unUserNotificationCategory"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s17_MutableIndexableP", "contains"]
+- !private ["s17_MutableIndexableP", "flatMap"]
+- !private ["s17_MutableIndexableP", "isEmpty"]
+- !private ["s17_MutableIndexableP", "map"]
+- !private ["s17_MutableIndexableP", "reduce"]
+- ["s21_ObjectiveCBridgeableP", "NotificationCategory"]
+- !private ["s21_ObjectiveCBridgeableP", "Set"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "contains"]
+- !private ["s21_ObjectiveCBridgeableP", "flatMap"]
+- !private ["s21_ObjectiveCBridgeableP", "hasPrefix"]
+- !private ["s21_ObjectiveCBridgeableP", "hash"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "isEmpty"]
+- !private ["s21_ObjectiveCBridgeableP", "map"]
+- !private ["s21_ObjectiveCBridgeableP", "reduce"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- !private ["s22_RandomAccessIndexableP", "contains"]
+- !private ["s22_RandomAccessIndexableP", "flatMap"]
+- !private ["s22_RandomAccessIndexableP", "isEmpty"]
+- !private ["s22_RandomAccessIndexableP", "map"]
+- !private ["s22_RandomAccessIndexableP", "reduce"]
+- !private ["s26_RangeReplaceableIndexableP", "contains"]
+- !private ["s26_RangeReplaceableIndexableP", "flatMap"]
+- !private ["s26_RangeReplaceableIndexableP", "hasPrefix"]
+- !private ["s26_RangeReplaceableIndexableP", "hash"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "isEmpty"]
+- !private ["s26_RangeReplaceableIndexableP", "map"]
+- !private ["s26_RangeReplaceableIndexableP", "reduce"]
+- !private ["s16_SwiftStringViewP", "hasPrefix"]
+- !private ["s16_SwiftStringViewP", "hash"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "Sa"
+- "s23BidirectionalCollectionP"
+- !private "Sb"
+- !private "So6BundleC"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "s9DecodableP"
+- !private "s10DictionaryV"
+- "s9EncodableP"
+- "s9EquatableP"
+- "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "s25LosslessStringConvertibleP"
+- "s10MirrorPathP"
+- !private "s17MutableCollectionP"
+- !private "So7NSArrayC"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- !private "So17NSFastEnumerationP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- !private "15MobileMessaging18NotificationActionC"
+- "15MobileMessaging22NotificationCategoriesV"
+- "15MobileMessaging20NotificationCategoryC"
+- "15MobileMessaging29NotificationCategoryConstantsV"
+- "15MobileMessaging27NotificationCategoryOptionsC"
+- !private "s9OptionSetP"
+- !private "s22RandomAccessCollectionP"
+- "s26RangeReplaceableCollectionP"
+- !private "s16RawRepresentableP"
+- "s8SequenceP"
+- "s3SetV"
+- "s10SetAlgebraP"
+- !private "s12StaticStringV"
+- "SS"
+- "s14StringProtocolP"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- !private "So33UIMutableUserNotificationCategoryC"
+- !private "SC31UIUserNotificationActionContextO"
+- !private "So26UIUserNotificationCategoryC"
+- !private "So22UNNotificationCategoryC"
+- !private "SC29UNNotificationCategoryOptionsV"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- !private "s14_ArrayProtocolP"
+- "s23_BidirectionalIndexableP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- "s26_RangeReplaceableIndexableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "7f5897e5e9d1c59daf0b82049d0aa872"

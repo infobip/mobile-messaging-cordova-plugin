@@ -1,0 +1,459 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "LocationServiceKind"
+- "LocationServiceUsage"
+- "GeofencingCapabilityStatus"
+- "MMGeofencingServiceDelegate"
+- "GeofencingConstants"
+- "GeoEventHandling"
+- "GeoEventReportingRequest"
+provides-nominal:
+- "15MobileMessaging19LocationServiceKindC"
+- "15MobileMessaging20LocationServiceUsageO"
+- "15MobileMessaging26GeofencingCapabilityStatusO"
+- "15MobileMessaging27MMGeofencingServiceDelegateP"
+- "15MobileMessaging19GeofencingConstantsV"
+- "15MobileMessaging16GeoEventHandlingP"
+- "15MobileMessaging24GeoEventReportingRequestV"
+provides-member:
+- ["15MobileMessaging19LocationServiceKindC", ""]
+- ["15MobileMessaging20LocationServiceUsageO", ""]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", ""]
+- ["15MobileMessaging27MMGeofencingServiceDelegateP", ""]
+- ["15MobileMessaging19GeofencingConstantsV", ""]
+- ["15MobileMessaging16GeoEventHandlingP", ""]
+- ["15MobileMessaging24GeoEventReportingRequestV", ""]
+provides-dynamic-lookup:
+- "contains"
+- "didEnter"
+- "locationUpdates"
+- "rawValue"
+- "regionMonitoring"
+depends-top-level:
+- !private "!="
+- !private "&"
+- "<<"
+- "=="
+- "APIPath"
+- !private "APIValues"
+- "Array"
+- "AssignmentPrecedence"
+- "Bool"
+- "CLAuthorizationStatus"
+- "CLLocationDistance"
+- !private "Dictionary"
+- "GeoEventHandling"
+- "GeoEventReportData"
+- "GeoEventReportingRequest"
+- "GeoEventReportingResponse"
+- !private "GeoReportingAPIKeys"
+- "GeofencingCapabilityStatus"
+- "GeofencingConstants"
+- "Int"
+- "LocationServiceKind"
+- "LocationServiceUsage"
+- "MMGeoMessage"
+- "MMGeofencingServiceDelegate"
+- "MMRegion"
+- "NSObject"
+- "PostRequest"
+- !private "PushRegistration"
+- "RequestBody"
+- "String"
+- !private "|"
+- !private "~="
+depends-member:
+- !private ["15MobileMessaging7APIPathO", "GeoEventsReports"]
+- !private ["15MobileMessaging9APIValuesV", "platformType"]
+- !private ["Sa", "map"]
+- !private ["Sa", "reduce"]
+- !private ["15MobileMessaging11BaseMessageC", "geoEventReportFormat"]
+- !private ["s23BidirectionalCollectionP", "map"]
+- !private ["s23BidirectionalCollectionP", "reduce"]
+- !private ["s13BinaryIntegerP", "hashValue"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- ["SC21CLAuthorizationStatusO", "authorizedAlways"]
+- ["SC21CLAuthorizationStatusO", "authorizedWhenInUse"]
+- ["s7CVarArgP", "LocationServiceKind"]
+- !private ["s7CVarArgP", "geoEventReportFormat"]
+- !private ["s7CVarArgP", "hashValue"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "map"]
+- !private ["s7CVarArgP", "rawValue"]
+- !private ["s7CVarArgP", "reduce"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "map"]
+- !private ["s10CollectionP", "reduce"]
+- !private ["s10ComparableP", "hashValue"]
+- ["s28CustomDebugStringConvertibleP", "LocationServiceKind"]
+- !private ["s28CustomDebugStringConvertibleP", "geoEventReportFormat"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "map"]
+- !private ["s28CustomDebugStringConvertibleP", "rawValue"]
+- !private ["s28CustomDebugStringConvertibleP", "reduce"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hashValue"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "hashValue"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "map"]
+- !private ["s17CustomReflectableP", "reduce"]
+- ["s23CustomStringConvertibleP", "LocationServiceKind"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "geoEventReportFormat"]
+- !private ["s23CustomStringConvertibleP", "hashValue"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "map"]
+- !private ["s23CustomStringConvertibleP", "rawValue"]
+- !private ["s23CustomStringConvertibleP", "reduce"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "hashValue"]
+- !private ["s9DecodableP", "map"]
+- !private ["s9DecodableP", "reduce"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "dictionaryRepresentation"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "hashValue"]
+- !private ["s9EncodableP", "map"]
+- !private ["s9EncodableP", "reduce"]
+- !private ["s9EquatableP", "GeoEventsReports"]
+- ["s9EquatableP", "LocationServiceKind"]
+- ["s9EquatableP", "RawValue"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- ["s9EquatableP", "always"]
+- ["s9EquatableP", "authorizedAlways"]
+- ["s9EquatableP", "authorizedWhenInUse"]
+- !private ["s9EquatableP", "geoEventReportFormat"]
+- ["s9EquatableP", "hashValue"]
+- ["s9EquatableP", "init"]
+- ["s9EquatableP", "rawValue"]
+- ["s9EquatableP", "whenInUse"]
+- ["s9EquatableP", ""]
+- !private ["s25ExpressibleByArrayLiteralP", "map"]
+- !private ["s25ExpressibleByArrayLiteralP", "reduce"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "hashValue"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s17FixedWidthIntegerP", "hashValue"]
+- ["15MobileMessaging16GeoEventHandlingP", "MMRegion"]
+- ["15MobileMessaging16GeoEventHandlingP", "didEnter"]
+- !private ["15MobileMessaging18GeoEventReportDataV", "deinit"]
+- !private ["15MobileMessaging18GeoEventReportDataV", "dictionaryRepresentation"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "APIPath"]
+- !private ["15MobileMessaging24GeoEventReportingRequestV", "APIValues"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "GeoEventReportData"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "GeoEventReportingResponse"]
+- !private ["15MobileMessaging24GeoEventReportingRequestV", "GeoReportingAPIKeys"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "MMGeoMessage"]
+- !private ["15MobileMessaging24GeoEventReportingRequestV", "PushRegistration"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "RequestBody"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "ResponseType"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "String"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "body"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "deinit"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "eventsDataList"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "geoMessages"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "headers"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "init"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "internalUserId"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "method"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "mustRetryOnResponseError"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "parameters"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "path"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "responseObject"]
+- ["15MobileMessaging24GeoEventReportingRequestV", "retryLimit"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "deinit"]
+- !private ["15MobileMessaging19GeoReportingAPIKeysV", "messages"]
+- !private ["15MobileMessaging19GeoReportingAPIKeysV", "reports"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "RawValue"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "authorized"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "deinit"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "denied"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "hashValue"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "init"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "notAvailable"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "notDetermined"]
+- ["15MobileMessaging26GeofencingCapabilityStatusO", "rawValue"]
+- ["15MobileMessaging19GeofencingConstantsV", "CLAuthorizationStatus"]
+- ["15MobileMessaging19GeofencingConstantsV", "CLLocationDistance"]
+- ["15MobileMessaging19GeofencingConstantsV", "Int"]
+- ["15MobileMessaging19GeofencingConstantsV", "LocationServiceUsage"]
+- ["15MobileMessaging19GeofencingConstantsV", "distanceFilter"]
+- ["15MobileMessaging19GeofencingConstantsV", "init"]
+- ["15MobileMessaging19GeofencingConstantsV", "minimumAllowedUsage"]
+- ["15MobileMessaging19GeofencingConstantsV", "monitoringRegionsLimit"]
+- ["15MobileMessaging19GeofencingConstantsV", "preferableUsage"]
+- ["15MobileMessaging19GeofencingConstantsV", "regionRefreshThreshold"]
+- ["15MobileMessaging19GeofencingConstantsV", "supportedAuthStatuses"]
+- !private ["s8HashableP", "GeoEventsReports"]
+- ["s8HashableP", "LocationServiceKind"]
+- ["s8HashableP", "RawValue"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- ["s8HashableP", "always"]
+- ["s8HashableP", "authorizedAlways"]
+- ["s8HashableP", "authorizedWhenInUse"]
+- !private ["s8HashableP", "geoEventReportFormat"]
+- ["s8HashableP", "hashValue"]
+- ["s8HashableP", "init"]
+- ["s8HashableP", "rawValue"]
+- ["s8HashableP", "whenInUse"]
+- ["s8HashableP", ""]
+- !private ["Si", "hashValue"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hashValue"]
+- ["15MobileMessaging19LocationServiceKindC", "Bool"]
+- ["15MobileMessaging19LocationServiceKindC", "Int"]
+- ["15MobileMessaging19LocationServiceKindC", "LocationServiceKind"]
+- ["15MobileMessaging19LocationServiceKindC", "contains"]
+- ["15MobileMessaging19LocationServiceKindC", "deinit"]
+- ["15MobileMessaging19LocationServiceKindC", "init"]
+- ["15MobileMessaging19LocationServiceKindC", "locationUpdates"]
+- ["15MobileMessaging19LocationServiceKindC", "rawValue"]
+- ["15MobileMessaging19LocationServiceKindC", "regionMonitoring"]
+- ["15MobileMessaging20LocationServiceUsageO", "RawValue"]
+- ["15MobileMessaging20LocationServiceUsageO", "always"]
+- ["15MobileMessaging20LocationServiceUsageO", "deinit"]
+- ["15MobileMessaging20LocationServiceUsageO", "hashValue"]
+- ["15MobileMessaging20LocationServiceUsageO", "init"]
+- ["15MobileMessaging20LocationServiceUsageO", "rawValue"]
+- ["15MobileMessaging20LocationServiceUsageO", "whenInUse"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "hashValue"]
+- !private ["15MobileMessaging12MMGeoMessageC", "geoEventReportFormat"]
+- ["15MobileMessaging27MMGeofencingServiceDelegateP", "MMGeoMessage"]
+- ["15MobileMessaging27MMGeofencingServiceDelegateP", "MMRegion"]
+- ["15MobileMessaging27MMGeofencingServiceDelegateP", "didAddMessage"]
+- ["15MobileMessaging27MMGeofencingServiceDelegateP", "didEnterRegion"]
+- ["15MobileMessaging27MMGeofencingServiceDelegateP", "didExitRegion"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "geoEventReportFormat"]
+- !private ["15MobileMessaging9MTMessageC", "geoEventReportFormat"]
+- !private ["s10MirrorPathP", "hashValue"]
+- !private ["s17MutableCollectionP", "map"]
+- !private ["s17MutableCollectionP", "reduce"]
+- ["So8NSObjectC", "Bool"]
+- ["So8NSObjectC", "Int"]
+- ["So8NSObjectC", "LocationServiceKind"]
+- ["So8NSObjectC", "contains"]
+- !private ["So8NSObjectC", "geoEventReportFormat"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "locationUpdates"]
+- ["So8NSObjectC", "rawValue"]
+- ["So8NSObjectC", "regionMonitoring"]
+- ["So8NSObjectC", ""]
+- ["So16NSObjectProtocolP", "LocationServiceKind"]
+- !private ["So16NSObjectProtocolP", "geoEventReportFormat"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "rawValue"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["s7NumericP", "hashValue"]
+- !private ["15MobileMessaging11PostRequestP", "APIValues"]
+- !private ["15MobileMessaging11PostRequestP", "GeoReportingAPIKeys"]
+- !private ["15MobileMessaging11PostRequestP", "PushRegistration"]
+- ["15MobileMessaging11PostRequestP", "ResponseType"]
+- ["15MobileMessaging11PostRequestP", "body"]
+- !private ["15MobileMessaging11PostRequestP", "eventsDataList"]
+- !private ["15MobileMessaging11PostRequestP", "geoMessages"]
+- ["15MobileMessaging11PostRequestP", "headers"]
+- !private ["15MobileMessaging11PostRequestP", "internalUserId"]
+- ["15MobileMessaging11PostRequestP", "method"]
+- ["15MobileMessaging11PostRequestP", "mustRetryOnResponseError"]
+- ["15MobileMessaging11PostRequestP", "parameters"]
+- ["15MobileMessaging11PostRequestP", "path"]
+- ["15MobileMessaging11PostRequestP", "responseObject"]
+- ["15MobileMessaging11PostRequestP", "retryLimit"]
+- ["15MobileMessaging11PostRequestP", ""]
+- !private ["15MobileMessaging16PushRegistrationV", "internalId"]
+- !private ["15MobileMessaging16PushRegistrationV", "platform"]
+- !private ["s22RandomAccessCollectionP", "map"]
+- !private ["s22RandomAccessCollectionP", "reduce"]
+- !private ["s26RangeReplaceableCollectionP", "map"]
+- !private ["s26RangeReplaceableCollectionP", "reduce"]
+- !private ["s16RawRepresentableP", "GeoEventsReports"]
+- ["s16RawRepresentableP", "RawValue"]
+- ["s16RawRepresentableP", "always"]
+- ["s16RawRepresentableP", "authorizedAlways"]
+- ["s16RawRepresentableP", "authorizedWhenInUse"]
+- ["s16RawRepresentableP", "hashValue"]
+- ["s16RawRepresentableP", "init"]
+- ["s16RawRepresentableP", "rawValue"]
+- ["s16RawRepresentableP", "whenInUse"]
+- ["s16RawRepresentableP", ""]
+- !private ["15MobileMessaging11RequestDataP", "APIValues"]
+- !private ["15MobileMessaging11RequestDataP", "GeoReportingAPIKeys"]
+- !private ["15MobileMessaging11RequestDataP", "PushRegistration"]
+- ["15MobileMessaging11RequestDataP", "ResponseType"]
+- ["15MobileMessaging11RequestDataP", "body"]
+- !private ["15MobileMessaging11RequestDataP", "eventsDataList"]
+- !private ["15MobileMessaging11RequestDataP", "geoMessages"]
+- ["15MobileMessaging11RequestDataP", "headers"]
+- !private ["15MobileMessaging11RequestDataP", "internalUserId"]
+- ["15MobileMessaging11RequestDataP", "method"]
+- ["15MobileMessaging11RequestDataP", "mustRetryOnResponseError"]
+- ["15MobileMessaging11RequestDataP", "parameters"]
+- ["15MobileMessaging11RequestDataP", "path"]
+- ["15MobileMessaging11RequestDataP", "responseObject"]
+- ["15MobileMessaging11RequestDataP", "retryLimit"]
+- ["15MobileMessaging11RequestDataP", ""]
+- !private ["15MobileMessaging18RequestResponsableP", "APIValues"]
+- !private ["15MobileMessaging18RequestResponsableP", "GeoReportingAPIKeys"]
+- !private ["15MobileMessaging18RequestResponsableP", "PushRegistration"]
+- ["15MobileMessaging18RequestResponsableP", "ResponseType"]
+- ["15MobileMessaging18RequestResponsableP", "body"]
+- !private ["15MobileMessaging18RequestResponsableP", "eventsDataList"]
+- !private ["15MobileMessaging18RequestResponsableP", "geoMessages"]
+- ["15MobileMessaging18RequestResponsableP", "headers"]
+- !private ["15MobileMessaging18RequestResponsableP", "internalUserId"]
+- ["15MobileMessaging18RequestResponsableP", "method"]
+- ["15MobileMessaging18RequestResponsableP", "mustRetryOnResponseError"]
+- ["15MobileMessaging18RequestResponsableP", "parameters"]
+- ["15MobileMessaging18RequestResponsableP", "path"]
+- ["15MobileMessaging18RequestResponsableP", "responseObject"]
+- ["15MobileMessaging18RequestResponsableP", "retryLimit"]
+- ["15MobileMessaging18RequestResponsableP", ""]
+- !private ["s8SequenceP", "map"]
+- !private ["s8SequenceP", "reduce"]
+- !private ["s13SignedIntegerP", "hashValue"]
+- !private ["s13SignedNumericP", "hashValue"]
+- !private ["s12StaticStringV", "init"]
+- !private ["s10StrideableP", "hashValue"]
+- !private ["s14_ArrayProtocolP", "map"]
+- !private ["s14_ArrayProtocolP", "reduce"]
+- !private ["s23_BidirectionalIndexableP", "map"]
+- !private ["s23_BidirectionalIndexableP", "reduce"]
+- !private ["s18_BitwiseOperationsP", "hashValue"]
+- !private ["s24_DestructorSafeContainerP", "map"]
+- !private ["s24_DestructorSafeContainerP", "reduce"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "hashValue"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s10_IndexableP", "map"]
+- !private ["s10_IndexableP", "reduce"]
+- !private ["s14_IndexableBaseP", "map"]
+- !private ["s14_IndexableBaseP", "reduce"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "LocationServiceKind"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "geoEventReportFormat"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "rawValue"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s17_MutableIndexableP", "map"]
+- !private ["s17_MutableIndexableP", "reduce"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "hashValue"]
+- !private ["s21_ObjectiveCBridgeableP", "map"]
+- !private ["s21_ObjectiveCBridgeableP", "reduce"]
+- !private ["s22_RandomAccessIndexableP", "map"]
+- !private ["s22_RandomAccessIndexableP", "reduce"]
+- !private ["s26_RangeReplaceableIndexableP", "map"]
+- !private ["s26_RangeReplaceableIndexableP", "reduce"]
+- !private ["s11_StrideableP", "hashValue"]
+depends-nominal:
+- !private "15MobileMessaging7APIPathO"
+- !private "15MobileMessaging9APIValuesV"
+- !private "Sa"
+- !private "15MobileMessaging11BaseMessageC"
+- !private "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- !private "Sb"
+- "SC21CLAuthorizationStatusO"
+- "s7CVarArgP"
+- !private "s10CollectionP"
+- !private "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- !private "s29CustomPlaygroundQuickLookableP"
+- !private "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "s9DecodableP"
+- !private "15MobileMessaging23DictionaryRepresentableP"
+- !private "s9EncodableP"
+- "s9EquatableP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s27ExpressibleByIntegerLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "s17FixedWidthIntegerP"
+- "15MobileMessaging16GeoEventHandlingP"
+- !private "15MobileMessaging18GeoEventReportDataV"
+- "15MobileMessaging24GeoEventReportingRequestV"
+- "15MobileMessaging25GeoEventReportingResponseV"
+- !private "15MobileMessaging19GeoReportingAPIKeysV"
+- "15MobileMessaging26GeofencingCapabilityStatusO"
+- "15MobileMessaging19GeofencingConstantsV"
+- "s8HashableP"
+- !private "Si"
+- !private "15MobileMessaging17JSONSubscriptTypeP"
+- "15MobileMessaging19LocationServiceKindC"
+- "15MobileMessaging20LocationServiceUsageO"
+- !private "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging12MMGeoMessageC"
+- "15MobileMessaging27MMGeofencingServiceDelegateP"
+- !private "15MobileMessaging17MMMessageMetadataP"
+- !private "15MobileMessaging9MTMessageC"
+- !private "s10MirrorPathP"
+- !private "s17MutableCollectionP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- !private "s7NumericP"
+- "15MobileMessaging11PostRequestP"
+- !private "15MobileMessaging16PushRegistrationV"
+- !private "s22RandomAccessCollectionP"
+- !private "s26RangeReplaceableCollectionP"
+- "s16RawRepresentableP"
+- "15MobileMessaging11RequestDataP"
+- "15MobileMessaging18RequestResponsableP"
+- !private "s8SequenceP"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s12StaticStringV"
+- !private "s10StrideableP"
+- !private "s14_ArrayProtocolP"
+- !private "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- !private "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- !private "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "4084d46dbd22959f31059beb2ef0b920"

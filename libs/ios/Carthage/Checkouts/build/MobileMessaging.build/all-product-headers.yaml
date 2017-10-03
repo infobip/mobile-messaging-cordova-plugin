@@ -1,0 +1,89 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [
+    {
+      'type': 'directory',
+      'name': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/Release-iphonesimulator/MobileMessaging/MobileMessaging.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "MMNotifications.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+        },
+        {
+          'type': 'file',
+          'name': "MobileMessaging-Swift.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/Release-iphonesimulator/MobileMessaging/MobileMessaging.framework/Headers/MobileMessaging-Swift.h"
+        },
+        {
+          'type': 'file',
+          'name': "MobileMessaging-umbrella.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+        },
+        {
+          'type': 'file',
+          'name': "MobileMessagingAppDelegateObjc.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+        },
+        {
+          'type': 'file',
+          'name': "MobileMessagingCordovaApplicationDelegate.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/Release-iphonesimulator/MobileMessaging/MobileMessaging.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/module.modulemap"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/Release-iphonesimulator/MobileMessaging/MobileMessaging.framework/PrivateHeaders",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "AFHTTPSessionManager.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+        },
+        {
+          'type': 'file',
+          'name': "AFNetworkReachabilityManager.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+        },
+        {
+          'type': 'file',
+          'name': "AFNetworking.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+        },
+        {
+          'type': 'file',
+          'name': "AFSecurityPolicy.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+        },
+        {
+          'type': 'file',
+          'name': "AFURLRequestSerialization.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+        },
+        {
+          'type': 'file',
+          'name': "AFURLResponseSerialization.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+        },
+        {
+          'type': 'file',
+          'name': "AFURLSessionManager.h",
+          'external-contents': "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+        }
+      ]
+    }
+  ]
+}
