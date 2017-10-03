@@ -1,0 +1,575 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "SystemDataSynchronizationOperation"
+provides-nominal:
+- "15MobileMessaging34SystemDataSynchronizationOperationC"
+provides-member:
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", ""]
+provides-dynamic-lookup:
+- "currentSystemDataHash"
+- "execute"
+- "finishBlock"
+- "finished"
+- "installation"
+- "mmContext"
+- "user"
+depends-top-level:
+- !private "!"
+- !private "!="
+- "AssignmentPrecedence"
+- "Int64"
+- "MMInstallation"
+- !private "MMInternalErrorType"
+- !private "MMLogDebug"
+- !private "MMLogError"
+- "MMUser"
+- "MobileMessaging"
+- "NSError"
+- "Operation"
+- !private "String"
+- !private "StringLiteralType"
+- "SystemData"
+- !private "SystemDataSyncResult"
+- "SystemDataSynchronizationOperation"
+- "Void"
+depends-member:
+- !private ["Sa", "first"]
+- !private ["s23BidirectionalCollectionP", "first"]
+- !private ["s23BidirectionalCollectionP", "init"]
+- !private ["s13BinaryIntegerP", "init"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "Int64"]
+- !private ["s7CVarArgP", "MMInternalErrorType"]
+- !private ["s7CVarArgP", "MMLogDebug"]
+- !private ["s7CVarArgP", "MMLogError"]
+- !private ["s7CVarArgP", "MobileMessaging"]
+- !private ["s7CVarArgP", "NSError"]
+- !private ["s7CVarArgP", "String"]
+- !private ["s7CVarArgP", "currentSystemData"]
+- !private ["s7CVarArgP", "currentSystemDataHash"]
+- !private ["s7CVarArgP", "finish"]
+- !private ["s7CVarArgP", "finishBlock"]
+- !private ["s7CVarArgP", "finishWithError"]
+- !private ["s7CVarArgP", "first"]
+- !private ["s7CVarArgP", "handleResult"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "installation"]
+- !private ["s7CVarArgP", "isCancelled"]
+- !private ["s7CVarArgP", "mmContext"]
+- !private ["s7CVarArgP", "persist"]
+- !private ["s7CVarArgP", "pushRegistrationId"]
+- !private ["s7CVarArgP", "remoteApiManager"]
+- !private ["s7CVarArgP", "sendRequest"]
+- !private ["s7CVarArgP", "systemData"]
+- !private ["s7CVarArgP", "systemDataHash"]
+- !private ["s7CVarArgP", "user"]
+- !private ["s7CVarArgP", "userAgent"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "first"]
+- !private ["s10CollectionP", "init"]
+- !private ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "Int64"]
+- !private ["s28CustomDebugStringConvertibleP", "MMInternalErrorType"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLogDebug"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLogError"]
+- !private ["s28CustomDebugStringConvertibleP", "MobileMessaging"]
+- !private ["s28CustomDebugStringConvertibleP", "NSError"]
+- !private ["s28CustomDebugStringConvertibleP", "String"]
+- !private ["s28CustomDebugStringConvertibleP", "currentSystemData"]
+- !private ["s28CustomDebugStringConvertibleP", "currentSystemDataHash"]
+- !private ["s28CustomDebugStringConvertibleP", "finish"]
+- !private ["s28CustomDebugStringConvertibleP", "finishBlock"]
+- !private ["s28CustomDebugStringConvertibleP", "finishWithError"]
+- !private ["s28CustomDebugStringConvertibleP", "first"]
+- !private ["s28CustomDebugStringConvertibleP", "handleResult"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "installation"]
+- !private ["s28CustomDebugStringConvertibleP", "isCancelled"]
+- !private ["s28CustomDebugStringConvertibleP", "mmContext"]
+- !private ["s28CustomDebugStringConvertibleP", "persist"]
+- !private ["s28CustomDebugStringConvertibleP", "pushRegistrationId"]
+- !private ["s28CustomDebugStringConvertibleP", "remoteApiManager"]
+- !private ["s28CustomDebugStringConvertibleP", "sendRequest"]
+- !private ["s28CustomDebugStringConvertibleP", "systemData"]
+- !private ["s28CustomDebugStringConvertibleP", "systemDataHash"]
+- !private ["s28CustomDebugStringConvertibleP", "user"]
+- !private ["s28CustomDebugStringConvertibleP", "userAgent"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "first"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s23CustomStringConvertibleP", "Int64"]
+- !private ["s23CustomStringConvertibleP", "MMInternalErrorType"]
+- !private ["s23CustomStringConvertibleP", "MMLogDebug"]
+- !private ["s23CustomStringConvertibleP", "MMLogError"]
+- !private ["s23CustomStringConvertibleP", "MobileMessaging"]
+- !private ["s23CustomStringConvertibleP", "NSError"]
+- !private ["s23CustomStringConvertibleP", "String"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "currentSystemData"]
+- !private ["s23CustomStringConvertibleP", "currentSystemDataHash"]
+- !private ["s23CustomStringConvertibleP", "finish"]
+- !private ["s23CustomStringConvertibleP", "finishBlock"]
+- !private ["s23CustomStringConvertibleP", "finishWithError"]
+- !private ["s23CustomStringConvertibleP", "first"]
+- !private ["s23CustomStringConvertibleP", "handleResult"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "installation"]
+- !private ["s23CustomStringConvertibleP", "isCancelled"]
+- !private ["s23CustomStringConvertibleP", "mmContext"]
+- !private ["s23CustomStringConvertibleP", "persist"]
+- !private ["s23CustomStringConvertibleP", "pushRegistrationId"]
+- !private ["s23CustomStringConvertibleP", "remoteApiManager"]
+- !private ["s23CustomStringConvertibleP", "sendRequest"]
+- !private ["s23CustomStringConvertibleP", "systemData"]
+- !private ["s23CustomStringConvertibleP", "systemDataHash"]
+- !private ["s23CustomStringConvertibleP", "user"]
+- !private ["s23CustomStringConvertibleP", "userAgent"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "first"]
+- !private ["s9DecodableP", "init"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "first"]
+- !private ["s9EncodableP", "init"]
+- !private ["s9EquatableP", "Int64"]
+- !private ["s9EquatableP", "MMInternalErrorType"]
+- !private ["s9EquatableP", "MMLogDebug"]
+- !private ["s9EquatableP", "MMLogError"]
+- !private ["s9EquatableP", "MobileMessaging"]
+- !private ["s9EquatableP", "NSError"]
+- !private ["s9EquatableP", "NoRegistration"]
+- !private ["s9EquatableP", "String"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "currentSystemData"]
+- !private ["s9EquatableP", "currentSystemDataHash"]
+- !private ["s9EquatableP", "finish"]
+- !private ["s9EquatableP", "finishBlock"]
+- !private ["s9EquatableP", "finishWithError"]
+- !private ["s9EquatableP", "handleResult"]
+- !private ["s9EquatableP", "hashValue"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "installation"]
+- !private ["s9EquatableP", "isCancelled"]
+- !private ["s9EquatableP", "mmContext"]
+- !private ["s9EquatableP", "persist"]
+- !private ["s9EquatableP", "pushRegistrationId"]
+- !private ["s9EquatableP", "remoteApiManager"]
+- !private ["s9EquatableP", "sendRequest"]
+- !private ["s9EquatableP", "systemData"]
+- !private ["s9EquatableP", "systemDataHash"]
+- !private ["s9EquatableP", "user"]
+- !private ["s9EquatableP", "userAgent"]
+- ["s9EquatableP", ""]
+- !private ["s5ErrorP", "NoRegistration"]
+- !private ["s5ErrorP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "first"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s17FixedWidthIntegerP", "init"]
+- !private ["s8HashableP", "Int64"]
+- !private ["s8HashableP", "MMInternalErrorType"]
+- !private ["s8HashableP", "MMLogDebug"]
+- !private ["s8HashableP", "MMLogError"]
+- !private ["s8HashableP", "MobileMessaging"]
+- !private ["s8HashableP", "NSError"]
+- !private ["s8HashableP", "NoRegistration"]
+- !private ["s8HashableP", "String"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "currentSystemData"]
+- !private ["s8HashableP", "currentSystemDataHash"]
+- !private ["s8HashableP", "finish"]
+- !private ["s8HashableP", "finishBlock"]
+- !private ["s8HashableP", "finishWithError"]
+- !private ["s8HashableP", "handleResult"]
+- !private ["s8HashableP", "hashValue"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "installation"]
+- !private ["s8HashableP", "isCancelled"]
+- !private ["s8HashableP", "mmContext"]
+- !private ["s8HashableP", "persist"]
+- !private ["s8HashableP", "pushRegistrationId"]
+- !private ["s8HashableP", "remoteApiManager"]
+- !private ["s8HashableP", "sendRequest"]
+- !private ["s8HashableP", "systemData"]
+- !private ["s8HashableP", "systemDataHash"]
+- !private ["s8HashableP", "user"]
+- !private ["s8HashableP", "userAgent"]
+- ["s8HashableP", ""]
+- !private ["s5Int64V", "init"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging14MMInstallationC", "persist"]
+- !private ["15MobileMessaging14MMInstallationC", "systemDataHash"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "NoRegistration"]
+- !private ["15MobileMessaging6MMUserC", "pushRegistrationId"]
+- !private ["s10MirrorPathP", "init"]
+- !private ["15MobileMessagingAAC", "remoteApiManager"]
+- !private ["15MobileMessagingAAC", "userAgent"]
+- !private ["s17MutableCollectionP", "first"]
+- !private ["So8NSCodingP", "init"]
+- !private ["So9NSCopyingP", "init"]
+- !private ["So7NSErrorC", "init"]
+- !private ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "init"]
+- ["So8NSObjectC", "Int64"]
+- ["So8NSObjectC", "MMInstallation"]
+- !private ["So8NSObjectC", "MMInternalErrorType"]
+- !private ["So8NSObjectC", "MMLogDebug"]
+- !private ["So8NSObjectC", "MMLogError"]
+- ["So8NSObjectC", "MMUser"]
+- ["So8NSObjectC", "MobileMessaging"]
+- ["So8NSObjectC", "NSError"]
+- !private ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "SystemData"]
+- !private ["So8NSObjectC", "SystemDataSyncResult"]
+- ["So8NSObjectC", "Void"]
+- ["So8NSObjectC", "currentSystemData"]
+- ["So8NSObjectC", "currentSystemData.storage"]
+- ["So8NSObjectC", "currentSystemDataHash"]
+- ["So8NSObjectC", "currentSystemDataHash.storage"]
+- ["So8NSObjectC", "execute"]
+- !private ["So8NSObjectC", "finish"]
+- ["So8NSObjectC", "finishBlock"]
+- !private ["So8NSObjectC", "finishWithError"]
+- ["So8NSObjectC", "finished"]
+- ["So8NSObjectC", "handleResult"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "installation"]
+- !private ["So8NSObjectC", "isCancelled"]
+- ["So8NSObjectC", "mmContext"]
+- !private ["So8NSObjectC", "persist"]
+- !private ["So8NSObjectC", "pushRegistrationId"]
+- !private ["So8NSObjectC", "remoteApiManager"]
+- ["So8NSObjectC", "sendRequest"]
+- !private ["So8NSObjectC", "systemData"]
+- !private ["So8NSObjectC", "systemDataHash"]
+- ["So8NSObjectC", "user"]
+- !private ["So8NSObjectC", "userAgent"]
+- !private ["So16NSObjectProtocolP", "Int64"]
+- !private ["So16NSObjectProtocolP", "MMInternalErrorType"]
+- !private ["So16NSObjectProtocolP", "MMLogDebug"]
+- !private ["So16NSObjectProtocolP", "MMLogError"]
+- !private ["So16NSObjectProtocolP", "MobileMessaging"]
+- !private ["So16NSObjectProtocolP", "NSError"]
+- !private ["So16NSObjectProtocolP", "String"]
+- !private ["So16NSObjectProtocolP", "currentSystemData"]
+- !private ["So16NSObjectProtocolP", "currentSystemDataHash"]
+- !private ["So16NSObjectProtocolP", "finish"]
+- !private ["So16NSObjectProtocolP", "finishBlock"]
+- !private ["So16NSObjectProtocolP", "finishWithError"]
+- !private ["So16NSObjectProtocolP", "handleResult"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "installation"]
+- !private ["So16NSObjectProtocolP", "isCancelled"]
+- !private ["So16NSObjectProtocolP", "mmContext"]
+- !private ["So16NSObjectProtocolP", "persist"]
+- !private ["So16NSObjectProtocolP", "pushRegistrationId"]
+- !private ["So16NSObjectProtocolP", "remoteApiManager"]
+- !private ["So16NSObjectProtocolP", "sendRequest"]
+- !private ["So16NSObjectProtocolP", "systemData"]
+- !private ["So16NSObjectProtocolP", "systemDataHash"]
+- !private ["So16NSObjectProtocolP", "user"]
+- !private ["So16NSObjectProtocolP", "userAgent"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSSecureCodingP", "init"]
+- !private ["So8NSStringC", "init"]
+- !private ["s7NumericP", "init"]
+- ["15MobileMessaging9OperationC", "Int64"]
+- ["15MobileMessaging9OperationC", "MMInstallation"]
+- !private ["15MobileMessaging9OperationC", "MMInternalErrorType"]
+- !private ["15MobileMessaging9OperationC", "MMLogDebug"]
+- !private ["15MobileMessaging9OperationC", "MMLogError"]
+- ["15MobileMessaging9OperationC", "MMUser"]
+- ["15MobileMessaging9OperationC", "MobileMessaging"]
+- ["15MobileMessaging9OperationC", "NSError"]
+- !private ["15MobileMessaging9OperationC", "String"]
+- ["15MobileMessaging9OperationC", "SystemData"]
+- !private ["15MobileMessaging9OperationC", "SystemDataSyncResult"]
+- ["15MobileMessaging9OperationC", "Void"]
+- ["15MobileMessaging9OperationC", "currentSystemData"]
+- ["15MobileMessaging9OperationC", "currentSystemData.storage"]
+- ["15MobileMessaging9OperationC", "currentSystemDataHash"]
+- ["15MobileMessaging9OperationC", "currentSystemDataHash.storage"]
+- ["15MobileMessaging9OperationC", "execute"]
+- !private ["15MobileMessaging9OperationC", "finish"]
+- ["15MobileMessaging9OperationC", "finishBlock"]
+- !private ["15MobileMessaging9OperationC", "finishWithError"]
+- ["15MobileMessaging9OperationC", "finished"]
+- ["15MobileMessaging9OperationC", "handleResult"]
+- ["15MobileMessaging9OperationC", "init"]
+- ["15MobileMessaging9OperationC", "installation"]
+- !private ["15MobileMessaging9OperationC", "isCancelled"]
+- ["15MobileMessaging9OperationC", "mmContext"]
+- ["15MobileMessaging9OperationC", "sendRequest"]
+- ["15MobileMessaging9OperationC", "user"]
+- ["15MobileMessaging9OperationC", ""]
+- ["So9OperationC", "Int64"]
+- ["So9OperationC", "MMInstallation"]
+- !private ["So9OperationC", "MMInternalErrorType"]
+- !private ["So9OperationC", "MMLogDebug"]
+- !private ["So9OperationC", "MMLogError"]
+- ["So9OperationC", "MMUser"]
+- ["So9OperationC", "MobileMessaging"]
+- ["So9OperationC", "NSError"]
+- !private ["So9OperationC", "String"]
+- ["So9OperationC", "SystemData"]
+- !private ["So9OperationC", "SystemDataSyncResult"]
+- ["So9OperationC", "Void"]
+- ["So9OperationC", "currentSystemData"]
+- ["So9OperationC", "currentSystemData.storage"]
+- ["So9OperationC", "currentSystemDataHash"]
+- ["So9OperationC", "currentSystemDataHash.storage"]
+- ["So9OperationC", "execute"]
+- !private ["So9OperationC", "finish"]
+- ["So9OperationC", "finishBlock"]
+- !private ["So9OperationC", "finishWithError"]
+- ["So9OperationC", "finished"]
+- ["So9OperationC", "handleResult"]
+- ["So9OperationC", "init"]
+- ["So9OperationC", "installation"]
+- !private ["So9OperationC", "isCancelled"]
+- ["So9OperationC", "mmContext"]
+- ["So9OperationC", "sendRequest"]
+- ["So9OperationC", "user"]
+- !private ["s22RandomAccessCollectionP", "first"]
+- !private ["s26RangeReplaceableCollectionP", "first"]
+- !private ["s26RangeReplaceableCollectionP", "init"]
+- !private ["15MobileMessaging16RemoteAPIManagerC", "syncSystemData"]
+- !private ["15MobileMessaging6ResultO", "Cancel"]
+- !private ["15MobileMessaging6ResultO", "Failure"]
+- !private ["15MobileMessaging6ResultO", "Success"]
+- !private ["15MobileMessaging6ResultO", "error"]
+- !private ["s8SequenceP", "first"]
+- !private ["s8SequenceP", "init"]
+- !private ["s13SignedIntegerP", "init"]
+- !private ["s13SignedNumericP", "init"]
+- !private ["s12StaticStringV", "init"]
+- !private ["s10StrideableP", "init"]
+- !private ["SS", "init"]
+- !private ["s14StringProtocolP", "init"]
+- !private ["15MobileMessaging10SystemDataV", "deinit"]
+- !private ["15MobileMessaging10SystemDataV", "hashValue"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "Int64"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "MMInstallation"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "MMInternalErrorType"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "MMLogDebug"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "MMLogError"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "MMUser"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "MobileMessaging"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "NSError"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "String"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "SystemData"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "SystemDataSyncResult"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "Void"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "currentSystemData"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "currentSystemData.storage"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "currentSystemDataHash"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "currentSystemDataHash.storage"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "deinit"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "execute"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "finish"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "finishBlock"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "finishWithError"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "finished"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "handleResult"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "init"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "installation"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "isCancelled"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "mmContext"]
+- !private ["15MobileMessaging34SystemDataSynchronizationOperationC", "sendRequest"]
+- ["15MobileMessaging34SystemDataSynchronizationOperationC", "user"]
+- !private ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "init"]
+- !private ["15MobileMessaging9UserAgentC", "systemData"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s14_ArrayProtocolP", "first"]
+- !private ["s23_BidirectionalIndexableP", "first"]
+- !private ["s23_BidirectionalIndexableP", "init"]
+- !private ["s18_BitwiseOperationsP", "init"]
+- !private ["s15_CVarArgAlignedP", "init"]
+- !private ["s24_DestructorSafeContainerP", "first"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "first"]
+- !private ["s10_IndexableP", "init"]
+- !private ["s14_IndexableBaseP", "first"]
+- !private ["s14_IndexableBaseP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "Int64"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMInternalErrorType"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLogDebug"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLogError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MobileMessaging"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "String"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "currentSystemData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "currentSystemDataHash"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finish"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finishBlock"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finishWithError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "handleResult"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "installation"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isCancelled"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mmContext"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "persist"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "pushRegistrationId"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "remoteApiManager"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "sendRequest"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "systemData"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "systemDataHash"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "user"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "userAgent"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s17_MutableIndexableP", "first"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "first"]
+- !private ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s22_RandomAccessIndexableP", "first"]
+- !private ["s26_RangeReplaceableIndexableP", "first"]
+- !private ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s11_StrideableP", "init"]
+- !private ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "Sa"
+- !private "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- !private "Sb"
+- "s7CVarArgP"
+- !private "s10CollectionP"
+- !private "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- !private "15MobileMessaging27CustomPayloadSupportedTypesP"
+- !private "s29CustomPlaygroundQuickLookableP"
+- !private "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "s9DecodableP"
+- !private "s9EncodableP"
+- "s9EquatableP"
+- !private "s5ErrorP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s27ExpressibleByIntegerLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "s17FixedWidthIntegerP"
+- "s8HashableP"
+- !private "s5Int64V"
+- !private "15MobileMessaging17JSONSubscriptTypeP"
+- !private "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging14MMInstallationC"
+- !private "15MobileMessaging19MMInternalErrorTypeO"
+- !private "15MobileMessaging6MMUserC"
+- !private "s10MirrorPathP"
+- !private "15MobileMessagingAAC"
+- !private "s17MutableCollectionP"
+- !private "So8NSCodingP"
+- !private "So9NSCopyingP"
+- !private "So7NSErrorC"
+- !private "So21NSItemProviderReadingP"
+- !private "So21NSItemProviderWritingP"
+- !private "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- !private "So14NSSecureCodingP"
+- !private "So8NSStringC"
+- !private "s7NumericP"
+- "15MobileMessaging9OperationC"
+- "So9OperationC"
+- !private "s22RandomAccessCollectionP"
+- !private "s26RangeReplaceableCollectionP"
+- !private "15MobileMessaging16RemoteAPIManagerC"
+- !private "15MobileMessaging6ResultO"
+- !private "s8SequenceP"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s12StaticStringV"
+- !private "s10StrideableP"
+- !private "SS"
+- !private "s14StringProtocolP"
+- !private "15MobileMessaging10SystemDataV"
+- "15MobileMessaging34SystemDataSynchronizationOperationC"
+- !private "s16TextOutputStreamP"
+- !private "s20TextOutputStreamableP"
+- !private "15MobileMessaging9UserAgentC"
+- !private "15MobileMessaging23UserDataFoundationTypesP"
+- !private "s14_ArrayProtocolP"
+- !private "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- !private "s15_CVarArgAlignedP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s33_ExpressibleByStringInterpolationP"
+- !private "s35_HasCustomAnyHashableRepresentationP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- !private "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- !private "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- !private "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "7ae360df826c4fb836d9015f3ada3f74"

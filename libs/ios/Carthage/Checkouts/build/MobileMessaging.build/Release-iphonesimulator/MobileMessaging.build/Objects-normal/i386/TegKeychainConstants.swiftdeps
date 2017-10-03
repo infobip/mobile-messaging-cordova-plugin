@@ -1,0 +1,73 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "KeychainSwiftConstants"
+provides-nominal:
+- "15MobileMessaging22KeychainSwiftConstantsV"
+provides-member:
+- ["15MobileMessaging22KeychainSwiftConstantsV", ""]
+provides-dynamic-lookup:
+depends-top-level:
+- "CFString"
+- "CastingPrecedence"
+- "KeychainSwiftConstants"
+- "String"
+- !private "kSecAttrAccessGroup"
+- !private "kSecAttrAccessible"
+- !private "kSecAttrAccount"
+- !private "kSecAttrSynchronizable"
+- !private "kSecClass"
+- !private "kSecMatchLimit"
+- !private "kSecReturnData"
+- !private "kSecValueData"
+depends-member:
+- ["15MobileMessaging22KeychainSwiftConstantsV", "CFString"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "String"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "accessGroup"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "accessible"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "attrAccount"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "attrSynchronizable"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "init"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecAttrAccessGroup"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecAttrAccessible"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecAttrAccount"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecAttrSynchronizable"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecClass"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecMatchLimit"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecReturnData"]
+- !private ["15MobileMessaging22KeychainSwiftConstantsV", "kSecValueData"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "klass"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "matchLimit"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "returnData"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "toString"]
+- ["15MobileMessaging22KeychainSwiftConstantsV", "valueData"]
+depends-nominal:
+- "15MobileMessaging22KeychainSwiftConstantsV"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "f0ea727f4903c0b79d35fc8fa191304d"

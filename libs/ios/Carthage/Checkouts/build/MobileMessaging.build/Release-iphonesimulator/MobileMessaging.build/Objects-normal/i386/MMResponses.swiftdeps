@@ -1,0 +1,660 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "EmptyResponse"
+- "SeenStatusSendingResponse"
+- "SystemDataSyncResponse"
+- "RegistrationResponse"
+- "GeoEventReportingResponse"
+- "LibraryVersionResponse"
+- "MessagesSyncResponse"
+- "UserDataSyncResponse"
+- "MOMessageSendingResponse"
+- "DeliveryReportResponse"
+- "RegistrationResult"
+- "MessagesSyncResult"
+- "SeenStatusSendingResult"
+- "UserDataSyncResult"
+- "SystemDataSyncResult"
+- "MOMessageSendingResult"
+- "LibraryVersionResult"
+- "MMGeoEventReportingResult"
+- "RequestError"
+- "JSONDecodable"
+- "JSONEncodable"
+provides-nominal:
+- "15MobileMessaging13EmptyResponseV"
+- "15MobileMessaging20RegistrationResponseV"
+- "15MobileMessaging25GeoEventReportingResponseV"
+- "15MobileMessaging22LibraryVersionResponseV"
+- "15MobileMessaging20MessagesSyncResponseV"
+- "15MobileMessaging20UserDataSyncResponseV"
+- "15MobileMessaging24MOMessageSendingResponseV"
+- "15MobileMessaging12RequestErrorV"
+- "15MobileMessaging13JSONDecodableP"
+- "15MobileMessaging13JSONEncodableP"
+- "10Foundation4DateV"
+provides-member:
+- ["15MobileMessaging13EmptyResponseV", ""]
+- ["15MobileMessaging20RegistrationResponseV", ""]
+- ["15MobileMessaging25GeoEventReportingResponseV", ""]
+- ["15MobileMessaging22LibraryVersionResponseV", ""]
+- ["15MobileMessaging20MessagesSyncResponseV", ""]
+- ["15MobileMessaging20UserDataSyncResponseV", ""]
+- ["15MobileMessaging24MOMessageSendingResponseV", ""]
+- ["15MobileMessaging12RequestErrorV", ""]
+- ["15MobileMessaging13JSONDecodableP", ""]
+- ["15MobileMessaging13JSONEncodableP", ""]
+- ["10Foundation4DateV", ""]
+provides-dynamic-lookup:
+depends-top-level:
+- !private "+"
+- !private "??"
+- !private "APIKeys"
+- !private "APNSPayloadKeys"
+- !private "AnyHashable"
+- "Array"
+- "AssignmentPrecedence"
+- "Bool"
+- !private "BooleanLiteralType"
+- "CastingPrecedence"
+- "CustomUserData"
+- "Date"
+- !private "DateStaticFormatters"
+- "DeliveryReportResponse"
+- "Dictionary"
+- "EmptyResponse"
+- "GeoEventReportingResponse"
+- !private "GeoReportingAPIKeys"
+- !private "Int"
+- "JSON"
+- "JSONDecodable"
+- "JSONEncodable"
+- "LibraryVersionResponse"
+- "LibraryVersionResult"
+- "MMGeoEventReportingResult"
+- "MOMessage"
+- "MOMessageSendingResponse"
+- "MOMessageSendingResult"
+- "MTMessage"
+- "MessagesSyncResponse"
+- "MessagesSyncResult"
+- "NSError"
+- !private "NSLocalizedDescriptionKey"
+- !private "PushRegistration"
+- "RegistrationResponse"
+- "RegistrationResult"
+- "RequestError"
+- "Result"
+- "SeenStatusSendingResponse"
+- "SeenStatusSendingResult"
+- "String"
+- "SystemDataSyncResponse"
+- "SystemDataSyncResult"
+- "UserDataSyncResponse"
+- "UserDataSyncResult"
+- !private "VersionCheck"
+depends-member:
+- !private ["15MobileMessaging7APIKeysV", "kBackendErrorDomain"]
+- !private ["15MobileMessaging7APIKeysV", "kErrorMessageId"]
+- !private ["15MobileMessaging7APIKeysV", "kErrorText"]
+- !private ["15MobileMessaging7APIKeysV", "kMOMessages"]
+- !private ["15MobileMessaging7APIKeysV", "kRequestError"]
+- !private ["15MobileMessaging7APIKeysV", "kServiceException"]
+- !private ["15MobileMessaging7APIKeysV", "kUserDataCustomUserData"]
+- !private ["15MobileMessaging7APIKeysV", "kUserDataPredefinedUserData"]
+- !private ["15MobileMessaging15APNSPayloadKeysV", "payloads"]
+- !private ["Sa", "flatMap"]
+- !private ["Sa", "init"]
+- !private ["s23BidirectionalCollectionP", "flatMap"]
+- !private ["s23BidirectionalCollectionP", "init"]
+- !private ["s13BinaryIntegerP", "init"]
+- !private ["s7CVarArgP", "flatMap"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "reduce"]
+- !private ["s7CVarArgP", "string"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s10CollectionP", "arrayObject"]
+- !private ["s10CollectionP", "arrayValue"]
+- !private ["s10CollectionP", "bool"]
+- !private ["s10CollectionP", "dictionaryObject"]
+- !private ["s10CollectionP", "flatMap"]
+- !private ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "rawString"]
+- !private ["s10CollectionP", "reduce"]
+- !private ["s10CollectionP", "string"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "DateStaticFormatters"]
+- !private ["s10ComparableP", "JSON"]
+- !private ["s10ComparableP", "arrayObject"]
+- !private ["s10ComparableP", "arrayValue"]
+- !private ["s10ComparableP", "bool"]
+- !private ["s10ComparableP", "dictionaryObject"]
+- !private ["s10ComparableP", "init"]
+- !private ["s10ComparableP", "rawString"]
+- !private ["s10ComparableP", "string"]
+- !private ["s10ComparableP", "subscript"]
+- ["s10ComparableP", "toJSON"]
+- !private ["s28CustomDebugStringConvertibleP", "DateStaticFormatters"]
+- !private ["s28CustomDebugStringConvertibleP", "JSON"]
+- !private ["s28CustomDebugStringConvertibleP", "arrayObject"]
+- !private ["s28CustomDebugStringConvertibleP", "arrayValue"]
+- !private ["s28CustomDebugStringConvertibleP", "bool"]
+- !private ["s28CustomDebugStringConvertibleP", "dictionaryObject"]
+- !private ["s28CustomDebugStringConvertibleP", "flatMap"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "rawString"]
+- !private ["s28CustomDebugStringConvertibleP", "reduce"]
+- !private ["s28CustomDebugStringConvertibleP", "string"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- ["s28CustomDebugStringConvertibleP", "toJSON"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "DateStaticFormatters"]
+- !private ["s29CustomPlaygroundQuickLookableP", "JSON"]
+- !private ["s29CustomPlaygroundQuickLookableP", "init"]
+- ["s29CustomPlaygroundQuickLookableP", "toJSON"]
+- !private ["s17CustomReflectableP", "DateStaticFormatters"]
+- !private ["s17CustomReflectableP", "JSON"]
+- !private ["s17CustomReflectableP", "flatMap"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "reduce"]
+- !private ["s17CustomReflectableP", "subscript"]
+- ["s17CustomReflectableP", "toJSON"]
+- !private ["s23CustomStringConvertibleP", "DateStaticFormatters"]
+- !private ["s23CustomStringConvertibleP", "JSON"]
+- !private ["s23CustomStringConvertibleP", "arrayObject"]
+- !private ["s23CustomStringConvertibleP", "arrayValue"]
+- !private ["s23CustomStringConvertibleP", "bool"]
+- !private ["s23CustomStringConvertibleP", "dictionaryObject"]
+- !private ["s23CustomStringConvertibleP", "flatMap"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "rawString"]
+- !private ["s23CustomStringConvertibleP", "reduce"]
+- !private ["s23CustomStringConvertibleP", "string"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- ["s23CustomStringConvertibleP", "toJSON"]
+- !private ["15MobileMessaging14CustomUserDataV", "deinit"]
+- !private ["15MobileMessaging14CustomUserDataV", "init"]
+- !private ["10Foundation4DateV", "DateStaticFormatters"]
+- ["10Foundation4DateV", "JSON"]
+- ["10Foundation4DateV", "deinit"]
+- ["10Foundation4DateV", "toJSON"]
+- !private ["So13DateFormatterC", "string"]
+- !private ["15MobileMessaging20DateStaticFormattersV", "ContactsServiceDateFormatter"]
+- !private ["s9DecodableP", "DateStaticFormatters"]
+- !private ["s9DecodableP", "JSON"]
+- !private ["s9DecodableP", "flatMap"]
+- !private ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "reduce"]
+- !private ["s9DecodableP", "subscript"]
+- ["s9DecodableP", "toJSON"]
+- !private ["s10DictionaryV", "init"]
+- !private ["s10DictionaryV", "reduce"]
+- !private ["s10DictionaryV", "subscript"]
+- !private ["15MobileMessaging23DictionaryRepresentableP", "init"]
+- ["15MobileMessaging13EmptyResponseV", "JSON"]
+- ["15MobileMessaging13EmptyResponseV", "deinit"]
+- ["15MobileMessaging13EmptyResponseV", "init"]
+- !private ["s9EncodableP", "DateStaticFormatters"]
+- !private ["s9EncodableP", "JSON"]
+- !private ["s9EncodableP", "flatMap"]
+- !private ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "reduce"]
+- !private ["s9EncodableP", "subscript"]
+- ["s9EncodableP", "toJSON"]
+- !private ["s9EquatableP", "DateStaticFormatters"]
+- !private ["s9EquatableP", "JSON"]
+- !private ["s9EquatableP", "arrayObject"]
+- !private ["s9EquatableP", "arrayValue"]
+- !private ["s9EquatableP", "bool"]
+- !private ["s9EquatableP", "dictionaryObject"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "rawString"]
+- !private ["s9EquatableP", "string"]
+- !private ["s9EquatableP", "subscript"]
+- ["s9EquatableP", "toJSON"]
+- !private ["s5ErrorP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "arrayObject"]
+- !private ["s25ExpressibleByArrayLiteralP", "arrayValue"]
+- !private ["s25ExpressibleByArrayLiteralP", "bool"]
+- !private ["s25ExpressibleByArrayLiteralP", "dictionaryObject"]
+- !private ["s25ExpressibleByArrayLiteralP", "flatMap"]
+- !private ["s25ExpressibleByArrayLiteralP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "rawString"]
+- !private ["s25ExpressibleByArrayLiteralP", "string"]
+- !private ["s25ExpressibleByArrayLiteralP", "subscript"]
+- !private ["s27ExpressibleByBooleanLiteralP", "arrayObject"]
+- !private ["s27ExpressibleByBooleanLiteralP", "arrayValue"]
+- !private ["s27ExpressibleByBooleanLiteralP", "bool"]
+- !private ["s27ExpressibleByBooleanLiteralP", "dictionaryObject"]
+- !private ["s27ExpressibleByBooleanLiteralP", "init"]
+- !private ["s27ExpressibleByBooleanLiteralP", "rawString"]
+- !private ["s27ExpressibleByBooleanLiteralP", "string"]
+- !private ["s27ExpressibleByBooleanLiteralP", "subscript"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "arrayObject"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "arrayValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "bool"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "dictionaryObject"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "init"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "rawString"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "reduce"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "string"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "arrayObject"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "arrayValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "bool"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "dictionaryObject"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "rawString"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "string"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "subscript"]
+- !private ["s25ExpressibleByFloatLiteralP", "arrayObject"]
+- !private ["s25ExpressibleByFloatLiteralP", "arrayValue"]
+- !private ["s25ExpressibleByFloatLiteralP", "bool"]
+- !private ["s25ExpressibleByFloatLiteralP", "dictionaryObject"]
+- !private ["s25ExpressibleByFloatLiteralP", "init"]
+- !private ["s25ExpressibleByFloatLiteralP", "rawString"]
+- !private ["s25ExpressibleByFloatLiteralP", "string"]
+- !private ["s25ExpressibleByFloatLiteralP", "subscript"]
+- !private ["s27ExpressibleByIntegerLiteralP", "arrayObject"]
+- !private ["s27ExpressibleByIntegerLiteralP", "arrayValue"]
+- !private ["s27ExpressibleByIntegerLiteralP", "bool"]
+- !private ["s27ExpressibleByIntegerLiteralP", "dictionaryObject"]
+- !private ["s27ExpressibleByIntegerLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "rawString"]
+- !private ["s27ExpressibleByIntegerLiteralP", "string"]
+- !private ["s27ExpressibleByIntegerLiteralP", "subscript"]
+- !private ["s23ExpressibleByNilLiteralP", "arrayObject"]
+- !private ["s23ExpressibleByNilLiteralP", "arrayValue"]
+- !private ["s23ExpressibleByNilLiteralP", "bool"]
+- !private ["s23ExpressibleByNilLiteralP", "dictionaryObject"]
+- !private ["s23ExpressibleByNilLiteralP", "init"]
+- !private ["s23ExpressibleByNilLiteralP", "rawString"]
+- !private ["s23ExpressibleByNilLiteralP", "string"]
+- !private ["s23ExpressibleByNilLiteralP", "subscript"]
+- !private ["s26ExpressibleByStringLiteralP", "arrayObject"]
+- !private ["s26ExpressibleByStringLiteralP", "arrayValue"]
+- !private ["s26ExpressibleByStringLiteralP", "bool"]
+- !private ["s26ExpressibleByStringLiteralP", "dictionaryObject"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "rawString"]
+- !private ["s26ExpressibleByStringLiteralP", "string"]
+- !private ["s26ExpressibleByStringLiteralP", "subscript"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "arrayObject"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "arrayValue"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "bool"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "dictionaryObject"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "rawString"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "string"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "subscript"]
+- !private ["s17FixedWidthIntegerP", "init"]
+- !private ["So9FormatterC", "string"]
+- !private ["15MobileMessaging25GeoEventReportingResponseV", "GeoReportingAPIKeys"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "JSON"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "String"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "deinit"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "finishedCampaignIds"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "init"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "suspendedCampaignIds"]
+- ["15MobileMessaging25GeoEventReportingResponseV", "tempMessageIdRealMessageId"]
+- !private ["15MobileMessaging19GeoReportingAPIKeysV", "finishedCampaignIds"]
+- !private ["15MobileMessaging19GeoReportingAPIKeysV", "messageIdsMap"]
+- !private ["15MobileMessaging19GeoReportingAPIKeysV", "suspendedCampaignIds"]
+- !private ["s8HashableP", "DateStaticFormatters"]
+- !private ["s8HashableP", "JSON"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "string"]
+- ["s8HashableP", "toJSON"]
+- !private ["Si", "init"]
+- !private ["15MobileMessaging4JSONV", "arrayObject"]
+- !private ["15MobileMessaging4JSONV", "arrayValue"]
+- !private ["15MobileMessaging4JSONV", "bool"]
+- !private ["15MobileMessaging4JSONV", "deinit"]
+- !private ["15MobileMessaging4JSONV", "dictionaryObject"]
+- !private ["15MobileMessaging4JSONV", "init"]
+- !private ["15MobileMessaging4JSONV", "rawString"]
+- !private ["15MobileMessaging4JSONV", "string"]
+- !private ["15MobileMessaging4JSONV", "subscript"]
+- !private ["15MobileMessaging13JSONDecodableP", "APIKeys"]
+- !private ["15MobileMessaging13JSONDecodableP", "APNSPayloadKeys"]
+- !private ["15MobileMessaging13JSONDecodableP", "AnyHashable"]
+- !private ["15MobileMessaging13JSONDecodableP", "CustomUserData"]
+- !private ["15MobileMessaging13JSONDecodableP", "GeoReportingAPIKeys"]
+- !private ["15MobileMessaging13JSONDecodableP", "Int"]
+- ["15MobileMessaging13JSONDecodableP", "JSON"]
+- !private ["15MobileMessaging13JSONDecodableP", "MOMessage"]
+- !private ["15MobileMessaging13JSONDecodableP", "MTMessage"]
+- !private ["15MobileMessaging13JSONDecodableP", "NSError"]
+- !private ["15MobileMessaging13JSONDecodableP", "NSLocalizedDescriptionKey"]
+- !private ["15MobileMessaging13JSONDecodableP", "PushRegistration"]
+- !private ["15MobileMessaging13JSONDecodableP", "RequestError"]
+- !private ["15MobileMessaging13JSONDecodableP", "VersionCheck"]
+- !private ["15MobileMessaging13JSONDecodableP", "customData"]
+- !private ["15MobileMessaging13JSONDecodableP", "deviceToken"]
+- !private ["15MobileMessaging13JSONDecodableP", "error"]
+- !private ["15MobileMessaging13JSONDecodableP", "finishedCampaignIds"]
+- ["15MobileMessaging13JSONDecodableP", "init"]
+- !private ["15MobileMessaging13JSONDecodableP", "internalId"]
+- !private ["15MobileMessaging13JSONDecodableP", "isEnabled"]
+- !private ["15MobileMessaging13JSONDecodableP", "libraryVersion"]
+- !private ["15MobileMessaging13JSONDecodableP", "messageId"]
+- !private ["15MobileMessaging13JSONDecodableP", "messages"]
+- !private ["15MobileMessaging13JSONDecodableP", "platform"]
+- !private ["15MobileMessaging13JSONDecodableP", "platformType"]
+- !private ["15MobileMessaging13JSONDecodableP", "predefinedData"]
+- !private ["15MobileMessaging13JSONDecodableP", "suspendedCampaignIds"]
+- !private ["15MobileMessaging13JSONDecodableP", "tempMessageIdRealMessageId"]
+- !private ["15MobileMessaging13JSONDecodableP", "text"]
+- !private ["15MobileMessaging13JSONDecodableP", "updateUrl"]
+- ["15MobileMessaging13JSONDecodableP", ""]
+- !private ["15MobileMessaging13JSONEncodableP", "DateStaticFormatters"]
+- ["15MobileMessaging13JSONEncodableP", "JSON"]
+- ["15MobileMessaging13JSONEncodableP", "toJSON"]
+- ["15MobileMessaging13JSONEncodableP", ""]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- ["15MobileMessaging22LibraryVersionResponseV", "JSON"]
+- ["15MobileMessaging22LibraryVersionResponseV", "String"]
+- !private ["15MobileMessaging22LibraryVersionResponseV", "VersionCheck"]
+- ["15MobileMessaging22LibraryVersionResponseV", "deinit"]
+- ["15MobileMessaging22LibraryVersionResponseV", "init"]
+- ["15MobileMessaging22LibraryVersionResponseV", "libraryVersion"]
+- ["15MobileMessaging22LibraryVersionResponseV", "platformType"]
+- ["15MobileMessaging22LibraryVersionResponseV", "updateUrl"]
+- !private ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "init"]
+- !private ["15MobileMessaging9MOMessageC", "init"]
+- !private ["15MobileMessaging19MOMessageAttributesP", "init"]
+- !private ["15MobileMessaging24MOMessageSendingResponseV", "APIKeys"]
+- ["15MobileMessaging24MOMessageSendingResponseV", "JSON"]
+- ["15MobileMessaging24MOMessageSendingResponseV", "MOMessage"]
+- ["15MobileMessaging24MOMessageSendingResponseV", "deinit"]
+- ["15MobileMessaging24MOMessageSendingResponseV", "init"]
+- ["15MobileMessaging24MOMessageSendingResponseV", "messages"]
+- !private ["15MobileMessaging9MTMessageC", "init"]
+- !private ["15MobileMessaging20MessagesSyncResponseV", "APNSPayloadKeys"]
+- ["15MobileMessaging20MessagesSyncResponseV", "JSON"]
+- ["15MobileMessaging20MessagesSyncResponseV", "MTMessage"]
+- ["15MobileMessaging20MessagesSyncResponseV", "deinit"]
+- ["15MobileMessaging20MessagesSyncResponseV", "init"]
+- ["15MobileMessaging20MessagesSyncResponseV", "messages"]
+- !private ["s10MirrorPathP", "init"]
+- !private ["s17MutableCollectionP", "flatMap"]
+- !private ["s17MutableCollectionP", "init"]
+- !private ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "string"]
+- !private ["So9NSCopyingP", "init"]
+- !private ["So9NSCopyingP", "string"]
+- !private ["So7NSErrorC", "init"]
+- !private ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "init"]
+- !private ["So8NSObjectC", "string"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "string"]
+- !private ["So14NSSecureCodingP", "init"]
+- !private ["So8NSStringC", "init"]
+- !private ["s7NumericP", "init"]
+- !private ["15MobileMessaging16PushRegistrationV", "deviceToken"]
+- !private ["15MobileMessaging16PushRegistrationV", "internalId"]
+- !private ["15MobileMessaging16PushRegistrationV", "isEnabled"]
+- !private ["15MobileMessaging16PushRegistrationV", "platform"]
+- !private ["s22RandomAccessCollectionP", "flatMap"]
+- !private ["s22RandomAccessCollectionP", "init"]
+- !private ["s26RangeReplaceableCollectionP", "flatMap"]
+- !private ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s16RawRepresentableP", "arrayObject"]
+- !private ["s16RawRepresentableP", "arrayValue"]
+- !private ["s16RawRepresentableP", "bool"]
+- !private ["s16RawRepresentableP", "dictionaryObject"]
+- !private ["s16RawRepresentableP", "init"]
+- !private ["s16RawRepresentableP", "rawString"]
+- !private ["s16RawRepresentableP", "string"]
+- !private ["s16RawRepresentableP", "subscript"]
+- !private ["10Foundation20ReferenceConvertibleP", "DateStaticFormatters"]
+- !private ["10Foundation20ReferenceConvertibleP", "JSON"]
+- ["10Foundation20ReferenceConvertibleP", "toJSON"]
+- ["15MobileMessaging20RegistrationResponseV", "Bool"]
+- ["15MobileMessaging20RegistrationResponseV", "JSON"]
+- !private ["15MobileMessaging20RegistrationResponseV", "PushRegistration"]
+- ["15MobileMessaging20RegistrationResponseV", "String"]
+- ["15MobileMessaging20RegistrationResponseV", "deinit"]
+- ["15MobileMessaging20RegistrationResponseV", "deviceToken"]
+- ["15MobileMessaging20RegistrationResponseV", "init"]
+- ["15MobileMessaging20RegistrationResponseV", "internalId"]
+- ["15MobileMessaging20RegistrationResponseV", "isEnabled"]
+- ["15MobileMessaging20RegistrationResponseV", "platform"]
+- !private ["15MobileMessaging12RequestErrorV", "APIKeys"]
+- !private ["15MobileMessaging12RequestErrorV", "AnyHashable"]
+- !private ["15MobileMessaging12RequestErrorV", "Int"]
+- ["15MobileMessaging12RequestErrorV", "JSON"]
+- ["15MobileMessaging12RequestErrorV", "NSError"]
+- !private ["15MobileMessaging12RequestErrorV", "NSLocalizedDescriptionKey"]
+- ["15MobileMessaging12RequestErrorV", "String"]
+- ["15MobileMessaging12RequestErrorV", "deinit"]
+- ["15MobileMessaging12RequestErrorV", "foundationError"]
+- ["15MobileMessaging12RequestErrorV", "init"]
+- ["15MobileMessaging12RequestErrorV", "messageId"]
+- ["15MobileMessaging12RequestErrorV", "text"]
+- !private ["s8SequenceP", "arrayObject"]
+- !private ["s8SequenceP", "arrayValue"]
+- !private ["s8SequenceP", "bool"]
+- !private ["s8SequenceP", "dictionaryObject"]
+- !private ["s8SequenceP", "flatMap"]
+- !private ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "rawString"]
+- !private ["s8SequenceP", "reduce"]
+- !private ["s8SequenceP", "string"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s13SignedIntegerP", "init"]
+- !private ["s13SignedNumericP", "init"]
+- !private ["s5SliceV", "arrayObject"]
+- !private ["s5SliceV", "arrayValue"]
+- !private ["s5SliceV", "bool"]
+- !private ["s5SliceV", "dictionaryObject"]
+- !private ["s5SliceV", "rawString"]
+- !private ["s5SliceV", "string"]
+- !private ["s5SliceV", "subscript"]
+- !private ["s10StrideableP", "init"]
+- !private ["SS", "deinit"]
+- !private ["SS", "init"]
+- !private ["s14StringProtocolP", "init"]
+- !private ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["15MobileMessaging20UserDataSyncResponseV", "APIKeys"]
+- ["15MobileMessaging20UserDataSyncResponseV", "CustomUserData"]
+- ["15MobileMessaging20UserDataSyncResponseV", "JSON"]
+- ["15MobileMessaging20UserDataSyncResponseV", "RequestError"]
+- ["15MobileMessaging20UserDataSyncResponseV", "String"]
+- ["15MobileMessaging20UserDataSyncResponseV", "customData"]
+- ["15MobileMessaging20UserDataSyncResponseV", "deinit"]
+- ["15MobileMessaging20UserDataSyncResponseV", "error"]
+- ["15MobileMessaging20UserDataSyncResponseV", "init"]
+- ["15MobileMessaging20UserDataSyncResponseV", "predefinedData"]
+- !private ["15MobileMessaging12VersionCheckV", "libraryVersion"]
+- !private ["15MobileMessaging12VersionCheckV", "libraryVersionUpdateUrl"]
+- !private ["15MobileMessaging12VersionCheckV", "platformType"]
+- !private ["s14_ArrayProtocolP", "flatMap"]
+- !private ["s14_ArrayProtocolP", "init"]
+- !private ["s23_BidirectionalIndexableP", "flatMap"]
+- !private ["s23_BidirectionalIndexableP", "init"]
+- !private ["s18_BitwiseOperationsP", "init"]
+- !private ["s24_DestructorSafeContainerP", "flatMap"]
+- !private ["s24_DestructorSafeContainerP", "init"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "arrayObject"]
+- !private ["s10_IndexableP", "arrayValue"]
+- !private ["s10_IndexableP", "bool"]
+- !private ["s10_IndexableP", "dictionaryObject"]
+- !private ["s10_IndexableP", "flatMap"]
+- !private ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "rawString"]
+- !private ["s10_IndexableP", "reduce"]
+- !private ["s10_IndexableP", "string"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "arrayObject"]
+- !private ["s14_IndexableBaseP", "arrayValue"]
+- !private ["s14_IndexableBaseP", "bool"]
+- !private ["s14_IndexableBaseP", "dictionaryObject"]
+- !private ["s14_IndexableBaseP", "flatMap"]
+- !private ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "rawString"]
+- !private ["s14_IndexableBaseP", "reduce"]
+- !private ["s14_IndexableBaseP", "string"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "string"]
+- !private ["s17_MutableIndexableP", "flatMap"]
+- !private ["s17_MutableIndexableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "DateStaticFormatters"]
+- !private ["s21_ObjectiveCBridgeableP", "JSON"]
+- !private ["s21_ObjectiveCBridgeableP", "flatMap"]
+- !private ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "reduce"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- ["s21_ObjectiveCBridgeableP", "toJSON"]
+- !private ["s22_RandomAccessIndexableP", "flatMap"]
+- !private ["s22_RandomAccessIndexableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "flatMap"]
+- !private ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s11_StrideableP", "init"]
+- !private ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "15MobileMessaging7APIKeysV"
+- !private "15MobileMessaging15APNSPayloadKeysV"
+- !private "Sa"
+- !private "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- !private "s7CVarArgP"
+- !private "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- !private "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "15MobileMessaging14CustomUserDataV"
+- "10Foundation4DateV"
+- !private "So13DateFormatterC"
+- !private "15MobileMessaging20DateStaticFormattersV"
+- "s9DecodableP"
+- !private "s10DictionaryV"
+- !private "15MobileMessaging23DictionaryRepresentableP"
+- "15MobileMessaging13EmptyResponseV"
+- "s9EncodableP"
+- "s9EquatableP"
+- !private "s5ErrorP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s25ExpressibleByFloatLiteralP"
+- !private "s27ExpressibleByIntegerLiteralP"
+- !private "s23ExpressibleByNilLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "s17FixedWidthIntegerP"
+- !private "So9FormatterC"
+- "15MobileMessaging25GeoEventReportingResponseV"
+- !private "15MobileMessaging19GeoReportingAPIKeysV"
+- "s8HashableP"
+- !private "Si"
+- !private "15MobileMessaging4JSONV"
+- "15MobileMessaging13JSONDecodableP"
+- "15MobileMessaging13JSONEncodableP"
+- !private "15MobileMessaging17JSONSubscriptTypeP"
+- "15MobileMessaging22LibraryVersionResponseV"
+- !private "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging17MMMessageMetadataP"
+- !private "15MobileMessaging9MOMessageC"
+- !private "15MobileMessaging19MOMessageAttributesP"
+- "15MobileMessaging24MOMessageSendingResponseV"
+- !private "15MobileMessaging9MTMessageC"
+- "15MobileMessaging20MessagesSyncResponseV"
+- !private "s10MirrorPathP"
+- !private "s17MutableCollectionP"
+- !private "So8NSCodingP"
+- !private "So9NSCopyingP"
+- !private "So7NSErrorC"
+- !private "So21NSItemProviderReadingP"
+- !private "So21NSItemProviderWritingP"
+- !private "So16NSMutableCopyingP"
+- !private "So8NSObjectC"
+- !private "So16NSObjectProtocolP"
+- !private "So14NSSecureCodingP"
+- !private "So8NSStringC"
+- !private "s7NumericP"
+- !private "15MobileMessaging16PushRegistrationV"
+- !private "s22RandomAccessCollectionP"
+- !private "s26RangeReplaceableCollectionP"
+- !private "s16RawRepresentableP"
+- "10Foundation20ReferenceConvertibleP"
+- "15MobileMessaging20RegistrationResponseV"
+- "15MobileMessaging12RequestErrorV"
+- !private "s8SequenceP"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s5SliceV"
+- !private "s10StrideableP"
+- !private "SS"
+- !private "s14StringProtocolP"
+- !private "s16TextOutputStreamP"
+- !private "s20TextOutputStreamableP"
+- !private "15MobileMessaging23UserDataFoundationTypesP"
+- "15MobileMessaging20UserDataSyncResponseV"
+- !private "15MobileMessaging12VersionCheckV"
+- !private "s14_ArrayProtocolP"
+- !private "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s33_ExpressibleByStringInterpolationP"
+- !private "s35_HasCustomAnyHashableRepresentationP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- !private "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- !private "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- !private "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "cecd3b9634f5af787cc0a0e91db9c8e4"

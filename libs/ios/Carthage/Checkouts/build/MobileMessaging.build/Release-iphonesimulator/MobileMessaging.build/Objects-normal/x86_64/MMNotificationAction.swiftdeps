@@ -1,0 +1,794 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "NotificationAction"
+- "TextInputNotificationAction"
+- "NotificationActionOptions"
+- "NotificationActionKeys"
+provides-nominal:
+- "15MobileMessaging18NotificationActionC"
+- "15MobileMessaging27TextInputNotificationActionC"
+- "15MobileMessaging25NotificationActionOptionsC"
+- "15MobileMessaging22NotificationActionKeysV"
+provides-member:
+- ["15MobileMessaging18NotificationActionC", ""]
+- ["15MobileMessaging27TextInputNotificationActionC", ""]
+- ["15MobileMessaging25NotificationActionOptionsC", ""]
+- ["15MobileMessaging22NotificationActionKeysV", ""]
+provides-dynamic-lookup:
+- "authenticationRequired"
+- "contains"
+- "destructive"
+- "dismissAction"
+- "foreground"
+- "hash"
+- "identifier"
+- "isEqual"
+- "moRequired"
+- "options"
+- "rawValue"
+- "textInputActionButtonTitle"
+- "textInputPlaceholder"
+- "title"
+- "typedText"
+- "uiUserNotificationAction"
+- "unUserNotificationAction"
+depends-top-level:
+- !private "!"
+- !private "!="
+- !private "&"
+- "<<"
+- !private "=="
+- !private "??"
+- !private "Array"
+- "AssignmentPrecedence"
+- "Bool"
+- !private "BooleanLiteralType"
+- "CastingPrecedence"
+- !private "Dictionary"
+- "Int"
+- !private "MMLocalization"
+- "MMLogOutput"
+- "NSObject"
+- "NotificationAction"
+- "NotificationActionKeys"
+- "NotificationActionOptions"
+- "String"
+- "StringLiteralType"
+- "TernaryPrecedence"
+- "TextInputNotificationAction"
+- !private "UIMutableUserNotificationAction"
+- "UIUserNotificationAction"
+- !private "UIUserNotificationTextInputActionButtonTitleKey"
+- "UNNotificationAction"
+- !private "UNNotificationActionOptions"
+- !private "UNNotificationDismissActionIdentifier"
+- !private "UNTextInputNotificationAction"
+- !private "|"
+depends-member:
+- !private ["Sa", "append"]
+- !private ["Sa", "contains"]
+- !private ["Sa", "init"]
+- !private ["Sa", "reduce"]
+- !private ["s23BidirectionalCollectionP", "append"]
+- !private ["s23BidirectionalCollectionP", "contains"]
+- !private ["s23BidirectionalCollectionP", "hasPrefix"]
+- !private ["s23BidirectionalCollectionP", "hash"]
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["s23BidirectionalCollectionP", "reduce"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "MMLocalization"]
+- !private ["s7CVarArgP", "NotificationAction"]
+- !private ["s7CVarArgP", "NotificationActionKeys"]
+- ["s7CVarArgP", "NotificationActionOptions"]
+- !private ["s7CVarArgP", "UIMutableUserNotificationAction"]
+- !private ["s7CVarArgP", "UIUserNotificationTextInputActionButtonTitleKey"]
+- !private ["s7CVarArgP", "UNNotificationAction"]
+- !private ["s7CVarArgP", "UNNotificationDismissActionIdentifier"]
+- !private ["s7CVarArgP", "UNTextInputNotificationAction"]
+- !private ["s7CVarArgP", "activationMode"]
+- !private ["s7CVarArgP", "append"]
+- !private ["s7CVarArgP", "authenticationRequired"]
+- !private ["s7CVarArgP", "behavior"]
+- !private ["s7CVarArgP", "contains"]
+- !private ["s7CVarArgP", "destructive"]
+- !private ["s7CVarArgP", "foreground"]
+- !private ["s7CVarArgP", "hasPrefix"]
+- !private ["s7CVarArgP", "hash"]
+- !private ["s7CVarArgP", "identifier"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "isAuthenticationRequired"]
+- !private ["s7CVarArgP", "isDestructive"]
+- !private ["s7CVarArgP", "moRequired"]
+- !private ["s7CVarArgP", "options"]
+- !private ["s7CVarArgP", "parameters"]
+- !private ["s7CVarArgP", "rawValue"]
+- !private ["s7CVarArgP", "reduce"]
+- !private ["s7CVarArgP", "subscript"]
+- !private ["s7CVarArgP", "textInputActionButtonTitle"]
+- !private ["s7CVarArgP", "textInputPlaceholder"]
+- !private ["s7CVarArgP", "title"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "append"]
+- !private ["s10CollectionP", "contains"]
+- !private ["s10CollectionP", "hasPrefix"]
+- !private ["s10CollectionP", "hash"]
+- ["s10CollectionP", "init"]
+- !private ["s10CollectionP", "reduce"]
+- !private ["s10CollectionP", "subscript"]
+- !private ["s10ComparableP", "hasPrefix"]
+- !private ["s10ComparableP", "hash"]
+- ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLocalization"]
+- !private ["s28CustomDebugStringConvertibleP", "NotificationAction"]
+- !private ["s28CustomDebugStringConvertibleP", "NotificationActionKeys"]
+- ["s28CustomDebugStringConvertibleP", "NotificationActionOptions"]
+- !private ["s28CustomDebugStringConvertibleP", "UIMutableUserNotificationAction"]
+- !private ["s28CustomDebugStringConvertibleP", "UIUserNotificationTextInputActionButtonTitleKey"]
+- !private ["s28CustomDebugStringConvertibleP", "UNNotificationAction"]
+- !private ["s28CustomDebugStringConvertibleP", "UNNotificationDismissActionIdentifier"]
+- !private ["s28CustomDebugStringConvertibleP", "UNTextInputNotificationAction"]
+- !private ["s28CustomDebugStringConvertibleP", "activationMode"]
+- !private ["s28CustomDebugStringConvertibleP", "append"]
+- !private ["s28CustomDebugStringConvertibleP", "authenticationRequired"]
+- !private ["s28CustomDebugStringConvertibleP", "behavior"]
+- !private ["s28CustomDebugStringConvertibleP", "contains"]
+- !private ["s28CustomDebugStringConvertibleP", "destructive"]
+- !private ["s28CustomDebugStringConvertibleP", "foreground"]
+- !private ["s28CustomDebugStringConvertibleP", "hasPrefix"]
+- !private ["s28CustomDebugStringConvertibleP", "hash"]
+- !private ["s28CustomDebugStringConvertibleP", "identifier"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "isAuthenticationRequired"]
+- !private ["s28CustomDebugStringConvertibleP", "isDestructive"]
+- !private ["s28CustomDebugStringConvertibleP", "moRequired"]
+- !private ["s28CustomDebugStringConvertibleP", "options"]
+- !private ["s28CustomDebugStringConvertibleP", "parameters"]
+- !private ["s28CustomDebugStringConvertibleP", "rawValue"]
+- !private ["s28CustomDebugStringConvertibleP", "reduce"]
+- !private ["s28CustomDebugStringConvertibleP", "subscript"]
+- !private ["s28CustomDebugStringConvertibleP", "textInputActionButtonTitle"]
+- !private ["s28CustomDebugStringConvertibleP", "textInputPlaceholder"]
+- !private ["s28CustomDebugStringConvertibleP", "title"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "hasPrefix"]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "hash"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hasPrefix"]
+- !private ["s29CustomPlaygroundQuickLookableP", "hash"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "append"]
+- !private ["s17CustomReflectableP", "contains"]
+- !private ["s17CustomReflectableP", "hasPrefix"]
+- !private ["s17CustomReflectableP", "hash"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s17CustomReflectableP", "reduce"]
+- !private ["s17CustomReflectableP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "MMLocalization"]
+- !private ["s23CustomStringConvertibleP", "NotificationAction"]
+- !private ["s23CustomStringConvertibleP", "NotificationActionKeys"]
+- ["s23CustomStringConvertibleP", "NotificationActionOptions"]
+- !private ["s23CustomStringConvertibleP", "UIMutableUserNotificationAction"]
+- !private ["s23CustomStringConvertibleP", "UIUserNotificationTextInputActionButtonTitleKey"]
+- !private ["s23CustomStringConvertibleP", "UNNotificationAction"]
+- !private ["s23CustomStringConvertibleP", "UNNotificationDismissActionIdentifier"]
+- !private ["s23CustomStringConvertibleP", "UNTextInputNotificationAction"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "activationMode"]
+- !private ["s23CustomStringConvertibleP", "append"]
+- !private ["s23CustomStringConvertibleP", "authenticationRequired"]
+- !private ["s23CustomStringConvertibleP", "behavior"]
+- !private ["s23CustomStringConvertibleP", "contains"]
+- !private ["s23CustomStringConvertibleP", "destructive"]
+- !private ["s23CustomStringConvertibleP", "foreground"]
+- !private ["s23CustomStringConvertibleP", "hasPrefix"]
+- !private ["s23CustomStringConvertibleP", "hash"]
+- !private ["s23CustomStringConvertibleP", "identifier"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "isAuthenticationRequired"]
+- !private ["s23CustomStringConvertibleP", "isDestructive"]
+- !private ["s23CustomStringConvertibleP", "moRequired"]
+- !private ["s23CustomStringConvertibleP", "options"]
+- !private ["s23CustomStringConvertibleP", "parameters"]
+- !private ["s23CustomStringConvertibleP", "rawValue"]
+- !private ["s23CustomStringConvertibleP", "reduce"]
+- !private ["s23CustomStringConvertibleP", "subscript"]
+- !private ["s23CustomStringConvertibleP", "textInputActionButtonTitle"]
+- !private ["s23CustomStringConvertibleP", "textInputPlaceholder"]
+- !private ["s23CustomStringConvertibleP", "title"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "append"]
+- !private ["s9DecodableP", "contains"]
+- !private ["s9DecodableP", "hasPrefix"]
+- !private ["s9DecodableP", "hash"]
+- ["s9DecodableP", "init"]
+- !private ["s9DecodableP", "reduce"]
+- !private ["s9DecodableP", "subscript"]
+- !private ["s10DictionaryV", "subscript"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "append"]
+- !private ["s9EncodableP", "contains"]
+- !private ["s9EncodableP", "hasPrefix"]
+- !private ["s9EncodableP", "hash"]
+- ["s9EncodableP", "init"]
+- !private ["s9EncodableP", "reduce"]
+- !private ["s9EncodableP", "subscript"]
+- !private ["s9EquatableP", "MMLocalization"]
+- !private ["s9EquatableP", "NotificationAction"]
+- !private ["s9EquatableP", "NotificationActionKeys"]
+- ["s9EquatableP", "NotificationActionOptions"]
+- !private ["s9EquatableP", "UIMutableUserNotificationAction"]
+- !private ["s9EquatableP", "UIUserNotificationTextInputActionButtonTitleKey"]
+- !private ["s9EquatableP", "UNNotificationAction"]
+- !private ["s9EquatableP", "UNNotificationDismissActionIdentifier"]
+- !private ["s9EquatableP", "UNTextInputNotificationAction"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "activationMode"]
+- !private ["s9EquatableP", "authenticationRequired"]
+- !private ["s9EquatableP", "background"]
+- !private ["s9EquatableP", "behavior"]
+- !private ["s9EquatableP", "destructive"]
+- !private ["s9EquatableP", "foreground"]
+- !private ["s9EquatableP", "hasPrefix"]
+- !private ["s9EquatableP", "hash"]
+- !private ["s9EquatableP", "identifier"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "insert"]
+- !private ["s9EquatableP", "isAuthenticationRequired"]
+- !private ["s9EquatableP", "isDestructive"]
+- !private ["s9EquatableP", "moRequired"]
+- !private ["s9EquatableP", "options"]
+- !private ["s9EquatableP", "parameters"]
+- !private ["s9EquatableP", "rawValue"]
+- !private ["s9EquatableP", "textInput"]
+- !private ["s9EquatableP", "textInputActionButtonTitle"]
+- !private ["s9EquatableP", "textInputPlaceholder"]
+- !private ["s9EquatableP", "title"]
+- ["s9EquatableP", ""]
+- !private ["s25ExpressibleByArrayLiteralP", "append"]
+- !private ["s25ExpressibleByArrayLiteralP", "authenticationRequired"]
+- !private ["s25ExpressibleByArrayLiteralP", "contains"]
+- !private ["s25ExpressibleByArrayLiteralP", "destructive"]
+- !private ["s25ExpressibleByArrayLiteralP", "foreground"]
+- !private ["s25ExpressibleByArrayLiteralP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "insert"]
+- !private ["s25ExpressibleByArrayLiteralP", "reduce"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "hasPrefix"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "hash"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "hasPrefix"]
+- !private ["s26ExpressibleByStringLiteralP", "hash"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "hasPrefix"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "hash"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "MMLocalization"]
+- !private ["s8HashableP", "NotificationAction"]
+- !private ["s8HashableP", "NotificationActionKeys"]
+- ["s8HashableP", "NotificationActionOptions"]
+- !private ["s8HashableP", "UIMutableUserNotificationAction"]
+- !private ["s8HashableP", "UIUserNotificationTextInputActionButtonTitleKey"]
+- !private ["s8HashableP", "UNNotificationAction"]
+- !private ["s8HashableP", "UNNotificationDismissActionIdentifier"]
+- !private ["s8HashableP", "UNTextInputNotificationAction"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "activationMode"]
+- !private ["s8HashableP", "authenticationRequired"]
+- !private ["s8HashableP", "background"]
+- !private ["s8HashableP", "behavior"]
+- !private ["s8HashableP", "destructive"]
+- !private ["s8HashableP", "foreground"]
+- !private ["s8HashableP", "hasPrefix"]
+- !private ["s8HashableP", "hash"]
+- !private ["s8HashableP", "identifier"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "isAuthenticationRequired"]
+- !private ["s8HashableP", "isDestructive"]
+- !private ["s8HashableP", "moRequired"]
+- !private ["s8HashableP", "options"]
+- !private ["s8HashableP", "parameters"]
+- !private ["s8HashableP", "rawValue"]
+- !private ["s8HashableP", "textInput"]
+- !private ["s8HashableP", "textInputActionButtonTitle"]
+- !private ["s8HashableP", "textInputPlaceholder"]
+- !private ["s8HashableP", "title"]
+- ["s8HashableP", ""]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hasPrefix"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "hash"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "hasPrefix"]
+- !private ["s25LosslessStringConvertibleP", "hash"]
+- ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging14MMLocalizationC", "localizedString"]
+- !private ["15MobileMessaging11MMLogOutputC", "rawValue"]
+- !private ["s10MirrorPathP", "hasPrefix"]
+- !private ["s10MirrorPathP", "hash"]
+- ["s10MirrorPathP", "init"]
+- !private ["s17MutableCollectionP", "append"]
+- !private ["s17MutableCollectionP", "contains"]
+- !private ["s17MutableCollectionP", "init"]
+- !private ["s17MutableCollectionP", "reduce"]
+- !private ["So8NSCodingP", "activationMode"]
+- !private ["So8NSCodingP", "behavior"]
+- !private ["So8NSCodingP", "hasPrefix"]
+- !private ["So8NSCodingP", "hash"]
+- !private ["So8NSCodingP", "identifier"]
+- ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "isAuthenticationRequired"]
+- !private ["So8NSCodingP", "isDestructive"]
+- !private ["So8NSCodingP", "parameters"]
+- !private ["So8NSCodingP", "title"]
+- !private ["So9NSCopyingP", "activationMode"]
+- !private ["So9NSCopyingP", "behavior"]
+- !private ["So9NSCopyingP", "hasPrefix"]
+- !private ["So9NSCopyingP", "hash"]
+- !private ["So9NSCopyingP", "identifier"]
+- ["So9NSCopyingP", "init"]
+- !private ["So9NSCopyingP", "isAuthenticationRequired"]
+- !private ["So9NSCopyingP", "isDestructive"]
+- !private ["So9NSCopyingP", "parameters"]
+- !private ["So9NSCopyingP", "title"]
+- !private ["So21NSItemProviderReadingP", "hasPrefix"]
+- !private ["So21NSItemProviderReadingP", "hash"]
+- ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "hasPrefix"]
+- !private ["So21NSItemProviderWritingP", "hash"]
+- ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "activationMode"]
+- !private ["So16NSMutableCopyingP", "behavior"]
+- !private ["So16NSMutableCopyingP", "hasPrefix"]
+- !private ["So16NSMutableCopyingP", "hash"]
+- !private ["So16NSMutableCopyingP", "identifier"]
+- ["So16NSMutableCopyingP", "init"]
+- !private ["So16NSMutableCopyingP", "isAuthenticationRequired"]
+- !private ["So16NSMutableCopyingP", "isDestructive"]
+- !private ["So16NSMutableCopyingP", "parameters"]
+- !private ["So16NSMutableCopyingP", "title"]
+- ["So8NSObjectC", "Bool"]
+- ["So8NSObjectC", "Int"]
+- !private ["So8NSObjectC", "MMLocalization"]
+- ["So8NSObjectC", "MMLogOutput"]
+- ["So8NSObjectC", "NotificationAction"]
+- !private ["So8NSObjectC", "NotificationActionKeys"]
+- ["So8NSObjectC", "NotificationActionOptions"]
+- ["So8NSObjectC", "String"]
+- !private ["So8NSObjectC", "UIMutableUserNotificationAction"]
+- ["So8NSObjectC", "UIUserNotificationAction"]
+- !private ["So8NSObjectC", "UIUserNotificationTextInputActionButtonTitleKey"]
+- ["So8NSObjectC", "UNNotificationAction"]
+- !private ["So8NSObjectC", "UNNotificationActionOptions"]
+- !private ["So8NSObjectC", "UNNotificationDismissActionIdentifier"]
+- !private ["So8NSObjectC", "UNTextInputNotificationAction"]
+- !private ["So8NSObjectC", "activationMode"]
+- ["So8NSObjectC", "authenticationRequired"]
+- !private ["So8NSObjectC", "behavior"]
+- ["So8NSObjectC", "contains"]
+- ["So8NSObjectC", "destructive"]
+- ["So8NSObjectC", "dismissAction"]
+- ["So8NSObjectC", "foreground"]
+- !private ["So8NSObjectC", "hasPrefix"]
+- ["So8NSObjectC", "hash"]
+- ["So8NSObjectC", "identifier"]
+- ["So8NSObjectC", "init"]
+- !private ["So8NSObjectC", "isAuthenticationRequired"]
+- !private ["So8NSObjectC", "isDestructive"]
+- ["So8NSObjectC", "isEqual"]
+- ["So8NSObjectC", "moRequired"]
+- ["So8NSObjectC", "options"]
+- !private ["So8NSObjectC", "parameters"]
+- ["So8NSObjectC", "rawValue"]
+- ["So8NSObjectC", "textInputActionButtonTitle"]
+- ["So8NSObjectC", "textInputPlaceholder"]
+- ["So8NSObjectC", "title"]
+- ["So8NSObjectC", "typedText"]
+- ["So8NSObjectC", "uiUserNotificationAction"]
+- ["So8NSObjectC", "unUserNotificationAction"]
+- ["So8NSObjectC", ""]
+- !private ["So16NSObjectProtocolP", "MMLocalization"]
+- !private ["So16NSObjectProtocolP", "NotificationAction"]
+- !private ["So16NSObjectProtocolP", "NotificationActionKeys"]
+- ["So16NSObjectProtocolP", "NotificationActionOptions"]
+- !private ["So16NSObjectProtocolP", "UIMutableUserNotificationAction"]
+- !private ["So16NSObjectProtocolP", "UIUserNotificationTextInputActionButtonTitleKey"]
+- !private ["So16NSObjectProtocolP", "UNNotificationAction"]
+- !private ["So16NSObjectProtocolP", "UNNotificationDismissActionIdentifier"]
+- !private ["So16NSObjectProtocolP", "UNTextInputNotificationAction"]
+- !private ["So16NSObjectProtocolP", "activationMode"]
+- !private ["So16NSObjectProtocolP", "authenticationRequired"]
+- !private ["So16NSObjectProtocolP", "behavior"]
+- !private ["So16NSObjectProtocolP", "destructive"]
+- !private ["So16NSObjectProtocolP", "foreground"]
+- !private ["So16NSObjectProtocolP", "hasPrefix"]
+- !private ["So16NSObjectProtocolP", "hash"]
+- !private ["So16NSObjectProtocolP", "identifier"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "isAuthenticationRequired"]
+- !private ["So16NSObjectProtocolP", "isDestructive"]
+- !private ["So16NSObjectProtocolP", "moRequired"]
+- !private ["So16NSObjectProtocolP", "options"]
+- !private ["So16NSObjectProtocolP", "parameters"]
+- !private ["So16NSObjectProtocolP", "rawValue"]
+- !private ["So16NSObjectProtocolP", "textInputActionButtonTitle"]
+- !private ["So16NSObjectProtocolP", "textInputPlaceholder"]
+- !private ["So16NSObjectProtocolP", "title"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSSecureCodingP", "activationMode"]
+- !private ["So14NSSecureCodingP", "behavior"]
+- !private ["So14NSSecureCodingP", "hasPrefix"]
+- !private ["So14NSSecureCodingP", "hash"]
+- !private ["So14NSSecureCodingP", "identifier"]
+- ["So14NSSecureCodingP", "init"]
+- !private ["So14NSSecureCodingP", "isAuthenticationRequired"]
+- !private ["So14NSSecureCodingP", "isDestructive"]
+- !private ["So14NSSecureCodingP", "parameters"]
+- !private ["So14NSSecureCodingP", "title"]
+- !private ["So8NSStringC", "hasPrefix"]
+- !private ["So8NSStringC", "hash"]
+- ["So8NSStringC", "init"]
+- ["15MobileMessaging18NotificationActionC", "Bool"]
+- ["15MobileMessaging18NotificationActionC", "Int"]
+- !private ["15MobileMessaging18NotificationActionC", "MMLocalization"]
+- ["15MobileMessaging18NotificationActionC", "NotificationAction"]
+- !private ["15MobileMessaging18NotificationActionC", "NotificationActionKeys"]
+- ["15MobileMessaging18NotificationActionC", "NotificationActionOptions"]
+- ["15MobileMessaging18NotificationActionC", "String"]
+- !private ["15MobileMessaging18NotificationActionC", "UIMutableUserNotificationAction"]
+- ["15MobileMessaging18NotificationActionC", "UIUserNotificationAction"]
+- !private ["15MobileMessaging18NotificationActionC", "UIUserNotificationTextInputActionButtonTitleKey"]
+- ["15MobileMessaging18NotificationActionC", "UNNotificationAction"]
+- !private ["15MobileMessaging18NotificationActionC", "UNNotificationActionOptions"]
+- !private ["15MobileMessaging18NotificationActionC", "UNNotificationDismissActionIdentifier"]
+- !private ["15MobileMessaging18NotificationActionC", "UNTextInputNotificationAction"]
+- ["15MobileMessaging18NotificationActionC", "deinit"]
+- ["15MobileMessaging18NotificationActionC", "dismissAction"]
+- ["15MobileMessaging18NotificationActionC", "hash"]
+- ["15MobileMessaging18NotificationActionC", "identifier"]
+- ["15MobileMessaging18NotificationActionC", "init"]
+- ["15MobileMessaging18NotificationActionC", "isEqual"]
+- ["15MobileMessaging18NotificationActionC", "options"]
+- ["15MobileMessaging18NotificationActionC", "textInputActionButtonTitle"]
+- ["15MobileMessaging18NotificationActionC", "textInputPlaceholder"]
+- ["15MobileMessaging18NotificationActionC", "title"]
+- ["15MobileMessaging18NotificationActionC", "typedText"]
+- ["15MobileMessaging18NotificationActionC", "uiUserNotificationAction"]
+- ["15MobileMessaging18NotificationActionC", "unUserNotificationAction"]
+- ["15MobileMessaging18NotificationActionC", ""]
+- ["15MobileMessaging22NotificationActionKeysV", "authenticationRequired"]
+- ["15MobileMessaging22NotificationActionKeysV", "destructive"]
+- ["15MobileMessaging22NotificationActionKeysV", "foreground"]
+- ["15MobileMessaging22NotificationActionKeysV", "identifier"]
+- ["15MobileMessaging22NotificationActionKeysV", "init"]
+- ["15MobileMessaging22NotificationActionKeysV", "mm_prefix"]
+- ["15MobileMessaging22NotificationActionKeysV", "moRequired"]
+- ["15MobileMessaging22NotificationActionKeysV", "title"]
+- ["15MobileMessaging22NotificationActionKeysV", "titleLocalizationKey"]
+- ["15MobileMessaging25NotificationActionOptionsC", "Bool"]
+- ["15MobileMessaging25NotificationActionOptionsC", "Int"]
+- ["15MobileMessaging25NotificationActionOptionsC", "MMLogOutput"]
+- ["15MobileMessaging25NotificationActionOptionsC", "NotificationActionOptions"]
+- ["15MobileMessaging25NotificationActionOptionsC", "authenticationRequired"]
+- ["15MobileMessaging25NotificationActionOptionsC", "contains"]
+- ["15MobileMessaging25NotificationActionOptionsC", "deinit"]
+- ["15MobileMessaging25NotificationActionOptionsC", "destructive"]
+- ["15MobileMessaging25NotificationActionOptionsC", "foreground"]
+- ["15MobileMessaging25NotificationActionOptionsC", "init"]
+- ["15MobileMessaging25NotificationActionOptionsC", "moRequired"]
+- ["15MobileMessaging25NotificationActionOptionsC", "rawValue"]
+- !private ["s9OptionSetP", "authenticationRequired"]
+- !private ["s9OptionSetP", "destructive"]
+- !private ["s9OptionSetP", "foreground"]
+- !private ["s9OptionSetP", "insert"]
+- !private ["s22RandomAccessCollectionP", "append"]
+- !private ["s22RandomAccessCollectionP", "contains"]
+- !private ["s22RandomAccessCollectionP", "init"]
+- !private ["s22RandomAccessCollectionP", "reduce"]
+- !private ["s26RangeReplaceableCollectionP", "append"]
+- !private ["s26RangeReplaceableCollectionP", "contains"]
+- !private ["s26RangeReplaceableCollectionP", "hasPrefix"]
+- !private ["s26RangeReplaceableCollectionP", "hash"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- !private ["s26RangeReplaceableCollectionP", "reduce"]
+- !private ["s16RawRepresentableP", "authenticationRequired"]
+- !private ["s16RawRepresentableP", "background"]
+- !private ["s16RawRepresentableP", "destructive"]
+- !private ["s16RawRepresentableP", "foreground"]
+- !private ["s16RawRepresentableP", "insert"]
+- !private ["s16RawRepresentableP", "textInput"]
+- !private ["s8SequenceP", "append"]
+- !private ["s8SequenceP", "contains"]
+- !private ["s8SequenceP", "hasPrefix"]
+- !private ["s8SequenceP", "hash"]
+- ["s8SequenceP", "init"]
+- !private ["s8SequenceP", "reduce"]
+- !private ["s8SequenceP", "subscript"]
+- !private ["s10SetAlgebraP", "authenticationRequired"]
+- !private ["s10SetAlgebraP", "destructive"]
+- !private ["s10SetAlgebraP", "foreground"]
+- !private ["s10SetAlgebraP", "insert"]
+- !private ["s12StaticStringV", "init"]
+- !private ["SS", "hasPrefix"]
+- !private ["SS", "hash"]
+- ["SS", "init"]
+- !private ["s14StringProtocolP", "hasPrefix"]
+- !private ["s14StringProtocolP", "hash"]
+- ["s14StringProtocolP", "init"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "NotificationActionKeys"]
+- ["15MobileMessaging27TextInputNotificationActionC", "NotificationActionOptions"]
+- ["15MobileMessaging27TextInputNotificationActionC", "String"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "UIMutableUserNotificationAction"]
+- ["15MobileMessaging27TextInputNotificationActionC", "UIUserNotificationAction"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "UIUserNotificationTextInputActionButtonTitleKey"]
+- ["15MobileMessaging27TextInputNotificationActionC", "UNNotificationAction"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "UNNotificationActionOptions"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "UNTextInputNotificationAction"]
+- ["15MobileMessaging27TextInputNotificationActionC", "deinit"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "identifier"]
+- ["15MobileMessaging27TextInputNotificationActionC", "init"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "options"]
+- ["15MobileMessaging27TextInputNotificationActionC", "textInputActionButtonTitle"]
+- ["15MobileMessaging27TextInputNotificationActionC", "textInputPlaceholder"]
+- !private ["15MobileMessaging27TextInputNotificationActionC", "title"]
+- ["15MobileMessaging27TextInputNotificationActionC", "typedText"]
+- ["15MobileMessaging27TextInputNotificationActionC", "uiUserNotificationAction"]
+- ["15MobileMessaging27TextInputNotificationActionC", "unUserNotificationAction"]
+- !private ["s16TextOutputStreamP", "hasPrefix"]
+- !private ["s16TextOutputStreamP", "hash"]
+- ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "hasPrefix"]
+- !private ["s20TextOutputStreamableP", "hash"]
+- ["s20TextOutputStreamableP", "init"]
+- !private ["So31UIMutableUserNotificationActionC", "activationMode"]
+- !private ["So31UIMutableUserNotificationActionC", "behavior"]
+- !private ["So31UIMutableUserNotificationActionC", "identifier"]
+- !private ["So31UIMutableUserNotificationActionC", "init"]
+- !private ["So31UIMutableUserNotificationActionC", "isAuthenticationRequired"]
+- !private ["So31UIMutableUserNotificationActionC", "isDestructive"]
+- !private ["So31UIMutableUserNotificationActionC", "parameters"]
+- !private ["So31UIMutableUserNotificationActionC", "title"]
+- !private ["So24UIUserNotificationActionC", "activationMode"]
+- !private ["So24UIUserNotificationActionC", "behavior"]
+- !private ["So24UIUserNotificationActionC", "identifier"]
+- !private ["So24UIUserNotificationActionC", "init"]
+- !private ["So24UIUserNotificationActionC", "isAuthenticationRequired"]
+- !private ["So24UIUserNotificationActionC", "isDestructive"]
+- !private ["So24UIUserNotificationActionC", "parameters"]
+- !private ["So24UIUserNotificationActionC", "title"]
+- !private ["SC32UIUserNotificationActionBehaviorO", "textInput"]
+- !private ["SC32UIUserNotificationActivationModeO", "background"]
+- !private ["SC32UIUserNotificationActivationModeO", "foreground"]
+- !private ["So20UNNotificationActionC", "init"]
+- !private ["SC27UNNotificationActionOptionsV", "authenticationRequired"]
+- !private ["SC27UNNotificationActionOptionsV", "destructive"]
+- !private ["SC27UNNotificationActionOptionsV", "foreground"]
+- !private ["SC27UNNotificationActionOptionsV", "insert"]
+- !private ["So29UNTextInputNotificationActionC", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "hasPrefix"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "hash"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s14_ArrayProtocolP", "append"]
+- !private ["s14_ArrayProtocolP", "contains"]
+- !private ["s14_ArrayProtocolP", "init"]
+- !private ["s14_ArrayProtocolP", "reduce"]
+- !private ["s23_BidirectionalIndexableP", "append"]
+- !private ["s23_BidirectionalIndexableP", "contains"]
+- !private ["s23_BidirectionalIndexableP", "hasPrefix"]
+- !private ["s23_BidirectionalIndexableP", "hash"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s23_BidirectionalIndexableP", "reduce"]
+- !private ["s24_DestructorSafeContainerP", "append"]
+- !private ["s24_DestructorSafeContainerP", "contains"]
+- !private ["s24_DestructorSafeContainerP", "init"]
+- !private ["s24_DestructorSafeContainerP", "reduce"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "hasPrefix"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "hash"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "hasPrefix"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "hash"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "hasPrefix"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "hash"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "hasPrefix"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "hash"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "hasPrefix"]
+- !private ["s33_ExpressibleByStringInterpolationP", "hash"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "hasPrefix"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "hash"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "append"]
+- !private ["s10_IndexableP", "contains"]
+- !private ["s10_IndexableP", "hasPrefix"]
+- !private ["s10_IndexableP", "hash"]
+- ["s10_IndexableP", "init"]
+- !private ["s10_IndexableP", "reduce"]
+- !private ["s10_IndexableP", "subscript"]
+- !private ["s14_IndexableBaseP", "append"]
+- !private ["s14_IndexableBaseP", "contains"]
+- !private ["s14_IndexableBaseP", "hasPrefix"]
+- !private ["s14_IndexableBaseP", "hash"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["s14_IndexableBaseP", "reduce"]
+- !private ["s14_IndexableBaseP", "subscript"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLocalization"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NotificationAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NotificationActionKeys"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "NotificationActionOptions"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UIMutableUserNotificationAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UIUserNotificationTextInputActionButtonTitleKey"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UNNotificationAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UNNotificationDismissActionIdentifier"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UNTextInputNotificationAction"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "activationMode"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "authenticationRequired"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "behavior"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "destructive"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "foreground"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "hasPrefix"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "hash"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "identifier"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isAuthenticationRequired"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isDestructive"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "moRequired"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "options"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "parameters"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "rawValue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "textInputActionButtonTitle"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "textInputPlaceholder"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "title"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s17_MutableIndexableP", "append"]
+- !private ["s17_MutableIndexableP", "contains"]
+- !private ["s17_MutableIndexableP", "init"]
+- !private ["s17_MutableIndexableP", "reduce"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "append"]
+- !private ["s21_ObjectiveCBridgeableP", "contains"]
+- !private ["s21_ObjectiveCBridgeableP", "hasPrefix"]
+- !private ["s21_ObjectiveCBridgeableP", "hash"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s21_ObjectiveCBridgeableP", "reduce"]
+- !private ["s21_ObjectiveCBridgeableP", "subscript"]
+- !private ["s22_RandomAccessIndexableP", "append"]
+- !private ["s22_RandomAccessIndexableP", "contains"]
+- !private ["s22_RandomAccessIndexableP", "init"]
+- !private ["s22_RandomAccessIndexableP", "reduce"]
+- !private ["s26_RangeReplaceableIndexableP", "append"]
+- !private ["s26_RangeReplaceableIndexableP", "contains"]
+- !private ["s26_RangeReplaceableIndexableP", "hasPrefix"]
+- !private ["s26_RangeReplaceableIndexableP", "hash"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "reduce"]
+- !private ["s16_SwiftStringViewP", "hasPrefix"]
+- !private ["s16_SwiftStringViewP", "hash"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "Sa"
+- "s23BidirectionalCollectionP"
+- !private "Sb"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "s9DecodableP"
+- !private "s10DictionaryV"
+- "s9EncodableP"
+- "s9EquatableP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s30ExpressibleByDictionaryLiteralP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging14MMLocalizationC"
+- !private "15MobileMessaging11MMLogOutputC"
+- "s10MirrorPathP"
+- !private "s17MutableCollectionP"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- "15MobileMessaging18NotificationActionC"
+- "15MobileMessaging22NotificationActionKeysV"
+- "15MobileMessaging25NotificationActionOptionsC"
+- !private "s9OptionSetP"
+- !private "s22RandomAccessCollectionP"
+- "s26RangeReplaceableCollectionP"
+- !private "s16RawRepresentableP"
+- "s8SequenceP"
+- !private "s10SetAlgebraP"
+- !private "s12StaticStringV"
+- "SS"
+- "s14StringProtocolP"
+- "15MobileMessaging27TextInputNotificationActionC"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- !private "So31UIMutableUserNotificationActionC"
+- !private "So24UIUserNotificationActionC"
+- !private "SC32UIUserNotificationActionBehaviorO"
+- !private "SC32UIUserNotificationActivationModeO"
+- !private "So20UNNotificationActionC"
+- !private "SC27UNNotificationActionOptionsV"
+- !private "So29UNTextInputNotificationActionC"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- !private "s14_ArrayProtocolP"
+- "s23_BidirectionalIndexableP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- "s26_RangeReplaceableIndexableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "2591a5f659f329a43d8a9505dc3b6ba4"

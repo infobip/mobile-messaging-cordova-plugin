@@ -1,0 +1,348 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "RetryableNetworkingOperation"
+- "reachabilityError"
+provides-nominal:
+- "15MobileMessaging28RetryableNetworkingOperationC"
+provides-member:
+- ["15MobileMessaging28RetryableNetworkingOperationC", ""]
+provides-dynamic-lookup:
+- "execute"
+- "executeAttempt"
+depends-top-level:
+- !private "+"
+- !private "=="
+- !private "??"
+- "AssignmentPrecedence"
+- !private "BooleanLiteralType"
+- "Int"
+- !private "MMLogDebug"
+- "MMNetworkReachabilityManager"
+- "MMQueue"
+- "MMRetryableOperation"
+- "NSError"
+- "RetryableNetworkingOperation"
+- !private "String"
+- !private "StringLiteralType"
+- "reachabilityError"
+depends-member:
+- !private ["s23BidirectionalCollectionP", "init"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "MMLogDebug"]
+- !private ["s7CVarArgP", "MMNetworkReachabilityManager"]
+- ["s7CVarArgP", "MMQueue"]
+- !private ["s7CVarArgP", "String"]
+- !private ["s7CVarArgP", "execute"]
+- !private ["s7CVarArgP", "executeAttempt"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "name"]
+- !private ["s7CVarArgP", "reachabilityManager"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "init"]
+- !private ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLogDebug"]
+- !private ["s28CustomDebugStringConvertibleP", "MMNetworkReachabilityManager"]
+- ["s28CustomDebugStringConvertibleP", "MMQueue"]
+- !private ["s28CustomDebugStringConvertibleP", "String"]
+- !private ["s28CustomDebugStringConvertibleP", "execute"]
+- !private ["s28CustomDebugStringConvertibleP", "executeAttempt"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "name"]
+- !private ["s28CustomDebugStringConvertibleP", "reachabilityManager"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s23CustomStringConvertibleP", "MMLogDebug"]
+- !private ["s23CustomStringConvertibleP", "MMNetworkReachabilityManager"]
+- ["s23CustomStringConvertibleP", "MMQueue"]
+- !private ["s23CustomStringConvertibleP", "String"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "execute"]
+- !private ["s23CustomStringConvertibleP", "executeAttempt"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "name"]
+- !private ["s23CustomStringConvertibleP", "reachabilityManager"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "init"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "init"]
+- !private ["s9EquatableP", "MMLogDebug"]
+- !private ["s9EquatableP", "MMNetworkReachabilityManager"]
+- ["s9EquatableP", "MMQueue"]
+- ["s9EquatableP", "RetryableRequest"]
+- ["s9EquatableP", "Serial"]
+- !private ["s9EquatableP", "String"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "execute"]
+- !private ["s9EquatableP", "executeAttempt"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "name"]
+- ["s9EquatableP", "queue"]
+- !private ["s9EquatableP", "reachabilityManager"]
+- ["s9EquatableP", ""]
+- !private ["s5ErrorP", "init"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "MMLogDebug"]
+- !private ["s8HashableP", "MMNetworkReachabilityManager"]
+- ["s8HashableP", "MMQueue"]
+- ["s8HashableP", "RetryableRequest"]
+- ["s8HashableP", "Serial"]
+- !private ["s8HashableP", "String"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "execute"]
+- !private ["s8HashableP", "executeAttempt"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "name"]
+- ["s8HashableP", "queue"]
+- !private ["s8HashableP", "reachabilityManager"]
+- ["s8HashableP", ""]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "currentlyReachable"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "deinit"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "localizedNetworkReachabilityStatusString"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "reachable"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "setReachabilityStatusChangeBlock"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "sharedInstance"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "startMonitoring"]
+- !private ["15MobileMessaging28MMNetworkReachabilityManagerC", "stopMonitoring"]
+- ["15MobileMessaging7MMQueueO", "Serial"]
+- ["15MobileMessaging11MMQueueEnumP", "RetryableRequest"]
+- ["15MobileMessaging11MMQueueEnumP", "queue"]
+- ["15MobileMessaging20MMRetryableOperationC", "Int"]
+- !private ["15MobileMessaging20MMRetryableOperationC", "MMLogDebug"]
+- ["15MobileMessaging20MMRetryableOperationC", "MMNetworkReachabilityManager"]
+- ["15MobileMessaging20MMRetryableOperationC", "MMQueue"]
+- ["15MobileMessaging20MMRetryableOperationC", "MMRetryableOperationCompletion"]
+- !private ["15MobileMessaging20MMRetryableOperationC", "String"]
+- ["15MobileMessaging20MMRetryableOperationC", "execute"]
+- ["15MobileMessaging20MMRetryableOperationC", "executeAttempt"]
+- ["15MobileMessaging20MMRetryableOperationC", "init"]
+- !private ["15MobileMessaging20MMRetryableOperationC", "name"]
+- ["15MobileMessaging20MMRetryableOperationC", "operationQueue"]
+- ["15MobileMessaging20MMRetryableOperationC", "reachabilityManager"]
+- ["15MobileMessaging20MMRetryableOperationC", ""]
+- !private ["s10MirrorPathP", "init"]
+- !private ["So8NSCodingP", "init"]
+- !private ["So9NSCopyingP", "init"]
+- !private ["So7NSErrorC", "init"]
+- !private ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "init"]
+- ["So8NSObjectC", "Int"]
+- !private ["So8NSObjectC", "MMLogDebug"]
+- ["So8NSObjectC", "MMNetworkReachabilityManager"]
+- ["So8NSObjectC", "MMQueue"]
+- ["So8NSObjectC", "MMRetryableOperationCompletion"]
+- !private ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "execute"]
+- ["So8NSObjectC", "executeAttempt"]
+- !private ["So8NSObjectC", "name"]
+- ["So8NSObjectC", "operationQueue"]
+- ["So8NSObjectC", "reachabilityManager"]
+- !private ["So16NSObjectProtocolP", "MMLogDebug"]
+- !private ["So16NSObjectProtocolP", "MMNetworkReachabilityManager"]
+- ["So16NSObjectProtocolP", "MMQueue"]
+- !private ["So16NSObjectProtocolP", "String"]
+- !private ["So16NSObjectProtocolP", "execute"]
+- !private ["So16NSObjectProtocolP", "executeAttempt"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "name"]
+- !private ["So16NSObjectProtocolP", "reachabilityManager"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSSecureCodingP", "init"]
+- !private ["So8NSStringC", "init"]
+- ["15MobileMessaging7MMQueueO6SerialO3NewO", "RetryableRequest"]
+- ["15MobileMessaging7MMQueueO6SerialO3NewO", "deinit"]
+- ["15MobileMessaging7MMQueueO6SerialO3NewO", "queue"]
+- ["15MobileMessaging9OperationC", "Int"]
+- !private ["15MobileMessaging9OperationC", "MMLogDebug"]
+- ["15MobileMessaging9OperationC", "MMNetworkReachabilityManager"]
+- ["15MobileMessaging9OperationC", "MMQueue"]
+- ["15MobileMessaging9OperationC", "MMRetryableOperationCompletion"]
+- !private ["15MobileMessaging9OperationC", "String"]
+- ["15MobileMessaging9OperationC", "execute"]
+- ["15MobileMessaging9OperationC", "executeAttempt"]
+- !private ["15MobileMessaging9OperationC", "name"]
+- ["15MobileMessaging9OperationC", "operationQueue"]
+- ["15MobileMessaging9OperationC", "reachabilityManager"]
+- ["So9OperationC", "Int"]
+- !private ["So9OperationC", "MMLogDebug"]
+- ["So9OperationC", "MMNetworkReachabilityManager"]
+- ["So9OperationC", "MMQueue"]
+- ["So9OperationC", "MMRetryableOperationCompletion"]
+- !private ["So9OperationC", "String"]
+- ["So9OperationC", "execute"]
+- ["So9OperationC", "executeAttempt"]
+- !private ["So9OperationC", "name"]
+- ["So9OperationC", "operationQueue"]
+- ["So9OperationC", "reachabilityManager"]
+- !private ["s26RangeReplaceableCollectionP", "init"]
+- ["s16RawRepresentableP", "RetryableRequest"]
+- ["s16RawRepresentableP", "queue"]
+- !private ["15MobileMessaging27ReachabilityManagerProtocolP", "currentlyReachable"]
+- !private ["15MobileMessaging27ReachabilityManagerProtocolP", "localizedNetworkReachabilityStatusString"]
+- !private ["15MobileMessaging27ReachabilityManagerProtocolP", "reachable"]
+- !private ["15MobileMessaging27ReachabilityManagerProtocolP", "setReachabilityStatusChangeBlock"]
+- !private ["15MobileMessaging27ReachabilityManagerProtocolP", "sharedInstance"]
+- !private ["15MobileMessaging27ReachabilityManagerProtocolP", "startMonitoring"]
+- !private ["15MobileMessaging27ReachabilityManagerProtocolP", "stopMonitoring"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "Int"]
+- !private ["15MobileMessaging28RetryableNetworkingOperationC", "MMLogDebug"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "MMNetworkReachabilityManager"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "MMQueue"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "MMRetryableOperationCompletion"]
+- !private ["15MobileMessaging28RetryableNetworkingOperationC", "String"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "deinit"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "execute"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "executeAttempt"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "init"]
+- !private ["15MobileMessaging28RetryableNetworkingOperationC", "operationQueue"]
+- ["15MobileMessaging28RetryableNetworkingOperationC", "reachabilityManager"]
+- !private ["s8SequenceP", "init"]
+- ["15MobileMessaging7MMQueueO6SerialO", "New"]
+- !private ["SS", "init"]
+- !private ["s14StringProtocolP", "init"]
+- !private ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s23_BidirectionalIndexableP", "init"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "init"]
+- !private ["s14_IndexableBaseP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLogDebug"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMNetworkReachabilityManager"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "MMQueue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "String"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "execute"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "executeAttempt"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "name"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "reachabilityManager"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "s23BidirectionalCollectionP"
+- !private "Sb"
+- "s7CVarArgP"
+- !private "s10CollectionP"
+- !private "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- !private "15MobileMessaging27CustomPayloadSupportedTypesP"
+- !private "s29CustomPlaygroundQuickLookableP"
+- !private "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "s9DecodableP"
+- !private "s9EncodableP"
+- "s9EquatableP"
+- !private "s5ErrorP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- !private "15MobileMessaging17JSONSubscriptTypeP"
+- !private "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging28MMNetworkReachabilityManagerC"
+- "15MobileMessaging7MMQueueO"
+- "15MobileMessaging11MMQueueEnumP"
+- "15MobileMessaging20MMRetryableOperationC"
+- !private "s10MirrorPathP"
+- !private "So8NSCodingP"
+- !private "So9NSCopyingP"
+- !private "So7NSErrorC"
+- !private "So21NSItemProviderReadingP"
+- !private "So21NSItemProviderWritingP"
+- !private "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- !private "So14NSSecureCodingP"
+- !private "So8NSStringC"
+- "15MobileMessaging7MMQueueO6SerialO3NewO"
+- "15MobileMessaging9OperationC"
+- "So9OperationC"
+- !private "s26RangeReplaceableCollectionP"
+- "s16RawRepresentableP"
+- !private "15MobileMessaging27ReachabilityManagerProtocolP"
+- "15MobileMessaging28RetryableNetworkingOperationC"
+- !private "s8SequenceP"
+- "15MobileMessaging7MMQueueO6SerialO"
+- !private "SS"
+- !private "s14StringProtocolP"
+- !private "s16TextOutputStreamP"
+- !private "s20TextOutputStreamableP"
+- !private "15MobileMessaging23UserDataFoundationTypesP"
+- !private "s23_BidirectionalIndexableP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s33_ExpressibleByStringInterpolationP"
+- !private "s35_HasCustomAnyHashableRepresentationP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s21_ObjectiveCBridgeableP"
+- !private "s26_RangeReplaceableIndexableP"
+- !private "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "bd4a2ad4982dc8c31edd3b9b18be266c"

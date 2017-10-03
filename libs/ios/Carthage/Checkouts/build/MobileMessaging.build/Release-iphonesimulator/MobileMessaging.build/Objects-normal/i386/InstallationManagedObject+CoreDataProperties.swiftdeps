@@ -1,0 +1,125 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+provides-nominal:
+provides-member:
+- ["15MobileMessaging25InstallationManagedObjectC", ""]
+- ["15MobileMessaging25InstallationManagedObjectC", "badgeNumber"]
+- ["15MobileMessaging25InstallationManagedObjectC", "deviceToken"]
+- ["15MobileMessaging25InstallationManagedObjectC", "dirtyAttributes"]
+- ["15MobileMessaging25InstallationManagedObjectC", "internalUserId"]
+- ["15MobileMessaging25InstallationManagedObjectC", "externalUserId"]
+- ["15MobileMessaging25InstallationManagedObjectC", "customUserData"]
+- ["15MobileMessaging25InstallationManagedObjectC", "predefinedUserData"]
+- ["15MobileMessaging25InstallationManagedObjectC", "systemDataHash"]
+- ["15MobileMessaging25InstallationManagedObjectC", "location"]
+- ["15MobileMessaging25InstallationManagedObjectC", "isRegistrationEnabled"]
+- ["15MobileMessaging25InstallationManagedObjectC", "applicationCode"]
+provides-dynamic-lookup:
+- "applicationCode"
+- "badgeNumber"
+- "customUserData"
+- "deviceToken"
+- "dirtyAttributes"
+- "externalUserId"
+- "internalUserId"
+- "isRegistrationEnabled"
+- "location"
+- "predefinedUserData"
+- "systemDataHash"
+depends-top-level:
+- "AnyObject"
+- "Bool"
+- "DictionaryRepresentation"
+- "InstallationManagedObject"
+- "Int"
+- "Int32"
+- "Int64"
+- "String"
+depends-member:
+- ["15MobileMessaging25InstallationManagedObjectC", "AnyObject"]
+- ["15MobileMessaging25InstallationManagedObjectC", "Bool"]
+- ["15MobileMessaging25InstallationManagedObjectC", "DictionaryRepresentation"]
+- ["15MobileMessaging25InstallationManagedObjectC", "Int"]
+- ["15MobileMessaging25InstallationManagedObjectC", "Int32"]
+- ["15MobileMessaging25InstallationManagedObjectC", "Int64"]
+- ["15MobileMessaging25InstallationManagedObjectC", "String"]
+- ["15MobileMessaging25InstallationManagedObjectC", "applicationCode"]
+- ["15MobileMessaging25InstallationManagedObjectC", "badgeNumber"]
+- ["15MobileMessaging25InstallationManagedObjectC", "customUserData"]
+- ["15MobileMessaging25InstallationManagedObjectC", "deviceToken"]
+- ["15MobileMessaging25InstallationManagedObjectC", "dirtyAttributes"]
+- ["15MobileMessaging25InstallationManagedObjectC", "externalUserId"]
+- ["15MobileMessaging25InstallationManagedObjectC", "internalUserId"]
+- ["15MobileMessaging25InstallationManagedObjectC", "isRegistrationEnabled"]
+- ["15MobileMessaging25InstallationManagedObjectC", "location"]
+- ["15MobileMessaging25InstallationManagedObjectC", "predefinedUserData"]
+- ["15MobileMessaging25InstallationManagedObjectC", "systemDataHash"]
+- ["So15NSManagedObjectC", "AnyObject"]
+- ["So15NSManagedObjectC", "Bool"]
+- ["So15NSManagedObjectC", "DictionaryRepresentation"]
+- ["So15NSManagedObjectC", "Int"]
+- ["So15NSManagedObjectC", "Int32"]
+- ["So15NSManagedObjectC", "Int64"]
+- ["So15NSManagedObjectC", "String"]
+- ["So15NSManagedObjectC", "applicationCode"]
+- ["So15NSManagedObjectC", "badgeNumber"]
+- ["So15NSManagedObjectC", "customUserData"]
+- ["So15NSManagedObjectC", "deviceToken"]
+- ["So15NSManagedObjectC", "dirtyAttributes"]
+- ["So15NSManagedObjectC", "externalUserId"]
+- ["So15NSManagedObjectC", "internalUserId"]
+- ["So15NSManagedObjectC", "isRegistrationEnabled"]
+- ["So15NSManagedObjectC", "location"]
+- ["So15NSManagedObjectC", "predefinedUserData"]
+- ["So15NSManagedObjectC", "systemDataHash"]
+- ["So8NSObjectC", "AnyObject"]
+- ["So8NSObjectC", "Bool"]
+- ["So8NSObjectC", "DictionaryRepresentation"]
+- ["So8NSObjectC", "Int"]
+- ["So8NSObjectC", "Int32"]
+- ["So8NSObjectC", "Int64"]
+- ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "applicationCode"]
+- ["So8NSObjectC", "badgeNumber"]
+- ["So8NSObjectC", "customUserData"]
+- ["So8NSObjectC", "deviceToken"]
+- ["So8NSObjectC", "dirtyAttributes"]
+- ["So8NSObjectC", "externalUserId"]
+- ["So8NSObjectC", "internalUserId"]
+- ["So8NSObjectC", "isRegistrationEnabled"]
+- ["So8NSObjectC", "location"]
+- ["So8NSObjectC", "predefinedUserData"]
+- ["So8NSObjectC", "systemDataHash"]
+depends-nominal:
+- "15MobileMessaging25InstallationManagedObjectC"
+- "So15NSManagedObjectC"
+- "So8NSObjectC"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "3f767860d020e113644b7145587ee8e1"

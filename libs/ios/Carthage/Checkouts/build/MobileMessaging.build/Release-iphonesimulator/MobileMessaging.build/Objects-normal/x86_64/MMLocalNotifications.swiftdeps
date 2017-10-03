@@ -1,0 +1,546 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "LocalNotificationKeys"
+- "LocalNotifications"
+provides-nominal:
+- "15MobileMessaging21LocalNotificationKeysV"
+- "15MobileMessaging18LocalNotificationsC"
+provides-member:
+- ["15MobileMessaging21LocalNotificationKeysV", ""]
+- ["15MobileMessaging18LocalNotificationsC", ""]
+- ["So19UILocalNotificationC", ""]
+- ["So19UILocalNotificationC", "make"]
+provides-dynamic-lookup:
+- "make"
+depends-top-level:
+- !private "!"
+- !private "=="
+- "Array"
+- "AssignmentPrecedence"
+- !private "CastingPrecedence"
+- !private "Dictionary"
+- "LocalNotificationKeys"
+- "LocalNotifications"
+- !private "MMLogDebug"
+- !private "MMLogError"
+- "MTMessage"
+- !private "MobileMessaging"
+- !private "String"
+- "StringLiteralType"
+- "UILocalNotification"
+- !private "UNMutableNotificationContent"
+- !private "UNNotificationAttachment"
+- !private "UNNotificationRequest"
+- !private "UNNotificationSound"
+- !private "UNUserNotificationCenter"
+- "Void"
+- !private "||"
+depends-member:
+- !private ["15MobileMessaging11BaseMessageC", "aps"]
+- !private ["15MobileMessaging11BaseMessageC", "downloadImageAttachment"]
+- !private ["15MobileMessaging11BaseMessageC", "isGeoSignalingMessage"]
+- !private ["15MobileMessaging11BaseMessageC", "isSilent"]
+- !private ["15MobileMessaging11BaseMessageC", "messageId"]
+- !private ["15MobileMessaging11BaseMessageC", "originalPayload"]
+- !private ["15MobileMessaging11BaseMessageC", "sound"]
+- !private ["15MobileMessaging11BaseMessageC", "text"]
+- !private ["15MobileMessaging11BaseMessageC", "title"]
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "LocalNotificationKeys"]
+- !private ["s7CVarArgP", "UILocalNotification"]
+- !private ["s7CVarArgP", "add"]
+- !private ["s7CVarArgP", "alertBody"]
+- !private ["s7CVarArgP", "alertTitle"]
+- !private ["s7CVarArgP", "application"]
+- !private ["s7CVarArgP", "aps"]
+- !private ["s7CVarArgP", "attachments"]
+- !private ["s7CVarArgP", "body"]
+- !private ["s7CVarArgP", "category"]
+- !private ["s7CVarArgP", "categoryIdentifier"]
+- !private ["s7CVarArgP", "current"]
+- !private ["s7CVarArgP", "default"]
+- !private ["s7CVarArgP", "downloadImageAttachment"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "isGeoSignalingMessage"]
+- !private ["s7CVarArgP", "isSilent"]
+- !private ["s7CVarArgP", "make"]
+- !private ["s7CVarArgP", "messageId"]
+- !private ["s7CVarArgP", "originalPayload"]
+- !private ["s7CVarArgP", "sharedInstance"]
+- !private ["s7CVarArgP", "sound"]
+- !private ["s7CVarArgP", "soundName"]
+- !private ["s7CVarArgP", "text"]
+- !private ["s7CVarArgP", "title"]
+- !private ["s7CVarArgP", "userInfo"]
+- ["s10CollectionP", "init"]
+- ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "LocalNotificationKeys"]
+- !private ["s28CustomDebugStringConvertibleP", "UILocalNotification"]
+- !private ["s28CustomDebugStringConvertibleP", "absoluteString"]
+- !private ["s28CustomDebugStringConvertibleP", "add"]
+- !private ["s28CustomDebugStringConvertibleP", "alertBody"]
+- !private ["s28CustomDebugStringConvertibleP", "alertTitle"]
+- !private ["s28CustomDebugStringConvertibleP", "application"]
+- !private ["s28CustomDebugStringConvertibleP", "aps"]
+- !private ["s28CustomDebugStringConvertibleP", "attachments"]
+- !private ["s28CustomDebugStringConvertibleP", "body"]
+- !private ["s28CustomDebugStringConvertibleP", "category"]
+- !private ["s28CustomDebugStringConvertibleP", "categoryIdentifier"]
+- !private ["s28CustomDebugStringConvertibleP", "current"]
+- !private ["s28CustomDebugStringConvertibleP", "default"]
+- !private ["s28CustomDebugStringConvertibleP", "downloadImageAttachment"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "isGeoSignalingMessage"]
+- !private ["s28CustomDebugStringConvertibleP", "isSilent"]
+- !private ["s28CustomDebugStringConvertibleP", "make"]
+- !private ["s28CustomDebugStringConvertibleP", "messageId"]
+- !private ["s28CustomDebugStringConvertibleP", "originalPayload"]
+- !private ["s28CustomDebugStringConvertibleP", "sharedInstance"]
+- !private ["s28CustomDebugStringConvertibleP", "sound"]
+- !private ["s28CustomDebugStringConvertibleP", "soundName"]
+- !private ["s28CustomDebugStringConvertibleP", "text"]
+- !private ["s28CustomDebugStringConvertibleP", "title"]
+- !private ["s28CustomDebugStringConvertibleP", "userInfo"]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "absoluteString"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s23CustomStringConvertibleP", "LocalNotificationKeys"]
+- !private ["s23CustomStringConvertibleP", "UILocalNotification"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "absoluteString"]
+- !private ["s23CustomStringConvertibleP", "add"]
+- !private ["s23CustomStringConvertibleP", "alertBody"]
+- !private ["s23CustomStringConvertibleP", "alertTitle"]
+- !private ["s23CustomStringConvertibleP", "application"]
+- !private ["s23CustomStringConvertibleP", "aps"]
+- !private ["s23CustomStringConvertibleP", "attachments"]
+- !private ["s23CustomStringConvertibleP", "body"]
+- !private ["s23CustomStringConvertibleP", "category"]
+- !private ["s23CustomStringConvertibleP", "categoryIdentifier"]
+- !private ["s23CustomStringConvertibleP", "current"]
+- !private ["s23CustomStringConvertibleP", "default"]
+- !private ["s23CustomStringConvertibleP", "downloadImageAttachment"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "isGeoSignalingMessage"]
+- !private ["s23CustomStringConvertibleP", "isSilent"]
+- !private ["s23CustomStringConvertibleP", "make"]
+- !private ["s23CustomStringConvertibleP", "messageId"]
+- !private ["s23CustomStringConvertibleP", "originalPayload"]
+- !private ["s23CustomStringConvertibleP", "sharedInstance"]
+- !private ["s23CustomStringConvertibleP", "sound"]
+- !private ["s23CustomStringConvertibleP", "soundName"]
+- !private ["s23CustomStringConvertibleP", "text"]
+- !private ["s23CustomStringConvertibleP", "title"]
+- !private ["s23CustomStringConvertibleP", "userInfo"]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "absoluteString"]
+- ["s9DecodableP", "init"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "absoluteString"]
+- ["s9EncodableP", "init"]
+- !private ["s9EquatableP", "LocalNotificationKeys"]
+- !private ["s9EquatableP", "UILocalNotification"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "absoluteString"]
+- !private ["s9EquatableP", "add"]
+- !private ["s9EquatableP", "alertBody"]
+- !private ["s9EquatableP", "alertTitle"]
+- !private ["s9EquatableP", "application"]
+- !private ["s9EquatableP", "aps"]
+- !private ["s9EquatableP", "attachments"]
+- !private ["s9EquatableP", "body"]
+- !private ["s9EquatableP", "category"]
+- !private ["s9EquatableP", "categoryIdentifier"]
+- !private ["s9EquatableP", "current"]
+- !private ["s9EquatableP", "default"]
+- !private ["s9EquatableP", "downloadImageAttachment"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "isGeoSignalingMessage"]
+- !private ["s9EquatableP", "isSilent"]
+- !private ["s9EquatableP", "make"]
+- !private ["s9EquatableP", "messageId"]
+- !private ["s9EquatableP", "originalPayload"]
+- !private ["s9EquatableP", "sharedInstance"]
+- !private ["s9EquatableP", "sound"]
+- !private ["s9EquatableP", "soundName"]
+- !private ["s9EquatableP", "text"]
+- !private ["s9EquatableP", "title"]
+- !private ["s9EquatableP", "userInfo"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "LocalNotificationKeys"]
+- !private ["s8HashableP", "UILocalNotification"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "absoluteString"]
+- !private ["s8HashableP", "add"]
+- !private ["s8HashableP", "alertBody"]
+- !private ["s8HashableP", "alertTitle"]
+- !private ["s8HashableP", "application"]
+- !private ["s8HashableP", "aps"]
+- !private ["s8HashableP", "attachments"]
+- !private ["s8HashableP", "body"]
+- !private ["s8HashableP", "category"]
+- !private ["s8HashableP", "categoryIdentifier"]
+- !private ["s8HashableP", "current"]
+- !private ["s8HashableP", "default"]
+- !private ["s8HashableP", "downloadImageAttachment"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "isGeoSignalingMessage"]
+- !private ["s8HashableP", "isSilent"]
+- !private ["s8HashableP", "make"]
+- !private ["s8HashableP", "messageId"]
+- !private ["s8HashableP", "originalPayload"]
+- !private ["s8HashableP", "sharedInstance"]
+- !private ["s8HashableP", "sound"]
+- !private ["s8HashableP", "soundName"]
+- !private ["s8HashableP", "text"]
+- !private ["s8HashableP", "title"]
+- !private ["s8HashableP", "userInfo"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- ["15MobileMessaging21LocalNotificationKeysV", "init"]
+- ["15MobileMessaging21LocalNotificationKeysV", "pushPayload"]
+- !private ["15MobileMessaging18LocalNotificationsC", "LocalNotificationKeys"]
+- !private ["15MobileMessaging18LocalNotificationsC", "LocalNotifications"]
+- !private ["15MobileMessaging18LocalNotificationsC", "MMLogDebug"]
+- !private ["15MobileMessaging18LocalNotificationsC", "MMLogError"]
+- ["15MobileMessaging18LocalNotificationsC", "MTMessage"]
+- !private ["15MobileMessaging18LocalNotificationsC", "MobileMessaging"]
+- !private ["15MobileMessaging18LocalNotificationsC", "String"]
+- !private ["15MobileMessaging18LocalNotificationsC", "UILocalNotification"]
+- !private ["15MobileMessaging18LocalNotificationsC", "UNMutableNotificationContent"]
+- !private ["15MobileMessaging18LocalNotificationsC", "UNNotificationAttachment"]
+- !private ["15MobileMessaging18LocalNotificationsC", "UNNotificationRequest"]
+- !private ["15MobileMessaging18LocalNotificationsC", "UNNotificationSound"]
+- !private ["15MobileMessaging18LocalNotificationsC", "UNUserNotificationCenter"]
+- ["15MobileMessaging18LocalNotificationsC", "Void"]
+- ["15MobileMessaging18LocalNotificationsC", "deinit"]
+- ["15MobileMessaging18LocalNotificationsC", "init"]
+- ["15MobileMessaging18LocalNotificationsC", "presentLocalNotification"]
+- ["15MobileMessaging18LocalNotificationsC", "scheduleUserNotification"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging13MMApplicationP", "presentLocalNotificationNow"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "aps"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "downloadImageAttachment"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "isGeoSignalingMessage"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "isSilent"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "messageId"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "originalPayload"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "sound"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "text"]
+- !private ["15MobileMessaging17MMMessageMetadataP", "title"]
+- !private ["15MobileMessaging9MTMessageC", "aps"]
+- !private ["15MobileMessaging9MTMessageC", "deinit"]
+- !private ["15MobileMessaging9MTMessageC", "downloadImageAttachment"]
+- !private ["15MobileMessaging9MTMessageC", "isGeoSignalingMessage"]
+- !private ["15MobileMessaging9MTMessageC", "isSilent"]
+- !private ["15MobileMessaging9MTMessageC", "messageId"]
+- !private ["15MobileMessaging9MTMessageC", "originalPayload"]
+- !private ["15MobileMessaging9MTMessageC", "sound"]
+- !private ["15MobileMessaging9MTMessageC", "text"]
+- !private ["15MobileMessaging9MTMessageC", "title"]
+- ["s10MirrorPathP", "init"]
+- !private ["15MobileMessagingAAC", "application"]
+- !private ["15MobileMessagingAAC", "sharedInstance"]
+- !private ["So8NSCodingP", "LocalNotificationKeys"]
+- !private ["So8NSCodingP", "UILocalNotification"]
+- !private ["So8NSCodingP", "alertBody"]
+- !private ["So8NSCodingP", "alertTitle"]
+- !private ["So8NSCodingP", "attachments"]
+- !private ["So8NSCodingP", "body"]
+- !private ["So8NSCodingP", "category"]
+- !private ["So8NSCodingP", "categoryIdentifier"]
+- !private ["So8NSCodingP", "default"]
+- ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "make"]
+- !private ["So8NSCodingP", "sound"]
+- !private ["So8NSCodingP", "soundName"]
+- !private ["So8NSCodingP", "title"]
+- !private ["So8NSCodingP", "userInfo"]
+- !private ["So9NSCopyingP", "LocalNotificationKeys"]
+- !private ["So9NSCopyingP", "UILocalNotification"]
+- !private ["So9NSCopyingP", "alertBody"]
+- !private ["So9NSCopyingP", "alertTitle"]
+- !private ["So9NSCopyingP", "attachments"]
+- !private ["So9NSCopyingP", "body"]
+- !private ["So9NSCopyingP", "category"]
+- !private ["So9NSCopyingP", "categoryIdentifier"]
+- !private ["So9NSCopyingP", "default"]
+- ["So9NSCopyingP", "init"]
+- !private ["So9NSCopyingP", "make"]
+- !private ["So9NSCopyingP", "sound"]
+- !private ["So9NSCopyingP", "soundName"]
+- !private ["So9NSCopyingP", "title"]
+- !private ["So9NSCopyingP", "userInfo"]
+- ["So21NSItemProviderReadingP", "init"]
+- ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "attachments"]
+- !private ["So16NSMutableCopyingP", "body"]
+- !private ["So16NSMutableCopyingP", "categoryIdentifier"]
+- ["So16NSMutableCopyingP", "init"]
+- !private ["So16NSMutableCopyingP", "sound"]
+- !private ["So16NSMutableCopyingP", "title"]
+- !private ["So16NSMutableCopyingP", "userInfo"]
+- !private ["So8NSObjectC", "LocalNotificationKeys"]
+- ["So8NSObjectC", "MTMessage"]
+- ["So8NSObjectC", "UILocalNotification"]
+- !private ["So8NSObjectC", "add"]
+- !private ["So8NSObjectC", "alertBody"]
+- !private ["So8NSObjectC", "alertTitle"]
+- !private ["So8NSObjectC", "application"]
+- !private ["So8NSObjectC", "aps"]
+- !private ["So8NSObjectC", "attachments"]
+- !private ["So8NSObjectC", "body"]
+- !private ["So8NSObjectC", "category"]
+- !private ["So8NSObjectC", "categoryIdentifier"]
+- !private ["So8NSObjectC", "current"]
+- !private ["So8NSObjectC", "default"]
+- !private ["So8NSObjectC", "downloadImageAttachment"]
+- !private ["So8NSObjectC", "init"]
+- !private ["So8NSObjectC", "isGeoSignalingMessage"]
+- !private ["So8NSObjectC", "isSilent"]
+- ["So8NSObjectC", "make"]
+- !private ["So8NSObjectC", "messageId"]
+- !private ["So8NSObjectC", "originalPayload"]
+- !private ["So8NSObjectC", "sharedInstance"]
+- !private ["So8NSObjectC", "sound"]
+- !private ["So8NSObjectC", "soundName"]
+- !private ["So8NSObjectC", "text"]
+- !private ["So8NSObjectC", "title"]
+- !private ["So8NSObjectC", "userInfo"]
+- !private ["So16NSObjectProtocolP", "LocalNotificationKeys"]
+- !private ["So16NSObjectProtocolP", "UILocalNotification"]
+- !private ["So16NSObjectProtocolP", "add"]
+- !private ["So16NSObjectProtocolP", "alertBody"]
+- !private ["So16NSObjectProtocolP", "alertTitle"]
+- !private ["So16NSObjectProtocolP", "application"]
+- !private ["So16NSObjectProtocolP", "aps"]
+- !private ["So16NSObjectProtocolP", "attachments"]
+- !private ["So16NSObjectProtocolP", "body"]
+- !private ["So16NSObjectProtocolP", "category"]
+- !private ["So16NSObjectProtocolP", "categoryIdentifier"]
+- !private ["So16NSObjectProtocolP", "current"]
+- !private ["So16NSObjectProtocolP", "default"]
+- !private ["So16NSObjectProtocolP", "downloadImageAttachment"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "isGeoSignalingMessage"]
+- !private ["So16NSObjectProtocolP", "isSilent"]
+- !private ["So16NSObjectProtocolP", "make"]
+- !private ["So16NSObjectProtocolP", "messageId"]
+- !private ["So16NSObjectProtocolP", "originalPayload"]
+- !private ["So16NSObjectProtocolP", "sharedInstance"]
+- !private ["So16NSObjectProtocolP", "sound"]
+- !private ["So16NSObjectProtocolP", "soundName"]
+- !private ["So16NSObjectProtocolP", "text"]
+- !private ["So16NSObjectProtocolP", "title"]
+- !private ["So16NSObjectProtocolP", "userInfo"]
+- !private ["So14NSSecureCodingP", "attachments"]
+- !private ["So14NSSecureCodingP", "body"]
+- !private ["So14NSSecureCodingP", "categoryIdentifier"]
+- !private ["So14NSSecureCodingP", "default"]
+- ["So14NSSecureCodingP", "init"]
+- !private ["So14NSSecureCodingP", "sound"]
+- !private ["So14NSSecureCodingP", "title"]
+- !private ["So14NSSecureCodingP", "userInfo"]
+- ["So8NSStringC", "init"]
+- !private ["15MobileMessaging14PushPayloadAPSO", "category"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- !private ["10Foundation20ReferenceConvertibleP", "absoluteString"]
+- ["s8SequenceP", "init"]
+- ["SS", "init"]
+- ["s14StringProtocolP", "init"]
+- ["s16TextOutputStreamP", "init"]
+- ["s20TextOutputStreamableP", "init"]
+- !private ["So19UILocalNotificationC", "LocalNotificationKeys"]
+- ["So19UILocalNotificationC", "MTMessage"]
+- ["So19UILocalNotificationC", "UILocalNotification"]
+- !private ["So19UILocalNotificationC", "alertBody"]
+- !private ["So19UILocalNotificationC", "alertTitle"]
+- !private ["So19UILocalNotificationC", "category"]
+- !private ["So19UILocalNotificationC", "init"]
+- ["So19UILocalNotificationC", "make"]
+- !private ["So19UILocalNotificationC", "soundName"]
+- !private ["So19UILocalNotificationC", "userInfo"]
+- !private ["So28UNMutableNotificationContentC", "attachments"]
+- !private ["So28UNMutableNotificationContentC", "body"]
+- !private ["So28UNMutableNotificationContentC", "categoryIdentifier"]
+- !private ["So28UNMutableNotificationContentC", "init"]
+- !private ["So28UNMutableNotificationContentC", "sound"]
+- !private ["So28UNMutableNotificationContentC", "title"]
+- !private ["So28UNMutableNotificationContentC", "userInfo"]
+- !private ["So24UNNotificationAttachmentC", "init"]
+- !private ["So21UNNotificationContentC", "attachments"]
+- !private ["So21UNNotificationContentC", "body"]
+- !private ["So21UNNotificationContentC", "categoryIdentifier"]
+- !private ["So21UNNotificationContentC", "init"]
+- !private ["So21UNNotificationContentC", "sound"]
+- !private ["So21UNNotificationContentC", "title"]
+- !private ["So21UNNotificationContentC", "userInfo"]
+- !private ["So21UNNotificationRequestC", "init"]
+- !private ["So19UNNotificationSoundC", "default"]
+- !private ["So19UNNotificationSoundC", "init"]
+- !private ["So24UNUserNotificationCenterC", "add"]
+- !private ["So24UNUserNotificationCenterC", "current"]
+- !private ["10Foundation3URLV", "absoluteString"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s34_ExpressibleByFileReferenceLiteralP", "absoluteString"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- ["s10_IndexableP", "init"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "LocalNotificationKeys"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "UILocalNotification"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "add"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "alertBody"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "alertTitle"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "application"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "aps"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "attachments"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "body"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "category"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "categoryIdentifier"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "current"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "default"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "downloadImageAttachment"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isGeoSignalingMessage"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isSilent"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "make"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "messageId"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "originalPayload"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "sharedInstance"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "sound"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "soundName"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "text"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "title"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "userInfo"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "absoluteString"]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "15MobileMessaging11BaseMessageC"
+- "s23BidirectionalCollectionP"
+- !private "Sb"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "s9DecodableP"
+- "s9EncodableP"
+- "s9EquatableP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "15MobileMessaging21LocalNotificationKeysV"
+- "15MobileMessaging18LocalNotificationsC"
+- "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging13MMApplicationP"
+- !private "15MobileMessaging17MMMessageMetadataP"
+- !private "15MobileMessaging9MTMessageC"
+- "s10MirrorPathP"
+- !private "15MobileMessagingAAC"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- !private "15MobileMessaging14PushPayloadAPSO"
+- "s26RangeReplaceableCollectionP"
+- !private "10Foundation20ReferenceConvertibleP"
+- "s8SequenceP"
+- "SS"
+- "s14StringProtocolP"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- "So19UILocalNotificationC"
+- !private "So28UNMutableNotificationContentC"
+- !private "So24UNNotificationAttachmentC"
+- !private "So21UNNotificationContentC"
+- !private "So21UNNotificationRequestC"
+- !private "So19UNNotificationSoundC"
+- !private "So24UNUserNotificationCenterC"
+- !private "10Foundation3URLV"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- "s23_BidirectionalIndexableP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s34_ExpressibleByFileReferenceLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- "s21_ObjectiveCBridgeableP"
+- "s26_RangeReplaceableIndexableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/x86_64/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/objc/ObjectiveC.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/OpenGLES.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreData.framework/Headers/CoreData.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CoreImage.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Metal.framework/Headers/Metal.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/usr/include/Darwin.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Headers/LocalAuthentication.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UserNotifications.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.0.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
+interface-hash: "074a5d09b1d1169c6c5dacf8522222a3"

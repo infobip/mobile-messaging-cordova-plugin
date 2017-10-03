@@ -1,0 +1,589 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "SyncRegistrationOperation"
+provides-nominal:
+- "15MobileMessaging25SyncRegistrationOperationC"
+provides-member:
+- ["15MobileMessaging25SyncRegistrationOperationC", ""]
+provides-dynamic-lookup:
+- "execute"
+- "finishBlock"
+- "finished"
+- "installation"
+- "mmContext"
+- "user"
+depends-top-level:
+- !private "!"
+- !private "!="
+- !private "=="
+- !private "Array"
+- "AssignmentPrecedence"
+- "Bool"
+- !private "Dictionary"
+- "MMInstallation"
+- !private "MMInternalErrorType"
+- !private "MMLogDebug"
+- !private "MMLogError"
+- !private "MMNotificationKeyRegistrationInternalId"
+- !private "MMNotificationRegistrationUpdated"
+- "MMUser"
+- "MobileMessaging"
+- "NSError"
+- !private "NotificationCenter"
+- "Operation"
+- !private "RegistrationResult"
+- !private "String"
+- !private "StringLiteralType"
+- "SyncRegistrationOperation"
+- "TernaryPrecedence"
+- "Void"
+depends-member:
+- !private ["Sa", "first"]
+- !private ["s23BidirectionalCollectionP", "first"]
+- !private ["s23BidirectionalCollectionP", "init"]
+- !private ["Sb", "_getBuiltinLogicValue"]
+- !private ["s7CVarArgP", "MMInternalErrorType"]
+- !private ["s7CVarArgP", "MMLogDebug"]
+- !private ["s7CVarArgP", "MMLogError"]
+- !private ["s7CVarArgP", "MMNotificationKeyRegistrationInternalId"]
+- !private ["s7CVarArgP", "MMNotificationRegistrationUpdated"]
+- !private ["s7CVarArgP", "NSError"]
+- !private ["s7CVarArgP", "NotificationCenter"]
+- !private ["s7CVarArgP", "String"]
+- !private ["s7CVarArgP", "deviceToken"]
+- !private ["s7CVarArgP", "finish"]
+- !private ["s7CVarArgP", "finishBlock"]
+- !private ["s7CVarArgP", "finishWithError"]
+- !private ["s7CVarArgP", "first"]
+- !private ["s7CVarArgP", "handleRegistrationResult"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "installation"]
+- !private ["s7CVarArgP", "isCancelled"]
+- !private ["s7CVarArgP", "isPushRegistrationEnabled"]
+- !private ["s7CVarArgP", "isRegistrationEnabledLocally"]
+- !private ["s7CVarArgP", "isRegistrationStatusNeedSync"]
+- !private ["s7CVarArgP", "keychain"]
+- !private ["s7CVarArgP", "mmContext"]
+- !private ["s7CVarArgP", "mm_postNotificationFromMainThread"]
+- !private ["s7CVarArgP", "persist"]
+- !private ["s7CVarArgP", "pushRegistrationId"]
+- !private ["s7CVarArgP", "remoteApiManager"]
+- !private ["s7CVarArgP", "resetNeedToSync"]
+- !private ["s7CVarArgP", "sendRegistration"]
+- !private ["s7CVarArgP", "systemDataHash"]
+- !private ["s7CVarArgP", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["s7CVarArgP", "user"]
+- ["s7CVarArgP", ""]
+- !private ["s10CollectionP", "first"]
+- !private ["s10CollectionP", "init"]
+- !private ["s10ComparableP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "MMInternalErrorType"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLogDebug"]
+- !private ["s28CustomDebugStringConvertibleP", "MMLogError"]
+- !private ["s28CustomDebugStringConvertibleP", "MMNotificationKeyRegistrationInternalId"]
+- !private ["s28CustomDebugStringConvertibleP", "MMNotificationRegistrationUpdated"]
+- !private ["s28CustomDebugStringConvertibleP", "NSError"]
+- !private ["s28CustomDebugStringConvertibleP", "NotificationCenter"]
+- !private ["s28CustomDebugStringConvertibleP", "String"]
+- !private ["s28CustomDebugStringConvertibleP", "deviceToken"]
+- !private ["s28CustomDebugStringConvertibleP", "finish"]
+- !private ["s28CustomDebugStringConvertibleP", "finishBlock"]
+- !private ["s28CustomDebugStringConvertibleP", "finishWithError"]
+- !private ["s28CustomDebugStringConvertibleP", "first"]
+- !private ["s28CustomDebugStringConvertibleP", "handleRegistrationResult"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "installation"]
+- !private ["s28CustomDebugStringConvertibleP", "isCancelled"]
+- !private ["s28CustomDebugStringConvertibleP", "isPushRegistrationEnabled"]
+- !private ["s28CustomDebugStringConvertibleP", "isRegistrationEnabledLocally"]
+- !private ["s28CustomDebugStringConvertibleP", "isRegistrationStatusNeedSync"]
+- !private ["s28CustomDebugStringConvertibleP", "keychain"]
+- !private ["s28CustomDebugStringConvertibleP", "mmContext"]
+- !private ["s28CustomDebugStringConvertibleP", "mm_postNotificationFromMainThread"]
+- !private ["s28CustomDebugStringConvertibleP", "persist"]
+- !private ["s28CustomDebugStringConvertibleP", "pushRegistrationId"]
+- !private ["s28CustomDebugStringConvertibleP", "remoteApiManager"]
+- !private ["s28CustomDebugStringConvertibleP", "resetNeedToSync"]
+- !private ["s28CustomDebugStringConvertibleP", "sendRegistration"]
+- !private ["s28CustomDebugStringConvertibleP", "systemDataHash"]
+- !private ["s28CustomDebugStringConvertibleP", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["s28CustomDebugStringConvertibleP", "user"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- !private ["s29CustomPlaygroundQuickLookableP", "_getBuiltinLogicValue"]
+- !private ["s29CustomPlaygroundQuickLookableP", "init"]
+- !private ["s17CustomReflectableP", "_getBuiltinLogicValue"]
+- !private ["s17CustomReflectableP", "first"]
+- !private ["s17CustomReflectableP", "init"]
+- !private ["s23CustomStringConvertibleP", "MMInternalErrorType"]
+- !private ["s23CustomStringConvertibleP", "MMLogDebug"]
+- !private ["s23CustomStringConvertibleP", "MMLogError"]
+- !private ["s23CustomStringConvertibleP", "MMNotificationKeyRegistrationInternalId"]
+- !private ["s23CustomStringConvertibleP", "MMNotificationRegistrationUpdated"]
+- !private ["s23CustomStringConvertibleP", "NSError"]
+- !private ["s23CustomStringConvertibleP", "NotificationCenter"]
+- !private ["s23CustomStringConvertibleP", "String"]
+- !private ["s23CustomStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s23CustomStringConvertibleP", "deviceToken"]
+- !private ["s23CustomStringConvertibleP", "finish"]
+- !private ["s23CustomStringConvertibleP", "finishBlock"]
+- !private ["s23CustomStringConvertibleP", "finishWithError"]
+- !private ["s23CustomStringConvertibleP", "first"]
+- !private ["s23CustomStringConvertibleP", "handleRegistrationResult"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "installation"]
+- !private ["s23CustomStringConvertibleP", "isCancelled"]
+- !private ["s23CustomStringConvertibleP", "isPushRegistrationEnabled"]
+- !private ["s23CustomStringConvertibleP", "isRegistrationEnabledLocally"]
+- !private ["s23CustomStringConvertibleP", "isRegistrationStatusNeedSync"]
+- !private ["s23CustomStringConvertibleP", "keychain"]
+- !private ["s23CustomStringConvertibleP", "mmContext"]
+- !private ["s23CustomStringConvertibleP", "mm_postNotificationFromMainThread"]
+- !private ["s23CustomStringConvertibleP", "persist"]
+- !private ["s23CustomStringConvertibleP", "pushRegistrationId"]
+- !private ["s23CustomStringConvertibleP", "remoteApiManager"]
+- !private ["s23CustomStringConvertibleP", "resetNeedToSync"]
+- !private ["s23CustomStringConvertibleP", "sendRegistration"]
+- !private ["s23CustomStringConvertibleP", "systemDataHash"]
+- !private ["s23CustomStringConvertibleP", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["s23CustomStringConvertibleP", "user"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9DecodableP", "_getBuiltinLogicValue"]
+- !private ["s9DecodableP", "first"]
+- !private ["s9DecodableP", "init"]
+- !private ["s9EncodableP", "_getBuiltinLogicValue"]
+- !private ["s9EncodableP", "first"]
+- !private ["s9EncodableP", "init"]
+- !private ["s9EquatableP", "MMInternalErrorType"]
+- !private ["s9EquatableP", "MMLogDebug"]
+- !private ["s9EquatableP", "MMLogError"]
+- !private ["s9EquatableP", "MMNotificationKeyRegistrationInternalId"]
+- !private ["s9EquatableP", "MMNotificationRegistrationUpdated"]
+- !private ["s9EquatableP", "NSError"]
+- !private ["s9EquatableP", "NotificationCenter"]
+- !private ["s9EquatableP", "String"]
+- !private ["s9EquatableP", "UnknownError"]
+- !private ["s9EquatableP", "_getBuiltinLogicValue"]
+- !private ["s9EquatableP", "deviceToken"]
+- !private ["s9EquatableP", "finish"]
+- !private ["s9EquatableP", "finishBlock"]
+- !private ["s9EquatableP", "finishWithError"]
+- !private ["s9EquatableP", "handleRegistrationResult"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "installation"]
+- !private ["s9EquatableP", "isCancelled"]
+- !private ["s9EquatableP", "isPushRegistrationEnabled"]
+- !private ["s9EquatableP", "isRegistrationEnabledLocally"]
+- !private ["s9EquatableP", "isRegistrationStatusNeedSync"]
+- !private ["s9EquatableP", "keychain"]
+- !private ["s9EquatableP", "mmContext"]
+- !private ["s9EquatableP", "mm_postNotificationFromMainThread"]
+- !private ["s9EquatableP", "persist"]
+- !private ["s9EquatableP", "pushRegistrationId"]
+- !private ["s9EquatableP", "remoteApiManager"]
+- !private ["s9EquatableP", "resetNeedToSync"]
+- !private ["s9EquatableP", "sendRegistration"]
+- !private ["s9EquatableP", "systemDataHash"]
+- !private ["s9EquatableP", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["s9EquatableP", "user"]
+- ["s9EquatableP", ""]
+- !private ["s5ErrorP", "UnknownError"]
+- !private ["s5ErrorP", "init"]
+- !private ["s25ExpressibleByArrayLiteralP", "first"]
+- !private ["s27ExpressibleByBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s26ExpressibleByStringLiteralP", "init"]
+- !private ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s8HashableP", "MMInternalErrorType"]
+- !private ["s8HashableP", "MMLogDebug"]
+- !private ["s8HashableP", "MMLogError"]
+- !private ["s8HashableP", "MMNotificationKeyRegistrationInternalId"]
+- !private ["s8HashableP", "MMNotificationRegistrationUpdated"]
+- !private ["s8HashableP", "NSError"]
+- !private ["s8HashableP", "NotificationCenter"]
+- !private ["s8HashableP", "String"]
+- !private ["s8HashableP", "UnknownError"]
+- !private ["s8HashableP", "_getBuiltinLogicValue"]
+- !private ["s8HashableP", "deviceToken"]
+- !private ["s8HashableP", "finish"]
+- !private ["s8HashableP", "finishBlock"]
+- !private ["s8HashableP", "finishWithError"]
+- !private ["s8HashableP", "handleRegistrationResult"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "installation"]
+- !private ["s8HashableP", "isCancelled"]
+- !private ["s8HashableP", "isPushRegistrationEnabled"]
+- !private ["s8HashableP", "isRegistrationEnabledLocally"]
+- !private ["s8HashableP", "isRegistrationStatusNeedSync"]
+- !private ["s8HashableP", "keychain"]
+- !private ["s8HashableP", "mmContext"]
+- !private ["s8HashableP", "mm_postNotificationFromMainThread"]
+- !private ["s8HashableP", "persist"]
+- !private ["s8HashableP", "pushRegistrationId"]
+- !private ["s8HashableP", "remoteApiManager"]
+- !private ["s8HashableP", "resetNeedToSync"]
+- !private ["s8HashableP", "sendRegistration"]
+- !private ["s8HashableP", "systemDataHash"]
+- !private ["s8HashableP", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["s8HashableP", "user"]
+- ["s8HashableP", ""]
+- !private ["15MobileMessaging13JSONDecodableP", "internalId"]
+- !private ["15MobileMessaging13JSONDecodableP", "isEnabled"]
+- !private ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- !private ["15MobileMessaging13KeychainSwiftC", "internalId"]
+- !private ["s25LosslessStringConvertibleP", "_getBuiltinLogicValue"]
+- !private ["s25LosslessStringConvertibleP", "init"]
+- !private ["15MobileMessaging14MMInstallationC", "deviceToken"]
+- !private ["15MobileMessaging14MMInstallationC", "isPushRegistrationEnabled"]
+- !private ["15MobileMessaging14MMInstallationC", "isRegistrationStatusNeedSync"]
+- !private ["15MobileMessaging14MMInstallationC", "persist"]
+- !private ["15MobileMessaging14MMInstallationC", "resetNeedToSync"]
+- !private ["15MobileMessaging14MMInstallationC", "systemDataHash"]
+- !private ["15MobileMessaging19MMInternalErrorTypeO", "UnknownError"]
+- !private ["15MobileMessaging10MMKeychainC", "internalId"]
+- !private ["15MobileMessaging6MMUserC", "persist"]
+- !private ["15MobileMessaging6MMUserC", "pushRegistrationId"]
+- !private ["s10MirrorPathP", "init"]
+- !private ["15MobileMessagingAAC", "keychain"]
+- !private ["15MobileMessagingAAC", "remoteApiManager"]
+- !private ["15MobileMessagingAAC", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["s17MutableCollectionP", "first"]
+- !private ["So8NSCodingP", "init"]
+- !private ["So9NSCopyingP", "init"]
+- !private ["So7NSErrorC", "init"]
+- !private ["So21NSItemProviderReadingP", "init"]
+- !private ["So21NSItemProviderWritingP", "init"]
+- !private ["So16NSMutableCopyingP", "init"]
+- ["So8NSObjectC", "Bool"]
+- ["So8NSObjectC", "MMInstallation"]
+- !private ["So8NSObjectC", "MMInternalErrorType"]
+- !private ["So8NSObjectC", "MMLogDebug"]
+- !private ["So8NSObjectC", "MMLogError"]
+- !private ["So8NSObjectC", "MMNotificationKeyRegistrationInternalId"]
+- !private ["So8NSObjectC", "MMNotificationRegistrationUpdated"]
+- ["So8NSObjectC", "MMUser"]
+- ["So8NSObjectC", "MobileMessaging"]
+- ["So8NSObjectC", "NSError"]
+- !private ["So8NSObjectC", "NotificationCenter"]
+- !private ["So8NSObjectC", "RegistrationResult"]
+- !private ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "Void"]
+- !private ["So8NSObjectC", "deviceToken"]
+- ["So8NSObjectC", "execute"]
+- !private ["So8NSObjectC", "finish"]
+- ["So8NSObjectC", "finishBlock"]
+- !private ["So8NSObjectC", "finishWithError"]
+- ["So8NSObjectC", "finished"]
+- ["So8NSObjectC", "handleRegistrationResult"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "installation"]
+- !private ["So8NSObjectC", "isCancelled"]
+- !private ["So8NSObjectC", "isPushRegistrationEnabled"]
+- ["So8NSObjectC", "isRegistrationEnabledLocally"]
+- !private ["So8NSObjectC", "isRegistrationStatusNeedSync"]
+- !private ["So8NSObjectC", "keychain"]
+- ["So8NSObjectC", "mmContext"]
+- !private ["So8NSObjectC", "mm_postNotificationFromMainThread"]
+- !private ["So8NSObjectC", "persist"]
+- !private ["So8NSObjectC", "pushRegistrationId"]
+- !private ["So8NSObjectC", "remoteApiManager"]
+- !private ["So8NSObjectC", "resetNeedToSync"]
+- ["So8NSObjectC", "sendRegistration"]
+- !private ["So8NSObjectC", "systemDataHash"]
+- !private ["So8NSObjectC", "updateRegistrationEnabledSubservicesStatus"]
+- ["So8NSObjectC", "user"]
+- !private ["So16NSObjectProtocolP", "MMInternalErrorType"]
+- !private ["So16NSObjectProtocolP", "MMLogDebug"]
+- !private ["So16NSObjectProtocolP", "MMLogError"]
+- !private ["So16NSObjectProtocolP", "MMNotificationKeyRegistrationInternalId"]
+- !private ["So16NSObjectProtocolP", "MMNotificationRegistrationUpdated"]
+- !private ["So16NSObjectProtocolP", "NSError"]
+- !private ["So16NSObjectProtocolP", "NotificationCenter"]
+- !private ["So16NSObjectProtocolP", "String"]
+- !private ["So16NSObjectProtocolP", "deviceToken"]
+- !private ["So16NSObjectProtocolP", "finish"]
+- !private ["So16NSObjectProtocolP", "finishBlock"]
+- !private ["So16NSObjectProtocolP", "finishWithError"]
+- !private ["So16NSObjectProtocolP", "handleRegistrationResult"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "installation"]
+- !private ["So16NSObjectProtocolP", "isCancelled"]
+- !private ["So16NSObjectProtocolP", "isPushRegistrationEnabled"]
+- !private ["So16NSObjectProtocolP", "isRegistrationEnabledLocally"]
+- !private ["So16NSObjectProtocolP", "isRegistrationStatusNeedSync"]
+- !private ["So16NSObjectProtocolP", "keychain"]
+- !private ["So16NSObjectProtocolP", "mmContext"]
+- !private ["So16NSObjectProtocolP", "mm_postNotificationFromMainThread"]
+- !private ["So16NSObjectProtocolP", "persist"]
+- !private ["So16NSObjectProtocolP", "pushRegistrationId"]
+- !private ["So16NSObjectProtocolP", "remoteApiManager"]
+- !private ["So16NSObjectProtocolP", "resetNeedToSync"]
+- !private ["So16NSObjectProtocolP", "sendRegistration"]
+- !private ["So16NSObjectProtocolP", "systemDataHash"]
+- !private ["So16NSObjectProtocolP", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["So16NSObjectProtocolP", "user"]
+- ["So16NSObjectProtocolP", ""]
+- !private ["So14NSSecureCodingP", "init"]
+- !private ["So8NSStringC", "init"]
+- !private ["So18NotificationCenterC", "mm_postNotificationFromMainThread"]
+- ["15MobileMessaging9OperationC", "Bool"]
+- ["15MobileMessaging9OperationC", "MMInstallation"]
+- !private ["15MobileMessaging9OperationC", "MMInternalErrorType"]
+- !private ["15MobileMessaging9OperationC", "MMLogDebug"]
+- !private ["15MobileMessaging9OperationC", "MMLogError"]
+- !private ["15MobileMessaging9OperationC", "MMNotificationKeyRegistrationInternalId"]
+- !private ["15MobileMessaging9OperationC", "MMNotificationRegistrationUpdated"]
+- ["15MobileMessaging9OperationC", "MMUser"]
+- ["15MobileMessaging9OperationC", "MobileMessaging"]
+- ["15MobileMessaging9OperationC", "NSError"]
+- !private ["15MobileMessaging9OperationC", "NotificationCenter"]
+- !private ["15MobileMessaging9OperationC", "RegistrationResult"]
+- !private ["15MobileMessaging9OperationC", "String"]
+- ["15MobileMessaging9OperationC", "Void"]
+- ["15MobileMessaging9OperationC", "execute"]
+- !private ["15MobileMessaging9OperationC", "finish"]
+- ["15MobileMessaging9OperationC", "finishBlock"]
+- !private ["15MobileMessaging9OperationC", "finishWithError"]
+- ["15MobileMessaging9OperationC", "finished"]
+- ["15MobileMessaging9OperationC", "handleRegistrationResult"]
+- ["15MobileMessaging9OperationC", "init"]
+- ["15MobileMessaging9OperationC", "installation"]
+- !private ["15MobileMessaging9OperationC", "isCancelled"]
+- ["15MobileMessaging9OperationC", "isRegistrationEnabledLocally"]
+- ["15MobileMessaging9OperationC", "mmContext"]
+- ["15MobileMessaging9OperationC", "sendRegistration"]
+- ["15MobileMessaging9OperationC", "user"]
+- ["15MobileMessaging9OperationC", ""]
+- ["So9OperationC", "Bool"]
+- ["So9OperationC", "MMInstallation"]
+- !private ["So9OperationC", "MMInternalErrorType"]
+- !private ["So9OperationC", "MMLogDebug"]
+- !private ["So9OperationC", "MMLogError"]
+- !private ["So9OperationC", "MMNotificationKeyRegistrationInternalId"]
+- !private ["So9OperationC", "MMNotificationRegistrationUpdated"]
+- ["So9OperationC", "MMUser"]
+- ["So9OperationC", "MobileMessaging"]
+- ["So9OperationC", "NSError"]
+- !private ["So9OperationC", "NotificationCenter"]
+- !private ["So9OperationC", "RegistrationResult"]
+- !private ["So9OperationC", "String"]
+- ["So9OperationC", "Void"]
+- ["So9OperationC", "execute"]
+- !private ["So9OperationC", "finish"]
+- ["So9OperationC", "finishBlock"]
+- !private ["So9OperationC", "finishWithError"]
+- ["So9OperationC", "finished"]
+- ["So9OperationC", "handleRegistrationResult"]
+- ["So9OperationC", "init"]
+- ["So9OperationC", "installation"]
+- !private ["So9OperationC", "isCancelled"]
+- ["So9OperationC", "isRegistrationEnabledLocally"]
+- ["So9OperationC", "mmContext"]
+- ["So9OperationC", "sendRegistration"]
+- ["So9OperationC", "user"]
+- !private ["s22RandomAccessCollectionP", "first"]
+- !private ["s26RangeReplaceableCollectionP", "first"]
+- !private ["s26RangeReplaceableCollectionP", "init"]
+- !private ["15MobileMessaging20RegistrationResponseV", "internalId"]
+- !private ["15MobileMessaging20RegistrationResponseV", "isEnabled"]
+- !private ["15MobileMessaging16RemoteAPIManagerC", "syncRegistration"]
+- !private ["15MobileMessaging6ResultO", "Cancel"]
+- !private ["15MobileMessaging6ResultO", "Failure"]
+- !private ["15MobileMessaging6ResultO", "Success"]
+- !private ["15MobileMessaging6ResultO", "error"]
+- !private ["s8SequenceP", "first"]
+- !private ["s8SequenceP", "init"]
+- !private ["s12StaticStringV", "init"]
+- !private ["SS", "init"]
+- !private ["s14StringProtocolP", "init"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "Bool"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "MMInstallation"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "MMInternalErrorType"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "MMLogDebug"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "MMLogError"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "MMNotificationKeyRegistrationInternalId"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "MMNotificationRegistrationUpdated"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "MMUser"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "MobileMessaging"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "NSError"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "NotificationCenter"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "RegistrationResult"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "String"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "Void"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "deinit"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "execute"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "finish"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "finishBlock"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "finishWithError"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "finished"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "handleRegistrationResult"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "init"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "installation"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "isCancelled"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "isRegistrationEnabledLocally"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "mmContext"]
+- !private ["15MobileMessaging25SyncRegistrationOperationC", "sendRegistration"]
+- ["15MobileMessaging25SyncRegistrationOperationC", "user"]
+- !private ["s16TextOutputStreamP", "init"]
+- !private ["s20TextOutputStreamableP", "init"]
+- !private ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- !private ["s14_ArrayProtocolP", "first"]
+- !private ["s23_BidirectionalIndexableP", "first"]
+- !private ["s23_BidirectionalIndexableP", "init"]
+- !private ["s24_DestructorSafeContainerP", "first"]
+- !private ["s35_ExpressibleByBuiltinBooleanLiteralP", "_getBuiltinLogicValue"]
+- !private ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- !private ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- !private ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- !private ["s33_ExpressibleByStringInterpolationP", "init"]
+- !private ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- !private ["s10_IndexableP", "first"]
+- !private ["s10_IndexableP", "init"]
+- !private ["s14_IndexableBaseP", "first"]
+- !private ["s14_IndexableBaseP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMInternalErrorType"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLogDebug"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMLogError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMNotificationKeyRegistrationInternalId"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "MMNotificationRegistrationUpdated"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NSError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "NotificationCenter"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "String"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "deviceToken"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finish"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finishBlock"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "finishWithError"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "handleRegistrationResult"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "installation"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isCancelled"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isPushRegistrationEnabled"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isRegistrationEnabledLocally"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "isRegistrationStatusNeedSync"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "keychain"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mmContext"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_postNotificationFromMainThread"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "persist"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "pushRegistrationId"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "remoteApiManager"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "resetNeedToSync"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "sendRegistration"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "systemDataHash"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "updateRegistrationEnabledSubservicesStatus"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "user"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- !private ["s17_MutableIndexableP", "first"]
+- !private ["s21_ObjectiveCBridgeableP", "_getBuiltinLogicValue"]
+- !private ["s21_ObjectiveCBridgeableP", "first"]
+- !private ["s21_ObjectiveCBridgeableP", "init"]
+- !private ["s22_RandomAccessIndexableP", "first"]
+- !private ["s26_RangeReplaceableIndexableP", "first"]
+- !private ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- !private "Sa"
+- !private "s23BidirectionalCollectionP"
+- !private "Sb"
+- "s7CVarArgP"
+- !private "s10CollectionP"
+- !private "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- !private "15MobileMessaging27CustomPayloadSupportedTypesP"
+- !private "s29CustomPlaygroundQuickLookableP"
+- !private "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- !private "s9DecodableP"
+- !private "s9EncodableP"
+- "s9EquatableP"
+- !private "s5ErrorP"
+- !private "s25ExpressibleByArrayLiteralP"
+- !private "s27ExpressibleByBooleanLiteralP"
+- !private "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s26ExpressibleByStringLiteralP"
+- !private "s33ExpressibleByUnicodeScalarLiteralP"
+- "s8HashableP"
+- !private "15MobileMessaging13JSONDecodableP"
+- !private "15MobileMessaging17JSONSubscriptTypeP"
+- !private "15MobileMessaging13KeychainSwiftC"
+- !private "s25LosslessStringConvertibleP"
+- !private "15MobileMessaging14MMInstallationC"
+- !private "15MobileMessaging19MMInternalErrorTypeO"
+- !private "15MobileMessaging10MMKeychainC"
+- !private "15MobileMessaging6MMUserC"
+- !private "s10MirrorPathP"
+- !private "15MobileMessagingAAC"
+- !private "s17MutableCollectionP"
+- !private "So8NSCodingP"
+- !private "So9NSCopyingP"
+- !private "So7NSErrorC"
+- !private "So21NSItemProviderReadingP"
+- !private "So21NSItemProviderWritingP"
+- !private "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- !private "So14NSSecureCodingP"
+- !private "So8NSStringC"
+- !private "So18NotificationCenterC"
+- "15MobileMessaging9OperationC"
+- "So9OperationC"
+- !private "s22RandomAccessCollectionP"
+- !private "s26RangeReplaceableCollectionP"
+- !private "15MobileMessaging20RegistrationResponseV"
+- !private "15MobileMessaging16RemoteAPIManagerC"
+- !private "15MobileMessaging6ResultO"
+- !private "s8SequenceP"
+- !private "s12StaticStringV"
+- !private "SS"
+- !private "s14StringProtocolP"
+- "15MobileMessaging25SyncRegistrationOperationC"
+- !private "s16TextOutputStreamP"
+- !private "s20TextOutputStreamableP"
+- !private "15MobileMessaging23UserDataFoundationTypesP"
+- !private "s14_ArrayProtocolP"
+- !private "s23_BidirectionalIndexableP"
+- !private "s24_DestructorSafeContainerP"
+- !private "s35_ExpressibleByBuiltinBooleanLiteralP"
+- !private "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s34_ExpressibleByBuiltinStringLiteralP"
+- !private "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- !private "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- !private "s33_ExpressibleByStringInterpolationP"
+- !private "s35_HasCustomAnyHashableRepresentationP"
+- !private "s10_IndexableP"
+- !private "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- !private "s17_MutableIndexableP"
+- !private "s21_ObjectiveCBridgeableP"
+- !private "s22_RandomAccessIndexableP"
+- !private "s26_RangeReplaceableIndexableP"
+- !private "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "8c51e17e7c4c3fc645935fe58f424707"

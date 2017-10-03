@@ -1,0 +1,365 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "MMPostponer"
+provides-nominal:
+- "15MobileMessaging11MMPostponerC"
+provides-member:
+- ["15MobileMessaging11MMPostponerC", ""]
+provides-dynamic-lookup:
+- "postponeBlock"
+depends-top-level:
+- !private "+"
+- "AssignmentPrecedence"
+- "DispatchQueue"
+- !private "DispatchSource"
+- "DispatchSourceTimer"
+- !private "DispatchTime"
+- !private "DispatchTimeInterval"
+- "Double"
+- !private "Int"
+- "MMPostponer"
+- "MMQueue"
+- "NSObject"
+- "StringLiteralType"
+- "Void"
+depends-member:
+- ["s23BidirectionalCollectionP", "init"]
+- !private ["s13BinaryIntegerP", "init"]
+- !private ["s7CVarArgP", "DispatchSource"]
+- !private ["s7CVarArgP", "DispatchTime"]
+- !private ["s7CVarArgP", "DispatchTimeInterval"]
+- !private ["s7CVarArgP", "Int"]
+- ["s7CVarArgP", "MMQueue"]
+- !private ["s7CVarArgP", "block"]
+- !private ["s7CVarArgP", "createDispatchTimer"]
+- !private ["s7CVarArgP", "executionQueue"]
+- ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "invalidateTimer"]
+- !private ["s7CVarArgP", "makeTimerSource"]
+- !private ["s7CVarArgP", "schedulerQueue"]
+- !private ["s7CVarArgP", "timer"]
+- ["s7CVarArgP", ""]
+- ["s10CollectionP", "init"]
+- ["s10ComparableP", "init"]
+- !private ["s10ComparableP", "now"]
+- !private ["s28CustomDebugStringConvertibleP", "DispatchSource"]
+- !private ["s28CustomDebugStringConvertibleP", "DispatchTime"]
+- !private ["s28CustomDebugStringConvertibleP", "DispatchTimeInterval"]
+- !private ["s28CustomDebugStringConvertibleP", "Int"]
+- ["s28CustomDebugStringConvertibleP", "MMQueue"]
+- !private ["s28CustomDebugStringConvertibleP", "block"]
+- !private ["s28CustomDebugStringConvertibleP", "createDispatchTimer"]
+- !private ["s28CustomDebugStringConvertibleP", "executionQueue"]
+- ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "invalidateTimer"]
+- !private ["s28CustomDebugStringConvertibleP", "makeTimerSource"]
+- !private ["s28CustomDebugStringConvertibleP", "schedulerQueue"]
+- !private ["s28CustomDebugStringConvertibleP", "timer"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- ["15MobileMessaging27CustomPayloadSupportedTypesP", "init"]
+- ["s29CustomPlaygroundQuickLookableP", "init"]
+- ["s17CustomReflectableP", "init"]
+- !private ["s23CustomStringConvertibleP", "DispatchSource"]
+- !private ["s23CustomStringConvertibleP", "DispatchTime"]
+- !private ["s23CustomStringConvertibleP", "DispatchTimeInterval"]
+- !private ["s23CustomStringConvertibleP", "Int"]
+- ["s23CustomStringConvertibleP", "MMQueue"]
+- !private ["s23CustomStringConvertibleP", "block"]
+- !private ["s23CustomStringConvertibleP", "createDispatchTimer"]
+- !private ["s23CustomStringConvertibleP", "executeAsync"]
+- !private ["s23CustomStringConvertibleP", "executeSync"]
+- !private ["s23CustomStringConvertibleP", "executionQueue"]
+- ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "invalidateTimer"]
+- !private ["s23CustomStringConvertibleP", "makeTimerSource"]
+- !private ["s23CustomStringConvertibleP", "schedulerQueue"]
+- !private ["s23CustomStringConvertibleP", "timer"]
+- ["s23CustomStringConvertibleP", ""]
+- ["s9DecodableP", "init"]
+- !private ["So14DispatchObjectC", "makeTimerSource"]
+- !private ["So14DispatchSourceC", "makeTimerSource"]
+- !private ["So30DispatchSourceFileSystemObjectP", "makeTimerSource"]
+- !private ["So25DispatchSourceMachReceiveP", "makeTimerSource"]
+- !private ["So22DispatchSourceMachSendP", "makeTimerSource"]
+- !private ["So28DispatchSourceMemoryPressureP", "makeTimerSource"]
+- !private ["So21DispatchSourceProcessP", "makeTimerSource"]
+- !private ["So22DispatchSourceProtocolP", "cancel"]
+- !private ["So22DispatchSourceProtocolP", "makeTimerSource"]
+- !private ["So22DispatchSourceProtocolP", "resume"]
+- !private ["So22DispatchSourceProtocolP", "scheduleOneshot"]
+- !private ["So22DispatchSourceProtocolP", "setEventHandler"]
+- !private ["So18DispatchSourceReadP", "makeTimerSource"]
+- !private ["So20DispatchSourceSignalP", "makeTimerSource"]
+- !private ["So19DispatchSourceTimerP", "cancel"]
+- !private ["So19DispatchSourceTimerP", "makeTimerSource"]
+- !private ["So19DispatchSourceTimerP", "resume"]
+- !private ["So19DispatchSourceTimerP", "scheduleOneshot"]
+- !private ["So19DispatchSourceTimerP", "setEventHandler"]
+- !private ["So25DispatchSourceUserDataAddP", "makeTimerSource"]
+- !private ["So24DispatchSourceUserDataOrP", "makeTimerSource"]
+- !private ["So29DispatchSourceUserDataReplaceP", "makeTimerSource"]
+- !private ["So19DispatchSourceWriteP", "makeTimerSource"]
+- !private ["8Dispatch0A4TimeV", "now"]
+- !private ["8Dispatch0A12TimeIntervalO", "seconds"]
+- ["s9EncodableP", "init"]
+- !private ["s9EquatableP", "DispatchSource"]
+- !private ["s9EquatableP", "DispatchTime"]
+- !private ["s9EquatableP", "DispatchTimeInterval"]
+- !private ["s9EquatableP", "Int"]
+- ["s9EquatableP", "MMQueue"]
+- ["s9EquatableP", "Serial"]
+- !private ["s9EquatableP", "block"]
+- !private ["s9EquatableP", "createDispatchTimer"]
+- !private ["s9EquatableP", "executionQueue"]
+- ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "invalidateTimer"]
+- !private ["s9EquatableP", "makeTimerSource"]
+- !private ["s9EquatableP", "now"]
+- !private ["s9EquatableP", "schedulerQueue"]
+- !private ["s9EquatableP", "seconds"]
+- !private ["s9EquatableP", "timer"]
+- ["s9EquatableP", ""]
+- ["s43ExpressibleByExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s27ExpressibleByIntegerLiteralP", "init"]
+- ["s26ExpressibleByStringLiteralP", "init"]
+- ["s33ExpressibleByUnicodeScalarLiteralP", "init"]
+- !private ["s17FixedWidthIntegerP", "init"]
+- !private ["s8HashableP", "DispatchSource"]
+- !private ["s8HashableP", "DispatchTime"]
+- !private ["s8HashableP", "DispatchTimeInterval"]
+- !private ["s8HashableP", "Int"]
+- ["s8HashableP", "MMQueue"]
+- ["s8HashableP", "Serial"]
+- !private ["s8HashableP", "block"]
+- !private ["s8HashableP", "createDispatchTimer"]
+- !private ["s8HashableP", "executionQueue"]
+- ["s8HashableP", "init"]
+- !private ["s8HashableP", "invalidateTimer"]
+- !private ["s8HashableP", "makeTimerSource"]
+- !private ["s8HashableP", "schedulerQueue"]
+- !private ["s8HashableP", "timer"]
+- ["s8HashableP", ""]
+- !private ["Si", "init"]
+- ["15MobileMessaging17JSONSubscriptTypeP", "init"]
+- ["s25LosslessStringConvertibleP", "init"]
+- ["15MobileMessaging11MMPostponerC", "DispatchQueue"]
+- !private ["15MobileMessaging11MMPostponerC", "DispatchSource"]
+- ["15MobileMessaging11MMPostponerC", "DispatchSourceTimer"]
+- !private ["15MobileMessaging11MMPostponerC", "DispatchTime"]
+- !private ["15MobileMessaging11MMPostponerC", "DispatchTimeInterval"]
+- ["15MobileMessaging11MMPostponerC", "Double"]
+- !private ["15MobileMessaging11MMPostponerC", "Int"]
+- ["15MobileMessaging11MMPostponerC", "MMQueue"]
+- ["15MobileMessaging11MMPostponerC", "Void"]
+- !private ["15MobileMessaging11MMPostponerC", "block"]
+- !private ["15MobileMessaging11MMPostponerC", "createDispatchTimer"]
+- ["15MobileMessaging11MMPostponerC", "deinit"]
+- !private ["15MobileMessaging11MMPostponerC", "executionQueue"]
+- ["15MobileMessaging11MMPostponerC", "init"]
+- !private ["15MobileMessaging11MMPostponerC", "invalidateTimer"]
+- ["15MobileMessaging11MMPostponerC", "postponeBlock"]
+- !private ["15MobileMessaging11MMPostponerC", "schedulerQueue"]
+- !private ["15MobileMessaging11MMPostponerC", "timer"]
+- ["15MobileMessaging7MMQueueO", "Serial"]
+- !private ["15MobileMessaging13MMQueueObjectC", "executeAsync"]
+- !private ["15MobileMessaging13MMQueueObjectC", "executeSync"]
+- ["s10MirrorPathP", "init"]
+- ["So8NSCodingP", "init"]
+- ["So9NSCopyingP", "init"]
+- ["So21NSItemProviderReadingP", "init"]
+- ["So21NSItemProviderWritingP", "init"]
+- ["So16NSMutableCopyingP", "init"]
+- ["So8NSObjectC", "DispatchQueue"]
+- !private ["So8NSObjectC", "DispatchSource"]
+- ["So8NSObjectC", "DispatchSourceTimer"]
+- !private ["So8NSObjectC", "DispatchTime"]
+- !private ["So8NSObjectC", "DispatchTimeInterval"]
+- ["So8NSObjectC", "Double"]
+- !private ["So8NSObjectC", "Int"]
+- ["So8NSObjectC", "MMQueue"]
+- ["So8NSObjectC", "Void"]
+- ["So8NSObjectC", "block"]
+- ["So8NSObjectC", "createDispatchTimer"]
+- ["So8NSObjectC", "executionQueue"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "invalidateTimer"]
+- !private ["So8NSObjectC", "makeTimerSource"]
+- ["So8NSObjectC", "postponeBlock"]
+- ["So8NSObjectC", "schedulerQueue"]
+- ["So8NSObjectC", "timer"]
+- ["So8NSObjectC", ""]
+- !private ["So16NSObjectProtocolP", "DispatchSource"]
+- !private ["So16NSObjectProtocolP", "DispatchTime"]
+- !private ["So16NSObjectProtocolP", "DispatchTimeInterval"]
+- !private ["So16NSObjectProtocolP", "Int"]
+- ["So16NSObjectProtocolP", "MMQueue"]
+- !private ["So16NSObjectProtocolP", "block"]
+- !private ["So16NSObjectProtocolP", "cancel"]
+- !private ["So16NSObjectProtocolP", "createDispatchTimer"]
+- !private ["So16NSObjectProtocolP", "executionQueue"]
+- ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "invalidateTimer"]
+- !private ["So16NSObjectProtocolP", "makeTimerSource"]
+- !private ["So16NSObjectProtocolP", "resume"]
+- !private ["So16NSObjectProtocolP", "scheduleOneshot"]
+- !private ["So16NSObjectProtocolP", "schedulerQueue"]
+- !private ["So16NSObjectProtocolP", "setEventHandler"]
+- !private ["So16NSObjectProtocolP", "timer"]
+- ["So16NSObjectProtocolP", ""]
+- ["So14NSSecureCodingP", "init"]
+- ["So8NSStringC", "init"]
+- !private ["s7NumericP", "init"]
+- !private ["So9OS_objectC", "makeTimerSource"]
+- ["s26RangeReplaceableCollectionP", "init"]
+- ["s8SequenceP", "init"]
+- ["15MobileMessaging7MMQueueO6SerialO", "newQueue"]
+- !private ["s13SignedIntegerP", "init"]
+- !private ["s13SignedNumericP", "init"]
+- !private ["s12StaticStringV", "init"]
+- !private ["s10StrideableP", "init"]
+- ["SS", "init"]
+- ["s14StringProtocolP", "init"]
+- ["s16TextOutputStreamP", "init"]
+- ["s20TextOutputStreamableP", "init"]
+- ["15MobileMessaging23UserDataFoundationTypesP", "init"]
+- ["s23_BidirectionalIndexableP", "init"]
+- !private ["s18_BitwiseOperationsP", "init"]
+- ["s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP", "init"]
+- !private ["s35_ExpressibleByBuiltinIntegerLiteralP", "init"]
+- ["s34_ExpressibleByBuiltinStringLiteralP", "init"]
+- ["s39_ExpressibleByBuiltinUTF16StringLiteralP", "init"]
+- ["s41_ExpressibleByBuiltinUnicodeScalarLiteralP", "init"]
+- ["s33_ExpressibleByStringInterpolationP", "init"]
+- ["s35_HasCustomAnyHashableRepresentationP", "init"]
+- ["s10_IndexableP", "init"]
+- ["s14_IndexableBaseP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "DispatchSource"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "DispatchTime"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "DispatchTimeInterval"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "Int"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "MMQueue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "block"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "createDispatchTimer"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "executionQueue"]
+- ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "invalidateTimer"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "makeTimerSource"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "schedulerQueue"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "timer"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+- ["s21_ObjectiveCBridgeableP", "init"]
+- ["s26_RangeReplaceableIndexableP", "init"]
+- !private ["s11_StrideableP", "init"]
+- ["s16_SwiftStringViewP", "init"]
+depends-nominal:
+- "s23BidirectionalCollectionP"
+- !private "s13BinaryIntegerP"
+- "s7CVarArgP"
+- "s10CollectionP"
+- "s10ComparableP"
+- "s28CustomDebugStringConvertibleP"
+- "15MobileMessaging27CustomPayloadSupportedTypesP"
+- "s29CustomPlaygroundQuickLookableP"
+- "s17CustomReflectableP"
+- "s23CustomStringConvertibleP"
+- "s9DecodableP"
+- !private "So14DispatchObjectC"
+- !private "So14DispatchSourceC"
+- !private "So30DispatchSourceFileSystemObjectP"
+- !private "So25DispatchSourceMachReceiveP"
+- !private "So22DispatchSourceMachSendP"
+- !private "So28DispatchSourceMemoryPressureP"
+- !private "So21DispatchSourceProcessP"
+- !private "So22DispatchSourceProtocolP"
+- !private "So18DispatchSourceReadP"
+- !private "So20DispatchSourceSignalP"
+- !private "So19DispatchSourceTimerP"
+- !private "So25DispatchSourceUserDataAddP"
+- !private "So24DispatchSourceUserDataOrP"
+- !private "So29DispatchSourceUserDataReplaceP"
+- !private "So19DispatchSourceWriteP"
+- !private "8Dispatch0A4TimeV"
+- !private "8Dispatch0A12TimeIntervalO"
+- "s9EncodableP"
+- "s9EquatableP"
+- "s43ExpressibleByExtendedGraphemeClusterLiteralP"
+- !private "s27ExpressibleByIntegerLiteralP"
+- "s26ExpressibleByStringLiteralP"
+- "s33ExpressibleByUnicodeScalarLiteralP"
+- !private "s17FixedWidthIntegerP"
+- "s8HashableP"
+- !private "Si"
+- "15MobileMessaging17JSONSubscriptTypeP"
+- "s25LosslessStringConvertibleP"
+- "15MobileMessaging11MMPostponerC"
+- "15MobileMessaging7MMQueueO"
+- !private "15MobileMessaging13MMQueueObjectC"
+- "s10MirrorPathP"
+- "So8NSCodingP"
+- "So9NSCopyingP"
+- "So21NSItemProviderReadingP"
+- "So21NSItemProviderWritingP"
+- "So16NSMutableCopyingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "So14NSSecureCodingP"
+- "So8NSStringC"
+- !private "s7NumericP"
+- !private "So9OS_objectC"
+- "s26RangeReplaceableCollectionP"
+- "s8SequenceP"
+- "15MobileMessaging7MMQueueO6SerialO"
+- !private "s13SignedIntegerP"
+- !private "s13SignedNumericP"
+- !private "s12StaticStringV"
+- !private "s10StrideableP"
+- "SS"
+- "s14StringProtocolP"
+- "s16TextOutputStreamP"
+- "s20TextOutputStreamableP"
+- "15MobileMessaging23UserDataFoundationTypesP"
+- "s23_BidirectionalIndexableP"
+- !private "s18_BitwiseOperationsP"
+- "s51_ExpressibleByBuiltinExtendedGraphemeClusterLiteralP"
+- !private "s35_ExpressibleByBuiltinIntegerLiteralP"
+- "s34_ExpressibleByBuiltinStringLiteralP"
+- "s39_ExpressibleByBuiltinUTF16StringLiteralP"
+- "s41_ExpressibleByBuiltinUnicodeScalarLiteralP"
+- "s33_ExpressibleByStringInterpolationP"
+- "s35_HasCustomAnyHashableRepresentationP"
+- "s10_IndexableP"
+- "s14_IndexableBaseP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+- "s21_ObjectiveCBridgeableP"
+- "s26_RangeReplaceableIndexableP"
+- !private "s11_StrideableP"
+- "s16_SwiftStringViewP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreData.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "6c8a4b54d392c2e4a42c113283b2dfaa"

@@ -35,7 +35,7 @@
 
 		<hook type="before_build" src="scripts/fixEntitlementsBuildSetting.js"/>
 		<hook type="before_run" src="scripts/fixEntitlementsBuildSetting.js"/>
-		<framework src="libs/ios/MobileMessaging.framework" custom="true" embed="true"/>
+		<framework src="libs/ios/Carthage/Build/iOS/MobileMessaging.framework" custom="true" embed="true"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
 	

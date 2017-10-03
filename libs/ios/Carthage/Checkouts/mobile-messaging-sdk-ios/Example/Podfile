@@ -1,0 +1,34 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+platform :ios, '8.0'
+
+$podName = 'MobileMessaging'
+$geoPodName = 'MobileMessaging/Geofencing'
+
+target 'MobileMessagingExample' do
+    pod $podName, :path => '../'
+	pod $geoPodName, :path => '../'
+	target 'NotificationServiceExtension' do
+		inherit! :search_paths
+	end
+end
+
+target 'MobileMessagingExample_Tests' do
+    pod $podName, :path => '../'
+	pod $geoPodName, :path => '../'
+end
+
+target 'MobileMessagingExample_Tests_Device' do
+	pod $podName, :path => '../'
+	pod $geoPodName, :path => '../'
+end
+
+post_install do |installer|
+	installer.pods_project.targets.each do |target|
+		if target.name == 'MobileMessaging'
+			target.build_configurations.each do |config|
+				config.build_settings['ENABLE_TESTABILITY'] = 'YES' # for this particular project we want the SDK to be testable
+			end
+		end
+	end
+end
