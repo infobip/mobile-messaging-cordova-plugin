@@ -21,6 +21,7 @@ The document describes library integration steps for your Cordova project.
 
 For iOS project:
 - Xcode 9.0+
+- Carthage (`brew install carthage`)
 - Minimum deployment target 8.0+
 
 For Android project: 
@@ -48,7 +49,21 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.3.4 --nofetch --save
     ```
 
-4. Configure your iOS project to enable Push Notifications. Go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
+4. Configure your iOS project:
+    1. To enable Push Notifications, go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
+    2. On your application targets’ “Build Phases” settings tab, click the “+” icon and choose “New Run Script Phase”. Create a Run Script in which you specify your shell (ex: `/bin/sh`), add the following contents to the script area below the shell:
+        ```bash
+        /usr/local/bin/carthage copy-frameworks
+        ```
+        Please note, that [Carthage](https://github.com/Carthage/Carthage) must be installed on your machine.
+    3. Add the path to the framework under “Input Files”:
+        ```
+        $(SRCROOT)/MyApp/Plugins/com-infobip-plugins-mobilemessaging/MobileMessaging.framework
+        ```
+    4. Add the path to the copied framework to the “Output Files”:
+        ```
+        $(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MobileMessaging.framework
+        ```
 
 5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
