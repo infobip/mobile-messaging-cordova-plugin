@@ -31,7 +31,6 @@ provides-nominal:
 provides-member:
 - ["15MobileMessaging20DateStaticFormattersV", ""]
 - ["s10DictionaryV", ""]
-- ["So12NSDictionaryC", ""]
 - ["So18NotificationCenterC", ""]
 - ["15MobileMessaging28MMNetworkReachabilityManagerC", ""]
 - ["10Foundation4DataV", ""]
@@ -49,10 +48,6 @@ provides-member:
 - ["s10DictionaryV", "userDataFoundationTypes"]
 - ["s10DictionaryV", "keyValuesHash"]
 - ["s10DictionaryV", "nilIfEmpty"]
-- ["s10DictionaryV", "mm_apsAlertBody"]
-- ["s10DictionaryV", "mm_messageId"]
-- ["So12NSDictionaryC", "mm_apsAlertBody"]
-- ["So12NSDictionaryC", "mm_messageId"]
 - ["So18NotificationCenterC", "mm_postNotificationFromMainThread"]
 - ["10Foundation4DataV", "mm_toHexString"]
 - ["SS", "mm_UUIDRegexPattern"]
@@ -83,8 +78,6 @@ provides-member:
 provides-dynamic-lookup:
 - "IS_IOS_BEFORE_10"
 - "SYSTEM_VERSION_LESS_THAN"
-- "mm_apsAlertBody"
-- "mm_messageId"
 - "mm_postNotificationFromMainThread"
 depends-top-level:
 - !private "!"
@@ -135,7 +128,7 @@ depends-top-level:
 - "MessageManagedObject"
 - "MobileMessaging"
 - "MobileMessagingService"
-- "NSDictionary"
+- !private "NSDictionary"
 - "NSError"
 - !private "NSLocalizedString"
 - !private "NSMakeRange"
@@ -275,11 +268,9 @@ depends-member:
 - !private ["s7CVarArgP", "localizedNetworkReachabilityStatusString"]
 - !private ["s7CVarArgP", "localizedUserNotificationString"]
 - !private ["s7CVarArgP", "mm_UUIDRegexPattern"]
-- !private ["s7CVarArgP", "mm_apsAlertBody"]
 - !private ["s7CVarArgP", "mm_dataFromHexadecimalString"]
 - !private ["s7CVarArgP", "mm_isUUID"]
 - !private ["s7CVarArgP", "mm_matches"]
-- !private ["s7CVarArgP", "mm_messageId"]
 - !private ["s7CVarArgP", "notify"]
 - !private ["s7CVarArgP", "post"]
 - !private ["s7CVarArgP", "processInfo"]
@@ -451,11 +442,9 @@ depends-member:
 - !private ["s28CustomDebugStringConvertibleP", "location"]
 - !private ["s28CustomDebugStringConvertibleP", "max"]
 - !private ["s28CustomDebugStringConvertibleP", "mm_UUIDRegexPattern"]
-- !private ["s28CustomDebugStringConvertibleP", "mm_apsAlertBody"]
 - !private ["s28CustomDebugStringConvertibleP", "mm_dataFromHexadecimalString"]
 - !private ["s28CustomDebugStringConvertibleP", "mm_isUUID"]
 - !private ["s28CustomDebugStringConvertibleP", "mm_matches"]
-- !private ["s28CustomDebugStringConvertibleP", "mm_messageId"]
 - !private ["s28CustomDebugStringConvertibleP", "mm_toHexString"]
 - ["s28CustomDebugStringConvertibleP", "none"]
 - !private ["s28CustomDebugStringConvertibleP", "notify"]
@@ -577,11 +566,9 @@ depends-member:
 - !private ["s17CustomReflectableP", "location"]
 - !private ["s17CustomReflectableP", "max"]
 - !private ["s17CustomReflectableP", "mm_UUIDRegexPattern"]
-- !private ["s17CustomReflectableP", "mm_apsAlertBody"]
 - !private ["s17CustomReflectableP", "mm_dataFromHexadecimalString"]
 - !private ["s17CustomReflectableP", "mm_isUUID"]
 - !private ["s17CustomReflectableP", "mm_matches"]
-- !private ["s17CustomReflectableP", "mm_messageId"]
 - !private ["s17CustomReflectableP", "mm_toHexString"]
 - ["s17CustomReflectableP", "none"]
 - !private ["s17CustomReflectableP", "reduce"]
@@ -658,11 +645,9 @@ depends-member:
 - !private ["s23CustomStringConvertibleP", "location"]
 - !private ["s23CustomStringConvertibleP", "max"]
 - !private ["s23CustomStringConvertibleP", "mm_UUIDRegexPattern"]
-- !private ["s23CustomStringConvertibleP", "mm_apsAlertBody"]
 - !private ["s23CustomStringConvertibleP", "mm_dataFromHexadecimalString"]
 - !private ["s23CustomStringConvertibleP", "mm_isUUID"]
 - !private ["s23CustomStringConvertibleP", "mm_matches"]
-- !private ["s23CustomStringConvertibleP", "mm_messageId"]
 - !private ["s23CustomStringConvertibleP", "mm_toHexString"]
 - !private ["s23CustomStringConvertibleP", "notify"]
 - !private ["s23CustomStringConvertibleP", "post"]
@@ -785,16 +770,12 @@ depends-member:
 - ["s10DictionaryV", "Hashable"]
 - ["s10DictionaryV", "Int"]
 - ["s10DictionaryV", "Key"]
-- !private ["s10DictionaryV", "NSDictionary"]
-- ["s10DictionaryV", "String"]
 - ["s10DictionaryV", "UserDataFoundationTypes"]
 - ["s10DictionaryV", "Value"]
 - ["s10DictionaryV", "customUserDataValues"]
 - !private ["s10DictionaryV", "init"]
 - !private ["s10DictionaryV", "isEmpty"]
 - ["s10DictionaryV", "keyValuesHash"]
-- ["s10DictionaryV", "mm_apsAlertBody"]
-- ["s10DictionaryV", "mm_messageId"]
 - ["s10DictionaryV", "nilIfEmpty"]
 - !private ["s10DictionaryV", "reduce"]
 - !private ["s10DictionaryV", "subscript"]
@@ -924,11 +905,9 @@ depends-member:
 - !private ["s9EquatableP", "location"]
 - !private ["s9EquatableP", "max"]
 - !private ["s9EquatableP", "mm_UUIDRegexPattern"]
-- !private ["s9EquatableP", "mm_apsAlertBody"]
 - !private ["s9EquatableP", "mm_dataFromHexadecimalString"]
 - !private ["s9EquatableP", "mm_isUUID"]
 - !private ["s9EquatableP", "mm_matches"]
-- !private ["s9EquatableP", "mm_messageId"]
 - !private ["s9EquatableP", "mm_toHexString"]
 - ["s9EquatableP", "none"]
 - !private ["s9EquatableP", "notify"]
@@ -951,7 +930,6 @@ depends-member:
 - !private ["s9EquatableP", "startMonitoring"]
 - !private ["s9EquatableP", "stopMonitoring"]
 - !private ["s9EquatableP", "strtoul"]
-- !private ["s9EquatableP", "subscript"]
 - !private ["s9EquatableP", "substring"]
 - !private ["s9EquatableP", "systemVersion"]
 - !private ["s9EquatableP", "timeIntervalSinceReferenceDate"]
@@ -985,8 +963,6 @@ depends-member:
 - !private ["s30ExpressibleByDictionaryLiteralP", "init"]
 - !private ["s30ExpressibleByDictionaryLiteralP", "isEmpty"]
 - !private ["s30ExpressibleByDictionaryLiteralP", "isEqual"]
-- !private ["s30ExpressibleByDictionaryLiteralP", "mm_apsAlertBody"]
-- !private ["s30ExpressibleByDictionaryLiteralP", "mm_messageId"]
 - !private ["s30ExpressibleByDictionaryLiteralP", "reduce"]
 - !private ["s30ExpressibleByDictionaryLiteralP", "subscript"]
 - !private ["s30ExpressibleByDictionaryLiteralP", "updateValue"]
@@ -1151,11 +1127,9 @@ depends-member:
 - !private ["s8HashableP", "location"]
 - !private ["s8HashableP", "max"]
 - !private ["s8HashableP", "mm_UUIDRegexPattern"]
-- !private ["s8HashableP", "mm_apsAlertBody"]
 - !private ["s8HashableP", "mm_dataFromHexadecimalString"]
 - !private ["s8HashableP", "mm_isUUID"]
 - !private ["s8HashableP", "mm_matches"]
-- !private ["s8HashableP", "mm_messageId"]
 - !private ["s8HashableP", "mm_toHexString"]
 - ["s8HashableP", "none"]
 - !private ["s8HashableP", "notify"]
@@ -1176,7 +1150,6 @@ depends-member:
 - !private ["s8HashableP", "startMonitoring"]
 - !private ["s8HashableP", "stopMonitoring"]
 - !private ["s8HashableP", "strtoul"]
-- !private ["s8HashableP", "subscript"]
 - !private ["s8HashableP", "substring"]
 - !private ["s8HashableP", "systemVersion"]
 - !private ["s8HashableP", "timeIntervalSinceReferenceDate"]
@@ -1398,16 +1371,13 @@ depends-member:
 - ["So8NSCodingP", "locale"]
 - !private ["So8NSCodingP", "localizedUserNotificationString"]
 - !private ["So8NSCodingP", "mm_UUIDRegexPattern"]
-- !private ["So8NSCodingP", "mm_apsAlertBody"]
 - !private ["So8NSCodingP", "mm_dataFromHexadecimalString"]
 - !private ["So8NSCodingP", "mm_isUUID"]
 - !private ["So8NSCodingP", "mm_matches"]
-- !private ["So8NSCodingP", "mm_messageId"]
 - !private ["So8NSCodingP", "range"]
 - !private ["So8NSCodingP", "replacingOccurrences"]
 - !private ["So8NSCodingP", "request"]
 - !private ["So8NSCodingP", "startIndex"]
-- !private ["So8NSCodingP", "subscript"]
 - !private ["So8NSCodingP", "substring"]
 - ["So8NSCodingP", "timeStyle"]
 - ["So8NSCodingP", "timeZone"]
@@ -1434,39 +1404,25 @@ depends-member:
 - ["So9NSCopyingP", "locale"]
 - !private ["So9NSCopyingP", "localizedUserNotificationString"]
 - !private ["So9NSCopyingP", "mm_UUIDRegexPattern"]
-- !private ["So9NSCopyingP", "mm_apsAlertBody"]
 - !private ["So9NSCopyingP", "mm_dataFromHexadecimalString"]
 - !private ["So9NSCopyingP", "mm_isUUID"]
 - !private ["So9NSCopyingP", "mm_matches"]
-- !private ["So9NSCopyingP", "mm_messageId"]
 - !private ["So9NSCopyingP", "range"]
 - !private ["So9NSCopyingP", "replacingOccurrences"]
 - !private ["So9NSCopyingP", "request"]
 - !private ["So9NSCopyingP", "startIndex"]
-- !private ["So9NSCopyingP", "subscript"]
 - !private ["So9NSCopyingP", "substring"]
 - ["So9NSCopyingP", "timeStyle"]
 - ["So9NSCopyingP", "timeZone"]
 - !private ["So9NSCopyingP", "trimmingCharacters"]
 - !private ["So9NSCopyingP", "userInfo"]
 - !private ["So9NSCopyingP", "withCString"]
-- !private ["So12NSDictionaryC", "NSDictionary"]
-- ["So12NSDictionaryC", "String"]
 - !private ["So12NSDictionaryC", "init"]
 - !private ["So12NSDictionaryC", "isEqual"]
-- ["So12NSDictionaryC", "mm_apsAlertBody"]
-- ["So12NSDictionaryC", "mm_messageId"]
-- !private ["So12NSDictionaryC", "subscript"]
 - !private ["So17NSFastEnumerationP", "init"]
 - !private ["So17NSFastEnumerationP", "isEqual"]
-- !private ["So17NSFastEnumerationP", "mm_apsAlertBody"]
-- !private ["So17NSFastEnumerationP", "mm_messageId"]
-- !private ["So17NSFastEnumerationP", "subscript"]
 - !private ["So20NSFetchRequestResultP", "init"]
 - !private ["So20NSFetchRequestResultP", "isEqual"]
-- !private ["So20NSFetchRequestResultP", "mm_apsAlertBody"]
-- !private ["So20NSFetchRequestResultP", "mm_messageId"]
-- !private ["So20NSFetchRequestResultP", "subscript"]
 - !private ["So21NSItemProviderReadingP", "addingPercentEncoding"]
 - !private ["So21NSItemProviderReadingP", "characters"]
 - !private ["So21NSItemProviderReadingP", "compare"]
@@ -1514,14 +1470,11 @@ depends-member:
 - !private ["So16NSMutableCopyingP", "isEqual"]
 - !private ["So16NSMutableCopyingP", "localizedUserNotificationString"]
 - !private ["So16NSMutableCopyingP", "mm_UUIDRegexPattern"]
-- !private ["So16NSMutableCopyingP", "mm_apsAlertBody"]
 - !private ["So16NSMutableCopyingP", "mm_dataFromHexadecimalString"]
 - !private ["So16NSMutableCopyingP", "mm_isUUID"]
 - !private ["So16NSMutableCopyingP", "mm_matches"]
-- !private ["So16NSMutableCopyingP", "mm_messageId"]
 - !private ["So16NSMutableCopyingP", "replacingOccurrences"]
 - !private ["So16NSMutableCopyingP", "startIndex"]
-- !private ["So16NSMutableCopyingP", "subscript"]
 - !private ["So16NSMutableCopyingP", "substring"]
 - !private ["So16NSMutableCopyingP", "trimmingCharacters"]
 - !private ["So16NSMutableCopyingP", "userInfo"]
@@ -1532,7 +1485,6 @@ depends-member:
 - ["So8NSObjectC", "IS_IOS_BEFORE_10"]
 - !private ["So8NSObjectC", "MMQueue"]
 - !private ["So8NSObjectC", "MatchingOptions"]
-- !private ["So8NSObjectC", "NSDictionary"]
 - !private ["So8NSObjectC", "NSNotification"]
 - !private ["So8NSObjectC", "Name"]
 - !private ["So8NSObjectC", "NotificationCenter"]
@@ -1567,11 +1519,9 @@ depends-member:
 - !private ["So8NSObjectC", "localizedNetworkReachabilityStatusString"]
 - !private ["So8NSObjectC", "localizedUserNotificationString"]
 - !private ["So8NSObjectC", "mm_UUIDRegexPattern"]
-- ["So8NSObjectC", "mm_apsAlertBody"]
 - !private ["So8NSObjectC", "mm_dataFromHexadecimalString"]
 - !private ["So8NSObjectC", "mm_isUUID"]
 - !private ["So8NSObjectC", "mm_matches"]
-- ["So8NSObjectC", "mm_messageId"]
 - ["So8NSObjectC", "mm_postNotificationFromMainThread"]
 - !private ["So8NSObjectC", "notify"]
 - !private ["So8NSObjectC", "post"]
@@ -1585,7 +1535,6 @@ depends-member:
 - !private ["So8NSObjectC", "startIndex"]
 - !private ["So8NSObjectC", "startMonitoring"]
 - !private ["So8NSObjectC", "stopMonitoring"]
-- !private ["So8NSObjectC", "subscript"]
 - !private ["So8NSObjectC", "substring"]
 - !private ["So8NSObjectC", "systemVersion"]
 - ["So8NSObjectC", "timeStyle"]
@@ -1628,11 +1577,9 @@ depends-member:
 - !private ["So16NSObjectProtocolP", "localizedNetworkReachabilityStatusString"]
 - !private ["So16NSObjectProtocolP", "localizedUserNotificationString"]
 - !private ["So16NSObjectProtocolP", "mm_UUIDRegexPattern"]
-- !private ["So16NSObjectProtocolP", "mm_apsAlertBody"]
 - !private ["So16NSObjectProtocolP", "mm_dataFromHexadecimalString"]
 - !private ["So16NSObjectProtocolP", "mm_isUUID"]
 - !private ["So16NSObjectProtocolP", "mm_matches"]
-- !private ["So16NSObjectProtocolP", "mm_messageId"]
 - !private ["So16NSObjectProtocolP", "notify"]
 - !private ["So16NSObjectProtocolP", "post"]
 - !private ["So16NSObjectProtocolP", "processInfo"]
@@ -1645,7 +1592,6 @@ depends-member:
 - !private ["So16NSObjectProtocolP", "startIndex"]
 - !private ["So16NSObjectProtocolP", "startMonitoring"]
 - !private ["So16NSObjectProtocolP", "stopMonitoring"]
-- !private ["So16NSObjectProtocolP", "subscript"]
 - !private ["So16NSObjectProtocolP", "substring"]
 - !private ["So16NSObjectProtocolP", "systemVersion"]
 - ["So16NSObjectProtocolP", "timeStyle"]
@@ -1672,16 +1618,13 @@ depends-member:
 - !private ["So14NSSecureCodingP", "isEqual"]
 - !private ["So14NSSecureCodingP", "localizedUserNotificationString"]
 - !private ["So14NSSecureCodingP", "mm_UUIDRegexPattern"]
-- !private ["So14NSSecureCodingP", "mm_apsAlertBody"]
 - !private ["So14NSSecureCodingP", "mm_dataFromHexadecimalString"]
 - !private ["So14NSSecureCodingP", "mm_isUUID"]
 - !private ["So14NSSecureCodingP", "mm_matches"]
-- !private ["So14NSSecureCodingP", "mm_messageId"]
 - !private ["So14NSSecureCodingP", "range"]
 - !private ["So14NSSecureCodingP", "replacingOccurrences"]
 - !private ["So14NSSecureCodingP", "request"]
 - !private ["So14NSSecureCodingP", "startIndex"]
-- !private ["So14NSSecureCodingP", "subscript"]
 - !private ["So14NSSecureCodingP", "substring"]
 - !private ["So14NSSecureCodingP", "trimmingCharacters"]
 - !private ["So14NSSecureCodingP", "userInfo"]
@@ -1857,11 +1800,9 @@ depends-member:
 - !private ["s8SequenceP", "isEmpty"]
 - !private ["s8SequenceP", "isEqual"]
 - !private ["s8SequenceP", "mm_UUIDRegexPattern"]
-- !private ["s8SequenceP", "mm_apsAlertBody"]
 - !private ["s8SequenceP", "mm_dataFromHexadecimalString"]
 - !private ["s8SequenceP", "mm_isUUID"]
 - !private ["s8SequenceP", "mm_matches"]
-- !private ["s8SequenceP", "mm_messageId"]
 - !private ["s8SequenceP", "mm_toHexString"]
 - !private ["s8SequenceP", "reduce"]
 - !private ["s8SequenceP", "replacingOccurrences"]
@@ -2384,11 +2325,9 @@ depends-member:
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "localizedNetworkReachabilityStatusString"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "localizedUserNotificationString"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_UUIDRegexPattern"]
-- !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_apsAlertBody"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_dataFromHexadecimalString"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_isUUID"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_matches"]
-- !private ["10Foundation27_KeyValueCodingAndObservingP", "mm_messageId"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "notify"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "post"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "processInfo"]
@@ -2401,7 +2340,6 @@ depends-member:
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "startIndex"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "startMonitoring"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "stopMonitoring"]
-- !private ["10Foundation27_KeyValueCodingAndObservingP", "subscript"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "substring"]
 - !private ["10Foundation27_KeyValueCodingAndObservingP", "systemVersion"]
 - ["10Foundation27_KeyValueCodingAndObservingP", "timeStyle"]
@@ -2618,7 +2556,7 @@ depends-nominal:
 - !private "s17MutableCollectionP"
 - "So8NSCodingP"
 - "So9NSCopyingP"
-- "So12NSDictionaryC"
+- !private "So12NSDictionaryC"
 - !private "So17NSFastEnumerationP"
 - !private "So20NSFetchRequestResultP"
 - "So21NSItemProviderReadingP"
@@ -2710,16 +2648,16 @@ depends-external:
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/CoreGraphics.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/Swift.swiftmodule"
 - "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/i386/UIKit.swiftmodule"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
-- "/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
-interface-hash: "d0b61ec79c05bae6c48907dd38c5158f"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/MobileMessaging-umbrella.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingAppDelegateObjc.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MobileMessagingCordovaApplicationDelegate.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworking.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLResponseSerialization.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLRequestSerialization.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFURLSessionManager.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFHTTPSessionManager.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFNetworkReachabilityManager.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Core/MMNotifications.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/mobile-messaging-sdk-ios/Classes/Vendor/AFNetworking/AFSecurityPolicy.h"
+- "/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap"
+interface-hash: "ecc6048925fb1e1cbd052d6f8c8488b9"

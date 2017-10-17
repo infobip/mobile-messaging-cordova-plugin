@@ -182,7 +182,7 @@
         "predefinedUserData":{
           "email": "john@mail.com",
           "msisdn" : "79697162937"
-        }	
+        } 
       },
       "responseBody": {
         "predefinedUserData": {

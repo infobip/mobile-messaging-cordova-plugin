@@ -1208,12 +1208,6 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 @end
 
 
-@interface NSDictionary<KeyType, ObjectType> (SWIFT_EXTENSION(MobileMessaging))
-@property (nonatomic, readonly, copy) NSString * _Nullable mm_apsAlertBody;
-@property (nonatomic, readonly, copy) NSString * _Nullable mm_messageId;
-@end
-
-
 
 
 @interface NSError (SWIFT_EXTENSION(MobileMessaging))
@@ -1228,15 +1222,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
-@end
-
-
 @interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
-@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
@@ -1244,17 +1234,21 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 @end
 
 
-
-
-
-
-
-
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
+
+
+
+
+
+
 @interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@end
+
+
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 @class NotificationActionOptions;
