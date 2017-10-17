@@ -1,3 +1,10 @@
+repositories {
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
+}
+
 dependencies {
     compile 'org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:1.8.3@aar'
     compile('org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:1.8.3@aar') {
