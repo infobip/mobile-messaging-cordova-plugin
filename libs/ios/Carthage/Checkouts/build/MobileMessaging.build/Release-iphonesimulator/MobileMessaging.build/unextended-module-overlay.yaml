@@ -3,11 +3,11 @@
   'case-sensitive': 'false',
   'roots': [{
     'type': 'directory',
-    'name': '/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/Release-iphonesimulator/MobileMessaging/MobileMessaging.framework/Modules'
+    'name': '/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/Release-iphonesimulator/MobileMessaging/MobileMessaging.framework/Modules'
     'contents': [{
       'type': 'file',
       'name': 'module.modulemap',
-      'external-contents': '/Users/andreykadochnikov/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap',
+      'external-contents': '/Users/mobile_ci/jenkins/workspace/infobip-mobile-messaging-cordova-plugin/libs/ios/Carthage/Checkouts/build/MobileMessaging.build/Release-iphonesimulator/MobileMessaging.build/unextended-module.modulemap',
     }]
   }]
 }

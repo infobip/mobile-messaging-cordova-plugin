@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/MobileMessaging-Swift.h</key>
 		<data>
-		Gm6lX6OiPj4tVHfXK98obG1Sp0Y=
+		lUF3WRvo8UzzZ9JzufLKz9GarZE=
 		</data>
 		<key>Headers/MobileMessaging-umbrella.h</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/MobileMessaging.swiftmodule/i386.swiftmodule</key>
 		<data>
-		SqgvzEU7RWNJed4UfP8Yg0WHzGM=
+		CWCu4zKpin0II3JB1fMsL9TCVFU=
 		</data>
 		<key>Modules/MobileMessaging.swiftmodule/x86_64.swiftdoc</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>Modules/MobileMessaging.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		EXAdf7h5eWLPAJ5H6wp+11hd5zc=
+		CrlD8obBq03iaeNsweQt0i0tmvo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -110,11 +110,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Gm6lX6OiPj4tVHfXK98obG1Sp0Y=
+			lUF3WRvo8UzzZ9JzufLKz9GarZE=
 			</data>
 			<key>hash2</key>
 			<data>
-			24vWPFBWtN+Ls36XGVglQo/R/1ABSWNhywuDcCf9ZwU=
+			E602I3HULTL61QfAh6qR/gCbGw1s+HEj72sb/GZLFE4=
 			</data>
 		</dict>
 		<key>Headers/MobileMessaging-umbrella.h</key>
@@ -209,11 +209,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SqgvzEU7RWNJed4UfP8Yg0WHzGM=
+			CWCu4zKpin0II3JB1fMsL9TCVFU=
 			</data>
 			<key>hash2</key>
 			<data>
-			raGEySl8wBmjP1BtXdFw31EwC/7Asyx52wbIz82vltg=
+			fVQ/SQcFOD5DktVzcRyrpbvBTSaiAydbJsgqdwObE/M=
 			</data>
 		</dict>
 		<key>Modules/MobileMessaging.swiftmodule/x86_64.swiftdoc</key>
@@ -231,11 +231,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EXAdf7h5eWLPAJ5H6wp+11hd5zc=
+			CrlD8obBq03iaeNsweQt0i0tmvo=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ls8VPYKbsSJusri8v2qa/qJ3HVjzDSirXTtcGucP6g8=
+			Zf21djs+Vro4obtqdYA2CCCejV5XYbSxQFXyQxcGGBM=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

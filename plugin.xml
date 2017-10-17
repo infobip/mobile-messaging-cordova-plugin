@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com-infobip-plugins-mobilemessaging"
-	version="0.3.4">
+	version="0.4.0">
 	
 	<name>MobileMessagingCordova</name>
 	<keywords>Infobip,push</keywords>
