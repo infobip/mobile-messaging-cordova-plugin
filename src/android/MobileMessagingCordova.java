@@ -590,11 +590,24 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("contentUrl", message.getContentUrl())
 					.putOpt("seen", message.getSeenTimestamp() != 0)
 					.putOpt("seenDate", message.getSeenTimestamp())
-					.putOpt("geo", MobileMessagingCore.hasGeo(message));
+					.putOpt("geo", hasGeo(message));
         } catch (JSONException e) {
             Log.w(TAG, "Cannot convert message to JSON: " + e.getMessage());
             Log.d(TAG, Log.getStackTraceString(e));
             return null;
+        }
+    }
+
+    private static boolean hasGeo(Message message) {
+        if (message == null || message.getInternalData() == null) {
+            return false;
+        }
+
+        try {
+            JSONObject geo = new JSONObject(message.getInternalData());
+            return geo.getJSONArray("geo") != null && geo.getJSONArray("geo").length() > 0;
+        } catch (JSONException e) {
+            return false;
         }
     }
 
