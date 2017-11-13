@@ -1,0 +1,18 @@
+{
+  "iOS" : [
+    {
+      "hash" : "f52b1eeb6da6cdab702c56589aec32052c9d6c36fc3db22050fe68f2cb831fb1",
+      "name" : "MobileMessaging"
+    }
+  ],
+  "commitish" : "1d29bfb970186554d6473bc4688d435c43892077",
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
+  "Mac" : [
+
+  ]
+}
