@@ -1,1 +1,1 @@
-git "file:///Users/okoroleva/infobip-mobile-messaging-ios" "okoroleva-MM-2251_CordovaDelegateFix"
+github "infobip/mobile-messaging-sdk-ios" "2.8.9"
