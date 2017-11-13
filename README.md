@@ -20,7 +20,7 @@ The document describes library integration steps for your Cordova project.
 - node (tested with 7.5.0)
 
 For iOS project:
-- Xcode 9.0+
+- Xcode 9.1
 - Carthage (`brew install carthage`)
 - Minimum deployment target 8.0+
 
