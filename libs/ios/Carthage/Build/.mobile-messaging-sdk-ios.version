@@ -1,11 +1,11 @@
 {
   "iOS" : [
     {
-      "hash" : "15f1a544751a13e2b7d2264232cc0f57acc220f70de50d4d08744a5b82d58601",
+      "hash" : "15ec9d0e28d32e6dd97852bce741a8b903ae66cbc92cb7bd4de6150c7a2174a4",
       "name" : "MobileMessaging"
     }
   ],
-  "commitish" : "2.8.9",
+  "commitish" : "3.0.2",
   "watchOS" : [
 
   ],

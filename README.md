@@ -225,7 +225,6 @@ MobileMessaging.syncUserData({
         gender:'M',
         birthdate:'1985-12-31',
         email:'john.smith@infobip.com',
-        telephone:'385989111111',
         customData: {
             customString: 'CustomString',
             customDate: new Date(),
