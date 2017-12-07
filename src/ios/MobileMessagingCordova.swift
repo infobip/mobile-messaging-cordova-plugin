@@ -463,8 +463,7 @@ extension MMUser {
 			MMUserPredefinedDataKeys.MiddleName: "middleName",
 			MMUserPredefinedDataKeys.Gender: "gender",
 			MMUserPredefinedDataKeys.Birthdate: "birthdate",
-			MMUserPredefinedDataKeys.Email: "email",
-			MMUserPredefinedDataKeys.Telephone: "telephone"
+			MMUserPredefinedDataKeys.Email: "email"
 		]
 	}
 	
