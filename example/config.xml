@@ -4,8 +4,8 @@
     <description>
         A sample Cordova mobile push demo.
     </description>
-    <author email="andrey.berezhnoy@infobip.com" href="http://infobip.com">
-        Mobile Messaing Team
+    <author email="push.support@infobip.com" href="https://infobip.com">
+        Mobile Messaging Team
     </author>
     <content src="index.html" />
     <access origin="*" />
