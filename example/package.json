@@ -1,36 +1,35 @@
 {
-    "name": "cordovamobilepushdemo",
-    "displayName": "CordovaMobilePushDemo",
-    "version": "1.0.0",
-    "description": "A sample Cordova mobile push demo.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "cordovamobilepushdemo",
+  "displayName": "CordovaMobilePushDemo",
+  "version": "1.0.0",
+  "description": "A sample Cordova mobile push demo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "andrey.berezhnoy@infobip.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "com-infobip-plugins-mobilemessaging": "..",
+    "cordova-android": "^7.0.0",
+    "cordova-browser": "^4.1.0",
+    "cordova-custom-config": "^5.0.2",
+    "cordova-ios": "^4.5.4",
+    "cordova-plugin-add-swift-support": "^1.7.1",
+    "cordova-plugin-cocoapod-support": "^1.3.0",
+    "cordova-plugin-inappbrowser": "^1.7.2",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "infobip-mobile-messaging-cordova-plugin": "file:///Users/tjuric/MobileFrameworkProjects/infobip-mobile-messaging-cordova-plugin"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "com-infobip-plugins-mobilemessaging": {},
+      "cordova-plugin-inappbrowser": {}
     },
-    "author": "andrey.berezhnoy@infobip.com",
-    "license": "Apache-2.0",
-    "dependencies": {
-        "com-infobip-plugins-mobilemessaging": "..",
-        "cordova-android": "^6.2.3",
-        "cordova-browser": "^4.1.0",
-        "cordova-custom-config": "file:node_modules/cordova-custom-config",
-        "cordova-ios": "^4.4.0",
-        "cordova-plugin-add-swift-support": "^1.7.0",
-        "cordova-plugin-cocoapod-support": "^1.3.0",
-        "cordova-plugin-inappbrowser": "^1.7.1",
-        "cordova-plugin-whitelist": "^1.3.2",
-        "infobip-mobile-messaging-cordova-plugin": "file:../"
-    },
-    "cordova": {
-        "plugins": {
-            "cordova-plugin-whitelist": {},
-            "com-infobip-plugins-mobilemessaging": {},
-            "cordova-plugin-inappbrowser": {}
-        },
-        "platforms": [
-            "android",
-            "browser",
-            "ios"
-        ]
-    }
+    "platforms": [
+      "browser",
+      "ios"
+    ]
+  }
 }

@@ -26,10 +26,9 @@
         <preference name="ios-XCBuildConfiguration-CODE_SIGN_ENTITLEMENTS" value="$(PROJECT_DIR)/$(PROJECT_NAME)/Entitlements-$(CONFIGURATION).plist" />
     </platform>
     <icon src="res/icon.png" />
-    <engine name="android" spec="^6.2.3" />
-    <engine name="browser" spec="^4.1.0" />
-    <engine name="ios" spec="^4.4.0" />
     <plugin name="com-infobip-plugins-mobilemessaging" spec=".." />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
+    <engine name="browser" spec="^4.1.0" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
