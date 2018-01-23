@@ -24,8 +24,6 @@ import org.infobip.mobile.messaging.CustomUserDataValue;
 import org.infobip.mobile.messaging.Event;
 import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
-import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
-import org.infobip.mobile.messaging.MobileMessagingCore;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
@@ -33,11 +31,12 @@ import org.infobip.mobile.messaging.geo.Area;
 import org.infobip.mobile.messaging.geo.Geo;
 import org.infobip.mobile.messaging.geo.GeoEvent;
 import org.infobip.mobile.messaging.geo.MobileGeo;
+import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
+import org.infobip.mobile.messaging.util.DateTimeUtil;
 import org.infobip.mobile.messaging.util.PreferenceHelper;
-import org.infobip.mobile.messaging.util.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -549,13 +548,14 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.OK, object));
     }
 
-    private static void sendCallbackWithResult(CallbackContext context, PluginResult result, boolean...keepCallback) {
+    private static void sendCallbackWithResult(CallbackContext context, PluginResult result, boolean... keepCallback) {
         result.setKeepCallback(keepCallback != null && keepCallback.length > 0 && keepCallback[0]);
         context.sendPluginResult(result);
     }
 
     /**
      * Creates new json object based on message bundle
+     *
      * @param bundle message bundle
      * @return message object in json format
      */
@@ -570,6 +570,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     /**
      * Creates json from a message object
+     *
      * @param message message object
      * @return message json
      */
@@ -588,9 +589,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("receivedTimestamp", message.getReceivedTimestamp())
                     .putOpt("customPayload", message.getCustomPayload())
                     .putOpt("contentUrl", message.getContentUrl())
-					.putOpt("seen", message.getSeenTimestamp() != 0)
-					.putOpt("seenDate", message.getSeenTimestamp())
-					.putOpt("geo", hasGeo(message));
+                    .putOpt("seen", message.getSeenTimestamp() != 0)
+                    .putOpt("seenDate", message.getSeenTimestamp())
+                    .putOpt("geo", hasGeo(message));
         } catch (JSONException e) {
             Log.w(TAG, "Cannot convert message to JSON: " + e.getMessage());
             Log.d(TAG, Log.getStackTraceString(e));
@@ -613,6 +614,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     /**
      * Creates array of json objects from list of messages
+     *
      * @param messages list of messages
      * @return array of jsons representing messages
      */
@@ -630,6 +632,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     /**
      * Creates new messages from json object
+     *
      * @param json json object
      * @return new {@link Message} object.
      */
@@ -655,6 +658,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     /**
      * Geo mapper
+     *
      * @param bundle where to read geo objects from
      * @return list of json objects representing geo objects
      */
@@ -677,7 +681,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                                         .put("lon", area.getLongitude()))
                                 .put("radius", area.getRadius())
                                 .put("title", area.getTitle()))
-                        );
+                );
             } catch (JSONException e) {
                 Log.w(TAG, "Cannot convert geo to JSON: " + e.getMessage());
                 Log.d(TAG, Log.getStackTraceString(e));
@@ -747,7 +751,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     continue;
                 }
 
-                predefined.put(key, json.opt(key));
+                Object value = json.opt(key);
+                if (value instanceof String) {
+                    try {
+                        String toYMDString = DateTimeUtil.DateToYMDString(dateFromString((String) value));
+                        predefined.put(key, toYMDString);
+                    } catch (Exception ignored) {
+                        predefined.put(key, (String) value);
+                    }
+                } else {
+                    predefined.put(key, value);
+                }
             }
 
             Map<String, CustomUserDataValue> custom = new HashMap<String, CustomUserDataValue>();
@@ -804,7 +818,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
         }
 
-        private static void saveMessages(Context context, Message...messages) {
+        private static void saveMessages(Context context, Message... messages) {
             List<String> newMessages = new ArrayList<String>(messages.length);
             for (Message m : messages) {
                 newMessages.add(serializer.serialize(m));
@@ -851,7 +865,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return set;
         }
 
-        private static Set<String> saveStringsToSet(Context context, String key, String...strings) {
+        private static Set<String> saveStringsToSet(Context context, String key, String... strings) {
             return saveStringSet(context, key, new HashSet<String>(Arrays.asList(strings)));
         }
 
@@ -895,7 +909,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         @Override
-        public void save(Context context, Message...messages) {
+        public void save(Context context, Message... messages) {
             if (!saveJS(messages)) {
                 Log.w(TAG, "JS storage not available yet, will cache");
                 CacheManager.saveMessages(context, messages);
