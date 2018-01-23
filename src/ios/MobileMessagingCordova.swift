@@ -446,6 +446,14 @@ extension BaseMessage {
 
 extension MMUser {
 	
+	static var dateYMDFormatter: DateFormatter = {
+		let result = DateFormatter()
+		result.locale = Locale(identifier: "en_US_POSIX")
+		result.dateFormat = "yyyy-MM-dd"
+		result.timeZone = TimeZone(secondsFromGMT: 0)
+		return result
+	}()
+	
 	static var dateFormatter: DateFormatter = {
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -466,13 +474,43 @@ extension MMUser {
 	}
 	
 	func set(dictionary: [String:AnyObject?]) {
-		for (key, jsonKey) in predefinedKeysDictionary() {
-			if let value = dictionary[jsonKey] as? String? {
-				set(predefinedData: value, forKey: key)
+		if let userMsisdn = dictionary["msisdn"] as? String? {
+			self.msisdn = userMsisdn
+		}
+		
+		if let userFirstName = dictionary["firstName"] as? String? {
+			self.firstName = userFirstName
+		}
+		
+		if let userLastName = dictionary["lastName"] as? String? {
+			self.lastName = userLastName
+		}
+		
+		if let userMiddleName = dictionary["middleName"] as? String? {
+			self.middleName = userMiddleName
+		}
+		
+		if let userGender = dictionary["gender"] as? String? {
+			if (userGender == "F") {
+				self.gender = UserGender.Female
+			} else if (userGender == "M") {
+				self.gender = UserGender.Male
+			} else {
+				self.gender = nil
 			}
 		}
 		
-		if let externalUserId = dictionary["externalUserId"] as? String {
+		if let userBirthdate = dictionary["birthdate"] as? String {
+			self.birthdate = MMUser.dateFormatter.date(from: userBirthdate)
+		} else {
+			self.birthdate = nil
+		}
+		
+		if let userEmail = dictionary["email"] as? String? {
+			self.email = userEmail
+		}
+		
+		if let externalUserId = dictionary["externalUserId"] as? String? {
 			self.externalId = externalUserId
 		}
 		
@@ -506,10 +544,37 @@ extension MMUser {
 	func dictionary() -> [String: Any] {
 		var result = [String: Any]()
 		
-		for (key, jsonKey) in predefinedKeysDictionary() {
-			if let value = MobileMessaging.currentUser?.predefinedData(forKey: key) {
-				result[jsonKey] = value
+		if let msisdn = MobileMessaging.currentUser?.msisdn {
+			result["msisdn"] = msisdn
+		}
+		
+		if let firstName = MobileMessaging.currentUser?.firstName {
+			result["firstName"] = firstName
+		}
+		
+		if let lastName = MobileMessaging.currentUser?.lastName {
+			result["lastName"] = lastName
+		}
+		
+		if let middleName = MobileMessaging.currentUser?.middleName {
+			result["middleName"] = middleName
+		}
+		
+		if let gender = MobileMessaging.currentUser?.gender {
+			switch gender {
+			case .Female:
+				result["gender"] = "F"
+			case .Male:
+				result["gender"] = "M"
 			}
+		}
+		
+		if let birthdate = MobileMessaging.currentUser?.birthdate {
+			result["birthdate"] = MMUser.dateYMDFormatter.string(from: birthdate as Date)
+		}
+		
+		if let email = MobileMessaging.currentUser?.email {
+			result["email"] = email
 		}
 		
 		if let externalUserId = MobileMessaging.currentUser?.externalId {
