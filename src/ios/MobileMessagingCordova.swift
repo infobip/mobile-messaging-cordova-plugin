@@ -372,7 +372,7 @@ fileprivate class MobileMessagingEventsManager {
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
-		if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId, !notificationExtensionAppGroupId.isEmpty() {
+		if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId, !notificationExtensionAppGroupId.isEmpty {
 			mobileMessaging = mobileMessaging?.withAppGroupId(notificationExtensionAppGroupId)
 		}
 		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
