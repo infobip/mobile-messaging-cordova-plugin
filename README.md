@@ -5,6 +5,9 @@
 Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in your application and access to the features of [Infobip IP Messaging Platform](https://portal.infobip.com/push/). 
 The document describes library integration steps for your Cordova project.
 
+> ### Notice
+> We highly encourage to configure [Notification Service Extension](#delivery-improvements-and-rich-content-notifications) for iOS. Apart from providing support for rich content it also dramatically improves delivery reporting for Push Notification on iOS. Upon implementing Notification Service Extension, SDK will be able to report delivery even when the application is killed.
+
 ## Features
 - [Receiving push messages](#messagereceived-event)
 - [Marking messages as seen](#mark-messages-as-seen)
@@ -58,12 +61,14 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         Please note, that [Carthage](https://github.com/Carthage/Carthage) must be installed on your machine.
     3. Add the path to the framework under “Input Files”:
         ```
-        $(SRCROOT)/MyApp/Plugins/com-infobip-plugins-mobilemessaging/MobileMessaging.framework
+        $SRCROOT/$PROJECT/Plugins/com-infobip-plugins-mobilemessaging/MobileMessaging.framework
         ```
     4. Add the path to the copied framework to the “Output Files”:
         ```
         $(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MobileMessaging.framework
         ```
+    <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/Carthage/carthage_run_script.png" alt="Carthage run script"/></center>
+
 
 5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
@@ -516,10 +521,7 @@ SDK supports rich content on Android out of the box. iOS platform **must be** ad
 
 ### Enabling notification extension in iOS for rich content and reliable delivery
 
-Additional Notification Service Extension **must be** be configured for iOS platform as described [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Using-Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10). Note that you don't need to configure your main application to pass App Group ID to SDK. Instead you will have to provide `notificationExtensionAppGroupId` as part of your application configuration. Refer to [configuration section](#initialization-configuration) for details.
-
-> ### Notice
-> We highly encourage to configure Notification Service Extension for iOS. Apart from providing support for rich content it also dramatically improves delivery reporting for Push Notification on iOS. Upon implementing Notification Service Extension, SDK will be able to report delivery even when the application is killed.
+Additional Notification Service Extension **must be** be configured for iOS platform as described [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10). Note that you don't need to configure your main application to pass App Group ID to SDK. Instead you will have to provide `notificationExtensionAppGroupId` as part of your application configuration. Refer to [configuration section](#initialization-configuration) for details.
 
 ### Sending content
 
