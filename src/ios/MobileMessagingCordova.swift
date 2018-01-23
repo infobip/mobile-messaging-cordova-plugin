@@ -39,13 +39,11 @@ class MMConfiguration {
 		}
 		
 		self.appCode = appCode
-		
-		
 		self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].unwrap(orDefault: false)
 		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
 		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
 		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
-		self.notificationExtensionAppGroupId = rawConfig[MMConfiguration.Keys.notificationExtensionAppGroupId] as? String
+		self.notificationExtensionAppGroupId = ios[MMConfiguration.Keys.notificationExtensionAppGroupId] as? String
 		
 		if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
 			var ps = [String: Any]()
@@ -78,7 +76,6 @@ class MMConfiguration {
 			self.notificationType = UserNotificationType.none
 		}
 	}
-	
 }
 
 fileprivate class MobileMessagingEventsManager {
@@ -92,10 +89,10 @@ fileprivate class MobileMessagingEventsManager {
 	
 	/// Must be in sync with `supportedEvents` (MobileMessagingCordova.js)
 	private let supportedNotifications: [String: String] = ["messageReceived": MMNotificationMessageReceived,
-	                                                        "tokenReceived":  MMNotificationDeviceTokenReceived,
-	                                                        "registrationUpdated":  MMNotificationRegistrationUpdated,
-	                                                        "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
-	                                                        "notificationTapped": MMNotificationMessageTapped]
+															"tokenReceived":  MMNotificationDeviceTokenReceived,
+															"registrationUpdated":  MMNotificationRegistrationUpdated,
+															"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
+															"notificationTapped": MMNotificationMessageTapped]
 	
 	init(plugin: MobileMessagingCordova) {
 		self.plugin = plugin
@@ -366,6 +363,7 @@ fileprivate class MobileMessagingEventsManager {
 		MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
 		
 		var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
+		
 		if configuration.geofencingEnabled {
 			mobileMessaging = mobileMessaging?.withGeofencingService()
 		}
@@ -374,7 +372,7 @@ fileprivate class MobileMessagingEventsManager {
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
 		}
-		if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId {
+		if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId, !notificationExtensionAppGroupId.isEmpty() {
 			mobileMessaging = mobileMessaging?.withAppGroupId(notificationExtensionAppGroupId)
 		}
 		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
@@ -597,7 +595,7 @@ class MessageStorageAdapter: MessageStorage {
 	func update(messageSentStatus status: MOMessageSentStatus, for messageId: MessageId, completion: @escaping () -> Void) {
 		// MO not supported
 	}
-
+	
 	func findMessage(withId messageId: MessageId) -> BaseMessage? {
 		queue.sync() {
 			sendCallback(for: "messageStorage.find", withMessage: messageId)
