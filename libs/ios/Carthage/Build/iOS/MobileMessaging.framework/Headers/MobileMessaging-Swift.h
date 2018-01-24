@@ -719,37 +719,13 @@ typedef SWIFT_ENUM(int16_t, MMSeenStatus) {
   MMSeenStatusSeenSent = 2,
 };
 
-enum MMUserPredefinedDataKeys : NSInteger;
 
 SWIFT_CLASS("_TtC15MobileMessaging6MMUser")
 @interface MMUser : NSObject
+@property (nonatomic, readonly) BOOL isChanged;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 /// Unique push registration identifier issued by server. This identifier matches one to one with APNS cloud token of the particular application installation. This identifier is only available after <code>MMNotificationRegistrationUpdated</code> event.
 @property (nonatomic, readonly, copy) NSString * _Nullable pushRegistrationId;
-/// The user’s id you can provide in order to link your own unique user identifier with Mobile Messaging user id, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable externalId;
-/// Saves the External User Id on the server asynchronously and executes the given callback block.
-/// \param externalId The id you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithExternalId:(NSString * _Nonnull)externalId completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// The user’s email address. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable email;
-/// Saves the email on the server asynchronously and executes the given callback block.
-/// \param email The email you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithEmail:(NSString * _Nonnull)email completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// A user’s MSISDN. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable msisdn;
-/// Saves the MSISDN on the server asynchronously and executes the given callback block.
-/// \param msisdn The MSISDN you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithMsisdn:(NSString * _Nonnull)msisdn completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
 /// Returns user’s custom data. Arbitrary attributes that are related to a particular user. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
 @property (nonatomic, copy) NSDictionary<NSString *, CustomUserDataValue *> * _Nullable customData;
 /// Saves the user’s custom data on the server asynchronously and executes the given callback block.
@@ -776,32 +752,62 @@ SWIFT_CLASS("_TtC15MobileMessaging6MMUser")
 /// \param completion The block to execute after the server responded.
 ///
 - (void)saveWithCustomData:(CustomUserDataValue * _Nullable)object forKey:(NSString * _Nonnull)key completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// Returns user’s predefined attributes (all possible attributes are described in the <code>MMUserPredefinedDataKeys</code> enum). Predefined attributes that are related to a particular user. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSDictionary<NSString *, NSString *> * _Nullable predefinedData;
-/// Saves the user’s attributes on the server asynchronously and executes the given callback block.
-/// \param predefinedData The dictionary representing data you want to link with the current user.
+/// The user’s id you can provide in order to link your own unique user identifier with Mobile Messaging user id, so that you will be able to send personalised targeted messages to exact user and other nice features.
+@property (nonatomic, copy) NSString * _Nullable externalId;
+/// Saves the External User Id on the server asynchronously and executes the given callback block.
+/// \param externalId The id you want to link with the current user.
 ///
 /// \param completion The block to execute after the server responded.
 ///
-- (void)saveWithPredefinedData:(NSDictionary<NSString *, NSString *> * _Nonnull)predefinedData completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// Returns the user’s attribute value associated with a given key.
-/// \param key The key of type <code>MMUserPredefinedDataKeys</code> for which to return the corresponding value.
-///
-- (NSString * _Nullable)predefinedDataForKey:(enum MMUserPredefinedDataKeys)key SWIFT_WARN_UNUSED_RESULT;
-/// Sets the user’s attribute value for a given key. To save data, call <code>save(completion:)</code> method of <code>MMUser</code> object.
-/// \param key The key of type <code>MMUserPredefinedDataKeys</code> for <code>object</code>.
-///
-/// \param object The object for <code>key</code>. Pass <code>object</code> as either <code>nil</code> or <code>NSNull()</code> in order to remove the key-value pair on the server.
-///
-- (void)setWithPredefinedData:(NSString * _Nullable)object forKey:(enum MMUserPredefinedDataKeys)key;
-/// Sets the user’s attribute value for a given key, immediately sends changes to the server asynchronously and executes the given callback block.
-/// \param key The key for <code>object</code>.
-///
-/// \param object The object for <code>key</code> of type <code>MMUserPredefinedDataKeys</code>. Pass <code>object</code> as either <code>nil</code> or <code>NSNull()</code> in order to remove the key-value pair on the server.
+- (void)saveWithExternalId:(NSString * _Nullable)externalId completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// The user’s email address. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
+@property (nonatomic, copy) NSString * _Nullable email;
+/// Saves the email on the server asynchronously and executes the given callback block.
+/// \param email The email you want to link with the current user.
 ///
 /// \param completion The block to execute after the server responded.
 ///
-- (void)saveWithPredefinedData:(NSString * _Nullable)object forKey:(enum MMUserPredefinedDataKeys)key completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+- (void)saveWithEmail:(NSString * _Nullable)email completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// A user’s MSISDN. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
+@property (nonatomic, copy) NSString * _Nullable msisdn;
+/// Saves the MSISDN on the server asynchronously and executes the given callback block.
+/// \param msisdn The MSISDN you want to link with the current user.
+///
+/// \param completion The block to execute after the server responded.
+///
+- (void)saveWithMsisdn:(NSString * _Nullable)msisdn completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// The user’s first name. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
+@property (nonatomic, copy) NSString * _Nullable firstName;
+/// Saves the first name on the server asynchronously and executes the given callback block.
+/// \param firstName The first name you want to link with the current user.
+///
+/// \param completion The block to execute after the server responded.
+///
+- (void)saveWithFirstName:(NSString * _Nullable)firstName completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// A user’s last name. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
+@property (nonatomic, copy) NSString * _Nullable lastName;
+/// Saves the last name on the server asynchronously and executes the given callback block.
+/// \param lastName The last name you want to link with the current user.
+///
+/// \param completion The block to execute after the server responded.
+///
+- (void)saveWithLastName:(NSString * _Nullable)lastName completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// A user’s middle name. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
+@property (nonatomic, copy) NSString * _Nullable middleName;
+/// Saves the middle name on the server asynchronously and executes the given callback block.
+/// \param middleName The middle name you want to link with the current user.
+///
+/// \param completion The block to execute after the server responded.
+///
+- (void)saveWithMiddleName:(NSString * _Nullable)middleName completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// A user’s birthdate. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
+@property (nonatomic, copy) NSDate * _Nullable birthdate;
+/// Saves the birthdate on the server asynchronously and executes the given callback block.
+/// \param birthdate The birthdate you want to link with the current user.
+///
+/// \param completion The block to execute after the server responded.
+///
+- (void)saveWithBirthdate:(NSDate * _Nullable)birthdate completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
 /// Explicitly tries to save all user data on the server.
 /// \param completion The block to execute after the server responded.
 ///
@@ -812,11 +818,6 @@ SWIFT_CLASS("_TtC15MobileMessaging6MMUser")
 - (void)fetchFromServerWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
-
-typedef SWIFT_ENUM(NSInteger, MMUserGenderValues) {
-  MMUserGenderValuesFemale = 0,
-  MMUserGenderValuesMale = 1,
-};
 
 typedef SWIFT_ENUM(NSInteger, MMUserPredefinedDataKeys) {
   MMUserPredefinedDataKeysMSISDN = 0,
@@ -853,6 +854,8 @@ typedef SWIFT_ENUM(int16_t, MOMessageSentStatus) {
 
 
 
+
+
 typedef SWIFT_ENUM(int16_t, MessageDeliveryMethod) {
   MessageDeliveryMethodUndefined = 0,
   MessageDeliveryMethodPush = 1,
@@ -865,11 +868,33 @@ typedef SWIFT_ENUM(int16_t, MessageDirection) {
   MessageDirectionMO = 1,
 };
 
+@class UserNotificationType;
+@class NotificationAction;
 
-SWIFT_PROTOCOL("_TtP15MobileMessaging15MessageHandling_")
-@protocol MessageHandling
-/// This callback is triggered after the new message is received. Default behaviour is implemented by <code>MMDefaultMessageHandling</code> class.
-- (void)didReceiveNewMessageWithMessage:(MTMessage * _Nonnull)message completion:(void (^ _Nullable)(void))completion;
+SWIFT_PROTOCOL("_TtP15MobileMessaging23MessageHandlingDelegate_")
+@protocol MessageHandlingDelegate
+@optional
+/// Called when a new message is received.
+/// \param message the new message received
+///
+/// \param completion the block to be executed after the messasge handled
+///
+- (void)didReceiveNewMessageWithMessage:(MTMessage * _Nonnull)message;
+/// Called when a notification is delivered to a foreground app.
+/// If your app is in the foreground when a notification arrives, the MobileMessaging SDK calls this method to deliver the notification directly to your app. If you implement this method, you can take whatever actions are necessary to process the notification and update your app. When you finish, execute the completionHandler block and specify how you want the system to alert the user, if at all.
+- (void)willPresentInForegroundWithMessage:(MTMessage * _Nonnull)message withCompletionHandler:(void (^ _Nonnull)(UserNotificationType * _Nonnull))completionHandler SWIFT_AVAILABILITY(ios,introduced=10.0);
+/// Called when a notification is delivered to a foreground app.
+- (void)didReceiveNewMessageInForegroundWithMessage:(MTMessage * _Nonnull)message SWIFT_AVAILABILITY(ios,deprecated=10.0,message="Use willPresentInForeground(message:withCompletionHandler:)");
+/// Called when a local notification scheduled for a message. Apart from push messages that are pushed to the device by APNs and displayed by iOS automatically, MobileMessaging SDK delivers messages by pulling them from the server and generating them locally. These messages are displayed via Local Notifications.
+- (void)willScheduleLocalNotificationFor:(MTMessage * _Nonnull)message;
+/// Called when a notification action is performed by the user.
+/// \param action <code>NotificationAction</code> object defining the action which was triggered.
+///
+/// \param message <code>MTMessage</code> message, for which action button was displayed, you can use <code>message.categoryId</code> in order to check the categoryId for action.
+///
+/// \param completion The block to execute when specified action performing is finished. You must call this block once the work is completed. The block is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
+///
+- (void)didPerformWithAction:(NotificationAction * _Nonnull)action forMessage:(MTMessage * _Nonnull)message completion:(void (^ _Nonnull)(void))completion;
 @end
 
 
@@ -883,7 +908,6 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging22MessageStorageDelegate_")
 
 
 
-@class UserNotificationType;
 @class UILocalNotification;
 @class UserAgent;
 @class NSURLSessionConfiguration;
@@ -1001,22 +1025,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMUser * _Nu
 /// An auxillary component provides the convinient access to the user agent data.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) UserAgent * _Nonnull userAgent;)
 + (UserAgent * _Nonnull)userAgent SWIFT_WARN_UNUSED_RESULT;
-/// A block object to be executed when user opens the app by tapping on the notification alert.
-/// Default implementation marks the corresponding message as seen.
-/// This block takes:
-/// <ul>
-///   <li>
-///     single MTMessage object initialized from the Dictionary.
-///   </li>
-/// </ul>
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) void (^ _Nullable notificationTapHandler)(MTMessage * _Nonnull);)
-+ (void (^ _Nullable)(MTMessage * _Nonnull))notificationTapHandler SWIFT_WARN_UNUSED_RESULT;
-+ (void)setNotificationTapHandler:(void (^ _Nullable)(MTMessage * _Nonnull))value;
-/// The message handling object defines the behaviour that is triggered during the message handling.
-/// You can implement your own message handling either by subclassing <code>MMDefaultMessageHandling</code> or implementing the <code>MessageHandling</code> protocol.
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MessageHandling> _Nonnull messageHandling;)
-+ (id <MessageHandling> _Nonnull)messageHandling SWIFT_WARN_UNUSED_RESULT;
-+ (void)setMessageHandling:(id <MessageHandling> _Nonnull)value;
+/// The <code>MessageHandlingDelegate</code> protocol defines methods for responding to actionable notifications and receiving new notifications. You assign your delegate object to the <code>messageHandlingDelegate</code> property of the <code>MobileMessaging.sharedInstance</code> object. The MobileMessaging SDK calls methods of your delegate at appropriate times to deliver information.
+@property (nonatomic, strong) id <MessageHandlingDelegate> _Nullable messageHandlingDelegate;
 /// The <code>URLSessionConfiguration</code> used for all url connections in the SDK
 /// Default value is <code>URLSessionConfiguration.default</code>.
 /// You can provide your own configuration to define a custom NSURLProtocol, policies etc.
@@ -1053,15 +1063,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GeofencingSe
 - (MobileMessaging * _Nonnull)withGeofencingService SWIFT_WARN_UNUSED_RESULT;
 @end
 
-@protocol NotificationActionHandling;
 @class NotificationCategory;
 
 @interface MobileMessaging (SWIFT_EXTENSION(MobileMessaging))
-/// The <code>notificationActionHandler</code> object defines the custom behaviour that is triggered while handling the interactive notifications action.
-/// Implement your own notification action hander class by implementing the <code>NotificationActionHandling</code> protocol.
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <NotificationActionHandling> _Nullable notificationActionHandler;)
-+ (id <NotificationActionHandling> _Nullable)notificationActionHandler SWIFT_WARN_UNUSED_RESULT;
-+ (void)setNotificationActionHandler:(id <NotificationActionHandling> _Nullable)value;
 /// Fabric method for Mobile Messaging session.
 /// remark:
 /// Mobile Messaging SDK reserves category Ids and action Ids with “mm_” prefix. Custom actions and categories with this prefix will be discarded.
@@ -1186,11 +1190,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
-@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
@@ -1206,11 +1210,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 @class NotificationActionOptions;
@@ -1220,6 +1224,7 @@ SWIFT_CLASS("_TtC15MobileMessaging18NotificationAction")
 @property (nonatomic, readonly, copy) NSString * _Nonnull identifier;
 @property (nonatomic, readonly, copy) NSString * _Nonnull title;
 @property (nonatomic, readonly, copy) NSArray<NotificationActionOptions *> * _Nonnull options;
+@property (nonatomic, readonly) BOOL isTapOnNotificationAlert;
 /// Initializes the <code>NotificationAction</code>
 /// \param identifier action identifier. “mm_” prefix is reserved for Mobile Messaging ids and cannot be used as a prefix.
 ///
@@ -1231,19 +1236,6 @@ SWIFT_CLASS("_TtC15MobileMessaging18NotificationAction")
 @property (nonatomic, readonly) NSUInteger hash;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
-@end
-
-
-SWIFT_PROTOCOL("_TtP15MobileMessaging26NotificationActionHandling_")
-@protocol NotificationActionHandling
-/// This method will be triggered during the notification action handling.
-/// \param action <code>NotificationAction</code> object defining the action which was triggered.
-///
-/// \param message <code>MTMessage</code> message, for which action button was displayed, you can use <code>message.categoryId</code> in order to check the categoryId for action.
-///
-/// \param completionHandler The block to execute when specified action performing is finished. You must call this block once the work is completed. The block is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
-///
-- (void)handleWithAction:(NotificationAction * _Nonnull)action forMessage:(MTMessage * _Nonnull)message withCompletionHandler:(void (^ _Nonnull)(void))completionHandler;
 @end
 
 
@@ -1461,6 +1453,11 @@ SWIFT_CLASS("_TtC15MobileMessaging9UserAgent")
 
 
 
+
+typedef SWIFT_ENUM(NSInteger, UserGender) {
+  UserGenderFemale = 0,
+  UserGenderMale = 1,
+};
 
 
 SWIFT_CLASS("_TtC15MobileMessaging20UserNotificationType")
