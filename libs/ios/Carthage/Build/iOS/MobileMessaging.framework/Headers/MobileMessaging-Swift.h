@@ -947,6 +947,11 @@ SWIFT_CLASS("_TtC15MobileMessaging15MobileMessaging")
 /// \param messageStorage a storage object, that implements the <code>MessageStorage</code> protocol
 ///
 - (MobileMessaging * _Nonnull)withMessageStorage:(id <MessageStorage> _Nonnull)messageStorage SWIFT_WARN_UNUSED_RESULT;
+/// Fabric method for Mobile Messaging session.
+/// It is possible to postpone the registration for Push Notifications. It is up to you to define when and where the user will be promt to allow receiving Push Notifications. By default the registration is being performed by <code>MobileMessaging.start()</code> call.
+/// remark:
+/// Don’t forget to register for Push Notifications explicitly by calling <code>MobileMessaging.registerForRemoteNotifications()</code>.
+- (MobileMessaging * _Nonnull)withoutRegisteringForRemoteNotifications SWIFT_WARN_UNUSED_RESULT;
 /// Starts a new Mobile Messaging session.
 /// This method should be called form AppDelegate’s <code>application(_:didFinishLaunchingWithOptions:)</code> callback.
 /// remark:
@@ -976,6 +981,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isPushRegistrat
 /// \param cleanUpData defines whether the Mobile Messaging internal storage will be dropped. False by default.
 ///
 + (void)stop:(BOOL)cleanUpData;
+/// Call this method to initiate the registration process with Apple Push Notification service. User will be promt to allow receiving Push Notifications.
++ (void)registerForRemoteNotifications;
 /// Logging utility is used for:
 /// <ul>
 ///   <li>
@@ -1025,8 +1032,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMUser * _Nu
 /// An auxillary component provides the convinient access to the user agent data.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) UserAgent * _Nonnull userAgent;)
 + (UserAgent * _Nonnull)userAgent SWIFT_WARN_UNUSED_RESULT;
-/// The <code>MessageHandlingDelegate</code> protocol defines methods for responding to actionable notifications and receiving new notifications. You assign your delegate object to the <code>messageHandlingDelegate</code> property of the <code>MobileMessaging.sharedInstance</code> object. The MobileMessaging SDK calls methods of your delegate at appropriate times to deliver information.
-@property (nonatomic, strong) id <MessageHandlingDelegate> _Nullable messageHandlingDelegate;
+/// The <code>MessageHandlingDelegate</code> protocol defines methods for responding to actionable notifications and receiving new notifications. You assign your delegate object to the <code>messageHandlingDelegate</code> property of the <code>MobileMessaging</code> class. The MobileMessaging SDK calls methods of your delegate at appropriate times to deliver information.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MessageHandlingDelegate> _Nullable messageHandlingDelegate;)
++ (id <MessageHandlingDelegate> _Nullable)messageHandlingDelegate SWIFT_WARN_UNUSED_RESULT;
++ (void)setMessageHandlingDelegate:(id <MessageHandlingDelegate> _Nullable)value;
 /// The <code>URLSessionConfiguration</code> used for all url connections in the SDK
 /// Default value is <code>URLSessionConfiguration.default</code>.
 /// You can provide your own configuration to define a custom NSURLProtocol, policies etc.
@@ -1198,11 +1207,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 @end
 
 
-@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
-@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
