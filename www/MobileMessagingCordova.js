@@ -1,19 +1,23 @@
-var supportedEvents = ["messageReceived", 'notificationTapped', "tokenReceived", "registrationUpdated", "geofenceEntered"];
+var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
 	if (parameters == null || parameters.length == 0) {
 		return;
 	}
-	var handlers = eventHandlers[parameters[0]] || [];
-	for (i = 0; i < handlers.length; i++) {
-		var handler = handlers[i];
-	  	if (typeof handler !== 'function') {
+	var eventName = parameters[0];
+	var handlers = eventHandlers[eventName] || [];
+			   
+	handlers.forEach(function(handler) {
+		if (typeof handler !== 'function') {
 			return;
 		} else {
-			setTimeout(handler(parameters.length > 1 ? parameters[1] : []), 200);
+			var eventParameters = parameters.slice(1);
+			setTimeout(function() {
+				handler.apply(null, eventParameters);
+			}, 100);
 		}
-    }
+	});
 };
 
 /**
@@ -31,25 +35,41 @@ var MobileMessagingCordova = function () {
  * @param {Json} configuration for Mobile Messaging
  * Configuration format:
  *	{
- *       applicationCode: '<The application code of your Application from Push Portal website>',
- *       geofencingEnabled: true,
- *		 messageStorage: '<Message storage save callback>',
- *		 defaultMessageStorage: true,
- *       android: {
- *           senderId: 'sender_id'
- *       },
- *       ios: {
+ *		applicationCode: '<The application code of your Application from Push Portal website>',
+ *		geofencingEnabled: true,
+ *		messageStorage: '<Message storage save callback>',
+ *		defaultMessageStorage: true,
+ *		android: {
+ *			senderId: 'sender_id'
+ *		},
+ *		ios: {
  *			notificationTypes: ['alert', 'sound', 'badge'],
  *			forceCleanup: <Boolean>,
- 			notificationExtensionAppGroupId: <String>
- *       },
- *		 privacySettings: {
+ *			notificationExtensionAppGroupId: <String>
+ *		},
+ *		privacySettings: {
  *			applicationCodePersistingDisabled: <Boolean>,
  *			userDataPersistingDisabled: <Boolean>,
  *			carrierInfoSendingDisabled: <Boolean>,
  *			systemInfoSendingDisabled: <Boolean>
- *		}
- * 	}
+ *		},
+ *		notificationCategories: [
+ *			{
+ *				identiier: <String>,
+ *				actions: [
+ *					{
+ *						identifier: <String>,
+ *						title: <String>,
+ *						foreground: <Boolean>,
+ *						authenticationRequired: <Boolean>,
+ *						moRequired: <Boolean>,
+ *						destructive: <Boolean>,
+ *						icon: <String>
+ *					}
+ *				]	
+ *			}
+ *		]
+ *	}
  * @param {Function} error callback
  */
 MobileMessagingCordova.prototype.init = function(config, onInitError) {
@@ -112,6 +132,8 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
  *   - notificationTapped
  *   - registrationUpdated
  *   - tokenReceived (iOS only)
+ *	 - geofenceEntered
+ *	 - actionTapped
  *
  * @name register
  * @param {String} eventName
@@ -138,9 +160,9 @@ MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
 	var handlers = eventHandlers[eventName] || [];
 	var index = handlers.indexOf(handler);
 	if (index > -1) {
-       handlers.splice(index, 1);
-    }
-    eventHandlers[eventName] = handlers;
+	   handlers.splice(index, 1);
+	}
+	eventHandlers[eventName] = handlers;
 };
 
 MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregister;
@@ -189,19 +211,19 @@ MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 	var defaultMessageStorage = {
 		find: function(messageId, callback) {
 			cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_find', [messageId]);
-	    },
+		},
 
-	    findAll: function(callback) {
+		findAll: function(callback) {
 			cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_findAll', []);
-	    },
+		},
 
-	    delete: function(messageId, callback) {
+		delete: function(messageId, callback) {
 			cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_delete', [messageId]);
-	    },
+		},
 
-	    deleteAll: function(callback) {
+		deleteAll: function(callback) {
 			cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_deleteAll', []);
-	    }
+		}
 	};
 	return defaultMessageStorage;
 };
