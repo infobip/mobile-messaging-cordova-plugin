@@ -19,6 +19,7 @@ class MMConfiguration {
 		static let messageStorage = "messageStorage"
 		static let cordovaPluginVersion = "cordovaPluginVersion"
 		static let notificationExtensionAppGroupId = "notificationExtensionAppGroupId"
+		static let notificationCategories = "notificationCategories"
 	}
 	
 	let appCode: String
@@ -30,6 +31,7 @@ class MMConfiguration {
 	let privacySettings: [String: Any]
 	let cordovaPluginVersion: String
 	let notificationExtensionAppGroupId: String?
+	let categories: [NotificationCategory]?
 	
 	init?(rawConfig: [String: AnyObject]) {
 		guard let appCode = rawConfig[MMConfiguration.Keys.applicationCode] as? String,
@@ -58,6 +60,8 @@ class MMConfiguration {
 		}
 		
 		self.cordovaPluginVersion = rawConfig[MMConfiguration.Keys.cordovaPluginVersion].unwrap(orDefault: "unknown")
+		
+		self.categories = (rawConfig[MMConfiguration.Keys.notificationCategories] as? [[String: Any]])?.flatMap(NotificationCategory.init)
 		
 		if let notificationTypeNames =  ios[MMConfiguration.Keys.notificationTypes] as? [String] {
 			let options = notificationTypeNames.reduce([], { (result, notificationTypeName) -> [UserNotificationType] in
@@ -88,11 +92,14 @@ fileprivate class MobileMessagingEventsManager {
 	private var cachedMobileMessagingNotifications = [Notification]()
 	
 	/// Must be in sync with `supportedEvents` (MobileMessagingCordova.js)
-	private let supportedNotifications: [String: String] = ["messageReceived": MMNotificationMessageReceived,
-															"tokenReceived":  MMNotificationDeviceTokenReceived,
-															"registrationUpdated":  MMNotificationRegistrationUpdated,
-															"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
-															"notificationTapped": MMNotificationMessageTapped]
+	private let supportedNotifications: [String: String] = [
+		"messageReceived": MMNotificationMessageReceived,
+		"tokenReceived":  MMNotificationDeviceTokenReceived,
+		"registrationUpdated":  MMNotificationRegistrationUpdated,
+		"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
+		"notificationTapped": MMNotificationMessageTapped,
+		"actionTapped": MMNotificationActionTapped
+	]
 	
 	init(plugin: MobileMessagingCordova) {
 		self.plugin = plugin
@@ -151,7 +158,7 @@ fileprivate class MobileMessagingEventsManager {
 	}
 	
 	private func handleMMNotification(cordovaEventName: String, callbackId: String, notification: Notification) {
-		var notificationResult:CDVPluginResult?
+		var notificationResult: CDVPluginResult?
 		switch notification.name.rawValue {
 		case MMNotificationMessageReceived:
 			if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
@@ -172,6 +179,10 @@ fileprivate class MobileMessagingEventsManager {
 		case MMNotificationMessageTapped:
 			if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
 				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary()])
+			}
+		case MMNotificationActionTapped:
+			if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage, let actionIdentifier = notification.userInfo?[MMNotificationKeyActionIdentifier] as? String {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary(), actionIdentifier])
 			}
 		default: break
 		}
@@ -374,6 +385,9 @@ fileprivate class MobileMessagingEventsManager {
 		}
 		if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId, !notificationExtensionAppGroupId.isEmpty {
 			mobileMessaging = mobileMessaging?.withAppGroupId(notificationExtensionAppGroupId)
+		}
+		if let categories = configuration.categories {
+			mobileMessaging = mobileMessaging?.withInteractiveNotificationCategories(Set(categories))
 		}
 		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
 		mobileMessaging?.start()
