@@ -210,8 +210,10 @@ describe('Base methods', function() {
 		expect(typeof handlingCallback == 'function');
 		var parameters = {'paramKey': 'paramValue'};
 		handlingCallback(['messageReceived', parameters]);
-		expect(spy1).toHaveBeenCalledWith(parameters);
-		expect(spy2).toHaveBeenCalledWith(parameters);
+		setTimeout(function() {
+				expect(spy1).toHaveBeenCalledWith(parameters);
+				expect(spy2).toHaveBeenCalledWith(parameters);
+			}, 200);
 	});
 
 
