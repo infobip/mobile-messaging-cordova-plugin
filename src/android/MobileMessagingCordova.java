@@ -31,6 +31,10 @@ import org.infobip.mobile.messaging.geo.Area;
 import org.infobip.mobile.messaging.geo.Geo;
 import org.infobip.mobile.messaging.geo.GeoEvent;
 import org.infobip.mobile.messaging.geo.MobileGeo;
+import org.infobip.mobile.messaging.interactive.InteractiveEvent;
+import org.infobip.mobile.messaging.interactive.MobileInteractive;
+import org.infobip.mobile.messaging.interactive.NotificationAction;
+import org.infobip.mobile.messaging.interactive.NotificationCategory;
 import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.infobip.mobile.messaging.storage.MessageStore;
@@ -78,6 +82,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
+    private static final String EVENT_NOTIFICATION_ACTION_TAPPED = "actionTapped";
     private static final String EVENT_MESSAGESTORAGE_START = "messageStorage.start";
     private static final String EVENT_MESSAGESTORAGE_SAVE = "messageStorage.save";
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
@@ -86,6 +91,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
         put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
+        put(InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey(), EVENT_NOTIFICATION_ACTION_TAPPED);
     }};
 
     private static final Map<String, String> messageBroadcastEventMap = new HashMap<String, String>() {{
@@ -108,8 +114,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
             if (GeoEvent.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
                 for (JSONObject geo : geosFromBundle(intent.getExtras())) {
                     if (libraryEventReceiver != null) {
-                        sendCallbackEvent(event, geo, libraryEventReceiver);
+                        sendCallbackEvent(event, libraryEventReceiver, geo);
                     }
+                }
+                return;
+            }
+
+            if (InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey().equals(intent.getAction())) {
+                Message message = Message.createFrom(intent.getExtras());
+                NotificationAction notificationAction = NotificationAction.createFrom(intent.getExtras());
+                if (libraryEventReceiver != null) {
+                    sendCallbackEvent(event, libraryEventReceiver, messageToJSON(message), notificationAction.getId(), notificationAction.getInputText());
                 }
                 return;
             }
@@ -122,7 +137,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
 
             if (libraryEventReceiver != null) {
-                sendCallbackEvent(event, data, libraryEventReceiver);
+                sendCallbackEvent(event, libraryEventReceiver, data);
             }
         }
     };
@@ -139,6 +154,20 @@ public class MobileMessagingCordova extends CordovaPlugin {
             boolean systemInfoSendingDisabled;
         }
 
+        class Action {
+            String identifier;
+            String title;
+            boolean foreground;
+            boolean moRequired;
+            String icon;
+            String inputLabel;
+        }
+
+        class Category {
+            String identifier;
+            List<Action> actions;
+        }
+
         String applicationCode;
         AndroidConfiguration android;
         boolean geofencingEnabled;
@@ -147,6 +176,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         boolean loggingEnabled;
         String cordovaPluginVersion = "unknown";
         PrivacySettings privacySettings = new PrivacySettings();
+        List<Category> notificationCategories = new ArrayList<Category>();
     }
 
     private static class InitContext {
@@ -179,7 +209,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 return;
             }
 
-            sendCallbackEvent(event, message, libraryEventReceiver);
+            sendCallbackEvent(event, libraryEventReceiver, message);
         }
     }
 
@@ -298,6 +328,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
             MobileGeo.getInstance(cordova.getActivity().getApplication()).activateGeofencing();
         }
 
+        NotificationCategory categories[] = notificationCategoriesFromConfiguration(configuration.notificationCategories);
+        if (categories.length > 0) {
+            MobileInteractive.getInstance(cordova.getActivity().getApplication()).setNotificationCategories(categories);
+        }
+
         sendCallbackSuccessKeepCallback(callbackContext);
     }
 
@@ -313,7 +348,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(commonLibraryBroadcastReceiver, intentFilter);
 
         for (CacheManager.Event event : CacheManager.loadEvents(cordova.getActivity())) {
-            sendCallbackEvent(event.type, event.object, callbackContext);
+            sendCallbackEvent(event.type, callbackContext, event.object);
         }
     }
 
@@ -508,21 +543,23 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return args.getString(0);
     }
 
-    private static boolean sendCallbackEvent(String event, Object object, CallbackContext callback) {
-        if (event == null || object == null) {
+    private static boolean sendCallbackEvent(String event, CallbackContext callback, Object object1, Object... objects) {
+        if (event == null || object1 == null) {
             return false;
         }
 
         JSONArray parameters = new JSONArray();
         parameters.put(event);
-        parameters.put(object);
+        parameters.put(object1);
+        for (Object o : objects) {
+            parameters.put(o);
+        }
 
         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
         pluginResult.setKeepCallback(true);
         callback.sendPluginResult(pluginResult);
         return true;
     }
-
 
     private static void sendCallbackError(CallbackContext callback, String message) {
         sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.ERROR, message));
@@ -689,6 +726,48 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         return geos;
+    }
+
+    /**
+     * Converts notification categories in configuration into library format
+     *
+     * @param categories notification categories from cordova
+     * @return library-understandable categories
+     */
+    @NonNull
+    private NotificationCategory[] notificationCategoriesFromConfiguration(@NonNull List<Configuration.Category> categories) {
+        NotificationCategory notificationCategories[] = new NotificationCategory[categories.size()];
+        for (int i = 0; i < notificationCategories.length; i++) {
+            Configuration.Category category = categories.get(i);
+            notificationCategories[i] = new NotificationCategory(
+                    category.identifier,
+                    notificationActionsFromConfiguration(category.actions)
+            );
+        }
+        return notificationCategories;
+    }
+
+    /**
+     * Converts notification actions in configuration into library format
+     *
+     * @param actions notification actions from cordova
+     * @return library-understandable actions
+     */
+    @NonNull
+    private NotificationAction[] notificationActionsFromConfiguration(@NonNull List<Configuration.Action> actions) {
+        NotificationAction notificationActions[] = new NotificationAction[actions.size()];
+        for (int i = 0; i < notificationActions.length; i++) {
+            Configuration.Action action = actions.get(i);
+            notificationActions[i] = new NotificationAction.Builder()
+                    .withId(action.identifier)
+                    .withIcon(cordova.getActivity().getApplication(), action.icon)
+                    .withTitleText(action.title)
+                    .withBringingAppToForeground(action.foreground)
+                    .withInput(action.inputLabel)
+                    .withMoMessage(action.moRequired)
+                    .build();
+        }
+        return notificationActions;
     }
 
     /**

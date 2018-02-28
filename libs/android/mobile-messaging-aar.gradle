@@ -6,8 +6,10 @@ repositories {
 }
 
 dependencies {
-    compile 'org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:1.9.5@aar'
-    compile('org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:1.9.5@aar') {
+	def mmVersion = '1.9.6'
+	compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-interactive-sdk:$mmVersion@aar"
+    compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
+    compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true;
     }
 }
