@@ -1199,15 +1199,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
-@end
-
-
 @interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
-@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
@@ -1215,15 +1211,19 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 @end
 
 
-
-
-
-
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
+
+
+
+
 @interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@end
+
+
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 @class NotificationActionOptions;
@@ -1292,6 +1292,7 @@ SWIFT_CLASS("_TtC15MobileMessaging20NotificationCategory")
 /// \param intentIdentifiers The intent identifier strings, which defined in Intents framework, that you want to associate with notifications of this category. Supported only for iOS 10+.
 ///
 - (nullable instancetype)initWithIdentifier:(NSString * _Nonnull)identifier actions:(NSArray<NotificationAction *> * _Nonnull)actions options:(NSArray<NotificationCategoryOptions *> * _Nullable)options intentIdentifiers:(NSArray<NSString *> * _Nullable)intentIdentifiers OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithDictionary:(NSDictionary<NSString *, id> * _Nonnull)dictionary OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly) NSUInteger hash;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
