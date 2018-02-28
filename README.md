@@ -107,6 +107,22 @@ configuration: {
     geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
     messageStorage: '<message storage implementation>',
     defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
+    notificationCategories: [
+       {
+           identiier: <String id of notification category>,
+           actions: [
+               {
+                   identifier: <String id of notification action inside category>,
+                   title: <Title of action button>,
+                   foreground: <set to 'true' if action tap should open application>,
+                   authenticationRequired: <set to 'true' if authentication required before action takes place (iOS only)>,
+                   moRequired: <set to 'true' if tap on action should send message to the platform>,
+                   destructive: <set to 'true'>,
+                   icon: <Action icon name in resources (Android only)>
+               }
+           ]   
+       }
+    ]
     android: {
         senderId: '<Cloud Messaging Sender ID obtained in step 1>'
     },
@@ -133,6 +149,7 @@ MobileMessaging.register('<event name>',
 | `tokenReceived` | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
 | `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internallId - string for the registered user.|
 | `geofenceEntered` | geo object |Occurs when device enters a geofence area. |
+| `actionTapped` | message, actionId |Occurs when user taps on action inside notification. |
 
 ### `messageReceived` event
 ```javascript
@@ -213,6 +230,15 @@ geo: {
         title: '<area title>'
     }
 }
+```
+
+### `actionTapped` event
+```javascript
+MobileMessaging.register('actionTapped',
+     function(message, actionId) {
+         console.log('Action ' + actionId + ' tapped for message ' + message.body);
+     }
+);
 ```
 
 ## Synchronizing user data
