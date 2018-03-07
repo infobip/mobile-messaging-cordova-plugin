@@ -64,7 +64,9 @@ var MobileMessagingCordova = function () {
  *						authenticationRequired: <Boolean>,
  *						moRequired: <Boolean>,
  *						destructive: <Boolean>,
- *						icon: <String>
+ *						icon: <String>,
+ *						textInputActionButtonTitle: <String>,
+ *						textInputPlaceholder: <String>
  *					}
  *				]	
  *			}

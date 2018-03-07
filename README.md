@@ -16,6 +16,7 @@ The document describes library integration steps for your Cordova project.
 - [Message storage](#message-storage)
 - [Privacy settings](#privacy-settings)
 - [Delivery improvements and rich content notifications](#delivery-improvements-and-rich-content-notifications)
+- [Interactive notifications](#interactive-notifications)
 
 ## Requirements
 - Cordova 7.0+ (`sudo npm install -g cordova`)
@@ -145,11 +146,11 @@ MobileMessaging.register('<event name>',
 | Event name | Event data | Description |
 | --- | --- | --- |
 | `messageReceived` | message object | Occurs when new message arrives, see separate section for all available message fields |
-| `notificationTapped` | message object |Occurs when notification is tapped. |
+| `notificationTapped` | message object | Occurs when notification is tapped. |
 | `tokenReceived` | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
 | `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internallId - string for the registered user.|
-| `geofenceEntered` | geo object |Occurs when device enters a geofence area. |
-| `actionTapped` | message, actionId |Occurs when user taps on action inside notification. |
+| `geofenceEntered` | geo object | Occurs when device enters a geofence area. |
+| `actionTapped` | message, actionId, text | Occurs when user taps on action inside notification or enters text as part of the notification response. |
 
 ### `messageReceived` event
 ```javascript
@@ -233,10 +234,23 @@ geo: {
 ```
 
 ### `actionTapped` event
+
+Regular notification action:
+
 ```javascript
 MobileMessaging.register('actionTapped',
      function(message, actionId) {
          console.log('Action ' + actionId + ' tapped for message ' + message.body);
+     }
+);
+```
+
+Text input action:
+
+```javascript
+MobileMessaging.register('actionTapped',
+     function(message, actionId, text) {
+         console.log('User responded to a message ' + message.body + ' with following text: ' + text);
      }
 );
 ```
@@ -516,6 +530,7 @@ MobileMessaging.init({
 ```
 
 ## Privacy settings
+
 Mobile Messaging SDK has several options to provide different levels of users privacy for your application. The settings are represented by `PrivacySettings` object and may be set up as follows:
 ```javascript
 MobileMessaging.init({
@@ -574,7 +589,62 @@ Provided content will be displayed on devices with iOS 10.+ in the notification 
 
 <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/RichNotifIos10.gif?raw=true" alt="Rich notification - iOS10"/></center>
 
-### FAQ
+## Interactive notifications
+
+Interactive notifications are push notifications that provide an option for end user to interact with application through button tap action. This interaction can be accomplished by using Mobile Messaging SDK predefined interactive notification categories or creating your own.
+
+### Predefined categories
+
+Mobile Messaging SDK provides only one predefined interaction category for now, but this list will be extended in future.
+ 
+Displaying of Interactive Notifications with predefined categories can be tested without any additional implementation on application side through Push API.
+
+> A = action
+
+| Category.id | A.id | A.title | A.foreground | A.authenticationRequired | A.destructive | A.moRequired |
+| --- | --- | --- | --- | --- | --- | --- |
+| mm_accept_decline | mm_accept | Accept | true | true | false | true |
+|| mm_decline | Decline | false | true | true | true |
+
+### Custom categories
+
+Interactive notifications should be registered at the SDK initialization step by providing `notificationCategories` configuration:
+
+```javascript
+MobileMessaging.init({
+    applicationCode: ...,
+    android: ...,
+    ios: ...,
+    notificationCategories: [{ // a list of custom interactive notification categories that your application has to support
+        identifier: <String; a unique category string identifier>,
+        actions: [ // a list of actions that a custom interactive notification category may consist of
+            {
+                identifier: <String; a unique action identifier>,
+                title: <String; an action title, represents a notification action button label>,
+                foreground: <Boolean; to bring the app to foreground or leave it in background state (or not)>,
+                textInputPlaceholder: <String; custom input field placeholder>,
+                moRequired: <Boolean; to trigger MO message sending (or not)>,
+                
+                // iOS only
+                authenticationRequired: <Boolean; to require device to be unlocked before performing (or not)>,
+                destructive: <Boolean; to be marked as destructive (or not)>,
+                textInputActionButtonTitle: <String; custom label for a sending button>,
+                
+                // Android only
+                icon: <String; a resource name for a special action icon>
+            }
+            ...
+        ]
+    }]
+    },
+    function(error) {
+        console.log('Init error: ' + error);
+    }
+);
+...
+```
+
+## FAQ
 
 #### How to open application webView on message tap
 - Install "cordova-plugin-inappbrowser" plugin
