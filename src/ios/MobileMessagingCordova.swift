@@ -182,7 +182,11 @@ fileprivate class MobileMessagingEventsManager {
 			}
 		case MMNotificationActionTapped:
 			if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage, let actionIdentifier = notification.userInfo?[MMNotificationKeyActionIdentifier] as? String {
-				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary(), actionIdentifier])
+				var parameters = [cordovaEventName, message.dictionary(), actionIdentifier] as [Any]
+				if let textInput = notification.userInfo?[MMNotificationKeyActionTextInput] as? String {
+					parameters.append(textInput)
+				}
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: parameters)
 			}
 		default: break
 		}
@@ -197,7 +201,7 @@ fileprivate class MobileMessagingEventsManager {
 	}
 }
 
-
+@objcMembers
 @objc(MobileMessagingCordova) class MobileMessagingCordova : CDVPlugin {
 	private var messageStorageAdapter: MessageStorageAdapter?
 	private var eventsManager: MobileMessagingEventsManager?

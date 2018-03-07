@@ -160,7 +160,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             boolean foreground;
             boolean moRequired;
             String icon;
-            String inputLabel;
+            String textInputPlaceholder;
         }
 
         class Category {
@@ -763,7 +763,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .withIcon(cordova.getActivity().getApplication(), action.icon)
                     .withTitleText(action.title)
                     .withBringingAppToForeground(action.foreground)
-                    .withInput(action.inputLabel)
+                    .withInput(action.textInputPlaceholder)
                     .withMoMessage(action.moRequired)
                     .build();
         }
