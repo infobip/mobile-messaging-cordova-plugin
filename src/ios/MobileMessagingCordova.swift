@@ -349,15 +349,15 @@ fileprivate class MobileMessagingEventsManager {
 			return
 		}
 		
-		MobileMessaging.defaultMessageStorage?.remove(withIds: [messageId])
-		let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		commandDelegate?.send(successResult, callbackId: command.callbackId)
+		MobileMessaging.defaultMessageStorage?.remove(withIds: [messageId]) { _ in
+			self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+		}
 	}
 	
 	func defaultMessageStorage_deleteAll(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.defaultMessageStorage?.removeAllMessages()
-		let successResult = CDVPluginResult(status: CDVCommandStatus_OK)
-		commandDelegate?.send(successResult, callbackId: command.callbackId)
+		MobileMessaging.defaultMessageStorage?.removeAllMessages() { _ in
+			self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+		}
 	}
 	
 	//MARK: Utils
