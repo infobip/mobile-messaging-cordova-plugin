@@ -663,3 +663,8 @@ MobileMessaging.register("notificationTapped", function(message) {
    "url": "http://infobip.com/"
 }
 ```
+
+#### What if my android build fails after adding the SDK?
+One of possible reasons for that is dependency conflict between plugins. SDK provides special properties which you can [set just like Cordova properties](https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-gradle-properties) in order to exclude some dependencies and to be able to resolve conflicts manually:
+- `infobipExcludeAndroidSupport` - set to true to exclude all android support libraries
+- `infobipExcludeGms` - set to true to exclude all google dependencies for push and geofencing
