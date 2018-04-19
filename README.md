@@ -671,7 +671,7 @@ One of possible reasons for that is dependency conflict between plugins. SDK pro
 
 You can set these properties when adding the plugin:
 ```bash
-$ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --nofetch --save --variable ANDROID_EXCLUDE_SUPPORT_LIBS=true --variable ANDROID_EXCLUDE_GMS_LIBS=true
+$ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --variable ANDROID_EXCLUDE_SUPPORT_LIBS=true --variable ANDROID_EXCLUDE_GMS_LIBS=true
 ```
 
 Or you can set properties in `config.xml` of your application inside the plugin section of the SDK:
