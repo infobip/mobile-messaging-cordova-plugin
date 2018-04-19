@@ -665,6 +665,22 @@ MobileMessaging.register("notificationTapped", function(message) {
 ```
 
 #### What if my android build fails after adding the SDK?
-One of possible reasons for that is dependency conflict between plugins. SDK provides special properties which you can [set just like Cordova properties](https://cordova.apache.org/docs/en/latest/guide/platforms/android/#setting-gradle-properties) in order to exclude some dependencies and to be able to resolve conflicts manually:
-- `infobipExcludeAndroidSupport` - set to true to exclude all android support libraries
-- `infobipExcludeGms` - set to true to exclude all google dependencies for push and geofencing
+One of possible reasons for that is dependency conflict between plugins. SDK provides special properties which you can use to exclude android dependencies from the SDK:
+- `ANDROID_EXCLUDE_SUPPORT_LIBS` - set to true to exclude all Android support libraries
+- `ANDROID_EXCLUDE_GMS_LIBS` - set to true to exclude all Google dependencies for push and geofencing
+
+You can set these properties when adding the plugin:
+```bash
+$ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --nofetch --save --variable ANDROID_EXCLUDE_SUPPORT_LIBS=true --variable ANDROID_EXCLUDE_GMS_LIBS=true
+```
+
+Or you can set properties in `config.xml` of your application inside the plugin section of the SDK:
+```xml
+<plugin name="com-infobip-plugins-mobilemessaging" spec="/Users/sslavin/gitrepos/infobip-mobile-messaging-cordova-plugin">
+    <variable name="ANDROID_EXCLUDE_SUPPORT_LIBS" value="true" />
+    <variable name="ANDROID_EXCLUDE_GMS_LIBS" value="true" />
+</plugin>
+```
+
+> ##### Notice
+> Make sure to remove and add the plugin if you want to change any of these parameters.

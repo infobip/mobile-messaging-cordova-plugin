@@ -15,6 +15,9 @@
 	
 	<hook type="after_plugin_add" src="scripts/installDependencies.js"/>
 
+	<preference name="ANDROID_EXCLUDE_SUPPORT_LIBS" default="false" />
+	<preference name="ANDROID_EXCLUDE_GMS_LIBS" default="false" />
+
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
 			<feature name="MobileMessagingCordova">
@@ -44,6 +47,8 @@
 			<feature name="MobileMessagingCordova">
 				<param name="android-package" value="org.apache.cordova.plugin.MobileMessagingCordova"/>
 			</feature>
+			<preference name="IB_ANDROID_EXCLUDE_SUPPORT_LIBS" value="$ANDROID_EXCLUDE_SUPPORT_LIBS"/>
+			<preference name="IB_ANDROID_EXCLUDE_GMS_LIBS" value="$ANDROID_EXCLUDE_GMS_LIBS"/>
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">

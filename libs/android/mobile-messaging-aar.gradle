@@ -1,16 +1,7 @@
-boolean getSetting(String name, boolean defaultValue) {
-    if (project.hasProperty(name)) {
-        return project.property(name).toBoolean()
-    } else if (System.getenv(name) != null) {
-        return System.getenv(name).toBoolean()
-    }
-    return defaultValue
-}
+def excludeAndroidSupportLibs = cdvHelpers.getConfigPreference("IB_ANDROID_EXCLUDE_SUPPORT_LIBS", "false").toBoolean()
+def excludeGmsLibs = cdvHelpers.getConfigPreference("IB_ANDROID_EXCLUDE_GMS_LIBS", "false").toBoolean()
 
-def infobipExcludeAndroidSupport = getSetting("infobipExcludeAndroidSupport", false)
-def infobipExcludeGms = getSetting("infobipExcludeGms", false)
-
-if (!infobipExcludeAndroidSupport) {
+if (!excludeAndroidSupportLibs) {
     repositories {
         maven {
             url 'https://maven.google.com/'
@@ -25,11 +16,11 @@ dependencies {
     compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true; 
-        if (infobipExcludeAndroidSupport) {    
+        if (excludeAndroidSupportLibs) {    
             exclude group: 'com.android.support', module: 'support-v4'
             exclude group: 'com.android.support', module: 'appcompat-v7'
         }
-        if (infobipExcludeGms) {
+        if (excludeGmsLibs) {
             exclude group: 'com.google.android.gms', module: 'play-services-gcm'
             exclude group: 'com.google.android.gms', module: 'play-services-location'
         }
