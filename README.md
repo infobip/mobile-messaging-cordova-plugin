@@ -676,7 +676,7 @@ $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.
 
 Or you can set properties in `config.xml` of your application inside the plugin section of the SDK:
 ```xml
-<plugin name="com-infobip-plugins-mobilemessaging" spec="/Users/sslavin/gitrepos/infobip-mobile-messaging-cordova-plugin">
+<plugin name="com-infobip-plugins-mobilemessaging" spec="https://github.com/infobip/mobile-messaging-cordova-plugin.git">
     <variable name="ANDROID_EXCLUDE_SUPPORT_LIBS" value="true" />
     <variable name="ANDROID_EXCLUDE_GMS_LIBS" value="true" />
 </plugin>
