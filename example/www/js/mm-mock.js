@@ -41,6 +41,12 @@
             }, 1000);
         },
 
+        logout: function (success, fail) {
+            setTimeout(function() {
+                success();
+            }, 1000);
+        },
+
         defaultMessageStorage: function() {
             return undefined;
         },

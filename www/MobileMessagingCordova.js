@@ -18,21 +18,21 @@ function execEventHandlerIfExists(parameters) {
 			}, 100);
 		}
 	});
-};
+}
 
 /**
  * Constructor
 */
 var MobileMessagingCordova = function () {
-	this.eventHandlers = eventHandlers
-	this.supportedEvents = supportedEvents
+	this.eventHandlers = eventHandlers;
+	this.supportedEvents = supportedEvents;
 };
 
 /**
  * Starts a new Mobile Messaging session.
  *
  * @name init
- * @param {Json} configuration for Mobile Messaging
+ * @param {JSON} configuration for Mobile Messaging
  * Configuration format:
  *	{
  *		applicationCode: '<The application code of your Application from Push Portal website>',
@@ -55,7 +55,7 @@ var MobileMessagingCordova = function () {
  *		},
  *		notificationCategories: [
  *			{
- *				identiier: <String>,
+ *				identifier: <String>,
  *				actions: [
  *					{
  *						identifier: <String>,
@@ -185,7 +185,7 @@ MobileMessagingCordova.prototype.syncUserData = function(userData, callback, err
  * Fetch user data from the server.
  *
  * @name fetchUserData
- * @param {Function} callback will be called with fetched user data  on success
+ * @param {Function} callback will be called with fetched user data on success
  * @param {Function} errorCallback will be called on error
  */
 MobileMessagingCordova.prototype.fetchUserData = function(callback, errorCallback) {
@@ -193,10 +193,21 @@ MobileMessagingCordova.prototype.fetchUserData = function(callback, errorCallbac
 };
 
 /**
+ * Log out user. Function erases currently stored user data on SDK and server associated with push registration, along with messages in SDK storage.
+ *
+ * @name logout
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.logout = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'logout', [])
+};
+
+/**
  * Mark messages as seen
  *
  * @name markMessagesSeen
- * @param {Array} array of identifiers of message to mark as seen
+ * @param {Array} messageIds of identifiers of message to mark as seen
  * @param {Function} callback will be called upon completion
  * @param {Function} errorCallback will be called on error
  */

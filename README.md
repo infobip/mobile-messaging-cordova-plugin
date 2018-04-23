@@ -110,7 +110,7 @@ configuration: {
     defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
     notificationCategories: [
        {
-           identiier: <String id of notification category>,
+           identifier: <String id of notification category>,
            actions: [
                {
                    identifier: <String id of notification action inside category>,
@@ -256,7 +256,7 @@ MobileMessaging.register('actionTapped',
 ```
 
 ## Synchronizing user data
-It is possible to sync user data to the server as well as fetch latest user data from the server.
+It is possible to sync user data to the server, fetch latest user data from the server as well as log out user (wipe out current user data) from mobile device and the server side.
 
 ### Sync user data
 Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. `customData` object shall contain all custom fields.
@@ -293,6 +293,18 @@ MobileMessaging.fetchUserData(
     },
     function(error) {
         alert('Error while syncing user data: ' + error);
+    }
+);
+```
+
+### User logout
+```javascript
+MobileMessaging.logout(
+    function() {
+        alert('User logged out.');
+    },
+    function(error) {
+        alert('Error while logging out user: ' + error);
     }
 );
 ```
@@ -356,14 +368,14 @@ MobileMessaging.init({
 ...
 
 /**
- * Retireves all messages from message storage
+ * Retrieves all messages from message storage
  */
 MobileMessaging.defaultMessageStorage().findAll(function(messages){
     console.log('Currently have ' + messages.length + ' messages in default storage');
 });
 
 //**
- * Retireves message from the storage using provided message id
+ * Retrieves message from the storage using provided message id
  */
 MobileMessaging.defaultMessageStorage().find('existing-message-id', function(message) {
     console.log('Found message by id: ' + JSON.stringify(message));
