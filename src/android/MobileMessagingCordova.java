@@ -68,6 +68,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_REGISTER_RECEIVER = "registerReceiver";
     private static final String FUNCTION_SYNC_USER_DATA = "syncUserData";
     private static final String FUNCTION_FETCH_USER_DATA = "fetchUserData";
+    private static final String FUNCTION_LOGOUT = "logout";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
     private static final String FUNCTION_MESSAGESTORAGE_REGISTER = "messageStorage_register";
     private static final String FUNCTION_MESSAGESTORAGE_UNREGISTER = "messageStorage_unregister";
@@ -257,6 +258,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_FETCH_USER_DATA.equals(action)) {
             fetchUserData(callbackContext);
             return true;
+        } else if (FUNCTION_LOGOUT.equals(action)) {
+            logout(callbackContext);
+            return true;
         } else if (FUNCTION_MARK_MESSAGES_SEEN.equals(action)) {
             markMessagesSeen(args, callbackContext);
             return true;
@@ -387,6 +391,28 @@ public class MobileMessagingCordova extends CordovaPlugin {
                             public void onResult(UserData result) {
                                 JSONObject json = UserDataJson.toJSON(result);
                                 sendCallbackSuccess(callbackContext, json);
+                            }
+
+                            @Override
+                            public void onError(MobileMessagingError e) {
+                                sendCallbackError(callbackContext, e.getMessage());
+                            }
+                        });
+                return null;
+            }
+        }.execute();
+    }
+
+    private void logout(final CallbackContext callbackContext) throws JSONException {
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
+                        .logout(new MobileMessaging.ResultListener<Object>() {
+                            @Override
+                            public void onResult(Object result) {
+                                sendCallbackSuccess(callbackContext);
                             }
 
                             @Override

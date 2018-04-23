@@ -254,6 +254,17 @@ describe('Base methods', function() {
 			[]);
 	});
 
+	it('should logout', function() {
+		MobileMessaging.logout(function() {}, function(err) {});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'logout',
+			[]);
+	});
+
 	it('should markMessagesSeen', function() {
 		MobileMessaging.markMessagesSeen([1,2,3], function(data) {}, function(err) {});
 
