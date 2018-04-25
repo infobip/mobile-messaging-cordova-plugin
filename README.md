@@ -54,7 +54,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     ```
 
 4. Configure your iOS project:
-    1. To enable Push Notifications, go to "Capabilities" tab (target settings) and turn on "Push Notifications" section.
+    1. To enable Push Notifications, go to "Capabilities" tab (target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
     2. On your application targets’ “Build Phases” settings tab, click the “+” icon and choose “New Run Script Phase”. Create a Run Script in which you specify your shell (ex: `/bin/sh`), add the following contents to the script area below the shell:
         ```bash
         /usr/local/bin/carthage copy-frameworks
