@@ -677,20 +677,20 @@ MobileMessaging.register("notificationTapped", function(message) {
 ```
 
 #### What if my android build fails after adding the SDK?
-One of possible reasons for that is dependency conflict between plugins. SDK provides special properties which you can use to exclude android dependencies from the SDK:
-- `ANDROID_EXCLUDE_SUPPORT_LIBS` - set to true to exclude all Android support libraries
-- `ANDROID_EXCLUDE_GMS_LIBS` - set to true to exclude all Google dependencies for push and geofencing
+One of possible reasons for that is dependency conflict between plugins. SDK provides special properties which you can use to enfore specific versions of dependencies for the SDK:
+- `ANDROID_SUPPORT_VER_OVERRIDE` - set to specific version e.g. "26.1.+" to use this version of android support libraries within SDK
+- `ANDROID_GMS_VER_OVERRIDE` - set to specific version e.g. "10.+" to use this version of Google dependencies for push and geofencing
 
 You can set these properties when adding the plugin:
 ```bash
-$ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --variable ANDROID_EXCLUDE_SUPPORT_LIBS=true --variable ANDROID_EXCLUDE_GMS_LIBS=true
+$ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --variable ANDROID_SUPPORT_VER_OVERRIDE="26.1.+" --variable ANDROID_GMS_VER_OVERRIDE="10.+"
 ```
 
 Or you can set properties in `config.xml` of your application inside the plugin section of the SDK:
 ```xml
 <plugin name="com-infobip-plugins-mobilemessaging" spec="https://github.com/infobip/mobile-messaging-cordova-plugin.git">
-    <variable name="ANDROID_EXCLUDE_SUPPORT_LIBS" value="true" />
-    <variable name="ANDROID_EXCLUDE_GMS_LIBS" value="true" />
+    <variable name="ANDROID_SUPPORT_VER_OVERRIDE" value="26.1.+" />
+    <variable name="ANDROID_GMS_VER_OVERRIDE" value="10.+" />
 </plugin>
 ```
 

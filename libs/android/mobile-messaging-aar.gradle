@@ -1,7 +1,10 @@
-def excludeAndroidSupportLibs = cdvHelpers.getConfigPreference("IB_ANDROID_EXCLUDE_SUPPORT_LIBS", "false").toBoolean()
-def excludeGmsLibs = cdvHelpers.getConfigPreference("IB_ANDROID_EXCLUDE_GMS_LIBS", "false").toBoolean()
+def overrideAndroidSupportLibsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_SUPPORT_VER_OVERRIDE", "false")
+def overrideGmsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_GMS_VER_OVERRIDE", "false")
 
-if (!excludeAndroidSupportLibs) {
+if (overrideAndroidSupportLibsVersion == "false") overrideAndroidSupportLibsVersion = ""
+if (overrideGmsVersion == "false") overrideGmsVersion = ""
+
+if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion > "26") {
     repositories {
         maven {
             url 'https://maven.google.com/'
@@ -16,13 +19,21 @@ dependencies {
     compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true; 
-        if (excludeAndroidSupportLibs) {    
-            exclude group: 'com.android.support', module: 'support-v4'
+        if (!overrideAndroidSupportLibsVersion.empty) {    
+            exclude group: 'com.android.support', module: 'support-v4'   
             exclude group: 'com.android.support', module: 'appcompat-v7'
         }
-        if (excludeGmsLibs) {
+        if (!overrideGmsVersion.empty) {
             exclude group: 'com.google.android.gms', module: 'play-services-gcm'
             exclude group: 'com.google.android.gms', module: 'play-services-location'
         }
+    }
+    if (!overrideAndroidSupportLibsVersion.empty) {
+        compile "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"
+        compile "com.android.support:appcompat-v7:$overrideAndroidSupportLibsVersion"
+    }
+    if (!overrideGmsVersion.empty) {
+        compile "com.google.android.gms:play-services-gcm:$overrideGmsVersion"
+        compile "com.google.android.gms:play-services-location:$overrideGmsVersion"
     }
 }
