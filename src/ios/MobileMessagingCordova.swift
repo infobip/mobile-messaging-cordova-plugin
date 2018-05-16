@@ -448,7 +448,7 @@ extension BaseMessage {
 			return nil
 		}
 		
-		return BaseMessage(messageId: messageId, direction: MessageDirection.MT, originalPayload: originalPayload)
+        return BaseMessage(messageId: messageId, direction: MessageDirection.MT, originalPayload: originalPayload, deliveryMethod: .undefined)
 	}
 	
 	func dictionary() -> [String: Any] {
@@ -668,11 +668,11 @@ class MessageStorageAdapter: MessageStorage {
 		sendCallback(for: "messageStorage.stop")
 	}
 	
-	func insert(outgoing messages: [MOMessage], completion: @escaping () -> Void) {
+	func insert(outgoing messages: [BaseMessage], completion: @escaping () -> Void) {
 		// MO not supported yet
 	}
 	
-	func insert(incoming messages: [MTMessage], completion: @escaping () -> Void) {
+	func insert(incoming messages: [BaseMessage], completion: @escaping () -> Void) {
 		sendCallback(for: "messageStorage.save", withArray: messages.map({
 			$0.dictionary()
 		}))
@@ -765,4 +765,3 @@ extension Optional {
 		}
 	}
 }
-
