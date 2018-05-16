@@ -163,12 +163,13 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # define SWIFT_DEPRECATED_OBJC(Msg) SWIFT_DEPRECATED_MSG(Msg)
 #endif
 #if __has_feature(modules)
+@import UIKit;
+@import CoreGraphics;
 @import ObjectiveC;
 @import Foundation;
+@import CoreData;
 @import CoreLocation;
 @import Dispatch;
-@import UIKit;
-@import CoreData;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -186,14 +187,44 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
+@class UIImage;
+@class CALayer;
+@class NSCoder;
+
+/// <code>AnimatedImageView</code> is a subclass of <code>UIImageView</code> for displaying animated image.
+SWIFT_CLASS("_TtC15MobileMessaging17AnimatedImageView")
+@interface AnimatedImageView : UIImageView
+@property (nonatomic, strong) UIImage * _Nullable image;
+@property (nonatomic, readonly, getter=isAnimating) BOOL animating;
+/// Starts the animation.
+- (void)startAnimating;
+/// Stops the animation.
+- (void)stopAnimating;
+- (void)displayLayer:(CALayer * _Nonnull)layer;
+- (void)didMoveToWindow;
+- (void)didMoveToSuperview;
+- (nonnull instancetype)initWithImage:(UIImage * _Nullable)image OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithImage:(UIImage * _Nullable)image highlightedImage:(UIImage * _Nullable)highlightedImage OBJC_DESIGNATED_INITIALIZER SWIFT_AVAILABILITY(ios,introduced=3.0);
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+@protocol CustomPayloadSupportedTypes;
 enum MessageDirection : int16_t;
+enum MessageDeliveryMethod : int16_t;
 
 SWIFT_CLASS("_TtC15MobileMessaging11BaseMessage")
 @interface BaseMessage : NSObject
-@property (nonatomic, readonly, copy) NSString * _Nonnull messageId;
-@property (nonatomic, readonly) enum MessageDirection direction;
+@property (nonatomic, copy) NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nullable customPayload;
+@property (nonatomic) enum MessageDirection direction;
+@property (nonatomic, copy) NSString * _Nonnull messageId;
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull originalPayload;
-- (nonnull instancetype)initWithMessageId:(NSString * _Nonnull)messageId direction:(enum MessageDirection)direction originalPayload:(NSDictionary<NSString *, id> * _Nonnull)originalPayload OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic) enum MessageDeliveryMethod deliveryMethod;
+@property (nonatomic, copy) NSString * _Nullable text;
+@property (nonatomic, readonly) BOOL isChatMessage;
+- (nonnull instancetype)initWithMessageId:(NSString * _Nonnull)messageId direction:(enum MessageDirection)direction originalPayload:(NSDictionary<NSString *, id> * _Nonnull)originalPayload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly) NSUInteger hash;
 - (BOOL)isEqualWithObject:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -228,11 +259,146 @@ SWIFT_CLASS("_TtC15MobileMessaging14BlockOperation")
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
+@class UIViewController;
+@class NSBundle;
+
+/// Default chat view implementation, extends UINavigationController with a CPChatVC put as a root view controller.
+SWIFT_CLASS("_TtC15MobileMessaging18CPChatNavigationVC")
+@interface CPChatNavigationVC : UINavigationController
+- (void)viewWillAppear:(BOOL)animated;
+- (void)viewDidLoad;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithNavigationBarClass:(Class _Nullable)navigationBarClass toolbarClass:(Class _Nullable)toolbarClass SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithRootViewController:(UIViewController * _Nonnull)rootViewController SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+@end
+
+@class ChatMessagesController;
+@class ChatMessage;
+enum ChatMessagesChangeType : NSUInteger;
+
+SWIFT_PROTOCOL("_TtP15MobileMessaging30ChatMessagesControllerDelegate_")
+@protocol ChatMessagesControllerDelegate
+- (void)controllerWillChangeContent:(ChatMessagesController * _Nonnull)controller;
+- (void)controller:(ChatMessagesController * _Nonnull)controller didChange:(ChatMessage * _Nonnull)message at:(NSIndexPath * _Nullable)indexPath for:(enum ChatMessagesChangeType)type newIndexPath:(NSIndexPath * _Nullable)newIndexPath;
+- (void)controllerDidChangeContent:(ChatMessagesController * _Nonnull)controller;
+@end
+
+
+SWIFT_CLASS("_TtC15MobileMessaging16CPViewController")
+@interface CPViewController : UIViewController
+- (void)viewWillAppear:(BOOL)animated;
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
+@end
+
+
+SWIFT_CLASS("_TtC15MobileMessaging21CPTableViewController")
+@interface CPTableViewController : CPViewController
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC15MobileMessaging12CPUserDataVC")
+@interface CPUserDataVC : CPTableViewController
+- (void)viewDidLoad;
+- (void)viewWillAppear:(BOOL)animated;
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class UIGestureRecognizer;
+
+SWIFT_CLASS("_TtC15MobileMessaging8CPChatVC")
+@interface CPChatVC : CPUserDataVC <ChatMessagesControllerDelegate, UIGestureRecognizerDelegate>
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)viewDidLoad;
+- (void)viewWillAppear:(BOOL)animated;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)viewWillDisappear:(BOOL)animated;
+- (void)viewDidLayoutSubviews;
+- (void)controllerWillChangeContent:(ChatMessagesController * _Nonnull)controller;
+- (void)controller:(ChatMessagesController * _Nonnull)controller didChange:(ChatMessage * _Nonnull)message at:(NSIndexPath * _Nullable)indexPath for:(enum ChatMessagesChangeType)type newIndexPath:(NSIndexPath * _Nullable)newIndexPath;
+- (void)controllerDidChangeContent:(ChatMessagesController * _Nonnull)controller;
+- (BOOL)gestureRecognizer:(UIGestureRecognizer * _Nonnull)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer * _Nonnull)otherGestureRecognizer SWIFT_WARN_UNUSED_RESULT;
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer * _Nonnull)gestureRecognizer SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+
+
+
+@class UITableView;
+@class UITableViewCell;
+
+@interface CPChatVC (SWIFT_EXTENSION(MobileMessaging))
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+
+@interface CPTableViewController (SWIFT_EXTENSION(MobileMessaging)) <UITableViewDataSource, UITableViewDelegate>
+- (NSInteger)tableView:(UITableView * _Nonnull)tableView numberOfRowsInSection:(NSInteger)section SWIFT_WARN_UNUSED_RESULT;
+- (UITableViewCell * _Nonnull)tableView:(UITableView * _Nonnull)tableView cellForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
+
 typedef SWIFT_ENUM(int16_t, CampaignState) {
   CampaignStateActive = 0,
   CampaignStateSuspended = 1,
   CampaignStateFinished = 2,
 };
+
+
+SWIFT_CLASS("_TtC15MobileMessaging11ChatMessage")
+@interface ChatMessage : NSObject
+@property (nonatomic, readonly) NSUInteger hash;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+
+
+
+typedef SWIFT_ENUM(NSUInteger, ChatMessagesChangeType) {
+  ChatMessagesChangeTypeInsert = 0,
+  ChatMessagesChangeTypeDelete = 1,
+  ChatMessagesChangeTypeMove = 2,
+  ChatMessagesChangeTypeUpdate = 3,
+};
+
+
+/// Controller manages a fetched result controller bound with a private managed object context, it solves all the threading issues for the user, forwarding the fetched result controller delegate callbacks to the main queue. Also hides some internals from the user and simplifies access to messages.
+SWIFT_CLASS("_TtC15MobileMessaging22ChatMessagesController")
+@interface ChatMessagesController : NSObject <NSFetchedResultsControllerDelegate>
+- (void)controllerWillChangeContent:(NSFetchedResultsController<id <NSFetchRequestResult>> * _Nonnull)controller;
+- (void)controller:(NSFetchedResultsController<id <NSFetchRequestResult>> * _Nonnull)controller didChangeObject:(id _Nonnull)anObject atIndexPath:(NSIndexPath * _Nullable)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath * _Nullable)newIndexPath;
+- (void)controllerDidChangeContent:(NSFetchedResultsController<id <NSFetchRequestResult>> * _Nonnull)controller;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+
+SWIFT_CLASS("_TtC15MobileMessaging15ChatParticipant")
+@interface ChatParticipant : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC15MobileMessaging12ChatSettings")
+@interface ChatSettings : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
 
 
 SWIFT_PROTOCOL("_TtP15MobileMessaging27CustomPayloadSupportedTypes_")
@@ -248,6 +414,8 @@ SWIFT_CLASS("_TtC15MobileMessaging19CustomUserDataValue")
 @property (nonatomic, readonly, copy) NSString * _Nullable string;
 @property (nonatomic, readonly, strong) NSDate * _Nullable date;
 @property (nonatomic, readonly, strong) NSNumber * _Nullable number;
+- (nonnull instancetype)initWithOptionalLiteral:(id _Nullable)optionalLiteral;
+- (nonnull instancetype)initWithNilLiteral;
 - (nonnull instancetype)initWithIntegerLiteral:(NSInteger)value;
 - (nonnull instancetype)initWithFloatLiteral:(double)value;
 - (nonnull instancetype)initWithStringLiteral:(NSString * _Nonnull)value;
@@ -412,6 +580,12 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging22OperationQueueDelegate_")
 @end
 
 
+SWIFT_CLASS("_TtC15MobileMessaging31InteractiveMessageAlertSettings")
+@interface InteractiveMessageAlertSettings : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 /// Describes the kind of location service. Possible values:
 /// <ul>
 ///   <li>
@@ -459,9 +633,104 @@ typedef SWIFT_ENUM(int8_t, MMDay) {
   MMDaySu = 7,
 };
 
+@class Query;
+
+SWIFT_PROTOCOL("_TtP15MobileMessaging22MessageStorageRemovers_")
+@protocol MessageStorageRemovers
+- (void)removeAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)removeWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)removeWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+@end
+
+
+SWIFT_PROTOCOL("_TtP15MobileMessaging21MessageStorageFinders_")
+@protocol MessageStorageFinders
+@property (nonatomic, copy) void (^ _Nullable messagesCountersUpdateHandler)(NSInteger, NSInteger);
+- (void)countAllMessagesWithCompletion:(void (^ _Nonnull)(NSInteger))completion;
+- (void)findAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
+- (void)findAllMessageIdsWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)findMessagesWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
+- (void)findMessagesWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
+@end
+
+enum MMSeenStatus : int16_t;
+enum MOMessageSentStatus : int16_t;
+
+/// The protocol describes implementation of the Message Storage. The Message Storage persists all the messages (both mobile originated and mobile terminated).
+SWIFT_PROTOCOL("_TtP15MobileMessaging14MessageStorage_")
+@protocol MessageStorage
+/// The queue in which all the hooks(inserts, updates) are dispatched.
+/// The queue must be provided by the particular implementation of this protocol in order to provide thread safety and performance aspects.
+@property (nonatomic, readonly, strong) dispatch_queue_t _Nonnull queue;
+/// This method is called by the Mobile Messaging SDK during the initialization process. You implement your custom preparation routine here if needed.
+- (void)start;
+/// This method is called by the Mobile Messaging SDK while stopping the currently running session (see also <code>MobileMessaging.stop()</code> method). You implement your custom deinitialization routine here if needed.
+- (void)stop;
+/// This method is called whenever a new mobile originated message is about to be sent to the server.
+- (void)insertWithOutgoing:(NSArray<BaseMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
+/// This method is called whenever a new mobile terminated message (either push(remote) notifictaion or fetched message) is received by the Mobile Messaging SDK.
+- (void)insertWithIncoming:(NSArray<BaseMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
+/// This method is used by the Mobile Messaging SDK in order to detect duplicated messages persisted in the Message Storage. It is strongly recommended to implement this method in your custom Message Storage.
+/// \param messageId unique identifier of a MT message. Consider this identifier as a primary key.
+///
+- (BaseMessage * _Nullable)findMessageWithId:(NSString * _Nonnull)messageId SWIFT_WARN_UNUSED_RESULT;
+/// This method is called whenever the seen status is updated for a particular mobile terminated (MT) message.
+/// \param status actual seen status for a message
+///
+/// \param messageId unique identifier of a MT message
+///
+- (void)updateWithMessageSeenStatus:(enum MMSeenStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
+/// This method is called whenever the delivery report is updated for a particular mobile terminated (MT) message.
+/// \param isDelivered boolean flag which defines whether the delivery report for a message was successfully sent
+///
+/// \param messageId unique identifier of a MT message
+///
+- (void)updateWithDeliveryReportStatus:(BOOL)isDelivered for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
+/// This method is called whenever the sending status is updated for a particular mobile originated (MO) message.
+/// \param status actual sending status for a MO message
+///
+/// \param messageId unique identifier of a MO message
+///
+- (void)updateWithMessageSentStatus:(enum MOMessageSentStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
+/// This method is used to fetch and return all stored chat messages ids.
+/// \param completion a block to be executed after fetching is completed, all the fetched message ids must be passed as a block parameter
+///
+- (void)findAllMessageIdsWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+@end
+
+
+/// Default implementation of the Message Storage protocol. Uses Core Data persistent storage with SQLite database.
+SWIFT_CLASS("_TtC15MobileMessaging23MMDefaultMessageStorage")
+@interface MMDefaultMessageStorage : NSObject <MessageStorage, MessageStorageFinders, MessageStorageRemovers>
+@property (nonatomic, copy) void (^ _Nullable messagesCountersUpdateHandler)(NSInteger, NSInteger);
+- (void)countAllMessagesWithCompletion:(void (^ _Nonnull)(NSInteger))completion;
+@property (nonatomic, readonly, strong) dispatch_queue_t _Nonnull queue;
+- (void)start;
+- (void)stop;
+- (void)findAllMessageIdsWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)insertWithOutgoing:(NSArray<BaseMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
+- (void)insertWithIncoming:(NSArray<BaseMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
+- (BaseMessage * _Nullable)findMessageWithId:(NSString * _Nonnull)messageId SWIFT_WARN_UNUSED_RESULT;
+- (void)updateWithMessageSentStatus:(enum MOMessageSentStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
+- (void)updateWithMessageSeenStatus:(enum MMSeenStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
+- (void)updateWithDeliveryReportStatus:(BOOL)isDelivered for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
+- (void)findAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
+- (void)findMessagesWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
+- (void)findMessagesWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
+- (void)removeAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)removeWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)removeWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC15MobileMessaging20MMDefaultChatStorage")
+@interface MMDefaultChatStorage : MMDefaultMessageStorage
+@end
+
 @class MMLogOutput;
 enum MMLogLevel : NSUInteger;
-@class UIViewController;
 
 SWIFT_PROTOCOL("_TtP15MobileMessaging9MMLogging_")
 @protocol MMLogging
@@ -491,127 +760,35 @@ SWIFT_CLASS("_TtC15MobileMessaging15MMDefaultLogger")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class MOMessage;
-@class MTMessage;
-enum MMSeenStatus : int16_t;
-enum MOMessageSentStatus : int16_t;
 
-/// The protocol describes implementation of the Message Storage. The Message Storage persists all the messages (both mobile originated and mobile terminated).
-SWIFT_PROTOCOL("_TtP15MobileMessaging14MessageStorage_")
-@protocol MessageStorage
-/// The queue in which all the hooks(inserts, updates) are dispatched.
-/// The queue must be provided by the particular implementation of this protocol in order to provide thread safety and performance aspects.
-@property (nonatomic, readonly, strong) dispatch_queue_t _Nonnull queue;
-/// This method is called by the Mobile Messaging SDK during the initialization process. You implement your custom preparation routine here if needed.
-- (void)start;
-/// This method is called by the Mobile Messaging SDK while stopping the currently running session (see also <code>MobileMessaging.stop()</code> method). You implement your custom deinitialization routine here if needed.
-- (void)stop;
-/// This method is called whenever a new mobile originated message is about to be sent to the server.
-- (void)insertWithOutgoing:(NSArray<MOMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
-/// This method is called whenever a new mobile terminated message (either push(remote) notifictaion or fetched message) is received by the Mobile Messaging SDK.
-- (void)insertWithIncoming:(NSArray<MTMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
-/// This method is used by the Mobile Messaging SDK in order to detect duplicated messages persisted in the Message Storage. It is strongly recommended to implement this method in your custom Message Storage.
-/// \param messageId unique identifier of a MT message. Consider this identifier as a primary key.
-///
-- (BaseMessage * _Nullable)findMessageWithId:(NSString * _Nonnull)messageId SWIFT_WARN_UNUSED_RESULT;
-/// This method is called whenever the seen status is updated for a particular mobile terminated (MT) message.
-/// \param status actual seen status for a message
-///
-/// \param messageId unique identifier of a MT message
-///
-- (void)updateWithMessageSeenStatus:(enum MMSeenStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
-/// This method is called whenever the delivery report is updated for a particular mobile terminated (MT) message.
-/// \param isDelivered boolean flag which defines whether the delivery report for a message was successfully sent
-///
-/// \param messageId unique identifier of a MT message
-///
-- (void)updateWithDeliveryReportStatus:(BOOL)isDelivered for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
-/// This method is called whenever the sending status is updated for a particular mobile originated (MO) message.
-/// \param status actual sending status for a MO message
-///
-/// \param messageId unique identifier of a MO message
-///
-- (void)updateWithMessageSentStatus:(enum MOMessageSentStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
-@end
+@class NotificationAction;
 
-@class Query;
-
-SWIFT_PROTOCOL("_TtP15MobileMessaging22MessageStorageRemovers_")
-@protocol MessageStorageRemovers
-- (void)removeAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
-- (void)removeWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
-- (void)removeWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
-@end
-
-
-SWIFT_PROTOCOL("_TtP15MobileMessaging21MessageStorageFinders_")
-@protocol MessageStorageFinders
-- (void)findAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
-- (void)findMessagesWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
-- (void)findMessagesWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
-@end
-
-
-/// Default implementation of the Message Storage protocol. Uses Core Data persistent storage with SQLite database.
-SWIFT_CLASS("_TtC15MobileMessaging23MMDefaultMessageStorage")
-@interface MMDefaultMessageStorage : NSObject <MessageStorage, MessageStorageFinders, MessageStorageRemovers>
-@property (nonatomic, readonly, strong) dispatch_queue_t _Nonnull queue;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-- (void)start;
-- (void)stop;
-- (void)insertWithOutgoing:(NSArray<MOMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
-- (void)insertWithIncoming:(NSArray<MTMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
-- (BaseMessage * _Nullable)findMessageWithId:(NSString * _Nonnull)messageId SWIFT_WARN_UNUSED_RESULT;
-- (void)updateWithMessageSentStatus:(enum MOMessageSentStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
-- (void)updateWithMessageSeenStatus:(enum MMSeenStatus)status for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
-- (void)updateWithDeliveryReportStatus:(BOOL)isDelivered for:(NSString * _Nonnull)messageId completion:(void (^ _Nonnull)(void))completion;
-- (void)findAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
-- (void)findMessagesWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
-- (void)findMessagesWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
-- (void)removeAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
-- (void)removeWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
-- (void)removeWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
-@end
-
-enum MessageDeliveryMethod : int16_t;
-
-/// Incapsulates all the attributes related to the remote notifications.
 SWIFT_CLASS("_TtC15MobileMessaging9MTMessage")
 @interface MTMessage : BaseMessage
-/// Defines the origin of a message.
-/// Message may be either pushed by APNS, generated locally or pulled from the server.
-@property (nonatomic, readonly) enum MessageDeliveryMethod deliveryMethod;
-/// Defines if a message is silent. Silent messages have neither text nor sound attributes.
-@property (nonatomic, readonly) BOOL isSilent;
-/// Custom message payload.
-/// See also: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Custom-message-payload">Custom message payload</a>
-@property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable customPayload;
-/// Title of the message. If message title may be localized (“alert.title-loc-key” attribute is present and refers to an existing localized string), the localized string is returned, otherwise the value of “alert.title” attribute is returned if present.
-@property (nonatomic, readonly, copy) NSString * _Nullable title;
-/// Text of a message. If message may be localized (“alert.loc-key” attribute is present and refers to an existing localized string), the localized string is returned, otherwise the value of “alert.body” attribute is returned if present.
-@property (nonatomic, readonly, copy) NSString * _Nullable text;
-/// Localization key of the message title.
-@property (nonatomic, readonly, copy) NSString * _Nullable title_loc_key;
-/// Localization args of the message title.
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable title_loc_args;
-/// Localization key of the message text.
-@property (nonatomic, readonly, copy) NSString * _Nullable loc_key;
-/// Localization args of the message.
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable loc_args;
-/// Sound of the message.
-@property (nonatomic, readonly, copy) NSString * _Nullable sound;
-/// Interactive category Id
-@property (nonatomic, readonly, copy) NSString * _Nullable category;
-@property (nonatomic, readonly, copy) NSString * _Nullable contentUrl;
-@property (nonatomic, readonly) NSTimeInterval sendDateTime;
+@property (nonatomic, strong) NotificationAction * _Nullable appliedAction;
+@property (nonatomic) NSTimeInterval sendDateTime;
 @property (nonatomic) enum MMSeenStatus seenStatus;
 @property (nonatomic, copy) NSDate * _Nullable seenDate;
 @property (nonatomic) BOOL isDeliveryReportSent;
 @property (nonatomic, copy) NSDate * _Nullable deliveryReportedDate;
-/// Initializes the MTMessage from original payload.
-- (nullable instancetype)initWithPayload:(NSDictionary * _Nonnull)payload OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithMessageId:(NSString * _Nonnull)messageId direction:(enum MessageDirection)direction originalPayload:(NSDictionary<NSString *, id> * _Nonnull)originalPayload SWIFT_UNAVAILABLE;
+@property (nonatomic, readonly, copy) NSString * _Nullable title;
+@property (nonatomic, readonly, copy) NSString * _Nullable title_loc_key;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable title_loc_args;
+@property (nonatomic, readonly, copy) NSString * _Nullable loc_key;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable loc_args;
+@property (nonatomic, readonly, copy) NSString * _Nullable sound;
+@property (nonatomic, readonly, copy) NSString * _Nullable category;
+@property (nonatomic, readonly) BOOL isSilent;
+@property (nonatomic, readonly, copy) NSString * _Nullable contentUrl;
+@property (nonatomic, readonly) BOOL showInApp;
+@property (nonatomic, readonly) BOOL isGeoSignalingMessage;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable silentData;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable internalData;
+@property (nonatomic, copy) NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nullable customPayload;
+@property (nonatomic, copy) NSString * _Nullable text;
+/// Designated init
+- (nullable instancetype)initWithPayload:(NSDictionary * _Nonnull)payload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod seenDate:(NSDate * _Nullable)seenDate deliveryReportDate:(NSDate * _Nullable)deliveryReportDate seenStatus:(enum MMSeenStatus)seenStatus isDeliveryReportSent:(BOOL)isDeliveryReportSent OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithMessageId:(NSString * _Nonnull)messageId direction:(enum MessageDirection)direction originalPayload:(NSDictionary<NSString *, id> * _Nonnull)originalPayload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod SWIFT_UNAVAILABLE;
 @end
 
 
@@ -623,7 +800,7 @@ SWIFT_CLASS("_TtC15MobileMessaging12MMGeoMessage")
 @property (nonatomic, readonly, copy) NSDate * _Nonnull expiryTime;
 @property (nonatomic, readonly) BOOL isNotExpired;
 @property (nonatomic) enum CampaignState campaignState;
-- (nullable instancetype)initWithPayload:(NSDictionary * _Nonnull)payload OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithPayload:(NSDictionary * _Nonnull)payload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod seenDate:(NSDate * _Nullable)seenDate deliveryReportDate:(NSDate * _Nullable)deliveryReportDate seenStatus:(enum MMSeenStatus)seenStatus isDeliveryReportSent:(BOOL)isDeliveryReportSent OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly) BOOL isNowAppropriateTimeForEntryNotification;
 @property (nonatomic, readonly) BOOL isNowAppropriateTimeForExitNotification;
 @end
@@ -829,6 +1006,8 @@ SWIFT_CLASS("_TtC15MobileMessaging6MMUser")
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
+
+
 typedef SWIFT_ENUM(NSInteger, MMUserPredefinedDataKeys) {
   MMUserPredefinedDataKeysMSISDN = 0,
   MMUserPredefinedDataKeysFirstName = 1,
@@ -842,15 +1021,13 @@ typedef SWIFT_ENUM(NSInteger, MMUserPredefinedDataKeys) {
 
 SWIFT_CLASS("_TtC15MobileMessaging9MOMessage")
 @interface MOMessage : BaseMessage
-@property (nonatomic, readonly, copy) NSString * _Nullable destination;
-@property (nonatomic, readonly, copy) NSString * _Nonnull text;
-@property (nonatomic, readonly, copy) NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nullable customPayload;
-@property (nonatomic, readonly) enum MOMessageSentStatus sentStatus;
-@property (nonatomic, readonly, copy) NSDate * _Nonnull composedDate;
-@property (nonatomic, readonly, copy) NSString * _Nullable bulkId;
-@property (nonatomic, readonly, copy) NSString * _Nullable initialMessageId;
+@property (nonatomic, copy) NSString * _Nullable destination;
+@property (nonatomic) enum MOMessageSentStatus sentStatus;
+@property (nonatomic, copy) NSDate * _Nonnull composedDate;
+@property (nonatomic, copy) NSString * _Nullable bulkId;
+@property (nonatomic, copy) NSString * _Nullable initialMessageId;
 - (nonnull instancetype)initWithDestination:(NSString * _Nullable)destination text:(NSString * _Nonnull)text customPayload:(NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nullable)customPayload composedDate:(NSDate * _Nonnull)composedDate bulkId:(NSString * _Nullable)bulkId initialMessageId:(NSString * _Nullable)initialMessageId;
-- (nonnull instancetype)initWithMessageId:(NSString * _Nonnull)messageId direction:(enum MessageDirection)direction originalPayload:(NSDictionary<NSString *, id> * _Nonnull)originalPayload SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithMessageId:(NSString * _Nonnull)messageId direction:(enum MessageDirection)direction originalPayload:(NSDictionary<NSString *, id> * _Nonnull)originalPayload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod SWIFT_UNAVAILABLE;
 @end
 
 typedef SWIFT_ENUM(int16_t, MOMessageSentStatus) {
@@ -861,6 +1038,18 @@ typedef SWIFT_ENUM(int16_t, MOMessageSentStatus) {
 
 
 
+
+
+
+
+
+@class NSEntityDescription;
+@class NSManagedObjectContext;
+
+SWIFT_CLASS("_TtC15MobileMessaging7Message")
+@interface Message : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
 
 
 
@@ -879,15 +1068,12 @@ typedef SWIFT_ENUM(int16_t, MessageDirection) {
 };
 
 @class UserNotificationType;
-@class NotificationAction;
 
 SWIFT_PROTOCOL("_TtP15MobileMessaging23MessageHandlingDelegate_")
 @protocol MessageHandlingDelegate
 @optional
 /// Called when a new message is received.
 /// \param message the new message received
-///
-/// \param completion the block to be executed after the messasge handled
 ///
 - (void)didReceiveNewMessageWithMessage:(MTMessage * _Nonnull)message;
 /// Called when a notification is delivered to a foreground app.
@@ -897,14 +1083,17 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23MessageHandlingDelegate_")
 - (void)didReceiveNewMessageInForegroundWithMessage:(MTMessage * _Nonnull)message SWIFT_AVAILABILITY(ios,deprecated=10.0,message="Use willPresentInForeground(message:withCompletionHandler:)");
 /// Called when a local notification scheduled for a message. Apart from push messages that are pushed to the device by APNs and displayed by iOS automatically, MobileMessaging SDK delivers messages by pulling them from the server and generating them locally. These messages are displayed via Local Notifications.
 - (void)willScheduleLocalNotificationFor:(MTMessage * _Nonnull)message;
+@required
 /// Called when a notification action is performed by the user.
 /// \param action <code>NotificationAction</code> object defining the action which was triggered.
 ///
 /// \param message <code>MTMessage</code> message, for which action button was displayed, you can use <code>message.categoryId</code> in order to check the categoryId for action.
 ///
-/// \param completion The block to execute when specified action performing is finished. You must call this block once the work is completed. The block is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
+/// \param notificationUserInfo a dictionary representing original local/remote notification’s userInfo
 ///
-- (void)didPerformWithAction:(NotificationAction * _Nonnull)action forMessage:(MTMessage * _Nonnull)message completion:(void (^ _Nonnull)(void))completion;
+/// \param completion The block to execute when specified action performing is finished. <em>You must call this block either immediately or after your handling is completed.</em> The block is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
+///
+- (void)didPerformWithAction:(NotificationAction * _Nonnull)action forMessage:(MTMessage * _Nullable)message notificationUserInfo:(NSDictionary<NSString *, id> * _Nullable)notificationUserInfo completion:(void (^ _Nonnull)(void))completion;
 @end
 
 
@@ -916,6 +1105,79 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging22MessageStorageDelegate_")
 - (void)didRemoveMessages:(NSArray<BaseMessage *> * _Nonnull)messages;
 @end
 
+
+
+
+SWIFT_CLASS("_TtC15MobileMessaging10MobileChat")
+@interface MobileChat : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+SWIFT_PROTOCOL("_TtP15MobileMessaging18MobileChatProtocol_")
+@protocol MobileChatProtocol
+/// Sends message with a specified text to a particular chat id.
+/// \param chatId id of destination chat
+///
+/// \param text body of the message
+///
+/// \param completion a block to be executed when sending is finished
+///
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+/// Sends message with a specified text to a particular chat id.
+/// \param chatId id of destination chat
+///
+/// \param text body of the message
+///
+/// \param customPayload additional data to send along with the chat message
+///
+/// \param completion a block to be executed when sending is finished. Contains a sent message object and an error
+///
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text customPayload:(NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nonnull)customPayload completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+/// Sets user info for curren chat user.
+/// \param info object representing chat user data
+///
+/// \param completion a block to be executed when operation is finished. Contains an error object
+///
+- (void)setUserInfoWithInfo:(ChatParticipant * _Nonnull)info completion:(void (^ _Nullable)(NSError * _Nullable))completion;
+/// Returns chat users profile cached locally.
+///
+/// returns:
+/// <code>ChatParticipant</code> object representing chat user data
+- (ChatParticipant * _Nullable)getUserInfo SWIFT_WARN_UNUSED_RESULT;
+/// Returns chat users profile from the server.
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     completion: a block to be executed when operation is finished. Contains the fetched chat user data
+///   </li>
+/// </ul>
+- (void)fetchUserInfoWithCompletion:(void (^ _Nullable)(ChatParticipant * _Nullable))completion;
+/// Returns the default chat messsage storage if used. For more information see <code>MMDefaultMessageStorage</code> class description.
+@property (nonatomic, readonly, strong) MMDefaultChatStorage * _Nullable defaultChatStorage;
+/// Marks all messages as seen
+- (void)markAllMessagesSeenWithCompletion:(void (^ _Nullable)(void))completion;
+/// Marks specific messages as seen
+- (void)markMessagesSeenWithMessageIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nullable)(void))completion;
+/// A wrapper around NSFetchedResultsController set up to manage the results of a Core Data fetch request applied to chat message storage. Only available for default chat message storage (returns <code>nil</code> otherwise).
+@property (nonatomic, readonly, strong) ChatMessagesController * _Nullable chatMessagesController;
+@end
+
+
+@interface MobileChat (SWIFT_EXTENSION(MobileMessaging)) <MobileChatProtocol>
+- (void)markMessagesSeenWithMessageIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nullable)(void))completion;
+- (void)markAllMessagesSeenWithCompletion:(void (^ _Nullable)(void))completion;
+@property (nonatomic, readonly, strong) ChatMessagesController * _Nullable chatMessagesController;
+@property (nonatomic, readonly, strong) MMDefaultChatStorage * _Nullable defaultChatStorage;
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text customPayload:(NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nonnull)customPayload completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+- (void)setUserInfoWithInfo:(ChatParticipant * _Nonnull)info completion:(void (^ _Nullable)(NSError * _Nullable))completion;
+- (ChatParticipant * _Nullable)getUserInfo SWIFT_WARN_UNUSED_RESULT;
+- (void)fetchUserInfoWithCompletion:(void (^ _Nullable)(ChatParticipant * _Nullable))completion;
+@end
 
 
 @class UILocalNotification;
@@ -1019,7 +1281,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MMLogging> _Nullab
 /// This method is called when a running app receives a local notification. The method should be called from AppDelegate’s <code>application(_:didReceiveLocalNotification:)</code> or <code>application(_:didReceive:)</code> callback.
 /// \param notification A local notification that encapsulates details about the notification, potentially including custom data.
 ///
-+ (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification;
+/// \param completion A block to be executed when local notification handling is finished
+///
++ (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification completion:(void (^ _Nullable)(void))completion;
 /// Maintains attributes related to the current application installation such as APNs device token, badge number, etc.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMInstallation * _Nullable currentInstallation;)
 + (MMInstallation * _Nullable)currentInstallation SWIFT_WARN_UNUSED_RESULT;
@@ -1090,7 +1354,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySetti
 /// Although this warning doesn’t mean that our code doesn’t work, you can shut it up by prefixing your App Group ID with a Team ID of a certificate that you are signing the build with. For example: <code>"9S95Y6XXXX.group.com.mobile-messaging.notification-service-extension"</code>. The App Group ID itself doesn’t need to be changed though.
 /// \param appGroupId An ID of an App Group
 ///
-- (MobileMessaging * _Nonnull)withAppGroupId:(NSString * _Nonnull)appGroupId SWIFT_WARN_UNUSED_RESULT SWIFT_AVAILABILITY(ios,introduced=10.0);
+- (MobileMessaging * _Nonnull)withAppGroupId:(NSString * _Nonnull)appGroupId SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -1133,52 +1397,24 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GeofencingSe
 /// \param completionHandler A block that you must call when you are finished performing the action. It is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
 ///
 + (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier forRemoteNotification:(NSDictionary * _Nonnull)userInfo responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler;
-/// This method handles interactive notifications actions and performs work that is defined for this action.
-/// \param identifier The identifier for the interactive notification action.
-///
-/// \param message The <code>MTMessage</code> object the action associated with.
-///
-/// \param responseInfo The data dictionary sent by the action. Potentially could contain text entered by the user in response to the text input action.
-///
-/// \param completionHandler A block that you must call when you are finished performing the action.
-///
-+ (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier message:(MTMessage * _Nullable)message responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler;
 /// Returns <code>NotificationCategory</code> object for provided category Id. Category Id can be obtained from <code>MTMessage</code> object with <code>MTMessage.category</code> method.
 /// \param identifier The identifier associated with the category of interactive notification
 ///
 + (NotificationCategory * _Nullable)categoryWithId:(NSString * _Nonnull)identifier SWIFT_WARN_UNUSED_RESULT;
 @end
 
-@class UIApplication;
 
-/// The Application Delegate inheritance - is a way to integrate Mobile Messaging SDK into your application.
-/// To implement this way, you should inherit your Application Delegate from <code>MobileMessagingAppDelegate</code>.
-SWIFT_CLASS("_TtC15MobileMessaging26MobileMessagingAppDelegate")
-@interface MobileMessagingAppDelegate : UIResponder <UIApplicationDelegate>
-/// Passes your Application Code to the Mobile Messaging SDK.
-/// In order to provide your own unique Application Code, you override this variable in your application delegate, that you inherit from <code>MobileMessagingAppDelegate</code>.
-@property (nonatomic, readonly, copy) NSString * _Nonnull applicationCode;
-@property (nonatomic, readonly, copy) NSString * _Nullable appGroupId;
-/// Preferable notification types that indicating how the app alerts the user when a push notification arrives.
-/// You should override this variable in your application delegate, that you inherit from <code>MobileMessagingAppDelegate</code>.
-/// remark:
-/// For now, Mobile Messaging SDK doesn’t support badge. You should handle the badge counter by yourself.
-@property (nonatomic, readonly, strong) UserNotificationType * _Nonnull userNotificationType;
-/// Set of categories that indicating which buttons will be displayed and behavour of these buttons when a push notification arrives.
-/// You can override this variable in your application delegate, that you inherit from <code>MobileMessagingAppDelegate</code>.
-/// Once application started, provided categories will be registered.
-/// remark:
-/// Mobile Messaging SDK reserves category Ids and action Ids with “mm_” prefix. Custom actions and categories with this prefix will be discarded.
-@property (nonatomic, readonly, copy) NSSet<NotificationCategory *> * _Nullable interactiveNotificationCategories;
-- (BOOL)application:(UIApplication * _Nonnull)application didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> * _Nullable)launchOptions SWIFT_WARN_UNUSED_RESULT;
-- (void)application:(UIApplication * _Nonnull)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData * _Nonnull)deviceToken;
-- (void)application:(UIApplication * _Nonnull)application didReceiveRemoteNotification:(NSDictionary * _Nonnull)userInfo fetchCompletionHandler:(void (^ _Nonnull)(UIBackgroundFetchResult))completionHandler;
-- (void)application:(UIApplication * _Nonnull)application didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification;
-- (void)application:(UIApplication * _Nonnull)application handleActionWithIdentifier:(NSString * _Nullable)identifier forLocalNotification:(UILocalNotification * _Nonnull)notification completionHandler:(void (^ _Nonnull)(void))completionHandler;
-- (void)application:(UIApplication * _Nonnull)application handleActionWithIdentifier:(NSString * _Nullable)identifier forRemoteNotification:(NSDictionary * _Nonnull)userInfo completionHandler:(void (^ _Nonnull)(void))completionHandler;
-- (void)application:(UIApplication * _Nonnull)application handleActionWithIdentifier:(NSString * _Nullable)identifier forLocalNotification:(UILocalNotification * _Nonnull)notification withResponseInfo:(NSDictionary * _Nonnull)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler;
-- (void)application:(UIApplication * _Nonnull)application handleActionWithIdentifier:(NSString * _Nullable)identifier forRemoteNotification:(NSDictionary * _Nonnull)userInfo withResponseInfo:(NSDictionary * _Nonnull)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@interface MobileMessaging (SWIFT_EXTENSION(MobileMessaging))
+/// This service manages Mobile Chat, provides API for sending and receiving mobile chat messages.
+/// You access the Mobile Chat service APIs through this property.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MobileChat * _Nullable mobileChat;)
++ (MobileChat * _Nullable)mobileChat SWIFT_WARN_UNUSED_RESULT;
+/// Fabric method for Mobile Messaging session.
+/// Use this method to enable the Mobile Chat service with default message storage implementation.
+- (MobileMessaging * _Nonnull)withMobileChat SWIFT_WARN_UNUSED_RESULT;
+/// Fabric method for Mobile Messaging session.
+/// Use this method to enable the Mobile Chat service with a your custom message storage implementation.
+- (MobileMessaging * _Nonnull)withMobileChatWithStorage:(id <MessageStorage> _Nonnull)storage SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class UNNotificationRequest;
@@ -1209,6 +1445,8 @@ SWIFT_CLASS("_TtC15MobileMessaging43MobileMessagingNotificationServiceExtension"
 @end
 
 
+
+
 SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 @protocol UserDataFoundationTypes
 @end
@@ -1232,11 +1470,15 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
-@end
+
+
 
 
 @interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@end
+
+
+@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
@@ -1252,11 +1494,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 @class NotificationActionOptions;
@@ -1300,6 +1542,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) Notification
 /// Indicates whether the SDK must generate MO message to report on users interaction.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) NotificationActionOptions * _Nonnull moRequired;)
 + (NotificationActionOptions * _Nonnull)moRequired SWIFT_WARN_UNUSED_RESULT;
+/// Indicates whether action is compatible with chat messages. If it is compatible, the action button will be shown in the SDK buil-in chat view.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) NotificationActionOptions * _Nonnull chatCompatible;)
++ (NotificationActionOptions * _Nonnull)chatCompatible SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -1316,6 +1561,9 @@ SWIFT_CLASS("_TtC15MobileMessaging20NotificationCategory")
 @property (nonatomic, readonly, copy) NSArray<NotificationAction *> * _Nonnull actions;
 /// Options indicating how to handle notifications associated with category.
 @property (nonatomic, readonly, copy) NSArray<NotificationCategoryOptions *> * _Nonnull options;
+/// The intent identifier strings, which defined in Intents framework, that you want to associate with notifications of this category.
+/// remark:
+/// Intent identifier may be useful for SiriKit support.
 @property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull intentIdentifiers;
 /// Initializes the <code>NotificationCategory</code>
 /// \param identifier category identifier. “mm_” prefix is reserved for Mobile Messaging ids and cannot be used as a prefix.
@@ -1335,14 +1583,12 @@ SWIFT_CLASS("_TtC15MobileMessaging20NotificationCategory")
 @end
 
 
+
+
 SWIFT_CLASS("_TtC15MobileMessaging27NotificationCategoryOptions")
 @interface NotificationCategoryOptions : NSObject
 - (nonnull instancetype)initWithOptions:(NSArray<NotificationCategoryOptions *> * _Nonnull)options OBJC_DESIGNATED_INITIALIZER;
 - (BOOL)containsWithOptions:(NotificationCategoryOptions * _Nonnull)options SWIFT_WARN_UNUSED_RESULT;
-/// remark:
-/// This option is available only for iOS 10+
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) NotificationCategoryOptions * _Nonnull customDismissAction;)
-+ (NotificationCategoryOptions * _Nonnull)customDismissAction SWIFT_WARN_UNUSED_RESULT;
 /// remark:
 /// This option is available only for iOS 10+
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) NotificationCategoryOptions * _Nonnull allowInCarPlay;)
@@ -1472,9 +1718,33 @@ SWIFT_CLASS("_TtC15MobileMessaging27TextInputNotificationAction") SWIFT_AVAILABI
 
 
 
+
+
+
+
+
+
+
+
 @interface UIDevice (SWIFT_EXTENSION(MobileMessaging))
 @property (nonatomic, readonly) BOOL IS_IOS_BEFORE_10;
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
