@@ -697,6 +697,10 @@ class MessageStorageAdapter: MessageStorage {
 		}
 		return foundMessage
 	}
+    
+    func findAllMessageIds(completion: @escaping ([String]) -> Void) {
+        // chat not supported yet
+    }
 	
 	func register(_ command: CDVInvokedUrlCommand) {
 		let callbackId = command.callbackId
