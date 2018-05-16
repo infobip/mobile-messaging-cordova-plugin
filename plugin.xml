@@ -26,7 +26,7 @@
 			</feature>
 
 			<!-- this entry is to set project deployment target -->
-	        <preference name="deployment-target" value="8.4" />
+	        <preference name="deployment-target" value="9.0" />
 
 	        <!-- this entry is to enable push notifications background mode (highly recommended for MobileMessaging SDK) -->
 	        <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
