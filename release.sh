@@ -13,6 +13,9 @@ echo RELEASE_COMMIT_LOG="${RELEASE_COMMIT_LOG//$'\n'/\\n}" > $PROPERTIES_FILE
 # Bump version
 ./newversion $RELEASE_VERSION
 
+# Remove package lock (temporary)
+rm -f package-lock.json
+
 # Install Carthage
 # brew install carthage
 cd libs/ios/
