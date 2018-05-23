@@ -17,6 +17,7 @@ The document describes library integration steps for your Cordova project.
 - [Privacy settings](#privacy-settings)
 - [Delivery improvements and rich content notifications](#delivery-improvements-and-rich-content-notifications)
 - [Interactive notifications](#interactive-notifications)
+- [In-app notifications](#in-app-notifications)
 
 ## Requirements
 - Cordova 7.0+ (`sudo npm install -g cordova`)
@@ -655,6 +656,10 @@ MobileMessaging.init({
 );
 ...
 ```
+
+## In-app notifications
+
+In-app notifications are alerts shown in foreground when user opens the app. Only the last received message with in-app enabled flag is displayed. If the sent notification didn’t have any category, in-app alert will be shown with default actions: `Cancel`, `Open`. For [interactive notifications](#interactive-notifications), actions defined for category will be displayed.
 
 ## FAQ
 
