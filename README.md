@@ -661,6 +661,8 @@ MobileMessaging.init({
 
 In-app notifications are alerts shown in foreground when user opens the app. Only the last received message with in-app enabled flag is displayed. If the sent notification didn’t have any category, in-app alert will be shown with default actions: `Cancel`, `Open`. For [interactive notifications](#interactive-notifications), actions defined for category will be displayed.
 
+You can send in-app messages through our [Push HTTP API](https://dev.infobip.com/docs/send-push-notifications) with `showInApp` boolean parameter that needs to be set up under `notificationOptions`.
+
 ## FAQ
 
 #### How to open application webView on message tap
