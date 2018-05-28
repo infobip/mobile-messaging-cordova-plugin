@@ -1060,6 +1060,7 @@ typedef SWIFT_ENUM(int16_t, MessageDeliveryMethod) {
   MessageDeliveryMethodPush = 1,
   MessageDeliveryMethodPull = 2,
   MessageDeliveryMethodGeneratedLocally = 3,
+  MessageDeliveryMethodLocal = 4,
 };
 
 typedef SWIFT_ENUM(int16_t, MessageDirection) {
@@ -1505,6 +1506,10 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 SWIFT_CLASS("_TtC15MobileMessaging18NotificationAction")
 @interface NotificationAction : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull DismissActionId;)
++ (NSString * _Nonnull)DismissActionId SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull DefaultActionId;)
++ (NSString * _Nonnull)DefaultActionId SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy) NSString * _Nonnull identifier;
 @property (nonatomic, readonly, copy) NSString * _Nonnull title;
 @property (nonatomic, readonly, copy) NSArray<NotificationActionOptions *> * _Nonnull options;
