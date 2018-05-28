@@ -149,7 +149,7 @@ MobileMessaging.register('<event name>',
 | `messageReceived` | message object | Occurs when new message arrives, see separate section for all available message fields |
 | `notificationTapped` | message object | Occurs when notification is tapped. |
 | `tokenReceived` | Cloud token | Occurs when an APNs device token is received. Contains device token - a hex-encoded string received from APNS. Returns device token as hex-encoded string.|
-| `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internallId - string for the registered user.|
+| `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internalId - string for the registered user.|
 | `geofenceEntered` | geo object | Occurs when device enters a geofence area. |
 | `actionTapped` | message, actionId, text | Occurs when user taps on action inside notification or enters text as part of the notification response. |
 
@@ -606,6 +606,8 @@ Provided content will be displayed on devices with iOS 10.+ in the notification 
 
 Interactive notifications are push notifications that provide an option for end user to interact with application through button tap action. This interaction can be accomplished by using Mobile Messaging SDK predefined interactive notification categories or creating your own.
 
+Tapping the action should trigger `actionTapped` event where you can act upon the received action identifier.
+
 ### Predefined categories
 
 Mobile Messaging SDK provides only one predefined interaction category for now, but this list will be extended in future.
@@ -659,9 +661,19 @@ MobileMessaging.init({
 
 ## In-app notifications
 
-In-app notifications are alerts shown in foreground when user opens the app. Only the last received message with in-app enabled flag is displayed. If the sent notification didn’t have any category, in-app alert will be shown with default actions: `Cancel`, `Open`. For [interactive notifications](#interactive-notifications), actions defined for category will be displayed.
+In-app notifications are alerts shown in foreground when user opens the app. Only the last received message with in-app enabled flag is displayed. If the sent notification didn’t have any category, in-app alert will be shown with default actions (localized texts): 
 
-You can send in-app messages through our [Push HTTP API](https://dev.infobip.com/docs/send-push-notifications) with `showInApp` boolean parameter that needs to be set up under `notificationOptions`.
+| Action | Android action ID | iOS action ID | Foreground |
+| --- | --- | --- | --- |
+| `Cancel` | `mm_cancel` | `com.apple.UNNotificationDismissActionIdentifier` | false |
+| `Open` | `mm_open` | `com.apple.UNNotificationDefaultActionIdentifier` | true |
+
+For [interactive notifications](#interactive-notifications), actions defined for category will be displayed.
+
+
+Tapping the action should trigger `actionTapped` event where you can act upon the received action identifier.
+
+You can send in-app messages through our [Push HTTP API](https://dev.infobip.com/docs/send-push-notifications) with `showInApp` boolean parameter that needs to be set up to `true` under `notificationOptions`.
 
 ## FAQ
 
