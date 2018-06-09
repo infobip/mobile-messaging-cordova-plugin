@@ -27,6 +27,8 @@ import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
+import org.infobip.mobile.messaging.dal.json.JSONArrayAdapter;
+import org.infobip.mobile.messaging.dal.json.JSONObjectAdapter;
 import org.infobip.mobile.messaging.geo.Area;
 import org.infobip.mobile.messaging.geo.Geo;
 import org.infobip.mobile.messaging.geo.GeoEvent;
@@ -906,7 +908,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         private static final String MESSAGES_KEY = TAG + ".cache.messages";
         private static final String EVENTS_KEY = TAG + ".cache.events";
         private static final Object cacheLock = new Object();
-        private static final JsonSerializer serializer = new JsonSerializer();
+        private static final JsonSerializer serializer = new JsonSerializer(false, new JSONObjectAdapter(), new JSONArrayAdapter());
 
         static class Event {
             String type;
