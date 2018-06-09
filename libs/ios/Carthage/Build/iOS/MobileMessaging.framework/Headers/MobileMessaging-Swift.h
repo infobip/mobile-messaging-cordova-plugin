@@ -211,13 +211,12 @@ SWIFT_CLASS("_TtC15MobileMessaging17AnimatedImageView")
 
 
 
-@protocol CustomPayloadSupportedTypes;
 enum MessageDirection : int16_t;
 enum MessageDeliveryMethod : int16_t;
 
 SWIFT_CLASS("_TtC15MobileMessaging11BaseMessage")
 @interface BaseMessage : NSObject
-@property (nonatomic, copy) NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nullable customPayload;
+@property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable customPayload;
 @property (nonatomic) enum MessageDirection direction;
 @property (nonatomic, copy) NSString * _Nonnull messageId;
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull originalPayload;
@@ -784,7 +783,7 @@ SWIFT_CLASS("_TtC15MobileMessaging9MTMessage")
 @property (nonatomic, readonly) BOOL isGeoSignalingMessage;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable silentData;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable internalData;
-@property (nonatomic, copy) NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nullable customPayload;
+@property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable customPayload;
 @property (nonatomic, copy) NSString * _Nullable text;
 /// Designated init
 - (nullable instancetype)initWithPayload:(NSDictionary * _Nonnull)payload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod seenDate:(NSDate * _Nullable)seenDate deliveryReportDate:(NSDate * _Nullable)deliveryReportDate seenStatus:(enum MMSeenStatus)seenStatus isDeliveryReportSent:(BOOL)isDeliveryReportSent OBJC_DESIGNATED_INITIALIZER;
