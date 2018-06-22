@@ -204,6 +204,42 @@ MobileMessagingCordova.prototype.logout = function(callback, errorCallback) {
 };
 
 /**
+ * Enables the push registration so that the application can receive push notifications through MobileMessaging SDK.
+ * MobileMessaging SDK has the push registration enabled by default.
+ *
+ * @name enablePushRegistration
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.enablePushRegistration = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'enablePushRegistration', [])
+};
+
+/**
+ * Disables the push registration so that the application is no longer able to receive push notifications through MobileMessaging SDK.
+ * MobileMessaging SDK has the push registration enabled by default.
+ *
+ * @name disablePushRegistration
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.disablePushRegistration = function(callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'disablePushRegistration', [])
+};
+
+/**
+ * Push registration status defines whether the device is allowed to receive push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
+ * MobileMessaging SDK has the push registration enabled by default.
+ *
+ * @name isPushRegistrationEnabled
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.isPushRegistrationEnabled = function(callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'isPushRegistrationEnabled', [])
+};
+
+/**
  * Mark messages as seen
  *
  * @name markMessagesSeen

@@ -298,6 +298,20 @@ fileprivate class MobileMessagingEventsManager {
 		})
 	}
 	
+	func enablePushRegistration(_ command: CDVInvokedUrlCommand) {
+		MobileMessaging.enablePushRegistration()
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+	}
+	
+	func disablePushRegistration(_ command: CDVInvokedUrlCommand) {
+		MobileMessaging.disablePushRegistration()
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+	}
+	
+	func isPushRegistrationEnabled(_ command: CDVInvokedUrlCommand) {
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.isPushRegistrationEnabled), callbackId: command.callbackId)
+	}
+	
 	func markMessagesSeen(_ command: CDVInvokedUrlCommand) {
 		guard let messageIds = command.arguments as? [String] else {
 			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve message ids")

@@ -71,6 +71,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_SYNC_USER_DATA = "syncUserData";
     private static final String FUNCTION_FETCH_USER_DATA = "fetchUserData";
     private static final String FUNCTION_LOGOUT = "logout";
+    private static final String FUNCTION_ENABLE_PUSH_REGISTRATION = "enablePushRegistration";
+    private static final String FUNCTION_DISABLE_PUSH_REGISTRATION = "disablePushRegistration";
+    private static final String FUNCTION_IS_PUSH_REGISTRATION_ENABLED = "isPushRegistrationEnabled";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
     private static final String FUNCTION_MESSAGESTORAGE_REGISTER = "messageStorage_register";
     private static final String FUNCTION_MESSAGESTORAGE_UNREGISTER = "messageStorage_unregister";
@@ -263,6 +266,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_LOGOUT.equals(action)) {
             logout(callbackContext);
             return true;
+        } else if (FUNCTION_ENABLE_PUSH_REGISTRATION.equals(action)) {
+            enablePushRegistration(callbackContext);
+            return true;
+        } else if (FUNCTION_DISABLE_PUSH_REGISTRATION.equals(action)) {
+            disablePushRegistration(callbackContext);
+            return true;
+        } else if (FUNCTION_IS_PUSH_REGISTRATION_ENABLED.equals(action)) {
+            isPushRegistrationEnabled(callbackContext);
+            return true;
         } else if (FUNCTION_MARK_MESSAGES_SEEN.equals(action)) {
             markMessagesSeen(args, callbackContext);
             return true;
@@ -439,6 +451,21 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 return null;
             }
         }.execute();
+    }
+
+    private void enablePushRegistration(CallbackContext callbackContext) throws JSONException {
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).enablePushRegistration();
+        sendCallbackSuccess(callbackContext);
+    }
+
+    private void disablePushRegistration(CallbackContext callbackContext) throws JSONException {
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).disablePushRegistration();
+        sendCallbackSuccess(callbackContext);
+    }
+
+    private void isPushRegistrationEnabled(CallbackContext callbackContext) throws JSONException {
+        boolean isPushRegEnabled = MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).isPushRegistrationEnabled();
+        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPushRegEnabled));
     }
 
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {

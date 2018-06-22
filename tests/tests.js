@@ -265,6 +265,39 @@ describe('Base methods', function() {
 			[]);
 	});
 
+    it('should enable push registration', function() {
+        MobileMessaging.enablePushRegistration(function() {}, function(err) {});
+
+        expect(cordova.exec).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            jasmine.any(Function),
+            'MobileMessagingCordova',
+            'enablePushRegistration',
+            []);
+    });
+
+    it('should disable push registration', function() {
+        MobileMessaging.disablePushRegistration(function() {}, function(err) {});
+
+        expect(cordova.exec).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            jasmine.any(Function),
+            'MobileMessagingCordova',
+            'disablePushRegistration',
+            []);
+    });
+
+    it('should check push registration enabled', function() {
+        MobileMessaging.isPushRegistrationEnabled(function() {}, function(err) {});
+
+        expect(cordova.exec).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            jasmine.any(Function),
+            'MobileMessagingCordova',
+            'isPushRegistrationEnabled',
+            []);
+    });
+
 	it('should markMessagesSeen', function() {
 		MobileMessaging.markMessagesSeen([1,2,3], function(data) {}, function(err) {});
 
