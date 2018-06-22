@@ -310,6 +310,16 @@ MobileMessaging.logout(
 );
 ```
 
+## Disabling the push registration
+Push registration on user's device is by default enabled to receive push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
+For notifications not to be displayed in the notification center you might send a silent campaign, but it you need to opt out of receiving messages call `disablePushRegistration`:
+
+```javascript
+MobileMessaging.disablePushRegistration(function () {
+        console.log('Registration disabled.');
+    });
+```
+
 ## Mark messages as seen
 Mobile Messaging SDK has an API to mark messages as seen by user. This is usually done when user opens a particular message. Message can be obtained either via `messageReceived` event or together with geo area with `geofenceEntered` event (via geo.message).
 ```javascript
