@@ -310,7 +310,7 @@ describe('Base methods', function() {
 	});
 
 	it('should set as primary', function() {
-		MobileMessaging.setPrimary([false], function(data) {}, function(err) {});
+		MobileMessaging.setPrimary(false, function(data) {}, function(err) {});
 
 		expect(cordova.exec).toHaveBeenCalledWith(
 			jasmine.any(Function),
