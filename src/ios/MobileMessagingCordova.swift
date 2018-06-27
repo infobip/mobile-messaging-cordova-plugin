@@ -297,7 +297,21 @@ fileprivate class MobileMessagingEventsManager {
 			}
 		})
 	}
-	
+
+	func setPrimary(_ command: CDVInvokedUrlCommand) {
+		guard let isPrimary = command.arguments[0] as? Bool else {
+			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve isPrimary parameter")
+			commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
+		}
+		MobileMessaging.setAsPrimaryDevice(isPrimary)
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+	}
+
+	func isPrimary(_ command: CDVInvokedUrlCommand) {
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.isPrimaryDevice), callbackId: command.callbackId)
+	}
+
 	func enablePushRegistration(_ command: CDVInvokedUrlCommand) {
 		MobileMessaging.enablePushRegistration()
 		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
