@@ -259,7 +259,7 @@ MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callbac
  * @param {Function} callback will be called upon completion
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.markMessagesSeen = function(newValue, callback, errorCallback) {
+MobileMessagingCordova.prototype.setPrimary = function(newValue, callback, errorCallback) {
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setPrimary', [newValue])
 };
 
@@ -270,7 +270,7 @@ MobileMessagingCordova.prototype.markMessagesSeen = function(newValue, callback,
  * @param {Function} callback will be called upon completion
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.markMessagesSeen = function(callback, errorCallback) {
+MobileMessagingCordova.prototype.isPrimary = function(callback, errorCallback) {
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'isPrimary', [])
 };
 
