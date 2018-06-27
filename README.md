@@ -8,16 +8,45 @@ The document describes library integration steps for your Cordova project.
 > ### Notice
 > We highly encourage to configure [Notification Service Extension](#delivery-improvements-and-rich-content-notifications) for iOS. Apart from providing support for rich content it also dramatically improves delivery reporting for Push Notification on iOS. Upon implementing Notification Service Extension, SDK will be able to report delivery even when the application is killed.
 
-## Features
-- [Receiving push messages](#messagereceived-event)
-- [Marking messages as seen](#mark-messages-as-seen)
-- [Setting user data for targeting](#synchronizing-user-data)
-- [Geofencing](#geofencing)
-- [Message storage](#message-storage)
-- [Privacy settings](#privacy-settings)
-- [Delivery improvements and rich content notifications](#delivery-improvements-and-rich-content-notifications)
-- [Interactive notifications](#interactive-notifications)
-- [In-app notifications](#in-app-notifications)
+  * [Requirements](#requirements)
+  * [Quick start guide](#quick-start-guide)
+  * [Initialization configuration](#initialization-configuration)
+  * [Events](#events)
+    + [`messageReceived` event](#-messagereceived--event)
+    + [`notificationTapped` event](#-notificationtapped--event)
+    + [`tokenReceived` event](#-tokenreceived--event)
+    + [`registrationUpdated` event](#-registrationupdated--event)
+    + [`geofenceEntered` event](#-geofenceentered--event)
+    + [`actionTapped` event](#-actiontapped--event)
+  * [Synchronizing user data](#synchronizing-user-data)
+    + [Sync user data](#sync-user-data)
+    + [Fetch user data](#fetch-user-data)
+    + [User logout](#user-logout)
+  * [Disabling the push registration](#disabling-the-push-registration)
+  * [Mark messages as seen](#mark-messages-as-seen)
+  * [Geofencing](#geofencing)
+    + [Android](#android)
+    + [iOS](#ios)
+  * [Message storage](#message-storage)
+    + [Default message storage](#default-message-storage)
+    + [External message storage](#external-message-storage)
+    + [External message storage implementation with local storage](#external-message-storage-implementation-with-local-storage)
+  * [Privacy settings](#privacy-settings)
+  * [Delivery improvements and rich content notifications](#delivery-improvements-and-rich-content-notifications)
+    + [Enabling notification extension in iOS for rich content and reliable delivery](#enabling-notification-extension-in-ios-for-rich-content-and-reliable-delivery)
+    + [Sending content](#sending-content)
+    + [Receiving on Android](#receiving-on-android)
+    + [Receiving on iOS](#receiving-on-ios)
+  * [Interactive notifications](#interactive-notifications)
+    + [Predefined categories](#predefined-categories)
+    + [Custom categories](#custom-categories)
+  * [In-app notifications](#in-app-notifications)
+  * [Configuring device as a primary one](#configuring-device-as-a-primary-one)
+    + [Setting device as primary](#setting-device-as-primary)
+    + [Getting current setting](#getting-current-setting)
+  * [FAQ](#faq)
+    + [How to open application webView on message tap](#how-to-open-application-webview-on-message-tap)
+    + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk-)
 
 ## Requirements
 - Cordova 7.0+ (`sudo npm install -g cordova`)
@@ -685,9 +714,32 @@ Tapping the action should trigger `actionTapped` event where you can act upon th
 
 You can send in-app messages through our [Push HTTP API](https://dev.infobip.com/docs/send-push-notifications) with `showInApp` boolean parameter that needs to be set up to `true` under `notificationOptions`.
 
+## Configuring device as a primary one
+
+Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device). For this particular use-case and other similar use-cases you can use APIs provided by Mobile Messaging SDK.
+
+### Setting device as primary
+
+Set primary to **true** or **false** for the current device:
+```javascript
+MobileMessaging.setPrimary(true);
+```
+
+Mobile Messaging SDK is responsible for syncing the primary setting with the server, that is the setting will be synchronized with the server eventually.
+
+### Getting current setting
+
+Retrieving current value of the primary setting is also possible through API:
+```javascript
+MobileMessaging.isPrimary(
+    function(isPrimary){
+        // handle current isPrimary value
+    });
+```
+
 ## FAQ
 
-#### How to open application webView on message tap
+### How to open application webView on message tap
 - Install "cordova-plugin-inappbrowser" plugin
 - Register event handler for notification tapping in MobileMessaging
 ```javascript
@@ -705,7 +757,7 @@ MobileMessaging.register("notificationTapped", function(message) {
 }
 ```
 
-#### What if my android build fails after adding the SDK?
+### What if my android build fails after adding the SDK?
 One of possible reasons for that is dependency conflict between plugins. SDK provides special properties which you can use to enfore specific versions of dependencies for the SDK:
 - `ANDROID_SUPPORT_VER_OVERRIDE` - set to specific version e.g. "26.1.+" to use this version of android support libraries within SDK
 - `ANDROID_GMS_VER_OVERRIDE` - set to specific version e.g. "10.+" to use this version of Google dependencies for push and geofencing
@@ -723,5 +775,5 @@ Or you can set properties in `config.xml` of your application inside the plugin 
 </plugin>
 ```
 
-> ##### Notice
+> #### Notice
 > Make sure to remove and add the plugin if you want to change any of these parameters.
