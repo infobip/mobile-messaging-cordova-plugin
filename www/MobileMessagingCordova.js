@@ -252,7 +252,7 @@ MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callbac
 };
 
 /**
- * Sets current registration as primary registration
+ * Sets current registration as either primary or not primary
  *
  * @name setPrimary
  * @param {Boolean} newValue new value for setting registration either primary or not primary
@@ -264,7 +264,7 @@ MobileMessagingCordova.prototype.markMessagesSeen = function(newValue, callback,
 };
 
 /**
- * Gets current registration primary setting status (either primary or not primary)
+ * Gets current registrations primary setting status (either primary or not primary)
  *
  * @name isPrimary
  * @param {Function} callback will be called upon completion
