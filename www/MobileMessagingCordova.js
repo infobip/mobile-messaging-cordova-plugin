@@ -251,6 +251,29 @@ MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callbac
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'markMessagesSeen', messageIds)
 };
 
+/**
+ * Sets current registration as either primary or not primary
+ *
+ * @name setPrimary
+ * @param {Boolean} newValue new value for setting registration either primary or not primary
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.setPrimary = function(newValue, callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setPrimary', [newValue])
+};
+
+/**
+ * Gets current registrations primary setting status (either primary or not primary)
+ *
+ * @name isPrimary
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.isPrimary = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'isPrimary', [])
+};
+
 MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 	var config = this.configuration;
 	if (!config.defaultMessageStorage) {

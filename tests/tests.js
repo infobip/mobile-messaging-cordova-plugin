@@ -309,6 +309,28 @@ describe('Base methods', function() {
 			[1,2,3]);
 	});
 
+	it('should set as primary', function() {
+		MobileMessaging.setPrimary(false, function(data) {}, function(err) {});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'setPrimary',
+			[false]);
+	});
+
+	it('should check if registration is primary', function() {
+        MobileMessaging.isPrimary(function() {}, function(err) {});
+
+        expect(cordova.exec).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            jasmine.any(Function),
+            'MobileMessagingCordova',
+            'isPrimary',
+            []);
+    });
+
 	it('should defaultMessageStorage disabled', function() {
 		var defaultMessageStorage = MobileMessaging.defaultMessageStorage();
 

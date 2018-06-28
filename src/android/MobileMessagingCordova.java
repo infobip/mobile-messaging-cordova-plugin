@@ -74,6 +74,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_ENABLE_PUSH_REGISTRATION = "enablePushRegistration";
     private static final String FUNCTION_DISABLE_PUSH_REGISTRATION = "disablePushRegistration";
     private static final String FUNCTION_IS_PUSH_REGISTRATION_ENABLED = "isPushRegistrationEnabled";
+    private static final String FUNCTION_IS_PRIMARY = "isPrimary";
+    private static final String FUNCTION_SET_PRIMARY = "setPrimary";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
     private static final String FUNCTION_MESSAGESTORAGE_REGISTER = "messageStorage_register";
     private static final String FUNCTION_MESSAGESTORAGE_UNREGISTER = "messageStorage_unregister";
@@ -278,6 +280,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_MARK_MESSAGES_SEEN.equals(action)) {
             markMessagesSeen(args, callbackContext);
             return true;
+        } else if (FUNCTION_IS_PRIMARY.equals(action)) {
+            isPrimary(callbackContext);
+            return true;
+        } else if (FUNCTION_SET_PRIMARY.equals(action)) {
+            setPrimary(args, callbackContext);
+            return true;
         } else if (FUNCTION_MESSAGESTORAGE_REGISTER.equals(action)) {
             MessageStoreAdapter.register(cordova.getActivity(), args, callbackContext);
             return true;
@@ -468,6 +476,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPushRegEnabled));
     }
 
+    private void setPrimary(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        boolean setting = resolveBooleanParameter(args);
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).setAsPrimaryDevice(setting);
+        sendCallbackSuccess(callbackContext);
+    }
+
+    private void isPrimary(CallbackContext callbackContext) throws JSONException {
+        boolean isPrimary = MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).isPrimaryDevice();
+        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPrimary));
+    }
+
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity();
         String messageId = resolveStringParameter(args);
@@ -596,6 +615,14 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         return args.getString(0);
+    }
+
+    private synchronized boolean resolveBooleanParameter(JSONArray args) throws JSONException {
+        if (args.length() < 1) {
+            throw new IllegalArgumentException("Cannot resolve boolean parameter from arguments");
+        }
+
+        return args.getBoolean(0);
     }
 
     private static boolean sendCallbackEvent(String event, CallbackContext callback, Object object1, Object... objects) {
