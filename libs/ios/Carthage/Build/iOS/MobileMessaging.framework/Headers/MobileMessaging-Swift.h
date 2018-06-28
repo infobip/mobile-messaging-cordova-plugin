@@ -814,6 +814,12 @@ SWIFT_CLASS("_TtC15MobileMessaging14MMInstallation")
 - (void)syncInstallationWithServerWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
 /// Explicitly tries to sync the system data with the server.
 - (void)syncSystemDataWithServerWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
+/// Syncs current primary device setting with the server
+/// Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device).
+/// If the value was changed on device, it trumps the server value, otherwise the servers value win.
+/// \param completion called after the setting is finished sync with the server
+///
+- (void)syncPrimaryFlagWithServer:(void (^ _Nullable)(NSError * _Nullable))completion;
 /// The number currently set as the badge of the app icon in Springboard.
 /// Set to 0 (zero) to hide the badge number. The default value of this property is 0.
 @property (nonatomic) NSInteger badgeNumber;
@@ -1231,6 +1237,18 @@ SWIFT_CLASS("_TtC15MobileMessaging15MobileMessaging")
 - (void)start:(void (^ _Nullable)(void))completion;
 /// Syncronizes all available subservices with the server.
 + (void)sync;
+/// Sets primary device setting
+/// Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device).
+/// \param isPrimary defines whether to set current device as primery one or not
+///
+/// \param completion called after the setting is finished sync with the server
+///
++ (void)setAsPrimaryDevice:(BOOL)isPrimary completion:(void (^ _Nullable)(NSError * _Nullable))completion;
+/// Primary device setting
+/// Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device).
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL isPrimaryDevice;)
++ (BOOL)isPrimaryDevice SWIFT_WARN_UNUSED_RESULT;
++ (void)setIsPrimaryDevice:(BOOL)newValue;
 /// Current push registration status.
 /// The status defines whether the device is allowed to be receiving push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
 /// MobileMessaging SDK has the push registration enabled by default.
