@@ -24,9 +24,11 @@ import org.infobip.mobile.messaging.CustomUserDataValue;
 import org.infobip.mobile.messaging.Event;
 import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
+import org.infobip.mobile.messaging.MobileMessagingCore;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
+import org.infobip.mobile.messaging.app.ActivityLifecycleMonitor;
 import org.infobip.mobile.messaging.dal.json.JSONArrayAdapter;
 import org.infobip.mobile.messaging.dal.json.JSONObjectAdapter;
 import org.infobip.mobile.messaging.geo.Area;
@@ -359,7 +361,20 @@ public class MobileMessagingCordova extends CordovaPlugin {
             MobileInteractive.getInstance(cordova.getActivity().getApplication()).setNotificationCategories(categories);
         }
 
+        // init method is called from WebView when activity is running
+        // so we can safely claim that we are in foreground
+        setForeground();
+
         sendCallbackSuccessKeepCallback(callbackContext);
+    }
+
+    private void setForeground() {
+        ActivityLifecycleMonitor monitor = MobileMessagingCore
+                .getInstance(cordova.getActivity().getApplicationContext())
+                .getActivityLifecycleMonitor();
+        if (monitor != null) {
+            monitor.onActivityResumed(cordova.getActivity());
+        }
     }
 
     private void registerReceiver(final CallbackContext callbackContext) throws JSONException {
