@@ -1,5 +1,7 @@
 # Mobile Messaging SDK plugin for Cordova
 
+[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/com-infobip-plugins-mobilemessaging)
+
 Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in your application and access to the features of [Infobip IP Messaging Platform](https://portal.infobip.com/push/). 
 The document describes library integration steps for your Cordova project.
 
