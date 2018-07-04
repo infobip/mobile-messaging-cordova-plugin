@@ -21,6 +21,6 @@ then
 	git add plugin.xml
 	git add package.json
 	git add README.md
-else 
+else
 	echo "Skipping 'git add'"
 fi
