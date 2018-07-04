@@ -12,10 +12,6 @@ sed -E -e 'H;1h;$!d;x' -e 's@version\=\"[^"\s]*\"@version="'$1'"@' -i '' plugin.
 # Update version in package.json
 npm --no-git-tag-version --force version $1
 
-# Update version in README.md
-# It bumps version number in the following line : `$ cordova plugin add com-infobip-plugins-mobilemessaging#0.8.5 --save`
-sed -E -e 'H;1h;$!d;x' -e 's@com-infobip-plugins-mobilemessaging#.*\-\-save@com-infobip-plugins-mobilemessaging#'$1' \-\-save@' -i '' README.md
-
 if [ -z "$2" ]
 then
 	git add plugin.xml
