@@ -1,7 +1,5 @@
 # Mobile Messaging SDK plugin for Cordova
 
-[![GitHub release](https://img.shields.io/github/release/infobip/mobile-messaging-cordova-plugin.svg)](https://github.com/infobip/mobile-messaging-cordova-plugin/releases)
-
 Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in your application and access to the features of [Infobip IP Messaging Platform](https://portal.infobip.com/push/). 
 The document describes library integration steps for your Cordova project.
 
@@ -80,7 +78,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 3. Add MobileMessaging plugin to your project, run in terminal:
     ```bash
-    $ cordova plugin add com-infobip-plugins-mobilemessaging#0.8.5 --save
+    $ cordova plugin add com-infobip-plugins-mobilemessaging --save
     ```
 
 4. Configure your iOS project:
