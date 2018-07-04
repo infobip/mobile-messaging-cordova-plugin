@@ -80,7 +80,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 3. Add MobileMessaging plugin to your project, run in terminal:
     ```bash
-    $ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git#0.8.5 --save
+    $ cordova plugin add com-infobip-plugins-mobilemessaging#0.8.5 --save
     ```
 
 4. Configure your iOS project:
@@ -764,7 +764,7 @@ One of possible reasons for that is dependency conflict between plugins. SDK pro
 
 You can set these properties when adding the plugin:
 ```bash
-$ cordova plugin add https://github.com/infobip/mobile-messaging-cordova-plugin.git --variable ANDROID_SUPPORT_VER_OVERRIDE="26.1.+" --variable ANDROID_GMS_VER_OVERRIDE="10.+"
+$ cordova plugin add com-infobip-plugins-mobilemessaging --variable ANDROID_SUPPORT_VER_OVERRIDE="26.1.+" --variable ANDROID_GMS_VER_OVERRIDE="10.+"
 ```
 
 Or you can set properties in `config.xml` of your application inside the plugin section of the SDK:
