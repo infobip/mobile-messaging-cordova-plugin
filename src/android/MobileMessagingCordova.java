@@ -93,6 +93,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
     private static final String EVENT_NOTIFICATION_ACTION_TAPPED = "actionTapped";
+    private static final String EVENT_LOGOUT_COMPLETED = "logoutCompleted";
     private static final String EVENT_MESSAGESTORAGE_START = "messageStorage.start";
     private static final String EVENT_MESSAGESTORAGE_SAVE = "messageStorage.save";
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
@@ -100,6 +101,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
+        put(Event.USER_LOGGED_OUT.getKey(), EVENT_LOGOUT_COMPLETED);
         put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
         put(InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey(), EVENT_NOTIFICATION_ACTION_TAPPED);
     }};
@@ -441,25 +443,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private void logout(final CallbackContext callbackContext) throws JSONException {
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
-                        .logout(new MobileMessaging.ResultListener<Object>() {
-                            @Override
-                            public void onResult(Object result) {
-                                sendCallbackSuccess(callbackContext);
-                            }
-
-                            @Override
-                            public void onError(MobileMessagingError e) {
-                                sendCallbackError(callbackContext, e.getMessage());
-                            }
-                        });
-                return null;
-            }
-        }.execute();
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).logout();
+        sendCallbackSuccess(callbackContext);
     }
 
     private void markMessagesSeen(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
