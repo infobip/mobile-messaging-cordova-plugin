@@ -1,4 +1,4 @@
-var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped"];
+var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "logoutCompleted"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
