@@ -149,7 +149,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
 
             if (libraryEventReceiver != null) {
-                sendCallbackEvent(event, libraryEventReceiver, data);
+                if (data == null) {
+                    sendCallbackEvent(event, libraryEventReceiver);
+                } else {
+                    sendCallbackEvent(event, libraryEventReceiver, data);
+                }
             }
         }
     };
@@ -443,8 +447,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private void logout(final CallbackContext callbackContext) throws JSONException {
-        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).logout();
-        sendCallbackSuccess(callbackContext);
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).logout();
+                sendCallbackSuccess(callbackContext);
+                return null;
+            }
+        }.execute();
     }
 
     private void markMessagesSeen(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -637,6 +648,19 @@ public class MobileMessagingCordova extends CordovaPlugin {
             parameters.put(o);
         }
 
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
+        pluginResult.setKeepCallback(true);
+        callback.sendPluginResult(pluginResult);
+        return true;
+    }
+
+    private static boolean sendCallbackEvent(String event, CallbackContext callback) {
+        if (event == null) {
+            return false;
+        }
+        
+        JSONArray parameters = new JSONArray();
+        parameters.put(event);
         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
         pluginResult.setKeepCallback(true);
         callback.sendPluginResult(pluginResult);
