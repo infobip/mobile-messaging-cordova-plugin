@@ -298,6 +298,17 @@ describe('Base methods', function() {
             []);
     });
 
+    it('should get push registration ID', function() {
+        MobileMessaging.getPushRegistrationId(function() {}, function(err) {});
+
+        expect(cordova.exec).toHaveBeenCalledWith(
+            jasmine.any(Function),
+            jasmine.any(Function),
+            'MobileMessagingCordova',
+            'getPushRegistrationId',
+            []);
+    });
+
 	it('should markMessagesSeen', function() {
 		MobileMessaging.markMessagesSeen([1,2,3], function(data) {}, function(err) {});
 

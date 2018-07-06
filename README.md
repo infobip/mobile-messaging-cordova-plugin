@@ -774,6 +774,20 @@ Or you can set properties in `config.xml` of your application inside the plugin 
     <variable name="ANDROID_GMS_VER_OVERRIDE" value="10.+" />
 </plugin>
 ```
+### How do I get Infobip's unique (push registration) ID?
+In order to get Infobip's unique push registration identifier issued by the server you need to implement the following code:
+
+```javascript
+MobileMessaging.getPushRegistrationId(
+    function(pushRegId) {
+        // handle logic related to push registration ID
+    });
+```
+
+This identifier:
+- matches one to one with FCM/APNs cloud token of the particular application installation
+- is only available after `registrationUpdated` event
+- does not change for the whole lifetime of the application installation
 
 > #### Notice
 > Make sure to remove and add the plugin if you want to change any of these parameters.

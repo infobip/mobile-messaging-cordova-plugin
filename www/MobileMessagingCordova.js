@@ -240,6 +240,17 @@ MobileMessagingCordova.prototype.isPushRegistrationEnabled = function(callback, 
 };
 
 /**
+ * Get push registration ID - Infobip's unique push registration identifier issued by the server.
+ *
+ * @name getPushRegistrationId
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.getPushRegistrationId = function(callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getPushRegistrationId', [])
+};
+
+/**
  * Mark messages as seen
  *
  * @name markMessagesSeen

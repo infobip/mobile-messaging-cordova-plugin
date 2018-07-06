@@ -321,6 +321,10 @@ fileprivate class MobileMessagingEventsManager {
 		MobileMessaging.disablePushRegistration()
 		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
 	}
+
+	func getPushRegistrationId(_ command: CDVInvokedUrlCommand) {
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.currentUser?.pushRegistrationId), callbackId: command.callbackId)
+	}
 	
 	func isPushRegistrationEnabled(_ command: CDVInvokedUrlCommand) {
 		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.isPushRegistrationEnabled), callbackId: command.callbackId)
