@@ -76,6 +76,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_ENABLE_PUSH_REGISTRATION = "enablePushRegistration";
     private static final String FUNCTION_DISABLE_PUSH_REGISTRATION = "disablePushRegistration";
     private static final String FUNCTION_IS_PUSH_REGISTRATION_ENABLED = "isPushRegistrationEnabled";
+    private static final String FUNCTION_GET_PUSH_REGISTRATION_ID = "getPushRegistrationId";
     private static final String FUNCTION_IS_PRIMARY = "isPrimary";
     private static final String FUNCTION_SET_PRIMARY = "setPrimary";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
@@ -285,6 +286,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_IS_PUSH_REGISTRATION_ENABLED.equals(action)) {
             isPushRegistrationEnabled(callbackContext);
             return true;
+        } else if (FUNCTION_GET_PUSH_REGISTRATION_ID.equals(action)) {
+            getPushRegistrationId(callbackContext);
+            return true;
         } else if (FUNCTION_MARK_MESSAGES_SEEN.equals(action)) {
             markMessagesSeen(args, callbackContext);
             return true;
@@ -485,6 +489,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private void isPushRegistrationEnabled(CallbackContext callbackContext) throws JSONException {
         boolean isPushRegEnabled = MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).isPushRegistrationEnabled();
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPushRegEnabled));
+    }
+
+    private void getPushRegistrationId(CallbackContext callbackContext) throws JSONException {
+        String pushRegistrationId = MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).getPushRegistrationId();
+        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, pushRegistrationId));
     }
 
     private void setPrimary(JSONArray args, CallbackContext callbackContext) throws JSONException {
