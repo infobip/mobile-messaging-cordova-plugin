@@ -288,14 +288,8 @@ fileprivate class MobileMessagingEventsManager {
 	}
 	
 	func logout(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.logout(completion: { error in
-			if let error = error {
-				let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
-				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
-			} else {
-				self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
-			}
-		})
+		MobileMessaging.logout()
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
 	}
 
 	func setPrimary(_ command: CDVInvokedUrlCommand) {
