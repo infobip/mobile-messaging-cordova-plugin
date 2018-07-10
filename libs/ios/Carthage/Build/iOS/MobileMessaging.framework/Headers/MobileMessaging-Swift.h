@@ -1337,11 +1337,15 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) NSURLSessionConfigurat
 /// The <code>PrivacySettings</code> class incapsulates privacy settings that affect the SDK behaviour and business logic.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySettings * _Nonnull privacySettings;)
 + (PrivacySettings * _Nonnull)privacySettings SWIFT_WARN_UNUSED_RESULT;
-/// Erases currently stored UserData on SDK and server associated with push registration, along with messages in SDK storage.
-/// User’s data synced over MobileMessaging is by default associated with created push registration. Logging out user means that push registration along with device specific data will remain, but user’s data (such as first name, custom data,…) will be wiped out.
+/// Erases currently stored UserData associated with push registration along with messages in SDK storage.
+/// User’s data synced over MobileMessaging is by default associated with created push registration. Logging out user means that push registration and device specific data will remain, but user’s data (such as first name, custom data, …) will be wiped out.
 /// If you log out user, there is no mechanism to log him in again since he’s already subscribed for broadcast notifications from your app, but you might want to sync new user data to target this user specifically.
-/// Use this method if:
+/// remark:
+/// There is another version of logout method that doesn’t require a <code>completion</code> parameter which means the SDK will handle any unsuccessful logout request by itself. See the method documentation for more details. Use this method in following cases:
 /// <ul>
+///   <li>
+///     you want to handle possible failures of server logout request and retry and maintain pending logout state by yourself
+///   </li>
 ///   <li>
 ///     you’re syncing user data to our server;
 ///   </li>
@@ -1357,7 +1361,32 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySetti
 /// </ul>
 /// \param completion The block to execute after the logout procedure finished
 ///
+/// \param error An error that happened during the server request
+///
 + (void)logoutWithCompletion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// Erases currently stored UserData associated with push registration along with messages in SDK storage.
+/// User’s data synced over MobileMessaging is by default associated with created push registration. Logging out user means that push registration and device specific data will remain, but user’s data (such as first name, custom data, …) will be wiped out.
+/// If you log out user, there is no mechanism to log him in again since he’s already subscribed for broadcast notifications from your app, but you might want to sync new user data to target this user specifically.
+/// remark:
+/// There is another version of logout method that doesn’t require a <code>completion</code> parameter which means the SDK will handle any unsuccessful logout request by itself. See the method documentation for more details. Use this method in following cases:
+/// <ul>
+///   <li>
+///     you don’t need to hanlde networking failures and maintain pending logout state by yourself
+///   </li>
+///   <li>
+///     you’re syncing user data to our server;
+///   </li>
+///   <li>
+///     your application has logout option;
+///   </li>
+///   <li>
+///     you don’t want new logged in user to be targeted by other user’s data, e.g. first name;
+///   </li>
+///   <li>
+///     you want logged out user to still receive broadcast notifications (if not, you need to call MobileMessaging.disablePushRegistration()).
+///   </li>
+/// </ul>
++ (void)logout;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
