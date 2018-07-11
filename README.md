@@ -134,35 +134,50 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 ## Initialization configuration
 ```javascript
-configuration: {
-    applicationCode: '<Infobip Application Code from the Customer Portal obtained in step 2>',
-    geofencingEnabled: '<set to 'true' to enable geofencing inside the library, optional>',
-    messageStorage: '<message storage implementation>',
-    defaultMessageStorage: '<set to 'true' to enable default message storage implementation>',
-    notificationCategories: [
-       {
-           identifier: <String id of notification category>,
-           actions: [
-               {
-                   identifier: <String id of notification action inside category>,
-                   title: <Title of action button>,
-                   foreground: <set to 'true' if action tap should open application>,
-                   authenticationRequired: <set to 'true' if authentication required before action takes place (iOS only)>,
-                   moRequired: <set to 'true' if tap on action should send message to the platform>,
-                   destructive: <set to 'true'>,
-                   icon: <Action icon name in resources (Android only)>
-               }
-           ]   
-       }
-    ]
-    android: {
-        senderId: '<Cloud Messaging Sender ID obtained in step 1>'
+MobileMessaging.init({
+        applicationCode: <String; Infobip Application Code from the Customer Portal obtained in step 2>,
+        android: {
+            senderId: <String; Cloud Messaging Sender ID obtained in step 1>
+        },
+        ios: {
+            notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>,
+            notificationExtensionAppGroupId: <String; app group id to sync data between main app and notification service extension> // optional but recommended!
+        },
+        geofencingEnabled: <Boolean; set to 'true' to enable geofencing inside the library>, // optional
+        messageStorage: <Object; message storage implementation>, // optional
+        defaultMessageStorage: <Boolean; set to 'true' to enable default message storage implementation>, // optional
+        notificationCategories: [ // optional
+           {
+               identifier: <String; a unique category string identifier>,
+               actions: [
+                   {
+                       identifier: <String; a unique action identifier>,
+                       title: <String; an action title, represents a notification action button label>,
+                       foreground: <Boolean; to bring the app to foreground or leave it in background state (or not)>,
+                       textInputPlaceholder: <String; custom input field placeholder>,
+                       moRequired: <Boolean; to trigger MO message sending (or not)>,
+                                               
+                       // iOS only
+                       authenticationRequired: <Boolean; to require device to be unlocked before performing (or not)>,
+                       destructive: <Boolean; to be marked as destructive (or not)>,
+                       textInputActionButtonTitle: <String; custom label for a sending button>,
+                       
+                       // Android only
+                       icon: <String; a resource name for a special action icon>
+                   }
+               ]   
+           }
+        ],
+        privacySettings: { // optional
+            carrierInfoSendingDisabled: <Boolean; defines if MM SDK should send carrier information to the server; false by default>,
+            systemInfoSendingDisabled: <Boolean; defines if MM SDK should send system information to the server; false by default>,
+            userDataPersistingDisabled: <Boolean; defines if MM SDK should persist User Data locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself; false by default>
+        }
     },
-    ios: {
-        notificationTypes: '<notification types to indicate how the app should alert user when push message arrives>',
-        notificationExtensionAppGroupId: '<app group id to sync data between main app and notification service extension>' 
+    function(error) {
+        console.log('Init error: ' + error);
     }
-}
+);
 ```
 
 ## Events
@@ -205,9 +220,9 @@ Supported message fields are described below:
 ```javascript
 message: {
     messageId: '<unique message id>',
-    title: '<title, optional>',
+    title: '<title>',
     body: '<message text>',
-    sound: '<notification sound, optional>',
+    sound: '<notification sound>',
     vibrate: '<true/false, notification vibration setting (Android only)>',
     icon: '<notification icon, optional (Android only)>',
     silent: '<true/false, disables notification for message>',
@@ -615,7 +630,7 @@ SDK supports rich content on Android out of the box. iOS platform **must be** ad
 
 ### Enabling notification extension in iOS for rich content and reliable delivery
 
-Additional Notification Service Extension **must be** be configured for iOS platform as described [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10). Note that you don't need to configure your main application to pass App Group ID to SDK. Instead you will have to provide `notificationExtensionAppGroupId` as part of your application configuration. Refer to [configuration section](#initialization-configuration) for details.
+Additional Notification Service Extension **must be** be configured for iOS platform (to display rich content and have reliable delivery) as described [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10). Acquired App Group ID needs to be provided as a value of `notificationExtensionAppGroupId` parameter in your application configuration. Refer to [configuration section](#initialization-configuration) for details.
 
 ### Sending content
 
