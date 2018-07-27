@@ -819,7 +819,7 @@ SWIFT_CLASS("_TtC15MobileMessaging14MMInstallation")
 /// If the value was changed on device, it trumps the server value, otherwise the servers value win.
 /// \param completion called after the setting is finished sync with the server
 ///
-- (void)syncPrimaryFlagWithServer:(void (^ _Nullable)(NSError * _Nullable))completion;
+- (void)syncPrimarySettingWithServer:(void (^ _Nullable)(NSError * _Nullable))completion;
 /// The number currently set as the badge of the app icon in Springboard.
 /// Set to 0 (zero) to hide the badge number. The default value of this property is 0.
 @property (nonatomic) NSInteger badgeNumber;
