@@ -1,4 +1,4 @@
-var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "logoutCompleted"];
+var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "logoutCompleted", "primaryChanged"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
@@ -283,6 +283,17 @@ MobileMessagingCordova.prototype.setPrimary = function(newValue, callback, error
  */
 MobileMessagingCordova.prototype.isPrimary = function(callback, errorCallback) {
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'isPrimary', [])
+};
+
+/**
+ * Syncs primary setting with server and triggers corresponding event if the setting changes.
+ *
+ * @name syncPrimary
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.syncPrimary = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'syncPrimary', [])
 };
 
 MobileMessagingCordova.prototype.defaultMessageStorage = function() {

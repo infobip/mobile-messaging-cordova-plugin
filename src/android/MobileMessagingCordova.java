@@ -79,6 +79,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_GET_PUSH_REGISTRATION_ID = "getPushRegistrationId";
     private static final String FUNCTION_IS_PRIMARY = "isPrimary";
     private static final String FUNCTION_SET_PRIMARY = "setPrimary";
+    private static final String FUNCTION_SYNC_PRIMARY = "syncPrimary";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
     private static final String FUNCTION_MESSAGESTORAGE_REGISTER = "messageStorage_register";
     private static final String FUNCTION_MESSAGESTORAGE_UNREGISTER = "messageStorage_unregister";
@@ -95,6 +96,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
     private static final String EVENT_NOTIFICATION_ACTION_TAPPED = "actionTapped";
     private static final String EVENT_LOGOUT_COMPLETED = "logoutCompleted";
+    private static final String EVENT_PRIMARY_CHANGED = "primaryChanged";
     private static final String EVENT_MESSAGESTORAGE_START = "messageStorage.start";
     private static final String EVENT_MESSAGESTORAGE_SAVE = "messageStorage.save";
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
@@ -103,6 +105,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
         put(Event.USER_LOGGED_OUT.getKey(), EVENT_LOGOUT_COMPLETED);
+        put(Event.PRIMARY_CHANGED.getKey(), EVENT_PRIMARY_CHANGED);
         put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
         put(InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey(), EVENT_NOTIFICATION_ACTION_TAPPED);
     }};
@@ -297,6 +300,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_SET_PRIMARY.equals(action)) {
             setPrimary(args, callbackContext);
+            return true;
+        } else if (FUNCTION_SYNC_PRIMARY.equals(action)) {
+            syncPrimary(callbackContext);
             return true;
         } else if (FUNCTION_MESSAGESTORAGE_REGISTER.equals(action)) {
             MessageStoreAdapter.register(cordova.getActivity(), args, callbackContext);
@@ -499,6 +505,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private void setPrimary(JSONArray args, CallbackContext callbackContext) throws JSONException {
         boolean setting = resolveBooleanParameter(args);
         MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).setAsPrimaryDevice(setting);
+        sendCallbackSuccess(callbackContext);
+    }
+
+    private void syncPrimary(CallbackContext callbackContext) throws JSONException {
+        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).syncPrimaryDeviceSettingWithServer();
         sendCallbackSuccess(callbackContext);
     }
 

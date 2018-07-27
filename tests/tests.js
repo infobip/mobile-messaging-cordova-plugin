@@ -342,6 +342,17 @@ describe('Base methods', function() {
             []);
     });
 
+    it('should sync primary', function() {
+		MobileMessaging.syncPrimary(function(data) {}, function(err) {});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'syncPrimary',
+			[]);
+	});
+
 	it('should defaultMessageStorage disabled', function() {
 		var defaultMessageStorage = MobileMessaging.defaultMessageStorage();
 

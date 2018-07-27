@@ -44,6 +44,7 @@ The document describes library integration steps for your Cordova project.
   * [Configuring device as a primary one](#configuring-device-as-a-primary-one)
     + [Setting device as primary](#setting-device-as-primary)
     + [Getting current setting](#getting-current-setting)
+    + [Synchronizing setting with server](#synchronizing-setting-with-server)
   * [FAQ](#faq)
     + [How to open application webView on message tap](#how-to-open-application-webview-on-message-tap)
     + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk)
@@ -197,6 +198,7 @@ MobileMessaging.register('<event name>',
 | `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internalId - string for the registered user.|
 | `geofenceEntered` | geo object | Occurs when device enters a geofence area. |
 | `actionTapped` | message, actionId, text | Occurs when user taps on action inside notification or enters text as part of the notification response. |
+| `primaryChanged` | | Occurs when primary device setting is updated after synchronization with the server. |
 
 ### `messageReceived` event
 ```javascript
@@ -297,6 +299,16 @@ Text input action:
 MobileMessaging.register('actionTapped',
      function(message, actionId, text) {
          console.log('User responded to a message ' + message.body + ' with following text: ' + text);
+     }
+);
+```
+
+### `primaryChanged` event
+
+```javascript
+MobileMessaging.register('primaryChanged',
+     function() {
+         // primary changed on the server, request new value
      }
 );
 ```
@@ -752,6 +764,16 @@ MobileMessaging.isPrimary(
         // handle current isPrimary value
     });
 ```
+
+### Synchronizing setting with server
+
+It is possible to manually trigger synchronization of the primary setting with server with the following API:
+```javascript
+MobileMessaging.syncPrimary();
+```
+Mobile Messaging SDK will contact the server after this API is called. Note that multiple calls to API will not result in the same amount if network requests. Number of requests will be optimized and reduced to reduce battery consumption.
+
+If the setting changes on a device after synchronization with the server, then [primaryChanged]() event will be produced.
 
 ## FAQ
 

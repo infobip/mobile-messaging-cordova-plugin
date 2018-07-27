@@ -98,7 +98,8 @@ fileprivate class MobileMessagingEventsManager {
 		"registrationUpdated":  MMNotificationRegistrationUpdated,
 		"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		"notificationTapped": MMNotificationMessageTapped,
-		"actionTapped": MMNotificationActionTapped
+		"actionTapped": MMNotificationActionTapped,
+		"primaryChanged": MMNotificationPrimaryDeviceSettingUpdated
 	]
 	
 	init(plugin: MobileMessagingCordova) {
@@ -188,6 +189,8 @@ fileprivate class MobileMessagingEventsManager {
 				}
 				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: parameters)
 			}
+		case MMNotificationPrimaryDeviceSettingUpdated:
+			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
 		default: break
 		}
 		
@@ -304,6 +307,11 @@ fileprivate class MobileMessagingEventsManager {
 
 	func isPrimary(_ command: CDVInvokedUrlCommand) {
 		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.isPrimaryDevice), callbackId: command.callbackId)
+	}
+
+	func syncPrimary(_ command: CDVInvokedUrlCommand) {
+		MobileMessaging.currentInstallation?.syncPrimarySettingWithServer()
+		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
 	}
 
 	func enablePushRegistration(_ command: CDVInvokedUrlCommand) {
