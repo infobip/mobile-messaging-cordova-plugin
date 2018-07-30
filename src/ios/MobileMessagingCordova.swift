@@ -458,7 +458,7 @@ extension MTMessage {
 		result["sound"] = sound
 		result["silent"] = isSilent
 		result["receivedTimestamp"] = sendDateTime
-		result["customData"] = customPayload
+		result["customPayload"] = customPayload
 		result["originalPayload"] = originalPayload
 		result["contentUrl"] = contentUrl
 		result["seen"] = seenStatus != .NotSeen
@@ -488,7 +488,7 @@ extension BaseMessage {
 	func dictionary() -> [String: Any] {
 		var result = [String: Any]()
 		result["messageId"] = messageId
-		result["customData"] = originalPayload["customPayload"]
+		result["customPayload"] = originalPayload["customPayload"]
 		result["originalPayload"] = originalPayload
 		
 		if let aps = originalPayload["aps"] as? StringKeyPayload {
