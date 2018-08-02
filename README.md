@@ -829,3 +829,22 @@ This identifier:
 - matches one to one with FCM/APNs cloud token of the particular application installation
 - is only available after `registrationUpdated` event
 - does not change for the whole lifetime of the application installation
+
+### What if building iOS from command line fails?
+Run following command line to build your app with xcode:
+```
+xcodebuild build `
+    ` -project "platforms/ios/MyApp.xcodeproj"`
+    ` -scheme "MyApp"`
+    ` -archivePath "platforms/ios/MyApp.xcarchive"`
+    ` -destination "generic/platform=iOS"`
+    ` -target="MyApp"`
+    ` ENABLE_BITCODE=NO`
+    ` PRODUCT_BUNDLE_IDENTIFIER="YOUR_APP_ID"`
+    ` PRODUCT_NAME="MyApp"`
+    ` DEVELOPMENT_TEAM="YOUR_TEAM_ID"`
+    ` CODE_SIGN_IDENTITY="iPhone Distribution"`
+    ` IPHONEOS_DEPLOYMENT_TARGET="IOS_VERSION" 
+```
+Adjust command line accordingly to your app setup, with appropriate names for the project, scheme, archive path and target. Also make sure to provide proper team ID and bundle as well as deployment target.
+
