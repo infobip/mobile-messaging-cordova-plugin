@@ -49,7 +49,7 @@ The document describes library integration steps for your Cordova project.
     + [How to open application webView on message tap](#how-to-open-application-webview-on-message-tap)
     + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk)
     + [How do I get Infobip's unique (push registration) ID?](#how-do-i-get-infobips-unique-push-registration-id)
-    + [What if building iOS from command line fails?](#what-if-building-ios-from-command-line-fails)
+    + [How to archive my app with command line?](#how-to-archive-my-app-with-command-line)
 
 ## Requirements
 - Cordova 7.0+ (`sudo npm install -g cordova`)
@@ -831,7 +831,7 @@ This identifier:
 - is only available after `registrationUpdated` event
 - does not change for the whole lifetime of the application installation
 
-### What if building iOS from command line fails?
+### How to archive my app with command line?
 Run following command line to build your app with xcode:
 ```
 xcodebuild build `
