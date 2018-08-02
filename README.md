@@ -49,6 +49,7 @@ The document describes library integration steps for your Cordova project.
     + [How to open application webView on message tap](#how-to-open-application-webview-on-message-tap)
     + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk)
     + [How do I get Infobip's unique (push registration) ID?](#how-do-i-get-infobips-unique-push-registration-id)
+    + [What if building iOS from command line fails?](#what-if-building-ios-from-command-line-fails)
 
 ## Requirements
 - Cordova 7.0+ (`sudo npm install -g cordova`)
