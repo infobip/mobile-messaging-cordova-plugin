@@ -5,7 +5,11 @@
 	version="0.9.3">
 	
 	<name>MobileMessagingCordova</name>
-	<keywords>Infobip,push</keywords>
+	<keywords>Infobip,push,cordova</keywords>
+	<engines>
+        <engine name="cordova-android" version=">=4.1.0"/>
+        <engine name="cordova-ios" version=">=4.3.0"/>
+    </engines>
 	<dependency id="cordova-plugin-add-swift-support"/>
 	<dependency id="cordova-custom-config"/>
 
@@ -19,25 +23,27 @@
 	<preference name="ANDROID_GMS_VER_OVERRIDE" default="false" />
 
 	<platform name="ios">
-		<config-file target="config.xml" parent="/*">
+		<config-file parent="UIBackgroundModes" target="*Info.plist">
+            <array>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
+
+		<config-file parent="/widget" target="config.xml">
 			<feature name="MobileMessagingCordova">
 				<param name="ios-package" value="MobileMessagingCordova" />
 				<param name="onload" value="true" />
 			</feature>
-
-			<!-- this entry is to set project deployment target -->
-	        <preference name="deployment-target" value="9.0" />
-
-	        <!-- this entry is to enable push notifications background mode (highly recommended for MobileMessaging SDK) -->
-	        <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
-	            <array>
-	                <string>remote-notification</string>
-	            </array>
-	        </config-file>
 		</config-file>
 
-		<hook type="before_build" src="scripts/fixEntitlementsBuildSetting.js"/>
-		<hook type="before_run" src="scripts/fixEntitlementsBuildSetting.js"/>
+		<config-file parent="aps-environment" target="*/Entitlements-Debug.plist">
+            <string>development</string>
+        </config-file>
+
+        <config-file parent="aps-environment" target="*/Entitlements-Release.plist">
+            <string>production</string>
+        </config-file>
+
 		<framework src="libs/ios/Carthage/Build/iOS/MobileMessaging.framework" custom="true" embed="true"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
