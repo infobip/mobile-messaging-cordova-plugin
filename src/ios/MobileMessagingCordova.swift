@@ -14,6 +14,7 @@ class MMConfiguration {
 		static let geofencingEnabled = "geofencingEnabled"
 		static let applicationCode = "applicationCode"
 		static let forceCleanup = "forceCleanup"
+		static let logging = "logging"
 		static let defaultMessageStorage = "defaultMessageStorage"
 		static let notificationTypes = "notificationTypes"
 		static let messageStorage = "messageStorage"
@@ -28,6 +29,7 @@ class MMConfiguration {
 	let defaultMessageStorage: Bool
 	let notificationType: UserNotificationType
 	let forceCleanup: Bool
+	let logging: Bool
 	let privacySettings: [String: Any]
 	let cordovaPluginVersion: String
 	let notificationExtensionAppGroupId: String?
@@ -43,6 +45,7 @@ class MMConfiguration {
 		self.appCode = appCode
 		self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].unwrap(orDefault: false)
 		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
+		self.logging = ios[MMConfiguration.Keys.logging].unwrap(orDefault: false)
 		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
 		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
 		self.notificationExtensionAppGroupId = ios[MMConfiguration.Keys.notificationExtensionAppGroupId] as? String
@@ -439,6 +442,9 @@ fileprivate class MobileMessagingEventsManager {
 			mobileMessaging = mobileMessaging?.withInteractiveNotificationCategories(Set(categories))
 		}
 		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
+		if (configuration.logging) {
+			MobileMessaging.logger = MMDefaultLogger()
+		}
 		mobileMessaging?.start()
 		MobileMessaging.sync()
 	}
