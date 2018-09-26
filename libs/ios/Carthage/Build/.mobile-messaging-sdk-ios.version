@@ -1,18 +1,22 @@
 {
-  "iOS" : [
-    {
-      "hash" : "837a6f4470f2d752166bcae50ee6e174176d7d9b622e58562a5dfbccd7602771",
-      "name" : "MobileMessaging"
-    }
+  "Mac" : [
+
   ],
-  "commitish" : "3.9.4",
   "watchOS" : [
 
   ],
   "tvOS" : [
 
   ],
-  "Mac" : [
-
+  "commitish" : "4.0.1",
+  "iOS" : [
+    {
+      "name" : "MobileMessaging",
+      "hash" : "7884d1950a6926b3759ed8b8b0fff9342b8cfbd836595c5ed039ec86ca61e64c"
+    },
+    {
+      "name" : "MobileMessaging",
+      "hash" : "7884d1950a6926b3759ed8b8b0fff9342b8cfbd836595c5ed039ec86ca61e64c"
+    }
   ]
 }
