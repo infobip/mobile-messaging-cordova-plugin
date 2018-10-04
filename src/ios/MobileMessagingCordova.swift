@@ -463,7 +463,7 @@ extension MTMessage {
 		result["body"] = text
 		result["sound"] = sound
 		result["silent"] = isSilent
-		result["receivedTimestamp"] = UInt64(sendDateTime)
+		result["receivedTimestamp"] = UInt64(sendDateTime * 1000)
 		result["customPayload"] = customPayload
 		result["originalPayload"] = originalPayload
 		result["contentUrl"] = contentUrl
