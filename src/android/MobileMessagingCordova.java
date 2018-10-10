@@ -26,6 +26,7 @@ import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.MobileMessagingCore;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
+import org.infobip.mobile.messaging.SuccessPending;
 import org.infobip.mobile.messaging.UserData;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
 import org.infobip.mobile.messaging.app.ActivityLifecycleMonitor;
@@ -113,6 +114,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final Map<String, String> messageBroadcastEventMap = new HashMap<String, String>() {{
         put(Event.MESSAGE_RECEIVED.getKey(), EVENT_MESSAGE_RECEIVED);
         put(Event.NOTIFICATION_TAPPED.getKey(), EVENT_NOTIFICATION_TAPPED);
+    }};
+
+    private static final Map<SuccessPending, String> logoutStates = new HashMap<SuccessPending, String>() {{
+        put(SuccessPending.Pending, "pending");
+        put(SuccessPending.Success, "success");
     }};
 
     private static volatile CallbackContext libraryEventReceiver = null;
@@ -393,7 +399,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
     }
 
-    private void registerReceiver(final CallbackContext callbackContext) throws JSONException {
+    private void registerReceiver(final CallbackContext callbackContext) {
 
         IntentFilter intentFilter = new IntentFilter();
         for (String action : broadcastEventMap.keySet()) {
@@ -411,11 +417,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void syncUserData(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final UserData userData = resolveUserData(args);
-        new AsyncTask<Void, Void, Void>() {
-
+        runInBackground(new Runnable() {
             @Override
-            protected Void doInBackground(Void... params) {
-                MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
+            public void run() {
+                mobileMessaging()
                         .syncUserData(userData, new MobileMessaging.ResultListener<UserData>() {
                             @Override
                             public void onResult(UserData result) {
@@ -428,17 +433,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
                                 sendCallbackError(callbackContext, e.getMessage());
                             }
                         });
-                return null;
             }
-        }.execute();
+        });
     }
 
-    private void fetchUserData(final CallbackContext callbackContext) throws JSONException {
-        new AsyncTask<Void, Void, Void>() {
-
+    private void fetchUserData(final CallbackContext callbackContext) {
+        runInBackground(new Runnable() {
             @Override
-            protected Void doInBackground(Void... params) {
-                MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
+            public void run() {
+                mobileMessaging()
                         .fetchUserData(new MobileMessaging.ResultListener<UserData>() {
                             @Override
                             public void onResult(UserData result) {
@@ -451,70 +454,83 @@ public class MobileMessagingCordova extends CordovaPlugin {
                                 sendCallbackError(callbackContext, e.getMessage());
                             }
                         });
-                return null;
             }
-        }.execute();
+        });
     }
 
-    private void logout(final CallbackContext callbackContext) throws JSONException {
-        new AsyncTask<Void, Void, Void>() {
-
+    private void logout(final CallbackContext callbackContext) {
+        runInBackground(new Runnable() {
             @Override
-            protected Void doInBackground(Void... params) {
-                MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).logout();
-                sendCallbackSuccess(callbackContext);
-                return null;
+            public void run() {
+                mobileMessaging().logout(new MobileMessaging.ResultListener<SuccessPending>() {
+                    @Override
+                    public void onResult(SuccessPending successPending) {
+                        sendCallbackSuccess(callbackContext, logoutStates.get(successPending));
+                    }
+
+                    @Override
+                    public void onError(MobileMessagingError e) {
+                        sendCallbackError(callbackContext, e.getMessage());
+                    }
+                });
             }
-        }.execute();
+        });
     }
 
     private void markMessagesSeen(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final String messageIds[] = resolveStringArray(args);
-        new AsyncTask<Void, Void, Void>() {
-
+        runInBackground(new Runnable() {
             @Override
-            protected Void doInBackground(Void... params) {
-                MobileMessaging.getInstance(cordova.getActivity().getApplicationContext())
+            public void run() {
+                mobileMessaging()
                         .setMessagesSeen(messageIds);
                 sendCallbackSuccess(callbackContext, args);
-                return null;
             }
-        }.execute();
+        });
     }
 
-    private void enablePushRegistration(CallbackContext callbackContext) throws JSONException {
-        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).enablePushRegistration();
+    private void enablePushRegistration(CallbackContext callbackContext) {
+        mobileMessaging().enablePushRegistration();
         sendCallbackSuccess(callbackContext);
     }
 
-    private void disablePushRegistration(CallbackContext callbackContext) throws JSONException {
-        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).disablePushRegistration();
+    private void disablePushRegistration(CallbackContext callbackContext) {
+        mobileMessaging().disablePushRegistration();
         sendCallbackSuccess(callbackContext);
     }
 
-    private void isPushRegistrationEnabled(CallbackContext callbackContext) throws JSONException {
-        boolean isPushRegEnabled = MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).isPushRegistrationEnabled();
+    private void isPushRegistrationEnabled(CallbackContext callbackContext) {
+        boolean isPushRegEnabled = mobileMessaging().isPushRegistrationEnabled();
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPushRegEnabled));
     }
 
-    private void getPushRegistrationId(CallbackContext callbackContext) throws JSONException {
-        String pushRegistrationId = MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).getPushRegistrationId();
+    private void getPushRegistrationId(CallbackContext callbackContext) {
+        String pushRegistrationId = mobileMessaging().getPushRegistrationId();
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, pushRegistrationId));
     }
 
     private void setPrimary(JSONArray args, CallbackContext callbackContext) throws JSONException {
         boolean setting = resolveBooleanParameter(args);
-        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).setAsPrimaryDevice(setting);
+        mobileMessaging().setAsPrimaryDevice(setting);
         sendCallbackSuccess(callbackContext);
     }
 
-    private void syncPrimary(CallbackContext callbackContext) throws JSONException {
-        MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).syncPrimaryDeviceSettingWithServer();
-        sendCallbackSuccess(callbackContext);
+    private void syncPrimary(final CallbackContext callbackContext) {
+        mobileMessaging().getPrimaryDeviceSetting(new MobileMessaging.ResultListener<Boolean>() {
+            @Override
+            public void onResult(Boolean aBoolean) {
+                sendCallbackSuccess(callbackContext, aBoolean);
+            }
+
+            @Override
+            public void onError(MobileMessagingError e) {
+                sendCallbackError(callbackContext, e.getMessage());
+            }
+        });
     }
 
-    private void isPrimary(CallbackContext callbackContext) throws JSONException {
-        boolean isPrimary = MobileMessaging.getInstance(cordova.getActivity().getApplicationContext()).isPrimaryDevice();
+    private void isPrimary(CallbackContext callbackContext) {
+        boolean isPrimary = mobileMessaging().isPrimaryDevice();
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPrimary));
     }
 
@@ -536,7 +552,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackSuccessEmpty(callbackContext);
     }
 
-    private synchronized void defaultMessageStorage_findAll(CallbackContext callbackContext) throws JSONException {
+    private synchronized void defaultMessageStorage_findAll(CallbackContext callbackContext) {
         Context context = cordova.getActivity();
         MessageStore messageStore = MobileMessaging.getInstance(context).getMessageStore();
         if (messageStore == null) {
@@ -568,7 +584,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackSuccess(callbackContext);
     }
 
-    private synchronized void defaultMessageStorage_deleteAll(CallbackContext callbackContext) throws JSONException {
+    private synchronized void defaultMessageStorage_deleteAll(CallbackContext callbackContext) {
         Context context = cordova.getActivity();
         MessageStore messageStore = MobileMessaging.getInstance(context).getMessageStore();
         if (messageStore == null) {
@@ -599,12 +615,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             throw new IllegalArgumentException("Cannot resolve user data from arguments");
         }
 
-        UserData userData = UserDataJson.fromJSON(args.getJSONObject(0));
-        if (userData == null) {
-            throw new RuntimeException("Cannot deserialize user data from arguments");
-        }
-
-        return userData;
+        return UserDataJson.fromJSON(args.getJSONObject(0));
     }
 
     @NonNull
@@ -656,6 +667,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return args.getBoolean(0);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     private static boolean sendCallbackEvent(String event, CallbackContext callback, Object object1, Object... objects) {
         if (event == null || object1 == null) {
             return false;
@@ -674,6 +686,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return true;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     private static boolean sendCallbackEvent(String event, CallbackContext callback) {
         if (event == null) {
             return false;
@@ -699,6 +712,14 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.OK));
     }
 
+    private static void sendCallbackSuccess(CallbackContext callback, boolean booleanParameter) {
+        sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.OK, booleanParameter));
+    }
+
+    private static void sendCallbackSuccess(CallbackContext callback, String stringParameter) {
+        sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.OK, stringParameter));
+    }
+
     private static void sendCallbackSuccessEmpty(CallbackContext callback) {
         sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.OK, (String) null));
     }
@@ -714,6 +735,21 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static void sendCallbackWithResult(CallbackContext context, PluginResult result, boolean... keepCallback) {
         result.setKeepCallback(keepCallback != null && keepCallback.length > 0 && keepCallback[0]);
         context.sendPluginResult(result);
+    }
+
+    private static void runInBackground(final Runnable runnable) {
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                runnable.run();
+                return null;
+            }
+        }.execute();
+    }
+
+    private MobileMessaging mobileMessaging() {
+        return MobileMessaging.getInstance(cordova.getActivity().getApplicationContext());
     }
 
     /**
@@ -947,6 +983,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
         }
 
+        @NonNull
         static UserData fromJSON(JSONObject json) {
             String externalUserId = json.optString("externalUserId", null);
 
@@ -962,7 +999,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                         String toYMDString = DateTimeUtil.DateToYMDString(dateFromString((String) value));
                         predefined.put(key, toYMDString);
                     } catch (Exception ignored) {
-                        predefined.put(key, (String) value);
+                        predefined.put(key, value);
                     }
                 } else {
                     predefined.put(key, value);
@@ -1070,6 +1107,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return set;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         private static Set<String> saveStringsToSet(Context context, String key, String... strings) {
             return saveStringSet(context, key, new HashSet<String>(Arrays.asList(strings)));
         }
@@ -1166,6 +1204,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         static boolean startJS() {
             CallbackContext callback;
             synchronized (registeredCallbacks) {
