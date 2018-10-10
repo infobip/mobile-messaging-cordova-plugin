@@ -102,7 +102,13 @@ fileprivate class MobileMessagingEventsManager {
 		"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		"notificationTapped": MMNotificationMessageTapped,
 		"actionTapped": MMNotificationActionTapped,
-		"primaryChanged": MMNotificationPrimaryDeviceSettingUpdated
+		"primaryChanged": MMNotificationPrimaryDeviceSettingUpdated,
+		"logoutCompleted": MMNotificationLogoutCompleted
+	]
+
+	private let logoutStates: [LogoutStatus: String] = [
+		LogoutStatus.pending: "pending",
+		LogoutStatus.undefined: "success"
 	]
 	
 	init(plugin: MobileMessagingCordova) {
@@ -294,8 +300,15 @@ fileprivate class MobileMessagingEventsManager {
 	}
 	
 	func logout(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.logout()
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+        MobileMessaging.logout({ (status, error) in
+            if let error = error {
+                let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
+                self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+            } else {
+                let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: logoutStates[status] )
+                self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+            }
+        })
 	}
 
 	func setPrimary(_ command: CDVInvokedUrlCommand) {
@@ -313,8 +326,15 @@ fileprivate class MobileMessagingEventsManager {
 	}
 
 	func syncPrimary(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.currentInstallation?.syncPrimarySettingWithServer()
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+        MobileMessaging.syncPrimaryDevice(completion: { (isPrimary, error) in
+            if let error = error {
+                let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
+                self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+            } else {
+                let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAsBool: isPrimary)
+                self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+            }
+        })
 	}
 
 	func enablePushRegistration(_ command: CDVInvokedUrlCommand) {
