@@ -622,6 +622,11 @@ typedef SWIFT_ENUM(NSInteger, LocationServiceUsage, closed) {
   LocationServiceUsageAlways = 1,
 };
 
+typedef SWIFT_ENUM(NSInteger, LogoutStatus, closed) {
+  LogoutStatusUndefined = 0,
+  LogoutStatusPending = 1,
+};
+
 typedef SWIFT_ENUM(int8_t, MMDay, closed) {
   MMDayMo = 1,
   MMDayTu = 2,
@@ -819,7 +824,7 @@ SWIFT_CLASS("_TtC15MobileMessaging14MMInstallation")
 /// If the value was changed on device, it trumps the server value, otherwise the servers value win.
 /// \param completion called after the setting is finished sync with the server
 ///
-- (void)syncPrimarySettingWithServer:(void (^ _Nullable)(NSError * _Nullable))completion;
+- (void)syncPrimarySettingWithServer:(void (^ _Nullable)(BOOL, NSError * _Nullable))completion;
 /// The number currently set as the badge of the app icon in Springboard.
 /// Set to 0 (zero) to hide the badge number. The default value of this property is 0.
 @property (nonatomic) NSInteger badgeNumber;
@@ -1244,6 +1249,8 @@ SWIFT_CLASS("_TtC15MobileMessaging15MobileMessaging")
 /// \param completion called after the setting is finished sync with the server
 ///
 + (void)setAsPrimaryDevice:(BOOL)isPrimary completion:(void (^ _Nullable)(NSError * _Nullable))completion;
+/// Synchronizes primary device setting with server
++ (void)syncPrimaryDeviceWithCompletion:(void (^ _Nonnull)(BOOL, NSError * _Nullable))completion;
 /// Primary device setting
 /// Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device).
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL isPrimaryDevice;)
@@ -1301,7 +1308,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MMLogging> _Nullab
 ///
 /// \param completion A block to be executed when local notification handling is finished
 ///
-+ (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification completion:(void (^ _Nullable)(void))completion;
++ (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification completion:(void (^ _Nullable)(void))completion SWIFT_AVAILABILITY(ios,deprecated=10.0);
 /// Maintains attributes related to the current application installation such as APNs device token, badge number, etc.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMInstallation * _Nullable currentInstallation;)
 + (MMInstallation * _Nullable)currentInstallation SWIFT_WARN_UNUSED_RESULT;
@@ -1361,9 +1368,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySetti
 /// </ul>
 /// \param completion The block to execute after the logout procedure finished
 ///
-/// \param error An error that happened during the server request
-///
-+ (void)logoutWithCompletion:(void (^ _Nonnull)(NSError * _Nullable))completion;
++ (void)logoutWithCompletion:(void (^ _Nonnull)(enum LogoutStatus, NSError * _Nullable))completion;
 /// Erases currently stored UserData associated with push registration along with messages in SDK storage.
 /// User’s data synced over MobileMessaging is by default associated with created push registration. Logging out user means that push registration and device specific data will remain, but user’s data (such as first name, custom data, …) will be wiped out.
 /// If you log out user, there is no mechanism to log him in again since he’s already subscribed for broadcast notifications from your app, but you might want to sync new user data to target this user specifically.
@@ -1433,7 +1438,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GeofencingSe
 ///
 /// \param completionHandler A block that you must call when you are finished performing the action. It is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:for:withResponseInfo:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
 ///
-+ (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier localNotification:(UILocalNotification * _Nonnull)localNotification responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler;
++ (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier localNotification:(UILocalNotification * _Nonnull)localNotification responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler SWIFT_AVAILABILITY(ios,deprecated=10.0);
 /// This method handles interactive notifications actions and performs work that is defined for this action. The method should be called from AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:completionHandler:)</code> callback.
 /// \param identifier The identifier for the interactive notification action.
 ///
@@ -1539,11 +1544,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 @class NotificationActionOptions;
@@ -1700,6 +1705,8 @@ SWIFT_CLASS("_TtC15MobileMessaging15PrivacySettings")
 /// The class defines a query that is used to fetch messages from the Message Storage.
 SWIFT_CLASS("_TtC15MobileMessaging5Query")
 @interface Query : NSObject
+/// note:
+///
 /// The following types of predicates are supported:
 /// <ul>
 ///   <li>
@@ -1712,13 +1719,13 @@ SWIFT_CLASS("_TtC15MobileMessaging5Query")
 ///     Key-existence predicates, such as <code>x IN SELF</code>.
 ///   </li>
 ///   <li>
-///     BEGINSWITH expressions.
+///     <code>BEGINSWITH</code> expressions.
 ///   </li>
 ///   <li>
 ///     Compound predicates with <code>AND</code>, <code>OR</code>, and <code>NOT</code>.
 ///   </li>
 ///   <li>
-///     SubQueries with <code>key IN %@</code>, subquery.
+///     SubQueries with key IN %@, subquery.
 ///   </li>
 /// </ul>
 /// The following types of predicates are NOT supported:
