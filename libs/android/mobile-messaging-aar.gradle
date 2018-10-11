@@ -14,7 +14,7 @@ if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion
 }
 
 dependencies {
-    def mmVersion = '1.15.3'
+    def mmVersion = '1.15.5'
     compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true; 
