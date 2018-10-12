@@ -218,11 +218,6 @@ fileprivate class MobileMessagingEventsManager {
 		static let cordovaConfigKey = "com.mobile-messaging.corodovaPluginConfiguration"
 	}
     
-    private static let logoutStates: [LogoutStatus: String] = [
-        LogoutStatus.pending: "pending",
-        LogoutStatus.undefined: "success"
-    ]
-    
 	override func pluginInitialize() {
 		super.pluginInitialize()
 		self.messageStorageAdapter = MessageStorageAdapter(plugin: self)
@@ -301,11 +296,14 @@ fileprivate class MobileMessagingEventsManager {
 	
 	func logout(_ command: CDVInvokedUrlCommand) {
         MobileMessaging.logout(completion: { (status, error) in
-            if let error = error {
+            if (status == LogoutStatus.pending) {
+                let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "pending")
+                self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+            } else if let error = error {
                 let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
                 self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
             } else {
-                let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessagingCordova.logoutStates[status] )
+                let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "success")
                 self.commandDelegate?.send(successResult, callbackId: command.callbackId)
             }
         })
