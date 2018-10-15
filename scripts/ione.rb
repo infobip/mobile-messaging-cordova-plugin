@@ -8,7 +8,11 @@ main_target_name = 'nescript'
 
 # puts "Enter App Group Id:"
 # app_group = gets.chomp
-app_group = "com.mobilemessaging.app-group-name"
+app_group = 'com.mobilemessaging.app-group-name'
+
+# puts "Enter notification extension bundle id:"
+# notification_extension_bundle_id = gets.chomp
+notification_extension_bundle_id = 'com.mobilemessaging.notificationextension'
 
 # puts "Enter Push Application Code:"
 # app_code = gets.chomp
@@ -68,21 +72,26 @@ plist_destination_filepath = extension_destination_dir + '/' + plist_name
 unless File.exist?(plist_destination_filepath)
 	puts 'cp'
 	FileUtils.cp(plist_name, plist_destination_filepath)
+	group_reference.new_reference(plist_destination_filepath)
 end 
 info_plist_path = "$(SRCROOT)/#{extension_dir_name}/#{plist_name}"
-group_reference.new_reference(plist_destination_filepath)
 build_settings_debug['INFOPLIST_FILE'] = info_plist_path
 build_settings_release['INFOPLIST_FILE'] = info_plist_path
 
 ## 6
-# set bundle identifier
+build_settings_debug['PRODUCT_BUNDLE_IDENTIFIER'] = notification_extension_bundle_id
+build_settings_release['PRODUCT_BUNDLE_IDENTIFIER'] = notification_extension_bundle_id
 
+## 7
+#todo since user specifies target we can update podfile for him with extension declaration
 
-###########
+## 8
 # - set ne_target.App_Group = On
 # build_settings_debug['CODE_SIGN_ENTITLEMENTS'] = '.entitlements'
 # build_settings_release['CODE_SIGN_ENTITLEMENTS'] = '.entitlements'
 
+## 9
+# put app code and group id into plists and read it from there!
 # - Pass App Group ID to the MobileMessaging SDK within your main application (use additional withAppGroupId(<# your App Group ID #>) constructor method):
 # - Pass App Group ID to the MobileMessaging SDK within Extension (use additional withAppGroupId(<# your App Group ID #>) constructor method):
 
