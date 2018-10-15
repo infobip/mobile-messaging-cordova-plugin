@@ -120,7 +120,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
                 }
             },
             function(error) {
-                console.log('Init error: ' + error);
+                console.log('Init error: ' + error.description);
             }
         );
 
@@ -177,7 +177,7 @@ MobileMessaging.init({
         }
     },
     function(error) {
-        console.log('Init error: ' + error);
+        console.log('Init error: ' + error.description);
     }
 );
 ```
@@ -339,7 +339,7 @@ MobileMessaging.syncUserData({
         alert('User data synchronized:' + JSON.stringify(data));
     },
     function(error) {
-        alert('Error while syncing user data: ' + error);
+        alert('Error while syncing user data: ' + error.description);
     }
 );
 ```
@@ -351,7 +351,7 @@ MobileMessaging.fetchUserData(
         alert('User data fetched:' + JSON.stringify(data));
     },
     function(error) {
-        alert('Error while syncing user data: ' + error);
+        alert('Error while syncing user data: ' + error.description);
     }
 );
 ```
@@ -363,7 +363,7 @@ MobileMessaging.logout(
         alert('User logged out.');
     },
     function(error) {
-        alert('Error while logging out user: ' + error);
+        alert('Error while logging out user: ' + error.description);
     }
 );
 ```
@@ -386,7 +386,7 @@ var message = ...;
 MobileMessaging.markMessagesSeen([message.messageId], function(messageIds){
     console.log("message ids marked as seen: " + messageIds);
 }, function(error){
-    console.log(error);
+    console.log(error.description);
 });
 ```
 Note that corresponding SDK function accepts array of message IDs as input parameter. You can also set success and error callbacks. Success callback will provide array of message IDs that were marked as seen. Error callback will notify about an error and provide description of error if any. 
@@ -431,7 +431,7 @@ MobileMessaging.init({
         }
     },
     function(error) {
-        console.log('Init error: ' + error);
+        console.log('Init error: ' + error.description);
     }
 );
 ...
@@ -531,7 +531,7 @@ MobileMessaging.init({
         }
     },
     function(error) {
-        console.log('Init error: ' + error);
+        console.log('Init error: ' + error.description);
     }
 );
 ```
@@ -605,7 +605,7 @@ MobileMessaging.init({
         }
     },
     function(error) {
-        console.log('Init error: ' + error);
+        console.log('Init error: ' + error.description);
     }
 );
 ```
@@ -625,7 +625,7 @@ MobileMessaging.init({
         }
     },
     function(error) {
-        console.log('Init error: ' + error);
+        console.log('Init error: ' + error.description);
     }
 );
 ...
@@ -721,7 +721,7 @@ MobileMessaging.init({
     }]
     },
     function(error) {
-        console.log('Init error: ' + error);
+        console.log('Init error: ' + error.description);
     }
 );
 ...
@@ -848,4 +848,30 @@ xcodebuild build `
     ` IPHONEOS_DEPLOYMENT_TARGET="IOS_VERSION" 
 ```
 Adjust command line accordingly to your app setup, with appropriate names for the project, scheme, archive path and target. Also make sure to provide proper team ID and bundle as well as deployment target.
+
+### How do I handle Google services - related errors on Android during initialization?
+SDK provides a method which you can call to display a system dialog which will help users resolve such issues. You will need to handle an error code provided by the library when initialization fails.
+```javascript
+MobileMessaging.init({
+    ...
+    },
+    function(error) {
+        console.log('Init error: ' + error.description);
+        if (error.code) {
+            displayErrorDialog(error.code);
+        }
+    }
+);
+
+function displayErrorDialog(errorCode) {
+    MobileMessaging.showDialogForError(errorCode, function(){
+          console.log("The issue was resolved by user");
+
+          // re-init SDK
+      }, function(error){
+          console.log("User failed to resolve the issue: " + error.description);
+      });
+}
+...
+```
 

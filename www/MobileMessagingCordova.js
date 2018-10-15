@@ -297,6 +297,18 @@ MobileMessagingCordova.prototype.syncPrimary = function(callback, errorCallback)
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'syncPrimary', [])
 };
 
+/**
+ * Displays built-in error dialog so that user can resolve errors during sdk initialization.
+ *
+ * @name showDialogForError
+ * @param {Integer} error code to display dialog for
+ * @param {Function} callback will be called upon completion
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.showDialogForError = function(errorCode, callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'showDialogForError', [errorCode])
+};
+
 MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 	var config = this.configuration;
 	if (!config.defaultMessageStorage) {

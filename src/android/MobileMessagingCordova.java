@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -12,9 +13,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -41,6 +46,7 @@ import org.infobip.mobile.messaging.interactive.MobileInteractive;
 import org.infobip.mobile.messaging.interactive.NotificationAction;
 import org.infobip.mobile.messaging.interactive.NotificationCategory;
 import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
+import org.infobip.mobile.messaging.mobile.InternalSdkError;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
@@ -53,6 +59,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -68,6 +75,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String TAG = "MobileMessagingCordova";
 
     private static final int REQ_CODE_LOC_PERMISSION_FOR_INIT = 1;
+    private static final int REQ_CODE_RESOLVE_GOOGLE_ERROR = 2;
 
     private static final String FUNCTION_INIT = "init";
     private static final String FUNCTION_REGISTER_RECEIVER = "registerReceiver";
@@ -81,6 +89,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_IS_PRIMARY = "isPrimary";
     private static final String FUNCTION_SET_PRIMARY = "setPrimary";
     private static final String FUNCTION_SYNC_PRIMARY = "syncPrimary";
+    private static final String FUNCTION_SHOW_DIALOG_FOR_ERROR = "showDialogForError";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
     private static final String FUNCTION_MESSAGESTORAGE_REGISTER = "messageStorage_register";
     private static final String FUNCTION_MESSAGESTORAGE_UNREGISTER = "messageStorage_unregister";
@@ -123,7 +132,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static volatile CallbackContext libraryEventReceiver = null;
 
-    private final InitContext initContext = new InitContext();
+    private final CordovaCallContext initContext = new CordovaCallContext();
+    private final CordovaCallContext showErrorDialogContext = new CordovaCallContext();
 
     private static final BroadcastReceiver commonLibraryBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -205,7 +215,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         List<Category> notificationCategories = new ArrayList<Category>();
     }
 
-    private static class InitContext {
+    private static class CordovaCallContext {
         JSONArray args;
         CallbackContext callbackContext;
 
@@ -241,7 +251,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     @Override
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
-        super.onRequestPermissionResult(requestCode, permissions, grantResults);
         if (requestCode != REQ_CODE_LOC_PERMISSION_FOR_INIT) {
             return;
         }
@@ -258,6 +267,34 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         init(initContext.args, initContext.callbackContext);
         initContext.reset();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode != REQ_CODE_RESOLVE_GOOGLE_ERROR) {
+            return;
+        }
+
+        if (!showErrorDialogContext.isValid()) {
+            Log.e(TAG, "Show dialog context is invalid, cannot forward information to Cordova");
+            return;
+        }
+
+        CallbackContext callbackContext = showErrorDialogContext.callbackContext;
+        showErrorDialogContext.reset();
+
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int playServicesAvailabilityResult = googleApiAvailability.isGooglePlayServicesAvailable(cordova.getActivity());
+        if (playServicesAvailabilityResult != ConnectionResult.SUCCESS) {
+            try {
+                showDialogForError(new JSONArray(Collections.singletonList(playServicesAvailabilityResult)), callbackContext);
+            } catch (JSONException e) {
+                sendCallbackError(callbackContext, e.getMessage());
+            }
+            return;
+        }
+
+        sendCallbackSuccess(callbackContext);
     }
 
     @Override
@@ -310,6 +347,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_SYNC_PRIMARY.equals(action)) {
             syncPrimary(callbackContext);
             return true;
+        } else if (FUNCTION_SHOW_DIALOG_FOR_ERROR.equals(action)) {
+            showDialogForError(args, callbackContext);
+            return true;
         } else if (FUNCTION_MESSAGESTORAGE_REGISTER.equals(action)) {
             MessageStoreAdapter.register(cordova.getActivity(), args, callbackContext);
             return true;
@@ -336,9 +376,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return false;
     }
 
-    @SuppressLint("MissingPermission")
-    private void init(JSONArray args, CallbackContext callbackContext) throws JSONException {
-        Configuration configuration = resolveConfiguration(args);
+
+    private void init(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final Configuration configuration = resolveConfiguration(args);
         if (configuration.geofencingEnabled && (!cordova.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) ||
                 ActivityCompat.checkSelfPermission(cordova.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             initContext.args = args;
@@ -372,22 +412,37 @@ public class MobileMessagingCordova extends CordovaPlugin {
             builder.withMessageStore(SQLiteMessageStore.class);
         }
 
-        builder.build();
+        builder.build(new MobileMessaging.InitListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onSuccess() {
+                if (configuration.geofencingEnabled) {
+                    MobileGeo.getInstance(cordova.getActivity().getApplication()).activateGeofencing();
+                }
 
-        if (configuration.geofencingEnabled) {
-            MobileGeo.getInstance(cordova.getActivity().getApplication()).activateGeofencing();
-        }
+                NotificationCategory categories[] = notificationCategoriesFromConfiguration(configuration.notificationCategories);
+                if (categories.length > 0) {
+                    MobileInteractive.getInstance(cordova.getActivity().getApplication()).setNotificationCategories(categories);
+                }
 
-        NotificationCategory categories[] = notificationCategoriesFromConfiguration(configuration.notificationCategories);
-        if (categories.length > 0) {
-            MobileInteractive.getInstance(cordova.getActivity().getApplication()).setNotificationCategories(categories);
-        }
+                // init method is called from WebView when activity is running
+                // so we can safely claim that we are in foreground
+                setForeground();
 
-        // init method is called from WebView when activity is running
-        // so we can safely claim that we are in foreground
-        setForeground();
+                if (callbackContext != null) {
+                    sendCallbackSuccessKeepCallback(callbackContext);
+                }
+            }
 
-        sendCallbackSuccessKeepCallback(callbackContext);
+            @Override
+            public void onError(InternalSdkError e, @Nullable Integer googleErrorCode) {
+                if (callbackContext != null) {
+                    sendCallbackError(callbackContext, e.get(), googleErrorCode);
+                } else {
+                    Log.e(TAG, "Cannot start SDK: " + e.get() + " errorCode: " + googleErrorCode);
+                }
+            }
+        });
     }
 
     private void setForeground() {
@@ -534,6 +589,34 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPrimary));
     }
 
+    private void showDialogForError(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final int errorCode = resolveIntParameter(args);
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        if (!googleApiAvailability.isUserResolvableError(errorCode)) {
+            sendCallbackError(callbackContext, "Error code [" + errorCode + "] is not user resolvable");
+            return;
+        }
+
+        showErrorDialogContext.args = args;
+        showErrorDialogContext.callbackContext = callbackContext;
+
+        cordova.setActivityResultCallback(MobileMessagingCordova.this);
+
+        googleApiAvailability
+                .getErrorDialog(
+                        cordova.getActivity(),
+                        errorCode,
+                        REQ_CODE_RESOLVE_GOOGLE_ERROR,
+                        new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                showErrorDialogContext.reset();
+                                sendCallbackError(callbackContext, "Error dialog was cancelled by user");
+                            }
+                        })
+                .show();
+    }
+
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity();
         String messageId = resolveStringParameter(args);
@@ -651,7 +734,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     @NonNull
-    private synchronized String resolveStringParameter(JSONArray args) throws JSONException {
+    private String resolveStringParameter(JSONArray args) throws JSONException {
         if (args.length() < 1 || args.getString(0) == null) {
             throw new IllegalArgumentException("Cannot resolve string parameter from arguments");
         }
@@ -659,7 +742,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return args.getString(0);
     }
 
-    private synchronized boolean resolveBooleanParameter(JSONArray args) throws JSONException {
+    private int resolveIntParameter(JSONArray args) throws JSONException {
+        if (args.length() < 1) {
+            throw new IllegalArgumentException("Cannot resolve string parameter from arguments");
+        }
+
+        return args.getInt(0);
+    }
+
+    private boolean resolveBooleanParameter(JSONArray args) throws JSONException {
         if (args.length() < 1) {
             throw new IllegalArgumentException("Cannot resolve boolean parameter from arguments");
         }
@@ -691,7 +782,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         if (event == null) {
             return false;
         }
-        
+
         JSONArray parameters = new JSONArray();
         parameters.put(event);
         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, parameters);
@@ -701,7 +792,18 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private static void sendCallbackError(CallbackContext callback, String message) {
-        sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.ERROR, message));
+        sendCallbackError(callback, message, null);
+    }
+
+    private static void sendCallbackError(CallbackContext callback, String message, @Nullable Integer errorCode) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("description", message);
+            json.put("code", errorCode);
+        } catch (JSONException e) {
+            Log.w(TAG, "Error when serializing error object:" + Log.getStackTraceString(e));
+        }
+        sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.ERROR, json));
     }
 
     private static void sendCallbackSuccessKeepCallback(CallbackContext callback) {
