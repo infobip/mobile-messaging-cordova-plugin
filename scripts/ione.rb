@@ -35,6 +35,25 @@ def createEntitlements(project, project_dir, entitlements_name, app_group)
 	return entitlements_destination_filepath
 end
 
+def putStringValueIntoPlist(key, value, plist_path)
+	doc = Nokogiri::XML(IO.read(plist_path))
+	key_node = doc.search("//dict//key[text() = '#{key}']").first
+	string_app_group_node = Nokogiri::XML::Node.new("string",doc)
+	string_app_group_node.content = value
+	if key_node == nil
+		key_node = Nokogiri::XML::Node.new("key",doc)
+		key_node.content = key
+		key_node.add_next_sibling(string_app_group_node)
+	else
+		existing_string_value_node = key_node.xpath("following-sibling::*").first
+		if existing_string_value_node.name == 'string'
+			existing_string_value_node.content = value
+		else
+			key_node.add_next_sibling(string_app_group_node)
+		end
+	end
+end
+
 def modifyXml(filepath, app_group)
 	puts "appending to xml"
 	doc = Nokogiri::XML(IO.read(filepath))
@@ -128,9 +147,9 @@ unless File.exist?(plist_destination_filepath)
 	FileUtils.cp(plist_name, plist_destination_filepath)
 	group_reference.new_reference(plist_destination_filepath)
 end 
-info_plist_path = "$(PROJECT_DIR)/#{extension_dir_name}/#{plist_name}"
-build_settings_debug['INFOPLIST_FILE'] = info_plist_path
-build_settings_release['INFOPLIST_FILE'] = info_plist_path
+info_plist_path = "#{project_dir}/#{extension_dir_name}/#{plist_name}"
+build_settings_debug['INFOPLIST_FILE'] = info_plist_path.sub(project_dir, '$(PROJECT_DIR)')
+build_settings_release['INFOPLIST_FILE'] = info_plist_path.sub(project_dir, '$(PROJECT_DIR)')
 
 ## 6
 build_settings_debug['PRODUCT_BUNDLE_IDENTIFIER'] = notification_extension_bundle_id
@@ -145,40 +164,40 @@ entitlements_release_filepath = build_settings_release['CODE_SIGN_ENTITLEMENTS']
 
 if entitlements_debug_filepath == nil and entitlements_release_filepath == nil
 	entitlements_destination_filepath = createEntitlements(project, project_dir, ".entitlements", app_group)
-	build_settings_debug['CODE_SIGN_ENTITLEMENTS'] = entitlements_destination_filepath.sub(project_dir, '$(PROJECT_DIR)')
+	build_settings_debug['CODE_SIGN_ENTITLEMENTS'] = entitlements_destination_filepath.sub(project_dir, '$(PROJECT_DIR)') #FIXME why this changes extension target build settings
 	build_settings_release['CODE_SIGN_ENTITLEMENTS'] = entitlements_destination_filepath.sub(project_dir, '$(PROJECT_DIR)')
 else
 	if entitlements_debug_filepath == entitlements_release_filepath
-		#todo test
 		modifyXml(entitlements_debug_filepath,app_group)
 	else
 		if entitlements_debug_filepath != nil
-			#todo test
 			modifyXml(entitlements_debug_filepath,app_group)
 		else
-			#todo test
 			entitlements_destination_filepath = createEntitlements(project, project_dir, "debug.entitlements", app_group)
 			build_settings_debug['CODE_SIGN_ENTITLEMENTS'] = entitlements_destination_filepath.sub(project_dir, '$(PROJECT_DIR)')
 		end
 
 		if entitlements_release_filepath != nil
-			#todo test
 			modifyXml(entitlements_release_filepath,app_group)
 		else
-			#todo test
 			entitlements_destination_filepath = createEntitlements(project, project_dir, "release.entitlements", app_group)
 			build_settings_release['CODE_SIGN_ENTITLEMENTS'] = entitlements_destination_filepath.sub(project_dir, '$(PROJECT_DIR)')
 		end
 	end
 end
 
-ne_terget_id = ne_target.uuid
-project.root_object.attributes["TargetAttributes"][ne_terget_id] = {"SystemCapabilities" => {"com.apple.ApplicationGroups.iOS" => {"enabled" => 1}}}
+project.root_object.attributes["TargetAttributes"][ne_target.uuid] = {"SystemCapabilities" => {"com.apple.ApplicationGroups.iOS" => {"enabled" => 1}}}
 
 ## 9
-# put app code and group id into plists and read it from there!
-# - Pass App Group ID to the MobileMessaging SDK within your main application (use additional withAppGroupId(<# your App Group ID #>) constructor method):
-# - Pass App Group ID to the MobileMessaging SDK within Extension (use additional withAppGroupId(<# your App Group ID #>) constructor method):
+
+#extension app group
+putAppGroupIntoPlist("Mobile Messaging SDK App Group", app_group, info_plist_path) 
+#extension app code
+putAppGroupIntoPlist("Mobile Messaging SDK App Code", app_code, info_plist_path)
+#main target app group
+putAppGroupIntoPlist("Mobile Messaging SDK App Group", app_group, main_target_build_settings_release["INFOPLIST_FILE"].sub('$(PROJECT_DIR)', project_dir))
+#main target app code
+putAppGroupIntoPlist("Mobile Messaging SDK App Code", app_code, main_target_build_settings_release["INFOPLIST_FILE"].sub('$(PROJECT_DIR)', project_dir))
 
 project.save()
 
