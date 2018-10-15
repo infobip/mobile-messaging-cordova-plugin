@@ -230,7 +230,7 @@ fileprivate class MobileMessagingEventsManager {
 		guard let userConfigDict = command.arguments[0] as? [String: AnyObject],
 			let userConfiguration = MMConfiguration(rawConfig: userConfigDict) else
 		{
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Can't parse configuration")
+            let errorResult = createErrorPluginResult(description: "Can't parse configuration")
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -265,7 +265,7 @@ fileprivate class MobileMessagingEventsManager {
 	
 	func syncUserData(_ command: CDVInvokedUrlCommand) {
 		guard let userDataDictionary = command.arguments[0] as? [String: AnyObject?] else {
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve user data dictionary")
+            let errorResult = createErrorPluginResult(description: "Cannot retrieve user data dictionary")
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -273,7 +273,7 @@ fileprivate class MobileMessagingEventsManager {
 		MobileMessaging.currentUser?.set(dictionary: userDataDictionary)
 		MobileMessaging.currentUser?.save({ error in
 			if let error = error {
-				let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
+				let errorResult = createErrorPluginResult(error)
 				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			} else {
 				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.currentUser?.dictionary())
@@ -285,7 +285,7 @@ fileprivate class MobileMessagingEventsManager {
 	func fetchUserData(_ command: CDVInvokedUrlCommand) {
 		MobileMessaging.currentUser?.fetchFromServer(completion: { error in
 			if let error = error {
-				let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
+				let errorResult = createErrorPluginResult(error)
 				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			} else {
 				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.currentUser?.dictionary())
@@ -300,7 +300,7 @@ fileprivate class MobileMessagingEventsManager {
                 let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "pending")
                 self.commandDelegate?.send(successResult, callbackId: command.callbackId)
             } else if let error = error {
-                let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
+                let errorResult = createErrorPluginResult(error)
                 self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
             } else {
                 let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "success")
@@ -311,7 +311,7 @@ fileprivate class MobileMessagingEventsManager {
 
 	func setPrimary(_ command: CDVInvokedUrlCommand) {
 		guard let isPrimary = command.arguments[0] as? Bool else {
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve isPrimary parameter")
+            let errorResult = createErrorPluginResult(description: "Cannot retrieve isPrimary parameter")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -326,7 +326,7 @@ fileprivate class MobileMessagingEventsManager {
 	func syncPrimary(_ command: CDVInvokedUrlCommand) {
         MobileMessaging.syncPrimaryDevice(completion: { (isPrimary, error) in
             if let error = error {
-                let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.description)
+                let errorResult = createErrorPluginResult(error)
                 self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
             } else {
                 let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: isPrimary)
@@ -355,13 +355,13 @@ fileprivate class MobileMessagingEventsManager {
 	
 	func markMessagesSeen(_ command: CDVInvokedUrlCommand) {
 		guard let messageIds = command.arguments as? [String] else {
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve message ids")
+            let errorResult = createErrorPluginResult(description: "Cannot retrieve message ids")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
 		
 		if (messageIds.isEmpty) {
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No message ids provided")
+			let errorResult = createErrorPluginResult(description: "No message ids provided")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -370,6 +370,10 @@ fileprivate class MobileMessagingEventsManager {
 		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: messageIds)
 		commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
+    
+    func showDialogForError(_ command: CDVInvokedUrlCommand) {
+        self.commandDelegate?.send(createErrorPluginResult(description: "Not supported"), callbackId: command.callbackId)
+    }
 	
 	//MARK: MessageStorage
 	func messageStorage_register(_ command: CDVInvokedUrlCommand) {
@@ -386,7 +390,7 @@ fileprivate class MobileMessagingEventsManager {
 	
 	func defaultMessageStorage_find(_ command: CDVInvokedUrlCommand) {
 		guard let messageId = command.arguments[0] as? String else {
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve messageId")
+			let errorResult = createErrorPluginResult(description: "Cannot retrieve messageId")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -410,7 +414,7 @@ fileprivate class MobileMessagingEventsManager {
 	
 	func defaultMessageStorage_delete(_ command: CDVInvokedUrlCommand) {
 		guard let messageId = command.arguments[0] as? String else {
-			let errorResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Cannot retrieve messageId")
+			let errorResult = createErrorPluginResult(description: "Cannot retrieve messageId")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -762,7 +766,7 @@ class MessageStorageAdapter: MessageStorage {
 	
 	func register(_ command: CDVInvokedUrlCommand) {
 		let callbackId = command.callbackId
-		let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+        let pluginResult = createErrorPluginResult(description: "Event name not recognized")
 		guard let event = command.arguments[0] as? String else {
 			plugin.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 			return
@@ -774,7 +778,7 @@ class MessageStorageAdapter: MessageStorage {
 	}
 	
 	func unregister(_ command: CDVInvokedUrlCommand) {
-		let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+        let pluginResult = createErrorPluginResult(description: "Event name not recognized")
 		guard let event = command.arguments[0] as? String else {
 			plugin.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 			return
@@ -786,7 +790,7 @@ class MessageStorageAdapter: MessageStorage {
 	}
 	
 	func findResult(_ command: CDVInvokedUrlCommand) {
-		let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR)
+        let pluginResult = createErrorPluginResult(description: "Invalid parameter for find")
 		guard let dictionary = command.arguments[0] as? [String: Any] else {
 			plugin.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 			return
@@ -826,4 +830,16 @@ extension Optional {
 			return fallbackValue
 		}
 	}
+}
+
+private func createErrorPluginResult(description: String, error: NSError) -> CDVPluginResult {
+    return createErrorPluginResult(description: error.description, errorCode: error.code)
+}
+
+private func createErrorPluginResult(description: String, errorCode: Int? = nil) -> CDVPluginResult {
+    var error: [AnyHashable: Any] = ["descritpion": description]
+    if let errorCode = errorCode {
+        error["code"] = errorCode
+    }
+    return CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error)
 }
