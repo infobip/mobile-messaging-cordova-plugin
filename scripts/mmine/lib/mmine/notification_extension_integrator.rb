@@ -3,7 +3,13 @@ require 'fileutils'
 require 'pathname'
 require 'nokogiri'
 
-class NotificationExtensionManager
+module Mmine
+  def self.root
+    File.expand_path '../..', File.dirname(__FILE__)
+  end
+end
+
+class NotificationExtensionIntegrator
 	def initialize(project_file_path, app_code, app_group, main_target_name, notification_extension_bundle_id)
 		@project_file_path = project_file_path
 		@app_code = app_code
@@ -14,14 +20,15 @@ class NotificationExtensionManager
 		@project_dir = Pathname.new(@project_file_path).parent.to_s
 		@project = Xcodeproj::Project.open(@project_file_path)
 		@ne_target_name = 'MobileMessagingNotificationExtension'
-		@extension_source_name = 'NotificationService.swift'
+		@extension_source_name_filepath = File.join(Mmine.root, 'resources','NotificationService.swift')
 		@extension_dir_name = 'NotificationExtension'
-		@extension_destination_dir = "#{@project_dir}/#{@extension_dir_name}"
-		@extension_code_destination_filepath = "#{@extension_destination_dir}/#{@extension_source_name}"
+		@extension_destination_dir = File.join(@project_dir, @extension_dir_name)
+		@extension_code_destination_filepath = File.join(@extension_destination_dir, @extension_source_name_filepath)
 		@extension_group_name = 'NotificationExtensionGroup'
 
 		@plist_name = 'MobileMessagingNotificationServiceExtension.plist'
-		@extension_info_plist_path = "#{@project_dir}/#{@extension_dir_name}/#{@plist_name}"
+		@plist_source_filepath = File.join(Mmine.root, 'resources', @plist_name)
+		@extension_info_plist_path = File.join(@project_dir, @extension_dir_name, @plist_name)
 
 		@main_target = @project.native_targets().select { |target| target.name == @main_target_name }.first
 		@main_target_build_settings_debug = @main_target.build_configurations.select { |config| config.type == :debug }.first.build_settings
@@ -66,7 +73,7 @@ class NotificationExtensionManager
 	def addNotificationExtensionSourceCode
 		unless File.exist?(@extension_code_destination_filepath)
 			puts 'cp'
-			FileUtils.cp(@extension_source_name, @extension_destination_dir)
+			FileUtils.cp(@extension_source_name_filepath, @extension_destination_dir)
 		end
 
 		filereference = notificationExtensionGroupReference().new_reference(@extension_code_destination_filepath)
@@ -79,7 +86,7 @@ class NotificationExtensionManager
 
 	def setupNotificationExtensionInfoPlist
 		unless File.exist?(@extension_info_plist_path)
-			FileUtils.cp(@plist_name, @extension_info_plist_path)
+			FileUtils.cp(@plist_source_filepath, @extension_info_plist_path)
 		end 
 		notificationExtensionGroupReference().new_reference(@extension_info_plist_path) #check if additional plist manipulations needed (target membership?)
 		setNotificationExtensionBuildSettings('INFOPLIST_FILE', resolveXcodePath(@extension_info_plist_path))
@@ -155,8 +162,9 @@ class NotificationExtensionManager
 
 	def createAppGroupEntitlements(entitlements_name)
 		puts "> creating entitlements #{entitlements_name}"
-		entitlements_destination_filepath = "#{@project_dir}/#{entitlements_name}"
-		FileUtils.cp("MobileMessagingNotificationExtension.entitlements", entitlements_destination_filepath)
+		entitlements_destination_filepath = File.join(@project_dir, entitlements_name)
+		entitlements_source_filepath = File.join(Mmine.root, 'resources', "MobileMessagingNotificationExtension.entitlements")
+		FileUtils.cp(entitlements_source_filepath, entitlements_destination_filepath)
 		ref = @project.main_group.new_reference(entitlements_destination_filepath)
 		ref.last_known_file_type = "text.xml"
 		modifyXml(entitlements_destination_filepath)
@@ -171,7 +179,7 @@ class NotificationExtensionManager
 			if path.start_with? "/"
 				return path
 			else
-				return "#{@project_dir}/#{path}"
+				return File.join(@project_dir, path)
 			end
 		end
 	end

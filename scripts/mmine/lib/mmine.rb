@@ -1,4 +1,4 @@
-require_relative 'notification_extension_integrator'
+require 'mmine/notification_extension_integrator'
 
 # puts "Enter main target name:"
 # main_target_name = gets.chomp
@@ -20,4 +20,4 @@ app_code = "87dc5af9bb50ebe3df341c891e1bdd15-6b0a9477-8dd9-4c58-ad55-9cf5e370bd5
 # project_file_path = gets.chomp
 project_file_path = '/Users/andreykadochnikov/nescript/nescript.xcodeproj'
 
-NotificationExtensionManager.new(project_file_path, app_code, app_group, main_target_name, notification_extension_bundle_id).setupNotificationExtension()
+NotificationExtensionIntegrator.new(project_file_path, app_code, app_group, main_target_name, notification_extension_bundle_id).setupNotificationExtension()
