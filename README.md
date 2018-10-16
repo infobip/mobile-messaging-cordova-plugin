@@ -871,7 +871,7 @@ function displayErrorDialog(errorCode) {
       }, function(error){
           console.log("User failed to resolve the issue: " + error.description);
       });
-}
+};
 ...
 ```
 
