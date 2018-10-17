@@ -1,21 +1,68 @@
 #!/usr/bin/env ruby
 
+require 'optionparser'
 require 'mmine'
 
 # puts "Enter main target name:"
 # main_target_name = gets.chomp
-main_target_name = 'nescript'
+# main_target_name = 'nescript'
 
 # puts "Enter App Group Id:"
 # app_group = gets.chomp
-app_group = 'group.com.mobile-messaging.notification-service-extension'
+# app_group = 'group.com.mobile-messaging.notification-service-extension'
 
 # puts "Enter notification extension bundle id:"
 # notification_extension_bundle_id = gets.chomp
-notification_extension_bundle_id = 'com.infobip.mobilemessaging.bipbip.NotificationServiceExtension'
+# notification_extension_bundle_id = 'com.infobip.mobilemessaging.bipbip.NotificationServiceExtension'
 
 # puts "Enter .xcodeproj file path"
 # project_file_path = gets.chomp
-project_file_path = '/Users/andreykadochnikov/nescript/nescript.xcodeproj'
+# project_file_path = '/Users/andreykadochnikov/nescript/nescript.xcodeproj'
 
-NotificationExtensionIntegrator.new(project_file_path, app_group, main_target_name, notification_extension_bundle_id).setupNotificationExtension()
+first_arg, *the_rest = ARGV
+
+
+options = {}
+integrate_parse = OptionParser.new do |opts|
+    opts.banner = "Usage: mmine [command] [parameters]"
+    opts.on("-p", "--project XCODE_PROJECT", "Path for your Xcode project file (.xcodeproj)") do |project|
+        options[:project] = project
+    end
+    opts.on("-g", "--app-group APP_GROUP_ID", "App Group Id for your shared location. You generate it here firs: https://developer.apple.com/account/ios/identifier/applicationGroup. For more inforamtion see https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW19") do |app_group|
+        options[:"app-group"] = app_group
+    end
+    opts.on("-t", "--target MAIN_TARGET", "Name of main Xcode project target") do |target|
+        options[:target] = target
+    end
+    opts.on("-b", "--bundle-id BUNDLE_ID", "Bundle Id that you specified for Explicit App Id of your Notification Extension here: https://developer.apple.com/account/ios/identifier/bundle") do |bundle_id|
+        options[:"bundle-id"] = bundle_id
+    end
+    opts.on("-h", "--help", "Prints this help") do
+        puts opts
+        exit
+    end
+end
+
+case first_arg
+when "integrate"
+    begin
+        integrate_parse.parse!
+        mandatory = [:"project", :"app-group", :"target", :"bundle-id"]
+        missing = mandatory.select{ |param| options[param].nil? }
+        unless missing.empty?
+            raise OptionParser::MissingArgument.new(missing.join(', '))
+        end  
+        NotificationExtensionIntegrator.new(options[:project], options[:app_group], options[:target], options[:bundle_id]).setupNotificationExtension()
+    rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+        puts $!.to_s
+        puts integrate_parse
+        exit
+    end 
+else
+    if first_arg == nil
+        puts "Please specify a command. For example 'mmine integrate'"
+    else
+        puts "Unknown command: #{first_arg}"
+    end
+end
+
