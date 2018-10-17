@@ -11,20 +11,18 @@ require 'mmine'
 # app_group = gets.chomp
 # app_group = 'group.com.mobile-messaging.notification-service-extension'
 
-# puts "Enter notification extension bundle id:"
-# notification_extension_bundle_id = gets.chomp
-# notification_extension_bundle_id = 'com.infobip.mobilemessaging.bipbip.NotificationServiceExtension'
-
 # puts "Enter .xcodeproj file path"
 # project_file_path = gets.chomp
 # project_file_path = '/Users/andreykadochnikov/nescript/nescript.xcodeproj'
 
 first_arg, *the_rest = ARGV
 
-
 options = {}
 integrate_parse = OptionParser.new do |opts|
     opts.banner = "Usage: mmine [command] [parameters]"
+    opts.on("-c", "--application-code APP_CODE", "Your Push Application Code from Infobip Portal") do |app_code|
+        options[:"application-code"] = app_code
+    end
     opts.on("-p", "--project XCODE_PROJECT", "Path for your Xcode project file (.xcodeproj)") do |project|
         options[:project] = project
     end
@@ -33,9 +31,6 @@ integrate_parse = OptionParser.new do |opts|
     end
     opts.on("-t", "--target MAIN_TARGET", "Name of main Xcode project target") do |target|
         options[:target] = target
-    end
-    opts.on("-b", "--bundle-id BUNDLE_ID", "Bundle Id that you specified for Explicit App Id of your Notification Extension here: https://developer.apple.com/account/ios/identifier/bundle") do |bundle_id|
-        options[:"bundle-id"] = bundle_id
     end
     opts.on("-h", "--help", "Prints this help") do
         puts opts
@@ -47,12 +42,12 @@ case first_arg
 when "integrate"
     begin
         integrate_parse.parse!
-        mandatory = [:"project", :"app-group", :"target", :"bundle-id"]
+        mandatory = [:"application-code",:"project", :"app-group", :"target"]
         missing = mandatory.select{ |param| options[param].nil? }
         unless missing.empty?
             raise OptionParser::MissingArgument.new(missing.join(', '))
         end  
-        NotificationExtensionIntegrator.new(options[:project], options[:app_group], options[:target], options[:bundle_id]).setupNotificationExtension()
+        NotificationExtensionIntegrator.new(options[:"application-code"], options[:project], options[:"app-group"], options[:target]).setupNotificationExtension()
     rescue OptionParser::InvalidOption, OptionParser::MissingArgument
         puts $!.to_s
         puts integrate_parse

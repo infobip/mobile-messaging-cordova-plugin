@@ -12,7 +12,7 @@ class NotificationService: UNNotificationServiceExtension {
 	override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
 		self.contentHandler = contentHandler
 		self.originalContent = request.content
-		MobileMessagingNotificationServiceExtension.startWithApplicationCode(<# your application code #> , appGroupId: <# your App Group ID #>)
+		MobileMessagingNotificationServiceExtension.start()
 		MobileMessagingNotificationServiceExtension.didReceive(request, withContentHandler: contentHandler)
 	}
 

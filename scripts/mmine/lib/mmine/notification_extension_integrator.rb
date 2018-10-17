@@ -10,11 +10,11 @@ module Mmine
 end
 
 class NotificationExtensionIntegrator
-	def initialize(project_file_path, app_group, main_target_name, notification_extension_bundle_id)
+	def initialize(application_code, project_file_path, app_group, main_target_name)
+		@application_code = application_code
 		@project_file_path = project_file_path
 		@app_group = app_group
 		@main_target_name = main_target_name
-		@notification_extension_bundle_id = notification_extension_bundle_id
 		
 		@project_dir = Pathname.new(@project_file_path).parent.to_s
 		@project = Xcodeproj::Project.open(@project_file_path)
@@ -22,7 +22,7 @@ class NotificationExtensionIntegrator
 		@extension_source_name_filepath = File.join(Mmine.root, 'resources','NotificationService.swift')
 		@extension_dir_name = 'NotificationExtension'
 		@extension_destination_dir = File.join(@project_dir, @extension_dir_name)
-		@extension_code_destination_filepath = File.join(@extension_destination_dir, @extension_source_name_filepath)
+		@extension_code_destination_filepath = File.join(@extension_destination_dir, 'NotificationService.swift')
 		@extension_group_name = 'NotificationExtensionGroup'
 
 		@plist_name = 'MobileMessagingNotificationServiceExtension.plist'
@@ -42,10 +42,13 @@ class NotificationExtensionIntegrator
 		createNotificationExtensionDir()
 		addNotificationExtensionSourceCode()
 		setupDevelopmentTeam()
+		setupDeploymentTarget()
 		setupNotificationExtensionInfoPlist()
 		setupNotificationExtensionBundleId()
 		setupNotificationExtensionEntitlements()
+		setupMainTargetEntitlements()
 		setupAppGroupPlistValue()
+		setupApplicationCodePlistValue()
 
 		## 9
 		# todo since user specifies target we can update podfile for him with extension declaration
@@ -69,38 +72,62 @@ class NotificationExtensionIntegrator
 	end
 
 	def addNotificationExtensionSourceCode
+		puts ">>>>> #{@extension_code_destination_filepath}"
 		unless File.exist?(@extension_code_destination_filepath)
 			puts 'cp'
-			FileUtils.cp(@extension_source_name_filepath, @extension_destination_dir)
+			FileUtils.cp(@extension_source_name_filepath, @extension_code_destination_filepath)
+			filereference = notificationExtensionGroupReference().new_reference(@extension_code_destination_filepath)
+			@ne_target.add_file_references([filereference])
 		end
-
-		filereference = notificationExtensionGroupReference().new_reference(@extension_code_destination_filepath)
-		@ne_target.add_file_references([filereference])
 	end
 
 	def setupDevelopmentTeam
 		setNotificationExtensionBuildSettings('DEVELOPMENT_TEAM', @main_target_build_settings_debug['DEVELOPMENT_TEAM'], @main_target_build_settings_release['DEVELOPMENT_TEAM'])
 	end
 
+	def setupDeploymentTarget
+		setNotificationExtensionBuildSettings('IPHONEOS_DEPLOYMENT_TARGET', "10.0")
+	end
+
 	def setupNotificationExtensionInfoPlist
 		unless File.exist?(@extension_info_plist_path)
 			FileUtils.cp(@plist_source_filepath, @extension_info_plist_path)
-		end 
-		notificationExtensionGroupReference().new_reference(@extension_info_plist_path) #check if additional plist manipulations needed (target membership?)
+			notificationExtensionGroupReference().new_reference(@extension_info_plist_path) #check if additional plist manipulations needed (target membership?)
+		end 		
 		setNotificationExtensionBuildSettings('INFOPLIST_FILE', resolveXcodePath(@extension_info_plist_path))
 	end
 
 	def setupNotificationExtensionBundleId
-		setNotificationExtensionBuildSettings('PRODUCT_BUNDLE_IDENTIFIER', @notification_extension_bundle_id)
+		suffix = "notification-extension"
+		debug_id = @main_target_build_settings_debug['PRODUCT_BUNDLE_IDENTIFIER']
+		release_id = @main_target_build_settings_release['PRODUCT_BUNDLE_IDENTIFIER']
+		setNotificationExtensionBuildSettings('PRODUCT_BUNDLE_IDENTIFIER', "#{debug_id}.#{suffix}", "#{release_id}.#{suffix}")
+	end
+
+	def setupMainTargetEntitlements
+		setupEntitlements(@main_target_build_settings_debug, @main_target_build_settings_release, @main_target_name)
 	end
 
 	def setupNotificationExtensionEntitlements
-		entitlements_debug_filepath = @extension_build_settings_debug['CODE_SIGN_ENTITLEMENTS'] != nil ? resolveAbsolutePath(@extension_build_settings_debug['CODE_SIGN_ENTITLEMENTS']) : nil
-		entitlements_release_filepath = @extension_build_settings_release['CODE_SIGN_ENTITLEMENTS'] != nil ? resolveAbsolutePath(@extension_build_settings_release['CODE_SIGN_ENTITLEMENTS']) : nil
+		setupEntitlements(@extension_build_settings_debug, @extension_build_settings_release, @ne_target_name)
+	end
+
+	def setupApplicationCodePlistValue
+		putStringValueIntoPlist("com.mobilemessaging.app_code", @application_code, @main_target_release_plist)
+	end
+
+	def setupAppGroupPlistValue
+		putStringValueIntoPlist("com.mobilemessaging.app_group", @app_group, @main_target_release_plist)
+	end
+
+	# private ->
+	def setupEntitlements(_build_settings_debug, _build_settings_release, target_name)
+		entitlements_debug_filepath = _build_settings_debug['CODE_SIGN_ENTITLEMENTS'] != nil ? resolveAbsolutePath(_build_settings_debug['CODE_SIGN_ENTITLEMENTS']) : nil
+		entitlements_release_filepath = _build_settings_release['CODE_SIGN_ENTITLEMENTS'] != nil ? resolveAbsolutePath(_build_settings_release['CODE_SIGN_ENTITLEMENTS']) : nil
 
 		if entitlements_debug_filepath == nil and entitlements_release_filepath == nil
-			entitlements_destination_filepath = createAppGroupEntitlements("MobileMessagingNotificationExtension.entitlements")
-			setNotificationExtensionBuildSettings('CODE_SIGN_ENTITLEMENTS', resolveXcodePath(entitlements_destination_filepath))
+			entitlements_destination_filepath = createAppGroupEntitlements("#{target_name}.entitlements")
+			setBuildSettings(_build_settings_debug, _build_settings_release, 'CODE_SIGN_ENTITLEMENTS', resolveXcodePath(entitlements_destination_filepath))
 		else
 			if entitlements_debug_filepath == entitlements_release_filepath
 				modifyXml(entitlements_debug_filepath)
@@ -108,15 +135,15 @@ class NotificationExtensionIntegrator
 				if entitlements_debug_filepath != nil
 					modifyXml(entitlements_debug_filepath)
 				else
-					entitlements_destination_filepath = createAppGroupEntitlements("MobileMessagingNotificationExtension_debug.entitlements")
-					@extension_build_settings_debug['CODE_SIGN_ENTITLEMENTS'] = resolveXcodePath(entitlements_destination_filepath)
+					entitlements_destination_filepath = createAppGroupEntitlements("#{target_name}_debug.entitlements")
+					_build_settings_debug['CODE_SIGN_ENTITLEMENTS'] = resolveXcodePath(entitlements_destination_filepath)
 				end
 
 				if entitlements_release_filepath != nil
 					modifyXml(entitlements_release_filepath)
 				else
-					entitlements_destination_filepath = createAppGroupEntitlements("MobileMessagingNotificationExtension_release.entitlements")
-					@extension_build_settings_release['CODE_SIGN_ENTITLEMENTS'] = resolveXcodePath(entitlements_destination_filepath)
+					entitlements_destination_filepath = createAppGroupEntitlements("#{target_name}_release.entitlements")
+					_build_settings_release['CODE_SIGN_ENTITLEMENTS'] = resolveXcodePath(entitlements_destination_filepath)
 				end
 			end
 		end
@@ -124,14 +151,14 @@ class NotificationExtensionIntegrator
 		@project.root_object.attributes["TargetAttributes"][@ne_target.uuid] = {"SystemCapabilities" => {"com.apple.ApplicationGroups.iOS" => {"enabled" => 1}}}
 	end
 
-	def setupAppGroupPlistValue
-		#main target app group
-		putStringValueIntoPlist("com.mobilemessaging.app_group", @app_group, @main_target_release_plist)
-	end
 
-	# private ->
 	def resolveXcodePath(path)
 		return path.sub(@project_dir, '$(PROJECT_DIR)')
+	end
+
+	def setBuildSettings(_build_settings_debug, _build_settings_release, key, debug_value, release_value=nil)
+		_build_settings_debug[key] = debug_value
+		_build_settings_release[key] = release_value != nil ? release_value : debug_value
 	end
 
 	def setNotificationExtensionBuildSettings(key, debug_value, release_value=nil)
@@ -147,13 +174,15 @@ class NotificationExtensionIntegrator
 		return group_reference
 	end
 
-	def createAppGroupEntitlements(entitlements_name)
-		puts "> creating entitlements #{entitlements_name}"
-		entitlements_destination_filepath = File.join(@project_dir, entitlements_name)
+	def createAppGroupEntitlements(_entitlements_name)
+		puts "> creating entitlements #{_entitlements_name}"
+		entitlements_destination_filepath = File.join(@project_dir, _entitlements_name)
 		entitlements_source_filepath = File.join(Mmine.root, 'resources', "MobileMessagingNotificationExtension.entitlements")
-		FileUtils.cp(entitlements_source_filepath, entitlements_destination_filepath)
-		ref = @project.main_group.new_reference(entitlements_destination_filepath)
-		ref.last_known_file_type = "text.xml"
+		unless File.exist?(entitlements_destination_filepath)
+			FileUtils.cp(entitlements_source_filepath, entitlements_destination_filepath)
+			ref = @project.main_group.new_reference(entitlements_destination_filepath)
+			ref.last_known_file_type = "text.xml"
+		end
 		modifyXml(entitlements_destination_filepath)
 		return entitlements_destination_filepath
 	end
