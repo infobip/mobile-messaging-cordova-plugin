@@ -10,9 +10,8 @@ module Mmine
 end
 
 class NotificationExtensionIntegrator
-	def initialize(project_file_path, app_code, app_group, main_target_name, notification_extension_bundle_id)
+	def initialize(project_file_path, app_group, main_target_name, notification_extension_bundle_id)
 		@project_file_path = project_file_path
-		@app_code = app_code
 		@app_group = app_group
 		@main_target_name = main_target_name
 		@notification_extension_bundle_id = notification_extension_bundle_id
@@ -47,7 +46,6 @@ class NotificationExtensionIntegrator
 		setupNotificationExtensionBundleId()
 		setupNotificationExtensionEntitlements()
 		setupAppGroupPlistValue()
-		setupAppCodePlistValue()
 
 		## 9
 		# todo since user specifies target we can update podfile for him with extension declaration
@@ -127,19 +125,8 @@ class NotificationExtensionIntegrator
 	end
 
 	def setupAppGroupPlistValue
-		app_group_plist_key = "com.mobilemessaging.app_group"
-		#extension app group
-		putStringValueIntoPlist(app_group_plist_key, @app_group, @extension_info_plist_path) 
 		#main target app group
-		putStringValueIntoPlist(app_group_plist_key, @app_group, @main_target_release_plist)
-	end
-
-	def setupAppCodePlistValue
-		app_code_plist_key = "com.mobilemessaging.app_code"
-		#extension app code
-		putStringValueIntoPlist(app_code_plist_key, @app_code, @extension_info_plist_path)
-		#main target app code
-		putStringValueIntoPlist(app_code_plist_key, @app_code, @main_target_debug_plist)
+		putStringValueIntoPlist("com.mobilemessaging.app_group", @app_group, @main_target_release_plist)
 	end
 
 	# private ->
