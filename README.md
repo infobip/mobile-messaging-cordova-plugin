@@ -50,6 +50,7 @@ The document describes library integration steps for your Cordova project.
     + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk)
     + [How do I get Infobip's unique (push registration) ID?](#how-do-i-get-infobips-unique-push-registration-id)
     + [How to archive my app with command line?](#how-to-archive-my-app-with-command-line)
+    + [How do I handle Google services - related errors on Android during initialization?](#how-do-i-handle-google-services---related-errors-on-android-during-initialization)
 
 ## Requirements
 - Cordova 7.0+ (`sudo npm install -g cordova`)
