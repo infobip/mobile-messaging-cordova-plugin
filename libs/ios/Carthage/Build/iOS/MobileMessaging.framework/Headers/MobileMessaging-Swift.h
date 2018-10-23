@@ -258,8 +258,9 @@ SWIFT_CLASS("_TtC15MobileMessaging14BlockOperation")
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
+
+
 @class UIViewController;
-@class NSBundle;
 
 /// Default chat view implementation, extends UINavigationController with a CPChatVC put as a root view controller.
 SWIFT_CLASS("_TtC15MobileMessaging18CPChatNavigationVC")
@@ -1406,7 +1407,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySetti
 /// Although this warning doesn’t mean that our code doesn’t work, you can shut it up by prefixing your App Group ID with a Team ID of a certificate that you are signing the build with. For example: <code>"9S95Y6XXXX.group.com.mobile-messaging.notification-service-extension"</code>. The App Group ID itself doesn’t need to be changed though.
 /// \param appGroupId An ID of an App Group
 ///
-- (MobileMessaging * _Nonnull)withAppGroupId:(NSString * _Nonnull)appGroupId SWIFT_WARN_UNUSED_RESULT;
+- (MobileMessaging * _Nonnull)withAppGroupId:(NSString * _Nonnull)appGroupId SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("The function is deprecated. Please put your App Group Id as a String value for a key `com.mobilemessaging.app_group` in your main info dictionary (Info.plist by defautlt).");
 @end
 
 
@@ -1484,7 +1485,15 @@ SWIFT_CLASS("_TtC15MobileMessaging43MobileMessagingNotificationServiceExtension"
 ///
 /// \param appGroupId An ID of an App Group. App Groups used to share data among app Notification Extension and the main application itself. Provide the appropriate App Group ID for both application and application extension in order to keep them in sync.
 ///
-+ (void)startWithApplicationCode:(NSString * _Nonnull)code appGroupId:(NSString * _Nonnull)appGroupId;
++ (void)startWithApplicationCode:(NSString * _Nonnull)code appGroupId:(NSString * _Nonnull)appGroupId SWIFT_DEPRECATED_MSG("The function is deprecated. Plese use `MobileMessagingNotificationServiceExtension.start()` instead and put your Application Code and App Group Id as String values for keys `com.mobilemessaging.app_code` and `com.mobilemessaging.app_group` respectively in your main info dictionary (info .plist file).");
+/// Starts a new Mobile Messaging Notification Service Extension session.
+/// This method should be called form <code>didReceive(_:, withContentHandler:)</code> of your subclass of UNNotificationServiceExtension.
+/// <em>It is required for the session start to put your Application Code and App Group Id as String values for keys</em> <code>com.mobilemessaging.app_code</code> <em>and</em> <code>com.mobilemessaging.app_group</code> <em>respectively in your main info dictionary (info .plist file)</em>
+/// remark:
+/// If you are facing with the following error in your console:
+/// <code>[User Defaults] Failed to read values in CFPrefsPlistSource<0xXXXXXXX> (Domain: ..., User: kCFPreferencesAnyUser, ByHost: Yes, Container: (null)): Using kCFPreferencesAnyUser with a container is only allowed for SystemContainers, detaching from cfprefsd</code>.
+/// Although this warning doesn’t mean that our code doesn’t work, you can shut it up by prefixing your App Group ID with a Team ID of a certificate that you are signing the build with. For example: <code>"9S95Y6XXXX.group.com.mobile-messaging.notification-service-extension"</code>. The App Group ID itself doesn’t need to be changed though.
++ (void)start;
 /// This method handles an incoming notification on the Notification Service Extensions side. It performs message delivery reporting and downloads data from <code>contentUrl</code> if provided. This method must be called within <code>UNNotificationServiceExtension.didReceive(_: withContentHandler:)</code> callback.
 /// \param request The original notification request. Use this object to get the original content of the notification.
 ///
@@ -1524,15 +1533,11 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
-@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
-@end
-
-
 @interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
-@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
@@ -1540,15 +1545,19 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 @end
 
 
-
-
-
-
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
+
+
+
+
 @interface NSString (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
+@end
+
+
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 @class NotificationActionOptions;
