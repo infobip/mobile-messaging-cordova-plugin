@@ -1309,7 +1309,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MMLogging> _Nullab
 ///
 /// \param completion A block to be executed when local notification handling is finished
 ///
-+ (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification completion:(void (^ _Nullable)(void))completion SWIFT_AVAILABILITY(ios,deprecated=10.0);
++ (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification completion:(void (^ _Nullable)(void))completion SWIFT_AVAILABILITY(ios,deprecated=10.0,message="If your apps minimum deployment target is iOS 10 or later, you don't need to forward your App Delegate calls to this method. Handling local notifications on iOS since 10.0 is done by Mobile Messaging SDK by implementing UNUserNotificationCenterDelegate under the hood.");
 /// Maintains attributes related to the current application installation such as APNs device token, badge number, etc.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMInstallation * _Nullable currentInstallation;)
 + (MMInstallation * _Nullable)currentInstallation SWIFT_WARN_UNUSED_RESULT;
@@ -1407,7 +1407,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySetti
 /// Although this warning doesn’t mean that our code doesn’t work, you can shut it up by prefixing your App Group ID with a Team ID of a certificate that you are signing the build with. For example: <code>"9S95Y6XXXX.group.com.mobile-messaging.notification-service-extension"</code>. The App Group ID itself doesn’t need to be changed though.
 /// \param appGroupId An ID of an App Group
 ///
-- (MobileMessaging * _Nonnull)withAppGroupId:(NSString * _Nonnull)appGroupId SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("The function is deprecated. Please put your App Group Id as a String value for a key `com.mobilemessaging.app_group` in your main info dictionary (Info.plist by defautlt).");
+- (MobileMessaging * _Nonnull)withAppGroupId:(NSString * _Nonnull)appGroupId SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("The function is deprecated. Please put your App Group Id as a String value for a key `com.mobilemessaging.app_group` in your main info dictionary (Info.plist by default).");
 @end
 
 
@@ -1439,7 +1439,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GeofencingSe
 ///
 /// \param completionHandler A block that you must call when you are finished performing the action. It is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:for:withResponseInfo:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
 ///
-+ (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier localNotification:(UILocalNotification * _Nonnull)localNotification responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler SWIFT_AVAILABILITY(ios,deprecated=10.0);
++ (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier localNotification:(UILocalNotification * _Nonnull)localNotification responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler SWIFT_AVAILABILITY(ios,deprecated=10.0,message="If your apps minimum deployment target is iOS 10 or later, you don't need to forward your App Delegate calls to this method. Handling notifications actions on iOS since 10.0 is done by Mobile Messaging SDK by implementing UNUserNotificationCenterDelegate under the hood.");
 /// This method handles interactive notifications actions and performs work that is defined for this action. The method should be called from AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:completionHandler:)</code> callback.
 /// \param identifier The identifier for the interactive notification action.
 ///
@@ -1449,7 +1449,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GeofencingSe
 ///
 /// \param completionHandler A block that you must call when you are finished performing the action. It is originally passed to AppDelegate’s <code>application(_:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:completionHandler:)</code> callback as a <code>completionHandler</code> parameter.
 ///
-+ (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier forRemoteNotification:(NSDictionary * _Nonnull)userInfo responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler;
++ (void)handleActionWithIdentifierWithIdentifier:(NSString * _Nullable)identifier forRemoteNotification:(NSDictionary * _Nonnull)userInfo responseInfo:(NSDictionary * _Nullable)responseInfo completionHandler:(void (^ _Nonnull)(void))completionHandler SWIFT_AVAILABILITY(ios,deprecated=10.0,message="If your apps minimum deployment target is iOS 10 or later, you don't need to forward your App Delegate calls to this method. Handling notifications actions on iOS since 10.0 is done by Mobile Messaging SDK by implementing UNUserNotificationCenterDelegate under the hood.");
 /// Returns <code>NotificationCategory</code> object for provided category Id. Category Id can be obtained from <code>MTMessage</code> object with <code>MTMessage.category</code> method.
 /// \param identifier The identifier associated with the category of interactive notification
 ///
@@ -1485,15 +1485,17 @@ SWIFT_CLASS("_TtC15MobileMessaging43MobileMessagingNotificationServiceExtension"
 ///
 /// \param appGroupId An ID of an App Group. App Groups used to share data among app Notification Extension and the main application itself. Provide the appropriate App Group ID for both application and application extension in order to keep them in sync.
 ///
-+ (void)startWithApplicationCode:(NSString * _Nonnull)code appGroupId:(NSString * _Nonnull)appGroupId SWIFT_DEPRECATED_MSG("The function is deprecated. Plese use `MobileMessagingNotificationServiceExtension.start()` instead and put your Application Code and App Group Id as String values for keys `com.mobilemessaging.app_code` and `com.mobilemessaging.app_group` respectively in your main info dictionary (info .plist file).");
++ (void)startWithApplicationCode:(NSString * _Nonnull)code appGroupId:(NSString * _Nonnull)appGroupId SWIFT_DEPRECATED_MSG("The function is deprecated. Plese use `startWithApplicationCode(_ applicationCode: String)` instead and put your App Group Id as a String value for a key `com.mobilemessaging.app_group` respectively in your main info dictionary (info .plist file).");
 /// Starts a new Mobile Messaging Notification Service Extension session.
 /// This method should be called form <code>didReceive(_:, withContentHandler:)</code> of your subclass of UNNotificationServiceExtension.
-/// <em>It is required for the session start to put your Application Code and App Group Id as String values for keys</em> <code>com.mobilemessaging.app_code</code> <em>and</em> <code>com.mobilemessaging.app_group</code> <em>respectively in your main info dictionary (info .plist file)</em>
+/// <em>It is required for the session start to put your App Group Id as a String value for a key</em> <code>com.mobilemessaging.app_group</code> <em>in your main info dictionary (info .plist file)</em>
 /// remark:
 /// If you are facing with the following error in your console:
 /// <code>[User Defaults] Failed to read values in CFPrefsPlistSource<0xXXXXXXX> (Domain: ..., User: kCFPreferencesAnyUser, ByHost: Yes, Container: (null)): Using kCFPreferencesAnyUser with a container is only allowed for SystemContainers, detaching from cfprefsd</code>.
 /// Although this warning doesn’t mean that our code doesn’t work, you can shut it up by prefixing your App Group ID with a Team ID of a certificate that you are signing the build with. For example: <code>"9S95Y6XXXX.group.com.mobile-messaging.notification-service-extension"</code>. The App Group ID itself doesn’t need to be changed though.
-+ (void)start;
+/// \param applicationCode The application code of your Application from Push Portal website.
+///
++ (void)startWithApplicationCode:(NSString * _Nonnull)applicationCode;
 /// This method handles an incoming notification on the Notification Service Extensions side. It performs message delivery reporting and downloads data from <code>contentUrl</code> if provided. This method must be called within <code>UNNotificationServiceExtension.didReceive(_: withContentHandler:)</code> callback.
 /// \param request The original notification request. Use this object to get the original content of the notification.
 ///
