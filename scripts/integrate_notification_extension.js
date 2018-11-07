@@ -5,15 +5,27 @@ module.exports = function(ctx) {
     if (ctx.opts.cordova.platforms.length > 0 && ctx.opts.cordova.platforms.indexOf('ios') < 0) { // corodova prepare was explicitly called for non-ios platforms
         return;
     }
-    if (!(ctx.opts.options.APPLICATION_CODE && ctx.opts.options.PROJECT && ctx.opts.options.TARGET && ctx.opts.options.APP_GROUP)) {
+
+    var ConfigParser = ctx.requireCordovaModule('cordova-common').ConfigParser;
+    var appConfig = new ConfigParser('config.xml');
+    var variables = appConfig.getPlugin(ctx.opts.plugin.id).variables;
+    var appName = appConfig.name();
+
+    var appCode = ctx.opts.options.IOS_EXTENSION_APP_CODE || variables.IOS_EXTENSION_APP_CODE;
+    var appGroup = ctx.opts.options.IOS_EXTENSION_APP_GROUP || variables.IOS_EXTENSION_APP_GROUP;
+    var projectPath = ctx.opts.options.IOS_EXTENSION_PROJECT_PATH || variables.IOS_EXTENSION_PROJECT_PATH || `platforms/ios/${appName}.xcodeproj`;
+    var projectMainTarget = ctx.opts.options.IOS_EXTENSION_PROJECT_MAIN_TARGET || variables.IOS_EXTENSION_PROJECT_MAIN_TARGET || appName;
+
+    if (!(appCode && appGroup && projectPath && projectMainTarget)) {
         return;
     }
-    var command = ` sudo gem install mmine;
+
+    var command = ` gem install mmine;
                     mmine integrate --cordova\
-                    -a ${ctx.opts.options.APPLICATION_CODE}\
-                    -p ${ctx.opts.options.PROJECT}\
-                    -t ${ctx.opts.options.TARGET}\
-                    -g ${ctx.opts.options.APP_GROUP}`;
+                    -a ${appCode}\
+                    -p ${ctx.opts.projectRoot}'/'${projectPath}\
+                    -t ${projectMainTarget}\
+                    -g ${appGroup}`;
 
     var exec = require('child_process').exec, child;
     child = exec(command,

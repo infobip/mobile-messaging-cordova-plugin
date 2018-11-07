@@ -143,8 +143,7 @@ MobileMessaging.init({
             senderId: <String; Cloud Messaging Sender ID obtained in step 1>
         },
         ios: {
-            notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>,
-            notificationExtensionAppGroupId: <String; app group id to sync data between main app and notification service extension> // optional but recommended!
+            notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>
         },
         geofencingEnabled: <Boolean; set to 'true' to enable geofencing inside the library>, // optional
         messageStorage: <Object; message storage implementation>, // optional
@@ -644,7 +643,21 @@ SDK supports rich content on Android out of the box. iOS platform **must be** ad
 
 ### Enabling notification extension in iOS for rich content and reliable delivery
 
-Additional Notification Service Extension **must be** be configured for iOS platform (to display rich content and have reliable delivery) as described [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10). Acquired App Group ID needs to be provided as a value of `notificationExtensionAppGroupId` parameter in your application configuration. Refer to [configuration section](#initialization-configuration) for details.
+Additional Notification Service Extension **must be** be configured for iOS platform (to display rich content and have reliable delivery). You need to add following parameters to your `config.xml` under the plugin section to activate the extension:
+```xml
+...
+    <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
+
+        <variable name="IOS_EXTENSION_APP_CODE" value="{YOUR APPLICATION CODE FROM INFOBIP PORTAL}" />
+        <variable name="IOS_EXTENSION_APP_GROUP" value="{APP GROUP ID FROM APPLE PORTAL}" />
+
+    </plugin>
+...
+```
+More details about the extension and iOS App Group can be found here [here](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10).
+
+> ### Notice
+> iOS notification extension is configured for your application automatically by the plugin hooks. Plugin needs to know main iOS target for the project and the path to the iOS project. Cordova application name and `platforms\ios\{applicationName}.xcodeproj` will be used by default. If you need to change these default settings, you can use `IOS_EXTENSION_PROJECT_MAIN_TARGET` and `IOS_EXTENSION_PROJECT_PATH` parameters respectively. You can set these parameters in `config.xml` under the plugin section or provide them via command line when building the project.
 
 ### Sending content
 
