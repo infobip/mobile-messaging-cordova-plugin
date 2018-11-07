@@ -19,7 +19,6 @@ class MMConfiguration {
 		static let notificationTypes = "notificationTypes"
 		static let messageStorage = "messageStorage"
 		static let cordovaPluginVersion = "cordovaPluginVersion"
-		static let notificationExtensionAppGroupId = "notificationExtensionAppGroupId"
 		static let notificationCategories = "notificationCategories"
 	}
 
@@ -32,7 +31,6 @@ class MMConfiguration {
 	let logging: Bool
 	let privacySettings: [String: Any]
 	let cordovaPluginVersion: String
-	let notificationExtensionAppGroupId: String?
 	let categories: [NotificationCategory]?
 
 	init?(rawConfig: [String: AnyObject]) {
@@ -48,7 +46,6 @@ class MMConfiguration {
 		self.logging = ios[MMConfiguration.Keys.logging].unwrap(orDefault: false)
 		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
 		self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
-		self.notificationExtensionAppGroupId = ios[MMConfiguration.Keys.notificationExtensionAppGroupId] as? String
 
 		if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
 			var ps = [String: Any]()
@@ -456,9 +453,6 @@ fileprivate class MobileMessagingEventsManager {
 			mobileMessaging = mobileMessaging?.withMessageStorage(storageAdapter)
 		} else if configuration.defaultMessageStorage {
 			mobileMessaging = mobileMessaging?.withDefaultMessageStorage()
-		}
-		if #available(iOS 10.0, *), let notificationExtensionAppGroupId = configuration.notificationExtensionAppGroupId, !notificationExtensionAppGroupId.isEmpty {
-			mobileMessaging = mobileMessaging?.withAppGroupId(notificationExtensionAppGroupId)
 		}
 		if let categories = configuration.categories {
 			mobileMessaging = mobileMessaging?.withInteractiveNotificationCategories(Set(categories))

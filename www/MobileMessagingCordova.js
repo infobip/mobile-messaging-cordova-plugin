@@ -45,7 +45,6 @@ var MobileMessagingCordova = function () {
  *		ios: {
  *			notificationTypes: ['alert', 'sound', 'badge'],
  *			forceCleanup: <Boolean>,
- *			notificationExtensionAppGroupId: <String>,
  *          logging: <Boolean>
  *		},
  *		privacySettings: {
