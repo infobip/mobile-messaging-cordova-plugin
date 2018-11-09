@@ -20,8 +20,8 @@ module.exports = function(ctx) {
         return;
     }
 
-    var command = ` gem install mmine;
-                    mmine integrate --cordova\
+    var command = ` gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine;
+                    ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate --cordova\
                     -a ${appCode}\
                     -p ${ctx.opts.projectRoot}'/'${projectPath}\
                     -t ${projectMainTarget}\
