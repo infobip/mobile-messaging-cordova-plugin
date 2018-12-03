@@ -20,12 +20,14 @@ module.exports = function(ctx) {
         return;
     }
 
-    var command = ` gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine;
+    var command = ` export GEM_HOME=plugins/${ctx.opts.plugin.id}/gems;
+                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine;
                     ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate --cordova\
                     -a ${appCode}\
                     -p ${ctx.opts.projectRoot}'/'${projectPath}\
                     -t ${projectMainTarget}\
-                    -g ${appGroup}`;
+                    -g ${appGroup}
+                    export GEM_HOME=$GEM_PATH`;
 
     var exec = require('child_process').exec, child;
     child = exec(command,
