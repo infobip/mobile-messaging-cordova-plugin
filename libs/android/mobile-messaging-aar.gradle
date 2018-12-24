@@ -4,7 +4,7 @@ def overrideGmsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_GMS_VER_OVER
 if (overrideAndroidSupportLibsVersion == "false") overrideAndroidSupportLibsVersion = ""
 if (overrideGmsVersion == "false") overrideGmsVersion = ""
 
-if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion > "26") {
+if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion > "28") {
     repositories {
         maven {
             url 'https://maven.google.com/'

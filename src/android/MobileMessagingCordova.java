@@ -163,7 +163,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
             String data = null;
             if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
-                data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
+                data = intent.getStringExtra(BroadcastParameter.EXTRA_CLOUD_TOKEN);
             } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
                 data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
             }
@@ -395,7 +395,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
                 .withApplicationCode(configuration.applicationCode)
-                .withGcmSenderId(configuration.android.senderId);
+                .withSenderId(configuration.android.senderId);
 
         if (configuration.privacySettings.userDataPersistingDisabled) {
             builder.withoutStoringUserData();
