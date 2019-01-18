@@ -174,6 +174,23 @@ MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregist
  *
  * @name saveUserData
  * @param {Object} an object containing user data
+ * {
+ *   externalUserId: "myID",
+ *   firstName: "John", 
+ *   lastName: "Smith",
+ *   middleName: "D",
+ *   gender: "Male",
+ *   birthday: "1985-01-15"
+ *   phones: ["79210000000", "79110000000"],
+ *   emails: ["one@email.com", "two@email.com"],
+ *   tags: ["Sports", "Food"],
+ *   customAttributes: {
+ *     "stringAttribute": "string",
+ *     "numberAttribute": 1,
+ *     "dateAttribute": "1985-01-15",
+ *     "booleanAttribute": true
+ *   }
+ * }
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
@@ -208,6 +225,29 @@ MobileMessagingCordova.prototype.getUser = function(callback, errorCallback) {
  *
  * @name saveInstallation
  * @param {Object} an object containing installation data
+ * {
+ *   isPrimaryDevice: true,
+ *   isPushRegistrationEnabled: true, 
+ *   notificationsEnabled: true,
+ *   geoEnabled: false,
+ *   sdkVersion: "1.2.3",
+ *   appVersion: "2.3.4"
+ *   os: "iOS",
+ *   osVersion: "12",
+ *   deviceManufacturer: "Apple",
+ *   deviceModel: "iPhone 5s",
+ *   deviceSecure: true,
+ *   language: "EN",
+ *   deviceTimezoneId: "GMT",
+ *   applicationUserId: "MyID",
+ *   deviceName: "John's iPhone 5s",
+ *   customAttributes: {
+ *     "stringAttribute": "string",
+ *     "numberAttribute": 1,
+ *     "dateAttribute": "1985-01-15",
+ *     "booleanAttribute": true
+ *   }
+ * }
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
