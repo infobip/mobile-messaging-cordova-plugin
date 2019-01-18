@@ -232,82 +232,117 @@ describe('Base methods', function() {
 		}
 	});
 	
-	it('should syncUserData', function() {
-		MobileMessaging.syncUserData({}, function(data) {}, function(err) {});
+	it('should saveUser', function() {
+		MobileMessaging.saveUser({firstName: "firstName"}, function(data) {}, function(err) {});
 
 		expect(cordova.exec).toHaveBeenCalledWith(
 			jasmine.any(Function),
 			jasmine.any(Function),
 			'MobileMessagingCordova',
-			'syncUserData',
-			[{}]);
+			'saveUser',
+			[{firstName: "firstName"}]);
 	});
 
-	it('should fetchUserData', function() {
-		MobileMessaging.fetchUserData(function(data) {}, function(err) {});
+	it('should fetchUser', function() {
+		MobileMessaging.fetchUser(function(data) {}, function(err) {});
 
 		expect(cordova.exec).toHaveBeenCalledWith(
 			jasmine.any(Function),
 			jasmine.any(Function),
 			'MobileMessagingCordova',
-			'fetchUserData',
+			'fetchUser',
 			[]);
 	});
 
-	it('should logout', function() {
-		MobileMessaging.logout(function() {}, function(err) {});
+	it('should getUser', function() {
+		MobileMessaging.getUser(function(data) {}, function(err) {});
 
 		expect(cordova.exec).toHaveBeenCalledWith(
 			jasmine.any(Function),
 			jasmine.any(Function),
 			'MobileMessagingCordova',
-			'logout',
+			'getUser',
 			[]);
 	});
 
-    it('should enable push registration', function() {
-        MobileMessaging.enablePushRegistration(function() {}, function(err) {});
+	it('should saveInstallation', function() {
+		MobileMessaging.saveInstallation({deviceModel: "deviceModel"}, function(data) {}, function(err) {});
 
-        expect(cordova.exec).toHaveBeenCalledWith(
-            jasmine.any(Function),
-            jasmine.any(Function),
-            'MobileMessagingCordova',
-            'enablePushRegistration',
-            []);
-    });
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'saveInstallation',
+			[{deviceModel: "deviceModel"}]);
+	});
 
-    it('should disable push registration', function() {
-        MobileMessaging.disablePushRegistration(function() {}, function(err) {});
+	it('should fetchInstallation', function() {
+		MobileMessaging.fetchInstallation(function(data) {}, function(err) {});
 
-        expect(cordova.exec).toHaveBeenCalledWith(
-            jasmine.any(Function),
-            jasmine.any(Function),
-            'MobileMessagingCordova',
-            'disablePushRegistration',
-            []);
-    });
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'fetchInstallation',
+			[]);
+	});
 
-    it('should check push registration enabled', function() {
-        MobileMessaging.isPushRegistrationEnabled(function() {}, function(err) {});
+	it('should getInstallation', function() {
+		MobileMessaging.getInstallation(function(data) {}, function(err) {});
 
-        expect(cordova.exec).toHaveBeenCalledWith(
-            jasmine.any(Function),
-            jasmine.any(Function),
-            'MobileMessagingCordova',
-            'isPushRegistrationEnabled',
-            []);
-    });
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'getInstallation',
+			[]);
+	});
 
-    it('should get push registration ID', function() {
-        MobileMessaging.getPushRegistrationId(function() {}, function(err) {});
+	it('should setInstallationAsPrimary', function() {
+		MobileMessaging.setInstallationAsPrimary("pushRegId", true, function(data) {}, function(err) {});
 
-        expect(cordova.exec).toHaveBeenCalledWith(
-            jasmine.any(Function),
-            jasmine.any(Function),
-            'MobileMessagingCordova',
-            'getPushRegistrationId',
-            []);
-    });
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'setInstallationAsPrimary',
+			["pushRegId", true]);
+	});
+
+	it('should personalize', function() {
+		var ctx = {
+			userIdentity: {
+				phones: ["79210000000", "79110000000"],
+				emails: ["one@email.com", "two@email.com"],
+				externalUserId: "myID"
+			},
+			userAttributes: {
+				firstName: "John",
+				lastName: "Smith"
+			},
+			forceDepersonalize: true
+		};	
+
+		MobileMessaging.personalize(ctx, function(data) {}, function(err) {});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'personalize',
+			[ctx]);
+	});
+
+	it('should depersonalize', function() {
+		MobileMessaging.depersonalize(function(data) {}, function(err) {});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'depersonalize',
+			[]);
+	});
 
 	it('should markMessagesSeen', function() {
 		MobileMessaging.markMessagesSeen([1,2,3], function(data) {}, function(err) {});
@@ -318,39 +353,6 @@ describe('Base methods', function() {
 			'MobileMessagingCordova',
 			'markMessagesSeen',
 			[1,2,3]);
-	});
-
-	it('should set as primary', function() {
-		MobileMessaging.setPrimary(false, function(data) {}, function(err) {});
-
-		expect(cordova.exec).toHaveBeenCalledWith(
-			jasmine.any(Function),
-			jasmine.any(Function),
-			'MobileMessagingCordova',
-			'setPrimary',
-			[false]);
-	});
-
-	it('should check if registration is primary', function() {
-        MobileMessaging.isPrimary(function() {}, function(err) {});
-
-        expect(cordova.exec).toHaveBeenCalledWith(
-            jasmine.any(Function),
-            jasmine.any(Function),
-            'MobileMessagingCordova',
-            'isPrimary',
-            []);
-    });
-
-    it('should sync primary', function() {
-		MobileMessaging.syncPrimary(function(data) {}, function(err) {});
-
-		expect(cordova.exec).toHaveBeenCalledWith(
-			jasmine.any(Function),
-			jasmine.any(Function),
-			'MobileMessagingCordova',
-			'syncPrimary',
-			[]);
 	});
 
 	it('should defaultMessageStorage disabled', function() {

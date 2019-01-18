@@ -1,4 +1,4 @@
-var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "logoutCompleted", "primaryChanged"];
+var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
@@ -170,84 +170,118 @@ MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
 MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregister;
 
 /**
- * Sync user data to the server.
+ * Saves user data to the server.
  *
- * @name syncUserData
- * @param {Object} userData object containing user data
- * @param {Function} callback will be called with synchronized user data on success
+ * @name saveUserData
+ * @param {Object} an object containing user data
+ * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.syncUserData = function(userData, callback, errorCallback) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'syncUserData', [userData])
+MobileMessagingCordova.prototype.saveUser = function(userData, callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'saveUser', [userData])
 };
 
 /**
  * Fetch user data from the server.
  *
- * @name fetchUserData
+ * @name fetchUser
  * @param {Function} callback will be called with fetched user data on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.fetchUserData = function(callback, errorCallback) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchUserData', [])
+MobileMessagingCordova.prototype.fetchUser = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchUser', [])
 };
 
 /**
- * Log out user. Function erases currently stored user data on SDK and server associated with push registration, along with messages in SDK storage.
+ * Gets user data from the locally stored cache.
  *
- * @name logout
- * @param {Function} callback will be called upon completion
+ * @name fetchUser
+ * @param {Function} callback will be called with fetched user data on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.logout = function(callback, errorCallback) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'logout', [])
+MobileMessagingCordova.prototype.getUser = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getUser', [])
 };
 
 /**
- * Enables the push registration so that the application can receive push notifications through MobileMessaging SDK.
- * MobileMessaging SDK has the push registration enabled by default.
+ * Saves installation to the server.
  *
- * @name enablePushRegistration
- * @param {Function} callback will be called upon completion
+ * @name saveInstallation
+ * @param {Object} an object containing installation data
+ * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.enablePushRegistration = function(callback, errorCallback) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'enablePushRegistration', [])
+MobileMessagingCordova.prototype.saveInstallation = function(installation, callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'saveInstallation', [installation])
 };
 
 /**
- * Disables the push registration so that the application is no longer able to receive push notifications through MobileMessaging SDK.
- * MobileMessaging SDK has the push registration enabled by default.
+ * Fetches installation from the server.
  *
- * @name disablePushRegistration
- * @param {Function} callback will be called upon completion
+ * @name fetchInstallation
+ * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.disablePushRegistration = function(callback, errorCallback) {
-    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'disablePushRegistration', [])
+MobileMessagingCordova.prototype.fetchInstallation = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchInstallation', [])
 };
 
 /**
- * Push registration status defines whether the device is allowed to receive push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
- * MobileMessaging SDK has the push registration enabled by default.
+ * Gets locally cached installation.
  *
- * @name isPushRegistrationEnabled
- * @param {Function} callback will be called upon completion
+ * @name fetchInstallation
+ * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.isPushRegistrationEnabled = function(callback, errorCallback) {
-    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'isPushRegistrationEnabled', [])
+MobileMessagingCordova.prototype.getInstallation = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getInstallation', [])
 };
 
 /**
- * Get push registration ID - Infobip's unique push registration identifier issued by the server.
+ * Sets any installation as primary for this user.
  *
- * @name getPushRegistrationId
- * @param {Function} callback will be called upon completion
+ * @name setInstallationAsPrimary
+ * @param {String} push registration ID of an installation
+ * @param {Boolean} primary or not
+ * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.getPushRegistrationId = function(callback, errorCallback) {
-    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getPushRegistrationId', [])
+MobileMessagingCordova.prototype.setInstallationAsPrimary = function(pushRegistrationId, primary, callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setInstallationAsPrimary', [pushRegistrationId, primary])
+};
+
+/**
+ * Performs personalization of the current installation on the platform.
+ *
+ * @name personalize
+ * @param {Object} an object containing user identity information as well as additional user attributes.
+ * {
+ *   "userIdentity": {
+ * 	   "phones": ["79210000000", "79110000000"],
+ *     "emails": ["one@email.com", "two@email.com"],
+ *     "externalUserId": "myID"	
+ *   },
+ *   "userAttributes": {
+ *	   "firstName": "John",
+ *     "lastName": "Smith" 
+ *   },
+ *   "forceDepersonalize": false
+ * }
+ * @param {Function} callback will be called on success
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.personalize = function(context, callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'personalize', [context])
+};
+
+/**
+ * Performs depersonalization of the current installation on the platform.
+ *
+ * @param {Function} callback will be called on success
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.depersonalize = function(callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'depersonalize', [])
 };
 
 /**
@@ -260,40 +294,6 @@ MobileMessagingCordova.prototype.getPushRegistrationId = function(callback, erro
  */
 MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callback, errorCallback) {
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'markMessagesSeen', messageIds)
-};
-
-/**
- * Sets current registration as either primary or not primary
- *
- * @name setPrimary
- * @param {Boolean} newValue new value for setting registration either primary or not primary
- * @param {Function} callback will be called upon completion
- * @param {Function} errorCallback will be called on error
- */
-MobileMessagingCordova.prototype.setPrimary = function(newValue, callback, errorCallback) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setPrimary', [newValue])
-};
-
-/**
- * Gets current registrations primary setting status (either primary or not primary)
- *
- * @name isPrimary
- * @param {Function} callback will be called upon completion
- * @param {Function} errorCallback will be called on error
- */
-MobileMessagingCordova.prototype.isPrimary = function(callback, errorCallback) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'isPrimary', [])
-};
-
-/**
- * Syncs primary setting with server and triggers corresponding event if the setting changes.
- *
- * @name syncPrimary
- * @param {Function} callback will be called upon completion
- * @param {Function} errorCallback will be called on error
- */
-MobileMessagingCordova.prototype.syncPrimary = function(callback, errorCallback) {
-	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'syncPrimary', [])
 };
 
 /**
