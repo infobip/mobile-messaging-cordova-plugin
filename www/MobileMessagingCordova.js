@@ -172,7 +172,7 @@ MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregist
 /**
  * Saves user data to the server.
  *
- * @name saveUserData
+ * @name saveUser
  * @param {Object} an object containing user data
  * {
  *   externalUserId: "myID",
@@ -212,7 +212,7 @@ MobileMessagingCordova.prototype.fetchUser = function(callback, errorCallback) {
 /**
  * Gets user data from the locally stored cache.
  *
- * @name fetchUser
+ * @name getUser
  * @param {Function} callback will be called with fetched user data on success
  * @param {Function} errorCallback will be called on error
  */
@@ -269,7 +269,7 @@ MobileMessagingCordova.prototype.fetchInstallation = function(callback, errorCal
 /**
  * Gets locally cached installation.
  *
- * @name fetchInstallation
+ * @name getInstallation
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
@@ -317,6 +317,7 @@ MobileMessagingCordova.prototype.personalize = function(context, callback, error
 /**
  * Performs depersonalization of the current installation on the platform.
  *
+ * @name depersonalize
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */

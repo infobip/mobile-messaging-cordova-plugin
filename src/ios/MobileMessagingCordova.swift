@@ -61,7 +61,7 @@ class MMConfiguration {
 
 		self.cordovaPluginVersion = rawConfig[MMConfiguration.Keys.cordovaPluginVersion].unwrap(orDefault: "unknown")
 
-		self.categories = (rawConfig[MMConfiguration.Keys.notificationCategories] as? [[String: Any]])?.flatMap(NotificationCategory.init)
+		self.categories = (rawConfig[MMConfiguration.Keys.notificationCategories] as? [[String: Any]])?.compactMap(NotificationCategory.init)
 
 		if let notificationTypeNames =  ios[MMConfiguration.Keys.notificationTypes] as? [String] {
 			let options = notificationTypeNames.reduce([], { (result, notificationTypeName) -> [UserNotificationType] in
@@ -100,7 +100,10 @@ fileprivate class MobileMessagingEventsManager {
 		"notificationTapped": MMNotificationMessageTapped,
 		"actionTapped": MMNotificationActionTapped,
 		"primaryChanged": MMNotificationPrimaryDeviceSettingUpdated,
-		"logoutCompleted": MMNotificationLogoutCompleted
+		"depersonalized": MMNotificationDepersonalized,
+		"personalized": MMNotificationPersonalized,
+		"installationUpdated": MMNotificationInstallationSynced,
+		"userUpdated": MMNotificationUserSynced
 	]
 
 	init(plugin: MobileMessagingCordova) {
@@ -138,7 +141,7 @@ fileprivate class MobileMessagingEventsManager {
 	}
 
 	private func register(forEvents events: Set<String>, callbackId: CallbackId) {
-		events.flatMap({ (cordovaEventName: CordovaEventName) -> (nName: MMNotificationNameString, callbackData: CallbackData)? in
+		events.compactMap({ (cordovaEventName: CordovaEventName) -> (nName: MMNotificationNameString, callbackData: CallbackData)? in
 			guard let mmNotificationNameString = supportedNotifications[cordovaEventName] else {
 				return nil
 			}
@@ -260,40 +263,125 @@ fileprivate class MobileMessagingEventsManager {
 		commandDelegate?.send(result, callbackId: command.callbackId)
 	}
 
-	func syncUserData(_ command: CDVInvokedUrlCommand) {
-		guard let userDataDictionary = command.arguments[0] as? [String: AnyObject?] else {
-			let errorResult = createErrorPluginResult(description: "Cannot retrieve user data dictionary")
+	func saveUser(_ command: CDVInvokedUrlCommand) {
+		guard let userDataDictionary = command.arguments[0] as? [String: Any], let user = User(dictRepresentation: userDataDictionary) else
+		{
+			let errorResult = createErrorPluginResult(description: "Could not retrieve user data from dictionary")
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
 
-		MobileMessaging.currentUser?.set(dictionary: userDataDictionary)
-		MobileMessaging.currentUser?.save({ error in
+		MobileMessaging.saveUser(user, completion: { (error) in
 			if let error = error {
 				let errorResult = createErrorPluginResult(error: error)
 				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			} else {
-				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.currentUser?.dictionary())
+				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.user?.dictionaryRepresentation)
 				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 			}
 		})
 	}
 
-	func fetchUserData(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.currentUser?.fetchFromServer(completion: { error in
+	func fetchUser(_ command: CDVInvokedUrlCommand) {
+		MobileMessaging.fetchUser(completion: { (user, error) in
 			if let error = error {
 				let errorResult = createErrorPluginResult(error: error)
 				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			} else {
-				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.currentUser?.dictionary())
+				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: user?.dictionaryRepresentation)
 				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 			}
 		})
 	}
 
-	func logout(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.logout(completion: { (status, error) in
-			if (status == LogoutStatus.pending) {
+	func getUser(_ command: CDVInvokedUrlCommand) {
+		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.user?.dictionaryRepresentation)
+		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+	}
+
+	func saveInstallation(_ command: CDVInvokedUrlCommand) {
+		guard let installationDictionary = command.arguments[0] as? [String: Any], let installation = Installation(dictRepresentation: installationDictionary) else
+		{
+			let errorResult = createErrorPluginResult(description: "Could not retrieve installation data from dictionary")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
+		}
+
+		MobileMessaging.saveInstallation(installation, completion: { (error) in
+			if let error = error {
+				let errorResult = createErrorPluginResult(error: error)
+				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			} else {
+				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.installation?.dictionaryRepresentation)
+				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+			}
+		})
+	}
+
+	func fetchInstallation(_ command: CDVInvokedUrlCommand) {
+		MobileMessaging.fetchInstallation(completion: { (installation, error) in
+			if let error = error {
+				let errorResult = createErrorPluginResult(error: error)
+				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			} else {
+				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: installation?.dictionaryRepresentation)
+				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+			}
+		})
+	}
+
+	func getInstallation(_ command: CDVInvokedUrlCommand) {
+		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.installation?.dictionaryRepresentation)
+		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+	}
+
+	func setInstallationAsPrimary(_ command: CDVInvokedUrlCommand) {
+		guard let pushRegId = command.arguments[0] as? String, let primary = command.arguments[1] as? Bool else
+		{
+			let errorResult = createErrorPluginResult(description: "Could not retrieve required function arguments")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
+		}
+		MobileMessaging.setInstallation(withPushRegistrationId: pushRegId, asPrimary: primary, completion: { (installations, error) in
+			if let error = error {
+				let errorResult = createErrorPluginResult(error: error)
+				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			} else {
+				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: installations?.map({ $0.dictionaryRepresentation }))
+				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+			}
+		})
+	}
+
+	func personalize(_ command: CDVInvokedUrlCommand) {
+		guard let context = command.arguments[0] as? [String: Any],
+			let uiDict = context["userIdentity"] as? [String: Any] else
+		{
+			let errorResult = createErrorPluginResult(description: "Could not retrieve required function arguments")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
+		}
+		guard let ui = UserIdentity(phones: uiDict["phones"] as? [String], emails: uiDict["emails"] as? [String], externalUserId: uiDict["externalUserId"] as? String) else {
+			let errorResult = createErrorPluginResult(description: "userIdentity must have at least one non-nil property")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
+		}
+		let uaDict = context["userAttributes"] as? [String: Any]
+		let ua = uaDict == nil ? nil : UserAttributes(dictRepresentation: uaDict!)
+		MobileMessaging.personalize(withUserIdentity: ui, userAttributes: ua) { (error) in
+			if let error = error {
+				let errorResult = createErrorPluginResult(error: error)
+				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			} else {
+				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.user?.dictionaryRepresentation)
+				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+			}
+		}
+	}
+
+	func depersonalize(_ command: CDVInvokedUrlCommand) {
+		MobileMessaging.depersonalize(completion: { (status, error) in
+			if (status == SuccessPending.pending) {
 				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "pending")
 				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 			} else if let error = error {
@@ -304,50 +392,6 @@ fileprivate class MobileMessagingEventsManager {
 				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 			}
 		})
-	}
-
-	func setPrimary(_ command: CDVInvokedUrlCommand) {
-		guard let isPrimary = command.arguments[0] as? Bool else {
-			let errorResult = createErrorPluginResult(description: "Cannot retrieve isPrimary parameter")
-			commandDelegate?.send(errorResult, callbackId: command.callbackId)
-			return
-		}
-		MobileMessaging.setAsPrimaryDevice(isPrimary)
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
-	}
-
-	func isPrimary(_ command: CDVInvokedUrlCommand) {
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.isPrimaryDevice), callbackId: command.callbackId)
-	}
-
-	func syncPrimary(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.syncPrimaryDevice(completion: { (isPrimary, error) in
-			if let error = error {
-				let errorResult = createErrorPluginResult(error: error)
-				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
-			} else {
-				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: isPrimary)
-				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
-			}
-		})
-	}
-
-	func enablePushRegistration(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.enablePushRegistration()
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
-	}
-
-	func disablePushRegistration(_ command: CDVInvokedUrlCommand) {
-		MobileMessaging.disablePushRegistration()
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
-	}
-
-	func getPushRegistrationId(_ command: CDVInvokedUrlCommand) {
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.currentUser?.pushRegistrationId), callbackId: command.callbackId)
-	}
-
-	func isPushRegistrationEnabled(_ command: CDVInvokedUrlCommand) {
-		self.commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.isPushRegistrationEnabled), callbackId: command.callbackId)
 	}
 
 	func markMessagesSeen(_ command: CDVInvokedUrlCommand) {
@@ -524,164 +568,6 @@ extension BaseMessage {
 		} else if let silent = originalPayload["silent"] as? Bool {
 			result["silent"] = silent
 		}
-
-		return result
-	}
-}
-
-extension MMUser {
-
-	static var dateYMDFormatter: DateFormatter = {
-		let result = DateFormatter()
-		result.locale = Locale(identifier: "en_US_POSIX")
-		result.dateFormat = "yyyy-MM-dd"
-		result.timeZone = TimeZone(secondsFromGMT: 0)
-		return result
-	}()
-
-	static var dateFormatter: DateFormatter = {
-		let dateFormatter = DateFormatter()
-		dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-		return dateFormatter
-	}()
-
-	func predefinedKeysDictionary() -> [MMUserPredefinedDataKeys: String] {
-		return [
-			MMUserPredefinedDataKeys.MSISDN: "msisdn",
-			MMUserPredefinedDataKeys.FirstName: "firstName",
-			MMUserPredefinedDataKeys.LastName: "lastName",
-			MMUserPredefinedDataKeys.MiddleName: "middleName",
-			MMUserPredefinedDataKeys.Gender: "gender",
-			MMUserPredefinedDataKeys.Birthdate: "birthdate",
-			MMUserPredefinedDataKeys.Email: "email"
-		]
-	}
-
-	func set(dictionary: [String:AnyObject?]) {
-		if let userMsisdn = dictionary["msisdn"] as? String? {
-			self.msisdn = userMsisdn
-		}
-
-		if let userFirstName = dictionary["firstName"] as? String? {
-			self.firstName = userFirstName
-		}
-
-		if let userLastName = dictionary["lastName"] as? String? {
-			self.lastName = userLastName
-		}
-
-		if let userMiddleName = dictionary["middleName"] as? String? {
-			self.middleName = userMiddleName
-		}
-
-		if let userGender = dictionary["gender"] as? String? {
-			if (userGender == "F") {
-				self.gender = UserGender.Female
-			} else if (userGender == "M") {
-				self.gender = UserGender.Male
-			} else {
-				self.gender = nil
-			}
-		}
-
-		if let userBirthdate = dictionary["birthdate"] as? String {
-			self.birthdate = MMUser.dateFormatter.date(from: userBirthdate)
-		} else {
-			self.birthdate = nil
-		}
-
-		if let userEmail = dictionary["email"] as? String? {
-			self.email = userEmail
-		}
-
-		if let externalUserId = dictionary["externalUserId"] as? String? {
-			self.externalId = externalUserId
-		}
-
-		guard let customData = dictionary["customData"] as? [String:AnyObject?] else {
-			return
-		}
-
-		for (key, data) in customData {
-			if data == nil {
-				set(customData: nil, forKey: key)
-				continue
-			}
-			if let double = data as? Double {
-				set(customData: CustomUserDataValue(double: double), forKey: key)
-				continue
-			}
-			if let int = data as? Int {
-				set(customData: CustomUserDataValue(integer: int), forKey: key)
-				continue
-			}
-			if let string = data as? String {
-				if let date = MMUser.dateFormatter.date(from: string) {
-					set(customData: CustomUserDataValue(date: date as NSDate), forKey: key)
-				} else {
-					set(customData: CustomUserDataValue(string: string), forKey: key)
-				}
-			}
-		}
-	}
-
-	func dictionary() -> [String: Any] {
-		var result = [String: Any]()
-
-		if let msisdn = MobileMessaging.currentUser?.msisdn {
-			result["msisdn"] = msisdn
-		}
-
-		if let firstName = MobileMessaging.currentUser?.firstName {
-			result["firstName"] = firstName
-		}
-
-		if let lastName = MobileMessaging.currentUser?.lastName {
-			result["lastName"] = lastName
-		}
-
-		if let middleName = MobileMessaging.currentUser?.middleName {
-			result["middleName"] = middleName
-		}
-
-		if let gender = MobileMessaging.currentUser?.gender {
-			switch gender {
-			case .Female:
-				result["gender"] = "F"
-			case .Male:
-				result["gender"] = "M"
-			}
-		}
-
-		if let birthdate = MobileMessaging.currentUser?.birthdate {
-			result["birthdate"] = MMUser.dateYMDFormatter.string(from: birthdate as Date)
-		}
-
-		if let email = MobileMessaging.currentUser?.email {
-			result["email"] = email
-		}
-
-		if let externalUserId = MobileMessaging.currentUser?.externalId {
-			result["externalUserId"] = externalUserId
-		}
-
-		guard let customData = MobileMessaging.currentUser?.customData else {
-			return result
-		}
-
-		var customDictionary = [String: Any]()
-		for (key, value) in customData {
-			if let number = value.number {
-				customDictionary[key] = number
-			} else if let date = value.date {
-				customDictionary[key] = MMUser.dateFormatter.string(from: date as Date)
-			} else if let string = value.string {
-				customDictionary[key] = string
-			}
-		}
-
-		result["customData"] = customDictionary
 
 		return result
 	}
