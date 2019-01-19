@@ -266,7 +266,7 @@ fileprivate class MobileMessagingEventsManager {
 	func saveUser(_ command: CDVInvokedUrlCommand) {
 		guard let userDataDictionary = command.arguments[0] as? [String: Any], let user = User(dictRepresentation: userDataDictionary) else
 		{
-			let errorResult = createErrorPluginResult(description: "Could not retrieve user data from dictionary")
+			let errorResult = createErrorPluginResult(description: "Could not retrieve user data from argument")
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -302,7 +302,7 @@ fileprivate class MobileMessagingEventsManager {
 	func saveInstallation(_ command: CDVInvokedUrlCommand) {
 		guard let installationDictionary = command.arguments[0] as? [String: Any], let installation = Installation(dictRepresentation: installationDictionary) else
 		{
-			let errorResult = createErrorPluginResult(description: "Could not retrieve installation data from dictionary")
+			let errorResult = createErrorPluginResult(description: "Could not retrieve installation data from argument")
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -338,7 +338,7 @@ fileprivate class MobileMessagingEventsManager {
 	func setInstallationAsPrimary(_ command: CDVInvokedUrlCommand) {
 		guard let pushRegId = command.arguments[0] as? String, let primary = command.arguments[1] as? Bool else
 		{
-			let errorResult = createErrorPluginResult(description: "Could not retrieve required function arguments")
+			let errorResult = createErrorPluginResult(description: "Could not retrieve required arguments")
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -357,7 +357,7 @@ fileprivate class MobileMessagingEventsManager {
 		guard let context = command.arguments[0] as? [String: Any],
 			let uiDict = context["userIdentity"] as? [String: Any] else
 		{
-			let errorResult = createErrorPluginResult(description: "Could not retrieve required function arguments")
+			let errorResult = createErrorPluginResult(description: "Could not retrieve context from argument")
 			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -395,14 +395,8 @@ fileprivate class MobileMessagingEventsManager {
 	}
 
 	func markMessagesSeen(_ command: CDVInvokedUrlCommand) {
-		guard let messageIds = command.arguments as? [String] else {
-			let errorResult = createErrorPluginResult(description: "Cannot retrieve message ids")
-			commandDelegate?.send(errorResult, callbackId: command.callbackId)
-			return
-		}
-
-		if (messageIds.isEmpty) {
-			let errorResult = createErrorPluginResult(description: "No message ids provided")
+		guard let messageIds = command.arguments as? [String], !messageIds.isEmpty else {
+			let errorResult = createErrorPluginResult(description: "Could not retrieve message ids from arguments")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -431,7 +425,7 @@ fileprivate class MobileMessagingEventsManager {
 
 	func defaultMessageStorage_find(_ command: CDVInvokedUrlCommand) {
 		guard let messageId = command.arguments[0] as? String else {
-			let errorResult = createErrorPluginResult(description: "Cannot retrieve messageId")
+			let errorResult = createErrorPluginResult(description: "Could not retrieve message id from arguments")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -455,7 +449,7 @@ fileprivate class MobileMessagingEventsManager {
 
 	func defaultMessageStorage_delete(_ command: CDVInvokedUrlCommand) {
 		guard let messageId = command.arguments[0] as? String else {
-			let errorResult = createErrorPluginResult(description: "Cannot retrieve messageId")
+			let errorResult = createErrorPluginResult(description: "Could not retrieve message id from arguments")
 			commandDelegate?.send(errorResult, callbackId: command.callbackId)
 			return
 		}
@@ -713,13 +707,16 @@ extension Optional {
 }
 
 private func createErrorPluginResult(error: NSError) -> CDVPluginResult {
-	return createErrorPluginResult(description: error.description, errorCode: error.code)
+	return createErrorPluginResult(description: error.description, errorCode: error.code, domain: error.domain)
 }
 
-private func createErrorPluginResult(description: String, errorCode: Int? = nil) -> CDVPluginResult {
+private func createErrorPluginResult(description: String, errorCode: Int? = nil, domain: String? = "com.infobip.mobile-messaging.cordova-plugin.ios-wrapper") -> CDVPluginResult {
 	var error: [AnyHashable: Any] = ["descritpion": description]
 	if let errorCode = errorCode {
 		error["code"] = errorCode
+	}
+	if let domain = domain {
+		error["domain"] = domain
 	}
 	return CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error)
 }
