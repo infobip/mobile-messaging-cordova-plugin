@@ -193,7 +193,15 @@ fileprivate class MobileMessagingEventsManager {
 				}
 				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: parameters)
 			}
-		case MMNotificationPrimaryDeviceSettingUpdated:
+		case MMNotificationPrimaryDeviceSettingUpdated: //TODO: align parameters passed with events
+			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+		case MMNotificationDepersonalized:
+			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+		case MMNotificationPersonalized:
+			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+		case MMNotificationInstallationSynced:
+			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+		case MMNotificationUserSynced:
 			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
 		default: break
 		}
