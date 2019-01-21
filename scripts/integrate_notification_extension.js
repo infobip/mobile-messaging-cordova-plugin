@@ -42,4 +42,4 @@ module.exports = function(ctx) {
                console.log('exec error: ' + error);
            }
        });
-}
+};
