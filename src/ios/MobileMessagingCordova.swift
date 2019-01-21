@@ -402,6 +402,24 @@ fileprivate class MobileMessagingEventsManager {
 		})
 	}
 
+	func depersonalizeInstallation(_ command: CDVInvokedUrlCommand) {
+		guard let pushRegId = command.arguments[0] as? String else
+		{
+			let errorResult = createErrorPluginResult(description: "Could not retrieve required arguments")
+			self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			return
+		}
+		MobileMessaging.depersonalizeInstallation(withPushRegistrationId: pushRegId, completion: { (installations, error) in
+			if let error = error {
+				let errorResult = createErrorPluginResult(error: error)
+				self.commandDelegate?.send(errorResult, callbackId: command.callbackId)
+			} else {
+				let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: installations)
+				self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+			}
+		})
+	}
+
 	func markMessagesSeen(_ command: CDVInvokedUrlCommand) {
 		guard let messageIds = command.arguments as? [String], !messageIds.isEmpty else {
 			let errorResult = createErrorPluginResult(description: "Could not retrieve message ids from arguments")
