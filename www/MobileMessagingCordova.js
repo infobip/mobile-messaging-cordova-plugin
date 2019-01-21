@@ -295,17 +295,17 @@ MobileMessagingCordova.prototype.setInstallationAsPrimary = function(pushRegistr
  *
  * @name personalize
  * @param {Object} an object containing user identity information as well as additional user attributes.
- * {
- *   "userIdentity": {
- * 	   "phones": ["79210000000", "79110000000"],
- *     "emails": ["one@email.com", "two@email.com"],
- *     "externalUserId": "myID"	
+ * { 
+ *   userIdentity: {
+ * 	   phones: ["79210000000", "79110000000"],
+ *     emails: ["one@email.com", "two@email.com"],
+ *     externalUserId: "myID"	
  *   },
- *   "userAttributes": {
- *	   "firstName": "John",
- *     "lastName": "Smith" 
+ *   userAttributes: {
+ *	   firstName: "John",
+ *     lastName: "Smith" 
  *   },
- *   "forceDepersonalize": false
+ *   forceDepersonalize: false
  * }
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
@@ -323,6 +323,17 @@ MobileMessagingCordova.prototype.personalize = function(context, callback, error
  */
 MobileMessagingCordova.prototype.depersonalize = function(callback, errorCallback) {
 	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'depersonalize', [])
+};
+
+/**
+ * Performs depersonalization of the installation referenced by pushRegistrationId.
+ *
+ * @param {String} push registration id of the remote installation to depersonalize
+ * @param {Function} callback will be called on success
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.depersonalizeInstallation = function(pushRegistrationId, callback, errorCallback) {
+	cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'depersonalizeInstallation', [pushRegistrationId])
 };
 
 /**

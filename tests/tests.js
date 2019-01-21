@@ -344,6 +344,17 @@ describe('Base methods', function() {
 			[]);
 	});
 
+	it('should depersonalizeInstallation', function() {
+		MobileMessaging.depersonalizeInstallation("myPushRegistrationId", function(data) {}, function(err) {});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'depersonalizeInstallation',
+			["myPushRegistrationId"]);
+	});
+
 	it('should markMessagesSeen', function() {
 		MobileMessaging.markMessagesSeen([1,2,3], function(data) {}, function(err) {});
 
