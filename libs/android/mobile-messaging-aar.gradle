@@ -14,14 +14,12 @@ if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion
 }
 
 dependencies {
-    def mmVersion = '1.17.1'
+    def mmVersion = '1.17.3'
     compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
-        transitive = true; 
-        if (!overrideAndroidSupportLibsVersion.empty) {    
-            exclude group: 'com.android.support', module: 'support-v4'   
-            exclude group: 'com.android.support', module: 'appcompat-v7'
-        }
+        transitive = true;
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
         if (!overrideGmsVersion.empty) {
             exclude group: 'com.google.android.gms', module: 'play-services-gcm'
             exclude group: 'com.google.android.gms', module: 'play-services-location'
@@ -30,6 +28,9 @@ dependencies {
     if (!overrideAndroidSupportLibsVersion.empty) {
         compile "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"
         compile "com.android.support:appcompat-v7:$overrideAndroidSupportLibsVersion"
+    } else {
+        compile "com.android.support:support-v4:27.1.1"
+        compile "com.android.support:appcompat-v7:27.1.1"
     }
     if (!overrideGmsVersion.empty) {
         compile "com.google.android.gms:play-services-gcm:$overrideGmsVersion"
