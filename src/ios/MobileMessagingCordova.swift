@@ -194,15 +194,21 @@ fileprivate class MobileMessagingEventsManager {
 				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: parameters)
 			}
 		case MMNotificationPrimaryDeviceSettingUpdated: //TODO: align parameters passed with events
-			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+			if let isPrimary = notification.userInfo?[MMNotificationKeyIsPrimaryDevice] as? Bool {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, isPrimary])
+			}
 		case MMNotificationDepersonalized:
 			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
 		case MMNotificationPersonalized:
 			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
 		case MMNotificationInstallationSynced:
-			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+			if let installation = notification.userInfo?[MMNotificationKeyInstallation] as? Installation {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, installation.dictionaryRepresentation])
+			}
 		case MMNotificationUserSynced:
-			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+			if let user = notification.userInfo?[MMNotificationKeyUser] as? User {
+				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, user.dictionaryRepresentation])
+			}
 		default: break
 		}
 
