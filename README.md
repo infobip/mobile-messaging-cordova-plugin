@@ -22,6 +22,7 @@ The document describes library integration steps for your Cordova project.
     + [Updating user](#updating-user)
     + [Personalize/Depersonalize](#personalizedepersonalize)
     + [Managing other installations](#managing-other-installations)
+    + [Interacting with tags and custom attributes](#interacting-with-tags-and-custom-attributes)
   * [Mark messages as seen](#mark-messages-as-seen)
   * [Geofencing](#geofencing)
     + [Android](#android)
@@ -289,9 +290,6 @@ Example of custom attributes:
 }
 ```
 
-> ### Notice
-> Custom attributes and tags, that you assign to the user can be used for future targeting. After you set the first tag, you can filter by this tag on the [people page](https://portal.infobip.com/people) on portal, you can also see this tag appear on [tag management page](https://portal.infobip.com/people/tags). The same is applied to `customAttributes`. After the first attribute is set, you can view it on [configuration](https://portal.infobip.com/people/configuration) page.
-
 ### Getting user
 
 There are currently two methods for getting user: `MobileMessaging.prototype.fetchUser(callback, errorCallback)` and `MobileMessaging.prototype.getUser(callback, errorCallback)`. They both supply user data model in the callback but the difference between them is that the `fetchUser` performs request to the server whereas `getUser` retrieves user data model from local cache.
@@ -332,6 +330,18 @@ It is possible to manage other installations belonging to the current user if th
 `MobileMessaging.prototype.setInstallationAsPrimary(pushRegId, callback, errorCallback)` is intended to set other installation as primary. Note that only one installation can be primary so this call is going to remove the previous flag. You can obtain `pushRegId` of the installation from the list of installations in user data model.
 
 `MobileMessaging.prototype.depersonalizeInstallation(pushRegId, callback, errorCallback)` is intended to depersonalize other installation that is currently personalized with current user (remote logout).
+
+### Interacting with tags and custom attributes
+
+Custom attributes and tags, that you assign to the user can be used for future targeting. After you set the first tag, you can filter by this tag on the [people page](https://portal.infobip.com/people) on portal, you can also see this tag appear on [tag management page](https://portal.infobip.com/people/tags). The same is applied to `customAttributes`. After the first attribute is set, you can view it on [configuration](https://portal.infobip.com/people/configuration) page.
+
+For example after executing next snippet of code on client device
+
+```javascript
+MobileMessaging.saveUser({ tags: ["NewCustomer"] });
+```
+
+you can view this tag on [tag management page](https://portal.infobip.com/people/tags).
 
 ## Mark messages as seen
 
