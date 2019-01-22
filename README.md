@@ -270,11 +270,11 @@ It is also possible to personalize/depersonalize current installation with alrea
    middleName: <string>,
    gender: <"Male"/"Female">,
    birthday: <date with format "yyyy-MM-dd" | Example: "1985-01-15">,
-   phones: <array<string> | User's mobile phones. Must be unique among all users. Example: ["79210000000", "79110000000"]>,
-   emails: <array<string> | User's emails. Must be unique among all users. Example: ["one@email.com", "two@email.com"]>,
-   tags: <array<string> | Tags assigned to user. Example: ["Sports", "Food"]>,
+   phones: <string[] | User's mobile phones. Must be unique among all users. Example: ["79210000000", "79110000000"]>,
+   emails: <string[] | User's emails. Must be unique among all users. Example: ["one@email.com", "two@email.com"]>,
+   tags: <string[] | Tags assigned to user. Example: ["Sports", "Food"]>,
    customAttributes: <object | Set of custom attributes assigned to user with values. Values can be one of type: string, number, boolean, date formatted string ('yyyy-MM-dd')>,
-   installations: <array<object> | Array of installations personalized by the user. This array also includes current installation>
+   installations: <object[] | Array of installations personalized by the user. This array also includes current installation>
 }
 ```
 
@@ -289,6 +289,9 @@ Example of custom attributes:
 }
 ```
 
+#### Note
+> Custom attributes and tags, that you assign to the user can be used for future targeting. After you set the first tag, you can filter by this tag on the [people page](https://portal.infobip.com/people) on portal, you can also see this tag appear on [tag management page](https://portal.infobip.com/people/tags). The same is applied to `customAttributes`. After the first attribute is set, you can view it on [configuration](https://portal.infobip.com/people/configuration) page.
+
 ### Getting user
 
 There are currently two methods for getting user: `MobileMessaging.prototype.fetchUser(callback, errorCallback)` and `MobileMessaging.prototype.getUser(callback, errorCallback)`. They both supply user data model in the callback but the difference between them is that the `fetchUser` performs request to the server whereas `getUser` retrieves user data model from local cache.
@@ -296,6 +299,9 @@ There are currently two methods for getting user: `MobileMessaging.prototype.fet
 ### Updating user
 
 The method `MobileMessaging.prototype.saveUser(user, callback, errorCallback)` is intended to save user attributes to the server. Note that the user model supplied as the first argument may contain only several fields set and in this case only those fields will be updated on server.
+
+#### Note
+> You cannot change the array of installations in this method. Also if you want to add a new tag, don't forget to include all the existing tags in the `tags` array. Otherwise if you include only the tag you want to add, all the other tags will be removed. The same applies to `phones` and `emails` arrays.
 
 ### Personalize/Depersonalize
 
@@ -307,8 +313,8 @@ The `context` argument of the `personalize` method has next data model:
 {
     userIdentity: {
         externalUserId: <string>,
-        phones: <array<string>>,
-        emails: <array<string>>
+        phones: <string[]>,
+        emails: <string[]>
     },
     userAttributes: <object | attributes of userModel except ones that contains in userIdentity>,
     forceDepersonalize: <boolean | false by default>
