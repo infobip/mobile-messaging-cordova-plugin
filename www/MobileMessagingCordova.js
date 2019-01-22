@@ -32,7 +32,7 @@ var MobileMessagingCordova = function () {
  * Starts a new Mobile Messaging session.
  *
  * @name init
- * @param {JSON} configuration for Mobile Messaging
+ * @param {JSON} config. Configuration for Mobile Messaging
  * Configuration format:
  *	{
  *		applicationCode: '<The application code of your Application from Push Portal website>',
@@ -72,7 +72,7 @@ var MobileMessagingCordova = function () {
  *			}
  *		]
  *	}
- * @param {Function} error callback
+ * @param {Function} onInitError. Error callback
  */
 MobileMessagingCordova.prototype.init = function(config, onInitError) {
 	var messageStorage = config.messageStorage;
@@ -173,7 +173,7 @@ MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregist
  * Saves user data to the server.
  *
  * @name saveUser
- * @param {Object} an object containing user data
+ * @param {Object} userData. An object containing user data
  * {
  *   externalUserId: "myID",
  *   firstName: "John", 
@@ -224,7 +224,7 @@ MobileMessagingCordova.prototype.getUser = function(callback, errorCallback) {
  * Saves installation to the server.
  *
  * @name saveInstallation
- * @param {Object} an object containing installation data
+ * @param {Object} installation. An object containing installation data
  * {
  *   isPrimaryDevice: true,
  *   isPushRegistrationEnabled: true, 
@@ -281,7 +281,7 @@ MobileMessagingCordova.prototype.getInstallation = function(callback, errorCallb
  * Sets any installation as primary for this user.
  *
  * @name setInstallationAsPrimary
- * @param {String} push registration ID of an installation
+ * @param {String} pushRegistrationId of an installation
  * @param {Boolean} primary or not
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
@@ -294,7 +294,7 @@ MobileMessagingCordova.prototype.setInstallationAsPrimary = function(pushRegistr
  * Performs personalization of the current installation on the platform.
  *
  * @name personalize
- * @param {Object} an object containing user identity information as well as additional user attributes.
+ * @param {Object} context. An object containing user identity information as well as additional user attributes.
  * { 
  *   userIdentity: {
  * 	   phones: ["79210000000", "79110000000"],
@@ -328,7 +328,7 @@ MobileMessagingCordova.prototype.depersonalize = function(callback, errorCallbac
 /**
  * Performs depersonalization of the installation referenced by pushRegistrationId.
  *
- * @param {String} push registration id of the remote installation to depersonalize
+ * @param {String} pushRegistrationId of the remote installation to depersonalize
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
@@ -352,7 +352,7 @@ MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callbac
  * Displays built-in error dialog so that user can resolve errors during sdk initialization.
  *
  * @name showDialogForError
- * @param {Integer} error code to display dialog for
+ * @param {Number} errorCode to display dialog for
  * @param {Function} callback will be called upon completion
  * @param {Function} errorCallback will be called on error
  */
