@@ -12,19 +12,16 @@ The document describes library integration steps for your Cordova project.
   * [Quick start guide](#quick-start-guide)
   * [Initialization configuration](#initialization-configuration)
   * [Events](#events)
-    + [Migration notes from 0.x.x](#events-migration-notes)
   * [Managing installation](#managing-installation)
     + [Installation data model](#installation-data-model)
     + [Getting installation](#getting-installation)
     + [Updating installation](#updating-installation)
-    + [Migration notes from 0.x.x](#installation-migration-notes)
   * [Managing user](#managing-user)
     + [User data model](#user-data-model)
     + [Getting user](#getting-user)
     + [Updating user](#updating-user)
     + [Personalize/Depersonalize](#personalizedepersonalize)
     + [Managing other installations](#managing-other-installations)
-    + [Migration notes from 0.x.x](#user-migration-notes)
   * [Mark messages as seen](#mark-messages-as-seen)
   * [Geofencing](#geofencing)
     + [Android](#android)
@@ -43,6 +40,7 @@ The document describes library integration steps for your Cordova project.
     + [Predefined categories](#predefined-categories)
     + [Custom categories](#custom-categories)
   * [In-app notifications](#in-app-notifications)
+  * [Migration guide from 0.x.x](#migration-guide-from-0xx)
   * [FAQ](#faq)
     + [How to open application webView on message tap](#how-to-open-application-webview-on-message-tap)
     + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk)
@@ -224,10 +222,6 @@ geo:
 }
 ```
 
-### Events migration notes
-
-Versions before 1.x.x provided support for `primaryChanged` event. Now the more general event `installationUpdated` is intended to be used instead.
-
 ## Managing installation
 
 ### Installation data model
@@ -259,12 +253,6 @@ There are currently two methods for getting current installation: `MobileMessagi
 ### Updating installation
 
 The method `MobileMessaging.prototype.saveInstallation(callback, errorCallback)` is intended to save user attributes to the server. Note that the user model supplied as the first argument may contain only several fields set and in this case only those fields will be updated on server.
-
-### Installation migration notes
-
-Before versions 1.x.x there were several separate methods for interacting with installation: `enablePushRegistration`, `disablePushRegistration`, `isPushRegistrationEnabled`, `setPrimary`, `isPrimary`, `syncPrimary`, `getPushRegistrationId`.
-
-Instead of `enablePushRegistration`, `disablePushRegistration` and `isPushRegistrationEnabled` you can use `isPushRegistrationEnabled` flag of the installation data model. The same applies to `setPrimary`, `isPrimary` and `syncPrimary`, you can use `isPrimaryDevice` flag instead. Instead of `getPushRegistrationId` you can use `pushRegistrationId` of installation. It is available only as readonly. You cannot change this field on server.
 
 ## Managing user
 
@@ -338,12 +326,6 @@ It is possible to manage other installations belonging to the current user if th
 `MobileMessaging.prototype.setInstallationAsPrimary(pushRegId, callback, errorCallback)` is intended to set other installation as primary. Note that only one installation can be primary so this call is going to remove the previous flag. You can obtain `pushRegId` of the installation from the list of installations in user data model.
 
 `MobileMessaging.prototype.depersonalizeInstallation(pushRegId, callback, errorCallback)` is intended to depersonalize other installation that is currently personalized with current user (remote logout).
-
-### User migration notes
-
-Previously there were three methods for user management: `syncUserData`, `fetchUserData`, `logout`.
-
-Now instead of `syncUserData` you can use `saveUser` to save user data model to the server. Instead of `fetchUserData` you can use `fetchUser` and instead of `logout` you can use `depersonalize`.
 
 ## Mark messages as seen
 
@@ -601,7 +583,7 @@ MobileMessaging.init({
 
 - `carrierInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the carrier information to the server. Default value is `false`.
 - `systemInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the system information such as OS version, device model, application version to the server. Default value is `false`.
-- `userDataPersistingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be persisting the [User Data](https://github.com/infobip/mobile-messaging-cordova-plugin#synchronizing-user-data) locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself. Default value is `false`.
+- `userDataPersistingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be persisting the [User Data](https://github.com/infobip/mobile-messaging-cordova-plugin#managing-user) locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself. Default value is `false`.
 
 ## Delivery improvements and rich content notifications
 
@@ -669,7 +651,7 @@ Displaying of Interactive Notifications with predefined categories can be tested
 | Category.id | A.id | A.title | A.foreground | A.authenticationRequired | A.destructive | A.moRequired |
 | --- | --- | --- | --- | --- | --- | --- |
 | mm_accept_decline | mm_accept | Accept | true | true | false | true |
-|| mm_decline | Decline | false | true | true | true |
+|  | mm_decline | Decline | false | true | true | true |
 
 ### Custom categories
 
@@ -725,6 +707,71 @@ Tapping the action should trigger `actionTapped` event where you can act upon th
 
 You can send in-app messages through our [Push HTTP API](https://dev.infobip.com/docs/send-push-notifications) with `showInApp` boolean parameter that needs to be set up to `true` under `notificationOptions`.
 
+## Migration guide from 0.x.x
+
+### Changed events
+
+| Events removed from 0.x.x | Event to use instead in 1.x.x |
+| --- | --- |
+| `logoutCompleted` | `depersonalized` |
+| `primaryChanged` | `installationUpdated` |
+
+`depersonalized` event is the direct replacement for `logoutCompleted` event. No more changes are required except event renaming.
+
+`installationUpdated` is more common event that is intended to replace `primaryChanged` event. Handler of the `installationUpdated` event will receive the whole installation as an argument. So this handler
+
+```javascript
+MobileMessaging.register('primaryChanged',
+    function() {
+        // primary changed on the server, request new value
+    }
+);
+```
+
+can be replaced with the following
+
+```javascript
+MobileMessaging.register('installationUpdated',
+    function(installation) {
+        // here installation.isPrimaryDevice is available for utilization
+    }
+);
+```
+
+### Installation management changes
+
+Version 1.x.x introduced new installation data model that combines fields `installation.pushRegistrationId`, `installation.isPrimaryDevice`, `installation.isPushRegistrationEnabled`. These fields can be used instead of methods in 0.x.x to get/set primary status of device and `isPushRegistrationEnabled` flag to get `pushRegistrationId`.
+
+| Methods used in 0.x.x | Field of installation in 1.x.x |
+| --- | --- |
+| `enablePushRegistration`, `disablePushRegistration`, `isPushRegistrationEnabled` | `installation.isPushRegistrationEnabled` |
+| `setPrimary`, `isPrimary`, `syncPrimary` | `installation.isPrimaryDevice` |
+| `getPushRegistrationId` | `installation.getPushRegistrationId` |
+
+Instead of `enablePushRegistration`, `disablePushRegistration` and `isPushRegistrationEnabled` you can use `isPushRegistrationEnabled` flag of the installation data model. The same applies to `setPrimary`, `isPrimary` and `syncPrimary`, you can use `isPrimaryDevice` flag instead. Instead of `getPushRegistrationId` you can use `pushRegistrationId` of installation. It is available only as readonly. You cannot change this field on server.
+
+### User management changes
+
+In version 1.x.x user data model was changed in the next way:
+
+| User data in 0.x.x | User data model in 1.x.x |
+| --- | --- |
+| `msisdn: string` For example `msisdn: '385989000000'` | `phones: string[]` For example `phones: ['79210000000', '79110000000']` |
+| `email: string` For example `email: 'john.smith@infobip.com'` | `emails: string[]` For example `emails: ['one@email.com', 'two@email.com']` |
+| `gender: 'M'&#124;'F'` | `gender: 'Male'&#124;'Female'` |
+| `birthdate: Date` For example `birthdate: Date()` | `birthday: string` where string is in date format `yyyy-MM-dd`. For example `birthday: "1985-01-15"` |
+
+Also some methods were removed but new ones introduced instead:
+
+| Methods used in 0.x.x | Methods to use in 1.x.x |
+| --- | --- |
+| `syncUserData` | `saveUser`, `personalize` |
+| `fetchUserData` | `fetchUser` |
+| `logout` | `depersonalize` |
+
+#### Note
+> Functionality of `syncUserData` was split between `personalize` and `saveUser` to avoid potential problems with merged person and make the intent to attach to person explicit. To learn more, read about [updating user](#updating-user) and [personalizing/depersonalizing installation](#personalizedepersonalize)
+
 ## FAQ
 
 ### How to open application webView on message tap
@@ -769,9 +816,9 @@ Or you can set properties in `config.xml` of your application inside the plugin 
 In order to get Infobip's unique push registration identifier issued by the server you need to implement the following code:
 
 ```javascript
-MobileMessaging.getPushRegistrationId(
-    function(pushRegId) {
-        // handle logic related to push registration ID
+MobileMessaging.fetchInstallation(
+    function(installation) {
+        // Here you can get pushRegistrationId with installation.pushRegistrationId
     });
 ```
 
