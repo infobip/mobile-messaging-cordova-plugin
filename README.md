@@ -764,7 +764,7 @@ In version 1.x.x user data model was changed in the next way:
 | --- | --- |
 | `msisdn: string` For example `msisdn: '385989000000'` | `phones: string[]` For example `phones: ['79210000000', '79110000000']` |
 | `email: string` For example `email: 'john.smith@infobip.com'` | `emails: string[]` For example `emails: ['one@email.com', 'two@email.com']` |
-| `gender: 'M'&#124;'F'` | `gender: 'Male'&#124;'Female'` |
+| `gender: 'M' or 'F'` | `gender: 'Male' or 'Female'` |
 | `birthdate: Date` For example `birthdate: Date()` | `birthday: string` where string is in date format `yyyy-MM-dd`. For example `birthday: "1985-01-15"` |
 
 Also some methods were removed but new ones introduced instead:
