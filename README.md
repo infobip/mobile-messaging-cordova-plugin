@@ -189,7 +189,7 @@ MobileMessaging.register('<event name>',
 
 
 Supported message fields are described below:
-```javascript
+```
 message: {
     messageId: <unique message id>,
     title: <title>,
@@ -199,7 +199,7 @@ message: {
     icon: <notification icon, optional (Android only)>,
     silent: <true/false, disables notification for message>,
     category: <notification category (Android only)>,
-    receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>,
+    receivedTimestamp: <absolute timestamp in milliseconds that indicates when the message was received>,
     customPayload: <any custom data provided with message>,
     originalPayload: <original payload of message (iOS only)>,
     contentUrl: <media content url if media provided>,
@@ -210,7 +210,7 @@ message: {
 ```
 
 Supported geo fields are described below:
-```javascript
+```
 geo: 
     area: {
         id: <area id>,
