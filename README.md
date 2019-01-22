@@ -289,7 +289,7 @@ Example of custom attributes:
 }
 ```
 
-#### Note
+> ### Notice
 > Custom attributes and tags, that you assign to the user can be used for future targeting. After you set the first tag, you can filter by this tag on the [people page](https://portal.infobip.com/people) on portal, you can also see this tag appear on [tag management page](https://portal.infobip.com/people/tags). The same is applied to `customAttributes`. After the first attribute is set, you can view it on [configuration](https://portal.infobip.com/people/configuration) page.
 
 ### Getting user
@@ -300,7 +300,7 @@ There are currently two methods for getting user: `MobileMessaging.prototype.fet
 
 The method `MobileMessaging.prototype.saveUser(user, callback, errorCallback)` is intended to save user attributes to the server. Note that the user model supplied as the first argument may contain only several fields set and in this case only those fields will be updated on server.
 
-#### Note
+> ### Notice
 > You cannot change the array of installations in this method. Also if you want to add a new tag, don't forget to include all the existing tags in the `tags` array. Otherwise if you include only the tag you want to add, all the other tags will be removed. The same applies to `phones` and `emails` arrays.
 
 ### Personalize/Depersonalize
@@ -775,7 +775,7 @@ Also some methods were removed but new ones introduced instead:
 | `fetchUserData` | `fetchUser` |
 | `logout` | `depersonalize` |
 
-#### Note
+> ### Notice
 > Functionality of `syncUserData` was split between `personalize` and `saveUser` to avoid potential problems with merged person and make the intent to attach to person explicit. To learn more, read about [updating user](#updating-user) and [personalizing/depersonalizing installation](#personalizedepersonalize)
 
 ## FAQ
