@@ -12,17 +12,17 @@ The document describes library integration steps for your Cordova project.
   * [Quick start guide](#quick-start-guide)
   * [Initialization configuration](#initialization-configuration)
   * [Events](#events)
-    + [`messageReceived` event](#messagereceived-event)
-    + [`notificationTapped` event](#notificationtapped-event)
-    + [`tokenReceived` event](#tokenreceived-event)
-    + [`registrationUpdated` event](#registrationupdated-event)
-    + [`geofenceEntered` event](#geofenceentered-event)
-    + [`actionTapped` event](#actiontapped-event)
-  * [Synchronizing user data](#synchronizing-user-data)
-    + [Sync user data](#sync-user-data)
-    + [Fetch user data](#fetch-user-data)
-    + [User logout](#user-logout)
-  * [Disabling the push registration](#disabling-the-push-registration)
+  * [Managing installation](#managing-installation)
+    + [Installation data model](#installation-data-model)
+    + [Getting installation](#getting-installation)
+    + [Updating installation](#updating-installation)
+  * [Managing user](#managing-user)
+    + [User data model](#user-data-model)
+    + [Getting user](#getting-user)
+    + [Updating user](#updating-user)
+    + [Personalize/Depersonalize](#personalizedepersonalize)
+    + [Managing other installations](#managing-other-installations)
+    + [Interacting with tags and custom attributes](#interacting-with-tags-and-custom-attributes)
   * [Mark messages as seen](#mark-messages-as-seen)
   * [Geofencing](#geofencing)
     + [Android](#android)
@@ -41,10 +41,7 @@ The document describes library integration steps for your Cordova project.
     + [Predefined categories](#predefined-categories)
     + [Custom categories](#custom-categories)
   * [In-app notifications](#in-app-notifications)
-  * [Configuring device as a primary one](#configuring-device-as-a-primary-one)
-    + [Setting device as primary](#setting-device-as-primary)
-    + [Getting current setting](#getting-current-setting)
-    + [Synchronizing setting with server](#synchronizing-setting-with-server)
+  * [Migration guide from 0.x.x](#migration-guide-from-0xx)
   * [FAQ](#faq)
     + [How to open application webView on message tap](#how-to-open-application-webview-on-message-tap)
     + [What if my android build fails after adding the SDK?](#what-if-my-android-build-fails-after-adding-the-sdk)
@@ -149,7 +146,8 @@ MobileMessaging.init({
                        textInputActionButtonTitle: <String; custom label for a sending button>,
                        
                        // Android only
-                       icon: <String; a resource name for a special action icon>
+                       icon:
+                        <String; a resource name for a special action icon>
                    }
                ]   
            }
@@ -183,186 +181,170 @@ MobileMessaging.register('<event name>',
 | `registrationUpdated` | Infobip internal ID | Occurs when the registration is updated on backend server. Returns internalId - string for the registered user.|
 | `geofenceEntered` | geo object | Occurs when device enters a geofence area. |
 | `actionTapped` | message, actionId, text | Occurs when user taps on action inside notification or enters text as part of the notification response. |
-| `primaryChanged` | | Occurs when primary device setting is updated after synchronization with the server. |
+| `installationUpdated` | installation | Occurs when save request to the server is successfully sent. |
+| `userUpdated` | user | Occurs when save request to the server is successfully sent. |
+| `personalized` | | Occurs when request for personalization is successfully sent to the server. |
+| `depersonalized` | | Occurs when request for depersonalization is successfully sent to the server. |
 
-### `messageReceived` event
-```javascript
-MobileMessaging.register('messageReceived', 
-    function(message) {
-        console.log('Message Received: ' + message.body);
-    }
-);
-```
-
-### `notificationTapped` event
-```javascript
-MobileMessaging.register('notificationTapped',
-     function(message) {
-         console.log('Notification tapped: ' + message.body);
-     }
-);
-```
 
 Supported message fields are described below:
-```javascript
+```
 message: {
-    messageId: '<unique message id>',
-    title: '<title>',
-    body: '<message text>',
-    sound: '<notification sound>',
-    vibrate: '<true/false, notification vibration setting (Android only)>',
-    icon: '<notification icon, optional (Android only)>',
-    silent: '<true/false, disables notification for message>',
-    category: '<notification category (Android only)>',
-    receivedTimestamp: '<absolute timestamp in milliseconds that indicates when the message was received>',
-    customPayload: '<any custom data provided with message>',
-    originalPayload: '<original payload of message (iOS only)>',
-    contentUrl: '<media content url if media provided>',
-	seen: '<true/false, was message seen or not>',
-	seenDate: '<absolute timestamp in milliseconds that indicates when the message was seen>',
-	geo: '<true/false, indicates was message triggered by geo event or not>'
+    messageId: <unique message id>,
+    title: <title>,
+    body: <message text>,
+    sound: <notification sound>,
+    vibrate: <true/false, notification vibration setting (Android only)>,
+    icon: <notification icon, optional (Android only)>,
+    silent: <true/false, disables notification for message>,
+    category: <notification category (Android only)>,
+    receivedTimestamp: <absolute timestamp in milliseconds that indicates when the message was received>,
+    customPayload: <any custom data provided with message>,
+    originalPayload: <original payload of message (iOS only)>,
+    contentUrl: <media content url if media provided>,
+    seen: <true/false, was message seen or not>,
+    seenDate: <absolute timestamp in milliseconds that indicates when the message was seen>,
+    geo: <true/false, indicates was message triggered by geo event or not>
 }
-```
-
-### `tokenReceived` event
-```javascript
-MobileMessaging.register('tokenReceived',
-     function(token) {
-         console.log('Token: ' + token);
-     }
-);
-```
-
-### `registrationUpdated` event
-```javascript
-MobileMessaging.register('registrationUpdated',
-     function(internalId) {
-         console.log('Internal ID: ' + internalId);
-     }
-);
-```
-
-### `geofenceEntered` event
-```javascript
-MobileMessaging.register('geofenceEntered',
-     function(geo) {
-         console.log('Geo area entered: ' + geo.area.title);
-     }
-);
 ```
 
 Supported geo fields are described below:
-```javascript
-geo: {
+```
+geo: 
     area: {
-        id: '<area id>',
-        center: {
-            lat: '<area latitude>',
-            lon: '<area longitude>'
+        id: <area id>,
+        center: 
+            lat: <area latitude>,
+            lon: <area longitude>
         },
-        radius: '<area radius>',
-        title: '<area title>'
+        radius: <area radius>,
+        title: <area title>
     }
 }
 ```
 
-### `actionTapped` event
+## Managing installation
 
-Regular notification action:
+### Installation data model
 
-```javascript
-MobileMessaging.register('actionTapped',
-     function(message, actionId) {
-         console.log('Action ' + actionId + ' tapped for message ' + message.body);
-     }
-);
+```
+{
+    pushRegistrationId: <string | read-only. Unique Infobip identifier of the installation>
+    isPrimaryDevice: <boolean | flag signalizing that the device is marked as primary on Infobip portal>,
+    isPushRegistrationEnabled: <boolean | flag signalizing that device will receive notifications>,
+    customAttributes: <object | Set of custom attributes assigned to user with values. Values can be one of type: string, number, boolean, date formatted string ('yyyy-MM-dd')>
+}
 ```
 
-Text input action:
+Example of custom attributes: 
 
 ```javascript
-MobileMessaging.register('actionTapped',
-     function(message, actionId, text) {
-         console.log('User responded to a message ' + message.body + ' with following text: ' + text);
-     }
-);
+{
+    stringAttribute: "string",
+    numberAttribute: 1,
+    dateAttribute: "1985-01-15",
+    booleanAttribute: true
+}
 ```
 
-### `primaryChanged` event
+### Getting installation
 
-```javascript
-MobileMessaging.register('primaryChanged',
-     function() {
-         // primary changed on the server, request new value
-     }
-);
+There are currently two methods for getting current installation: `MobileMessaging.prototype.fetchInstallation(callback, errorCallback)` and `MobileMessaging.prototype.getInstallation(callback, errorCallback)`. They both supply installation data model in the callback but the difference between them is that the `fetchInstallation` performs request to the server whereas `getInstallation` retrieves installation data model from local cache.
+
+### Updating installation
+
+The method `MobileMessaging.prototype.saveInstallation(callback, errorCallback)` is intended to save user attributes to the server. Note that the user model supplied as the first argument may contain only several fields set and in this case only those fields will be updated on server.
+
+## Managing user
+
+It is possible to save user data to the server, fetch latest user data from the server.
+
+It is also possible to personalize/depersonalize current installation with already existing user (can be used in login/logout procedures of your application). Depersonalize procedure will wipe out current user data whereas personalize procedure will fetch the latest user data that this installation was personalized with.
+
+### User data model
+
+```
+{
+   externalUserId: <string | unique user identifier in external (non-Infobip) service>,
+   firstName: <string>, 
+   lastName: <string>,
+   middleName: <string>,
+   gender: <"Male"/"Female">,
+   birthday: <date with format "yyyy-MM-dd" | Example: "1985-01-15">,
+   phones: <string[] | User's mobile phones. Must be unique among all users. Example: ["79210000000", "79110000000"]>,
+   emails: <string[] | User's emails. Must be unique among all users. Example: ["one@email.com", "two@email.com"]>,
+   tags: <string[] | Tags assigned to user. Example: ["Sports", "Food"]>,
+   customAttributes: <object | Set of custom attributes assigned to user with values. Values can be one of type: string, number, boolean, date formatted string ('yyyy-MM-dd')>,
+   installations: <object[] | Array of installations personalized by the user. This array also includes current installation>
+}
 ```
 
-## Synchronizing user data
-It is possible to sync user data to the server, fetch latest user data from the server as well as log out user (wipe out current user data) from mobile device and the server side.
+Example of custom attributes: 
 
-### Sync user data
-Set of predefined data fields is currently supported as well as custom fields containing string, number or date. Root level of user data contains all predefined fields as listed below. `customData` object shall contain all custom fields.
 ```javascript
-MobileMessaging.syncUserData({
-        externalUserId: 'johnsmith',
-        firstName: 'John',
-        lastName: 'Smith',
-        middleName: 'Matthew',
-        msisdn: '385989000000',
-        gender: 'M',
-        birthdate: new Date(),
-        email: 'john.smith@infobip.com',
-        customData: {
-            customString: 'CustomString',
-            customDate: new Date(),
-            customNumber: 3
-        }
+{
+    stringAttribute: "string",
+    numberAttribute: 1,
+    dateAttribute: "1985-01-15",
+    booleanAttribute: true
+}
+```
+
+### Getting user
+
+There are currently two methods for getting user: `MobileMessaging.prototype.fetchUser(callback, errorCallback)` and `MobileMessaging.prototype.getUser(callback, errorCallback)`. They both supply user data model in the callback but the difference between them is that the `fetchUser` performs request to the server whereas `getUser` retrieves user data model from local cache.
+
+### Updating user
+
+The method `MobileMessaging.prototype.saveUser(user, callback, errorCallback)` is intended to save user attributes to the server. Note that the user model supplied as the first argument may contain only several fields set and in this case only those fields will be updated on server.
+
+> ### Notice
+> You cannot change the array of installations in this method. Also if you want to add a new tag, don't forget to include all the existing tags in the `tags` array. Otherwise if you include only the tag you want to add, all the other tags will be removed. The same applies to `phones` and `emails` arrays.
+
+### Personalize/Depersonalize
+
+Methods `MobileMessaging.prototype.personalize(context, callback, errorCallback)` and `MobileMessaging.prototype.depersonalize(callback, errorCallback)` are intended to include this installation to the list of installations of the person or remove this installation from this list. This method is intended to be used on login/logout of the application respectively if the application provides such features.
+
+The `context` argument of the `personalize` method has next data model:
+
+```
+{
+    userIdentity: {
+        externalUserId: <string>,
+        phones: <string[]>,
+        emails: <string[]>
     },
-    function(data) {
-        alert('User data synchronized:' + JSON.stringify(data));
-    },
-    function(error) {
-        alert('Error while syncing user data: ' + error.description);
-    }
-);
+    userAttributes: <object | attributes of userModel except ones that contains in userIdentity>,
+    forceDepersonalize: <boolean | false by default>
+}
 ```
 
-### Fetch user data
-```javascript
-MobileMessaging.fetchUserData(
-    function(data) {
-        alert('User data fetched:' + JSON.stringify(data));
-    },
-    function(error) {
-        alert('Error while syncing user data: ' + error.description);
-    }
-);
-```
+The fields of `userIdentity` will be used to identify the user, so it has to include at least one field for successful identification. `userAttributes` should contain fields of user model that should be modified in the identified user
 
-### User logout
-```javascript
-MobileMessaging.logout(
-    function() {
-        alert('User logged out.');
-    },
-    function(error) {
-        alert('Error while logging out user: ' + error.description);
-    }
-);
-```
+The prerequisite for the invocation of this function is that the current user should not contain any phones, emails and externalUserId (it should be depersonalized), otherwise the result would be error. To overcome this restriction you can set `forceDepersonalize` flag to `true`.
 
-## Disabling the push registration
-Push registration on user's device is by default enabled to receive push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
-For notifications not to be displayed in the notification center you might send a silent campaign, but it you need to opt out of receiving messages call `disablePushRegistration`:
+### Managing other installations
+
+It is possible to manage other installations belonging to the current user if there are any. There are two methods intended to be used for this.
+
+`MobileMessaging.prototype.setInstallationAsPrimary(pushRegId, callback, errorCallback)` is intended to set other installation as primary. Note that only one installation can be primary so this call is going to remove the previous flag. You can obtain `pushRegId` of the installation from the list of installations in user data model.
+
+`MobileMessaging.prototype.depersonalizeInstallation(pushRegId, callback, errorCallback)` is intended to depersonalize other installation that is currently personalized with current user (remote logout).
+
+### Interacting with tags and custom attributes
+
+Custom attributes and tags, that you assign to the user can be used for future targeting. After you set the first tag, you can filter by this tag on the [people page](https://portal.infobip.com/people) on portal, you can also see this tag appear on [tag management page](https://portal.infobip.com/people/tags). The same is applied to `customAttributes`. After the first attribute is set, you can view it on [configuration](https://portal.infobip.com/people/configuration) page.
+
+For example after executing next snippet of code on client device
 
 ```javascript
-MobileMessaging.disablePushRegistration(function () {
-        console.log('Registration disabled.');
-    });
+MobileMessaging.saveUser({ tags: ["NewCustomer"] });
 ```
+
+you can view this tag on [tag management page](https://portal.infobip.com/people/tags).
 
 ## Mark messages as seen
+
 Mobile Messaging SDK has an API to mark messages as seen by user. This is usually done when user opens a particular message. Message can be obtained either via `messageReceived` event or together with geo area with `geofenceEntered` event (via geo.message).
 ```javascript
 var message = ...;
@@ -617,7 +599,7 @@ MobileMessaging.init({
 
 - `carrierInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the carrier information to the server. Default value is `false`.
 - `systemInfoSendingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be sending the system information such as OS version, device model, application version to the server. Default value is `false`.
-- `userDataPersistingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be persisting the [User Data](https://github.com/infobip/mobile-messaging-cordova-plugin#synchronizing-user-data) locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself. Default value is `false`.
+- `userDataPersistingDisabled`: A boolean variable that indicates whether the MobileMessaging SDK will be persisting the [User Data](https://github.com/infobip/mobile-messaging-cordova-plugin#managing-user) locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself. Default value is `false`.
 
 ## Delivery improvements and rich content notifications
 
@@ -685,7 +667,7 @@ Displaying of Interactive Notifications with predefined categories can be tested
 | Category.id | A.id | A.title | A.foreground | A.authenticationRequired | A.destructive | A.moRequired |
 | --- | --- | --- | --- | --- | --- | --- |
 | mm_accept_decline | mm_accept | Accept | true | true | false | true |
-|| mm_decline | Decline | false | true | true | true |
+|  | mm_decline | Decline | false | true | true | true |
 
 ### Custom categories
 
@@ -741,38 +723,70 @@ Tapping the action should trigger `actionTapped` event where you can act upon th
 
 You can send in-app messages through our [Push HTTP API](https://dev.infobip.com/docs/send-push-notifications) with `showInApp` boolean parameter that needs to be set up to `true` under `notificationOptions`.
 
-## Configuring device as a primary one
+## Migration guide from 0.x.x
 
-Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device). For this particular use-case and other similar use-cases you can use APIs provided by Mobile Messaging SDK.
+### Changed events
 
-### Setting device as primary
+| Events removed from 0.x.x | Event to use instead in 1.x.x |
+| --- | --- |
+| `logoutCompleted` | `depersonalized` |
+| `primaryChanged` | `installationUpdated` |
 
-Set primary to **true** or **false** for the current device:
+`depersonalized` event is the direct replacement for `logoutCompleted` event. No more changes are required except event renaming.
+
+`installationUpdated` is more common event that is intended to replace `primaryChanged` event. Handler of the `installationUpdated` event will receive the whole installation as an argument. So this handler
+
 ```javascript
-MobileMessaging.setPrimary(true);
+MobileMessaging.register('primaryChanged',
+    function() {
+        // primary changed on the server, request new value
+    }
+);
 ```
 
-Mobile Messaging SDK is responsible for syncing the primary setting with the server, that is the setting will be synchronized with the server eventually.
+can be replaced with the following
 
-### Getting current setting
-
-Retrieving current value of the primary setting is also possible through API:
 ```javascript
-MobileMessaging.isPrimary(
-    function(isPrimary){
-        // handle current isPrimary value
-    });
+MobileMessaging.register('installationUpdated',
+    function(installation) {
+        // here installation.isPrimaryDevice is available for utilization
+    }
+);
 ```
 
-### Synchronizing setting with server
+### Installation management changes
 
-It is possible to manually trigger synchronization of the primary setting with server with the following API:
-```javascript
-MobileMessaging.syncPrimary();
-```
-Mobile Messaging SDK will contact the server after this API is called. Note that multiple calls to API will not result in the same amount if network requests. Number of requests will be optimized and reduced to reduce battery consumption.
+Version 1.x.x introduced new installation data model that combines fields `installation.pushRegistrationId`, `installation.isPrimaryDevice`, `installation.isPushRegistrationEnabled`. These fields can be used instead of methods in 0.x.x to get/set primary status of device and `isPushRegistrationEnabled` flag to get `pushRegistrationId`.
 
-If the setting changes on a device after synchronization with the server, then [primaryChanged]() event will be produced.
+| Methods used in 0.x.x | Field of installation in 1.x.x |
+| --- | --- |
+| `enablePushRegistration`, `disablePushRegistration`, `isPushRegistrationEnabled` | `installation.isPushRegistrationEnabled` |
+| `setPrimary`, `isPrimary`, `syncPrimary` | `installation.isPrimaryDevice` |
+| `getPushRegistrationId` | `installation.getPushRegistrationId` |
+
+Instead of `enablePushRegistration`, `disablePushRegistration` and `isPushRegistrationEnabled` you can use `isPushRegistrationEnabled` flag of the installation data model. The same applies to `setPrimary`, `isPrimary` and `syncPrimary`, you can use `isPrimaryDevice` flag instead. Instead of `getPushRegistrationId` you can use `pushRegistrationId` of installation. It is available only as readonly. You cannot change this field on server.
+
+### User management changes
+
+In version 1.x.x user data model was changed in the next way:
+
+| User data in 0.x.x | User data model in 1.x.x |
+| --- | --- |
+| `msisdn: string` For example `msisdn: '385989000000'` | `phones: string[]` For example `phones: ['79210000000', '79110000000']` |
+| `email: string` For example `email: 'john.smith@infobip.com'` | `emails: string[]` For example `emails: ['one@email.com', 'two@email.com']` |
+| `gender: 'M' or 'F'` | `gender: 'Male' or 'Female'` |
+| `birthdate: Date` For example `birthdate: Date()` | `birthday: string` where string is in date format `yyyy-MM-dd`. For example `birthday: "1985-01-15"` |
+
+Also some methods were removed but new ones introduced instead:
+
+| Methods used in 0.x.x | Methods to use in 1.x.x |
+| --- | --- |
+| `syncUserData` | `saveUser`, `personalize` |
+| `fetchUserData` | `fetchUser` |
+| `logout` | `depersonalize` |
+
+> ### Notice
+> Functionality of `syncUserData` was split between `personalize` and `saveUser` to avoid potential problems with merged person and make the intent to attach to person explicit. To learn more, read about [updating user](#updating-user) and [personalizing/depersonalizing installation](#personalizedepersonalize)
 
 ## FAQ
 
@@ -818,9 +832,9 @@ Or you can set properties in `config.xml` of your application inside the plugin 
 In order to get Infobip's unique push registration identifier issued by the server you need to implement the following code:
 
 ```javascript
-MobileMessaging.getPushRegistrationId(
-    function(pushRegId) {
-        // handle logic related to push registration ID
+MobileMessaging.fetchInstallation(
+    function(installation) {
+        // Here you can get pushRegistrationId with installation.pushRegistrationId
     });
 ```
 
