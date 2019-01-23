@@ -20,19 +20,26 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.infobip.mobile.messaging.BroadcastParameter;
-import org.infobip.mobile.messaging.CustomUserDataValue;
+import org.infobip.mobile.messaging.CustomAttributeValue;
 import org.infobip.mobile.messaging.Event;
+import org.infobip.mobile.messaging.Installation;
+import org.infobip.mobile.messaging.InstallationMapper;
 import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.MobileMessagingCore;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.SuccessPending;
-import org.infobip.mobile.messaging.UserData;
+import org.infobip.mobile.messaging.User;
+import org.infobip.mobile.messaging.UserAttributes;
+import org.infobip.mobile.messaging.UserIdentity;
+import org.infobip.mobile.messaging.UserMapper;
+import org.infobip.mobile.messaging.api.appinstance.UserAtts;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
 import org.infobip.mobile.messaging.app.ActivityLifecycleMonitor;
 import org.infobip.mobile.messaging.dal.json.JSONArrayAdapter;
@@ -48,6 +55,8 @@ import org.infobip.mobile.messaging.interactive.NotificationCategory;
 import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
 import org.infobip.mobile.messaging.mobile.InternalSdkError;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
+import org.infobip.mobile.messaging.mobile.Result;
+import org.infobip.mobile.messaging.mobile.user.InstallationsActionListener;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
 import org.infobip.mobile.messaging.util.DateTimeUtil;
@@ -56,20 +65,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
+import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
 public class MobileMessagingCordova extends CordovaPlugin {
     private static final String TAG = "MobileMessagingCordova";
@@ -79,16 +86,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static final String FUNCTION_INIT = "init";
     private static final String FUNCTION_REGISTER_RECEIVER = "registerReceiver";
-    private static final String FUNCTION_SYNC_USER_DATA = "syncUserData";
-    private static final String FUNCTION_FETCH_USER_DATA = "fetchUserData";
-    private static final String FUNCTION_LOGOUT = "logout";
-    private static final String FUNCTION_ENABLE_PUSH_REGISTRATION = "enablePushRegistration";
-    private static final String FUNCTION_DISABLE_PUSH_REGISTRATION = "disablePushRegistration";
-    private static final String FUNCTION_IS_PUSH_REGISTRATION_ENABLED = "isPushRegistrationEnabled";
-    private static final String FUNCTION_GET_PUSH_REGISTRATION_ID = "getPushRegistrationId";
-    private static final String FUNCTION_IS_PRIMARY = "isPrimary";
-    private static final String FUNCTION_SET_PRIMARY = "setPrimary";
-    private static final String FUNCTION_SYNC_PRIMARY = "syncPrimary";
+    private static final String FUNCTION_SAVE_USER = "saveUser";
+    private static final String FUNCTION_FETCH_USER = "fetchUser";
+    private static final String FUNCTION_GET_USER = "getUser";
+    private static final String FUNCTION_SAVE_INSTALLATION = "saveInstallation";
+    private static final String FUNCTION_FETCH_INSTALLATION = "fetchInstallation";
+    private static final String FUNCTION_GET_INSTALLATION = "getInstallation";
+    private static final String FUNCTION_PERSONALIZE = "personalize";
+    private static final String FUNCTION_DEPERSONALIZE = "depersonalize";
+    private static final String FUNCTION_DEPERSONALIZE_INSTALLATION = "depersonalizeInstallation";
+    private static final String FUNCTION_SET_INSTALLATION_AS_PRIMARY = "setInstallationAsPrimary";
+
     private static final String FUNCTION_SHOW_DIALOG_FOR_ERROR = "showDialogForError";
     private static final String FUNCTION_MARK_MESSAGES_SEEN = "markMessagesSeen";
     private static final String FUNCTION_MESSAGESTORAGE_REGISTER = "messageStorage_register";
@@ -99,23 +107,28 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_DEF_MESSAGESTORAGE_DELETE = "defaultMessageStorage_delete";
     private static final String FUNCTION_DEF_MESSAGESTORAGE_DELETEALL = "defaultMessageStorage_deleteAll";
 
-    private static final String EVENT_MESSAGE_RECEIVED = "messageReceived";
-    private static final String EVENT_NOTIFICATION_TAPPED = "notificationTapped";
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
+    private static final String EVENT_INSTALLATION_UPDATED = "installationUpdated";
+    private static final String EVENT_USER_UPDATED = "userUpdated";
+    private static final String EVENT_PERSONALIZED = "personalized";
+    private static final String EVENT_DEPERSONALIZED = "depersonalized";
+
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
+    private static final String EVENT_NOTIFICATION_TAPPED = "notificationTapped";
     private static final String EVENT_NOTIFICATION_ACTION_TAPPED = "actionTapped";
-    private static final String EVENT_LOGOUT_COMPLETED = "logoutCompleted";
-    private static final String EVENT_PRIMARY_CHANGED = "primaryChanged";
+    private static final String EVENT_MESSAGE_RECEIVED = "messageReceived";
     private static final String EVENT_MESSAGESTORAGE_START = "messageStorage.start";
     private static final String EVENT_MESSAGESTORAGE_SAVE = "messageStorage.save";
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
-        put(Event.REGISTRATION_ACQUIRED.getKey(), EVENT_TOKEN_RECEIVED);
+        put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
         put(Event.REGISTRATION_CREATED.getKey(), EVENT_REGISTRATION_UPDATED);
-        put(Event.USER_LOGGED_OUT.getKey(), EVENT_LOGOUT_COMPLETED);
-        put(Event.PRIMARY_CHANGED.getKey(), EVENT_PRIMARY_CHANGED);
+        put(Event.INSTALLATION_UPDATED.getKey(), EVENT_INSTALLATION_UPDATED);
+        put(Event.USER_UPDATED.getKey(), EVENT_USER_UPDATED);
+        put(Event.PERSONALIZED.getKey(), EVENT_PERSONALIZED);
+        put(Event.DEPERSONALIZED.getKey(), EVENT_DEPERSONALIZED);
         put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
         put(InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey(), EVENT_NOTIFICATION_ACTION_TAPPED);
     }};
@@ -125,7 +138,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         put(Event.NOTIFICATION_TAPPED.getKey(), EVENT_NOTIFICATION_TAPPED);
     }};
 
-    private static final Map<SuccessPending, String> logoutStates = new HashMap<SuccessPending, String>() {{
+    private static final Map<SuccessPending, String> depersonalizeStates = new HashMap<SuccessPending, String>() {{
         put(SuccessPending.Pending, "pending");
         put(SuccessPending.Success, "success");
     }};
@@ -161,9 +174,25 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 return;
             }
 
+            if (Event.INSTALLATION_UPDATED.getKey().equals(intent.getAction())) {
+                if (libraryEventReceiver != null) {
+                    JSONObject updatedInstallation = InstallationJson.toJSON(Installation.createFrom(intent.getExtras()));
+                    sendCallbackEvent(event, libraryEventReceiver, updatedInstallation);
+                }
+                return;
+            }
+
+            if (Event.USER_UPDATED.getKey().equals(intent.getAction()) || Event.PERSONALIZED.getKey().equals(intent.getAction())) {
+                if (libraryEventReceiver != null) {
+                    JSONObject updatedUser = UserJson.toJSON(User.createFrom(intent.getExtras()));
+                    sendCallbackEvent(event, libraryEventReceiver, updatedUser);
+                }
+                return;
+            }
+
             String data = null;
-            if (Event.REGISTRATION_ACQUIRED.getKey().equals(intent.getAction())) {
-                data = intent.getStringExtra(BroadcastParameter.EXTRA_GCM_TOKEN);
+            if (Event.TOKEN_RECEIVED.getKey().equals(intent.getAction())) {
+                data = intent.getStringExtra(BroadcastParameter.EXTRA_CLOUD_TOKEN);
             } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
                 data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
             }
@@ -314,38 +343,38 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_REGISTER_RECEIVER.equals(action)) {
             registerReceiver(callbackContext);
             return true;
-        } else if (FUNCTION_SYNC_USER_DATA.equals(action)) {
-            syncUserData(args, callbackContext);
+        } else if (FUNCTION_SAVE_USER.equals(action)) {
+            saveUser(args, callbackContext);
             return true;
-        } else if (FUNCTION_FETCH_USER_DATA.equals(action)) {
-            fetchUserData(callbackContext);
+        } else if (FUNCTION_FETCH_USER.equals(action)) {
+            fetchUser(callbackContext);
             return true;
-        } else if (FUNCTION_LOGOUT.equals(action)) {
-            logout(callbackContext);
+        } else if (FUNCTION_GET_USER.equals(action)) {
+            getUser(callbackContext);
             return true;
-        } else if (FUNCTION_ENABLE_PUSH_REGISTRATION.equals(action)) {
-            enablePushRegistration(callbackContext);
+        } else if (FUNCTION_SAVE_INSTALLATION.equals(action)) {
+            saveInstallation(args, callbackContext);
             return true;
-        } else if (FUNCTION_DISABLE_PUSH_REGISTRATION.equals(action)) {
-            disablePushRegistration(callbackContext);
+        } else if (FUNCTION_FETCH_INSTALLATION.equals(action)) {
+            fetchInstallation(callbackContext);
             return true;
-        } else if (FUNCTION_IS_PUSH_REGISTRATION_ENABLED.equals(action)) {
-            isPushRegistrationEnabled(callbackContext);
+        } else if (FUNCTION_GET_INSTALLATION.equals(action)) {
+            getInstallation(callbackContext);
             return true;
-        } else if (FUNCTION_GET_PUSH_REGISTRATION_ID.equals(action)) {
-            getPushRegistrationId(callbackContext);
+        } else if (FUNCTION_PERSONALIZE.equals(action)) {
+            personalize(args, callbackContext);
+            return true;
+        } else if (FUNCTION_DEPERSONALIZE.equals(action)) {
+            depersonalize(callbackContext);
+            return true;
+        } else if (FUNCTION_DEPERSONALIZE_INSTALLATION.equals(action)) {
+            depersonalizeInstallation(args, callbackContext);
+            return true;
+        } else if (FUNCTION_SET_INSTALLATION_AS_PRIMARY.equals(action)) {
+            setInstallationAsPrimary(args, callbackContext);
             return true;
         } else if (FUNCTION_MARK_MESSAGES_SEEN.equals(action)) {
             markMessagesSeen(args, callbackContext);
-            return true;
-        } else if (FUNCTION_IS_PRIMARY.equals(action)) {
-            isPrimary(callbackContext);
-            return true;
-        } else if (FUNCTION_SET_PRIMARY.equals(action)) {
-            setPrimary(args, callbackContext);
-            return true;
-        } else if (FUNCTION_SYNC_PRIMARY.equals(action)) {
-            syncPrimary(callbackContext);
             return true;
         } else if (FUNCTION_SHOW_DIALOG_FOR_ERROR.equals(action)) {
             showDialogForError(args, callbackContext);
@@ -395,7 +424,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
                 .withApplicationCode(configuration.applicationCode)
-                .withGcmSenderId(configuration.android.senderId);
+                .withSenderId(configuration.android.senderId);
 
         if (configuration.privacySettings.userDataPersistingDisabled) {
             builder.withoutStoringUserData();
@@ -470,66 +499,183 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
     }
 
-    private void syncUserData(JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        final UserData userData = resolveUserData(args);
+    private void saveUser(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final User user = resolveUser(args);
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                mobileMessaging()
-                        .syncUserData(userData, new MobileMessaging.ResultListener<UserData>() {
-                            @Override
-                            public void onResult(UserData result) {
-                                JSONObject json = UserDataJson.toJSON(result);
-                                sendCallbackSuccess(callbackContext, json);
-                            }
-
-                            @Override
-                            public void onError(MobileMessagingError e) {
-                                sendCallbackError(callbackContext, e.getMessage());
-                            }
-                        });
+                mobileMessaging().saveUser(user, userResultListener(callbackContext));
             }
         });
     }
 
-    private void fetchUserData(final CallbackContext callbackContext) {
+    private void fetchUser(final CallbackContext callbackContext) {
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                mobileMessaging()
-                        .fetchUserData(new MobileMessaging.ResultListener<UserData>() {
-                            @Override
-                            public void onResult(UserData result) {
-                                JSONObject json = UserDataJson.toJSON(result);
-                                sendCallbackSuccess(callbackContext, json);
-                            }
-
-                            @Override
-                            public void onError(MobileMessagingError e) {
-                                sendCallbackError(callbackContext, e.getMessage());
-                            }
-                        });
+                mobileMessaging().fetchUser(userResultListener(callbackContext));
             }
         });
     }
 
-    private void logout(final CallbackContext callbackContext) {
+    @NonNull
+    private MobileMessaging.ResultListener<User> userResultListener(final CallbackContext callbackContext) {
+        return new MobileMessaging.ResultListener<User>() {
+            @Override
+            public void onResult(Result<User, MobileMessagingError> result) {
+                if (result.isSuccess()) {
+                    JSONObject json = UserJson.toJSON(result.getData());
+                    sendCallbackSuccess(callbackContext, json);
+                } else {
+                    sendCallbackError(callbackContext, result.getError().getMessage());
+                }
+            }
+        };
+    }
+
+    private void getUser(final CallbackContext callbackContext) {
+        User user = mobileMessaging().getUser();
+        JSONObject userJson = UserJson.toJSON(user);
+        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, userJson));
+    }
+
+    private void saveInstallation(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final Installation installation = resolveInstallation(args);
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                mobileMessaging().logout(new MobileMessaging.ResultListener<SuccessPending>() {
-                    @Override
-                    public void onResult(SuccessPending successPending) {
-                        sendCallbackSuccess(callbackContext, logoutStates.get(successPending));
-                    }
+                mobileMessaging()
+                        .saveInstallation(installation, installationResultListener(callbackContext));
+            }
+        });
+    }
 
+    private void fetchInstallation(final CallbackContext callbackContext) {
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().fetchInstallation(installationResultListener(callbackContext));
+            }
+        });
+    }
+
+    @NonNull
+    private MobileMessaging.ResultListener<Installation> installationResultListener(final CallbackContext callbackContext) {
+        return new MobileMessaging.ResultListener<Installation>() {
+            @Override
+            public void onResult(Result<Installation, MobileMessagingError> result) {
+                if (result.isSuccess()) {
+                    JSONObject json = InstallationJson.toJSON(result.getData());
+                    sendCallbackSuccess(callbackContext, json);
+                } else {
+                    sendCallbackError(callbackContext, result.getError().getMessage());
+                }
+            }
+        };
+    }
+
+    private void getInstallation(final CallbackContext callbackContext) {
+        Installation installation = mobileMessaging().getInstallation();
+        JSONObject installationJson = InstallationJson.toJSON(installation);
+        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, installationJson));
+    }
+
+    private void personalize(JSONArray args, final CallbackContext callbackContext) {
+        UserIdentity userIdentity = new UserIdentity();
+        userIdentity.setExternalUserId("tereza");
+        UserAttributes userAttributes = null;
+        boolean forceDepersonalize = true;
+
+        //TODO finish up
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().personalize(userIdentity, userAttributes, forceDepersonalize, new MobileMessaging.ResultListener<User>() {
                     @Override
-                    public void onError(MobileMessagingError e) {
-                        sendCallbackError(callbackContext, e.getMessage());
+                    public void onResult(Result<User, MobileMessagingError> result) {
+                        if (result.isSuccess()) {
+                            JSONObject json = UserJson.toJSON(result.getData());
+                            sendCallbackSuccess(callbackContext, json);
+                        } else {
+                            sendCallbackError(callbackContext, result.getError().getMessage());
+                        }
                     }
                 });
             }
         });
+    }
+
+    private void depersonalize(final CallbackContext callbackContext) {
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().depersonalize(new MobileMessaging.ResultListener<SuccessPending>() {
+                    @Override
+                    public void onResult(Result<SuccessPending, MobileMessagingError> result) {
+                        if (result.isSuccess()) {
+                            sendCallbackSuccess(callbackContext, depersonalizeStates.get(result.getData()));
+                        } else {
+                            sendCallbackError(callbackContext, result.getError().getMessage());
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void depersonalizeInstallation(JSONArray args, final CallbackContext callbackContext) {
+        String pushRegId = null;
+        try {
+            pushRegId = resolveStringParameter(args);
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Empty data!!");
+            return;
+        }
+
+        final String regId = pushRegId;
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().depersonalizeInstallation(regId, installationsResultListener(callbackContext));
+            }
+        });
+    }
+
+    private void setInstallationAsPrimary(JSONArray args, final CallbackContext callbackContext) {
+        String pushRegId = null;
+        Boolean isPrimary = null;
+        try {
+            pushRegId = resolveStringParameter(args);
+            isPrimary = resolveBooleanParameterWithIndex(args, 1);
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Empty data!!");
+            return;
+        }
+
+        final String regId = pushRegId;
+        final Boolean isPrimaryDevice = isPrimary;
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().setInstallationAsPrimary(regId, isPrimaryDevice, installationsResultListener(callbackContext));
+            }
+        });
+    }
+
+    @NonNull
+    private InstallationsActionListener installationsResultListener(final CallbackContext callbackContext) {
+        return new InstallationsActionListener() {
+            @Override
+            public void onSuccess(List<Installation> installations) {
+                JSONArray json = InstallationJson.toJSON(installations);
+                sendCallbackSuccess(callbackContext, json);
+            }
+
+            @Override
+            public void onError(MobileMessagingError e) {
+                sendCallbackError(callbackContext, e.getMessage());
+            }
+        };
     }
 
     private void markMessagesSeen(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -537,56 +683,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                mobileMessaging()
-                        .setMessagesSeen(messageIds);
+                mobileMessaging().setMessagesSeen(messageIds);
                 sendCallbackSuccess(callbackContext, args);
             }
         });
-    }
-
-    private void enablePushRegistration(CallbackContext callbackContext) {
-        mobileMessaging().enablePushRegistration();
-        sendCallbackSuccess(callbackContext);
-    }
-
-    private void disablePushRegistration(CallbackContext callbackContext) {
-        mobileMessaging().disablePushRegistration();
-        sendCallbackSuccess(callbackContext);
-    }
-
-    private void isPushRegistrationEnabled(CallbackContext callbackContext) {
-        boolean isPushRegEnabled = mobileMessaging().isPushRegistrationEnabled();
-        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPushRegEnabled));
-    }
-
-    private void getPushRegistrationId(CallbackContext callbackContext) {
-        String pushRegistrationId = mobileMessaging().getPushRegistrationId();
-        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, pushRegistrationId));
-    }
-
-    private void setPrimary(JSONArray args, CallbackContext callbackContext) throws JSONException {
-        boolean setting = resolveBooleanParameter(args);
-        mobileMessaging().setAsPrimaryDevice(setting);
-        sendCallbackSuccess(callbackContext);
-    }
-
-    private void syncPrimary(final CallbackContext callbackContext) {
-        mobileMessaging().getPrimaryDeviceSetting(new MobileMessaging.ResultListener<Boolean>() {
-            @Override
-            public void onResult(Boolean aBoolean) {
-                sendCallbackSuccess(callbackContext, aBoolean);
-            }
-
-            @Override
-            public void onError(MobileMessagingError e) {
-                sendCallbackError(callbackContext, e.getMessage());
-            }
-        });
-    }
-
-    private void isPrimary(CallbackContext callbackContext) {
-        boolean isPrimary = mobileMessaging().isPrimaryDevice();
-        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, isPrimary));
     }
 
     private void showDialogForError(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -693,12 +793,21 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     @NonNull
-    private static UserData resolveUserData(JSONArray args) throws JSONException {
+    private static User resolveUser(JSONArray args) throws JSONException {
         if (args.length() < 1 || args.getJSONObject(0) == null) {
-            throw new IllegalArgumentException("Cannot resolve user data from arguments");
+            throw new IllegalArgumentException("Cannot resolve user from arguments");
         }
 
-        return UserDataJson.fromJSON(args.getJSONObject(0));
+        return UserJson.fromJSON(args.getJSONObject(0));
+    }
+
+    @NonNull
+    private static Installation resolveInstallation(JSONArray args) throws JSONException {
+        if (args.length() < 1 || args.getJSONObject(0) == null) {
+            throw new IllegalArgumentException("Cannot resolve installation from arguments");
+        }
+
+        return InstallationJson.fromJSON(args.getJSONObject(0));
     }
 
     @NonNull
@@ -751,11 +860,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private boolean resolveBooleanParameter(JSONArray args) throws JSONException {
+        return resolveBooleanParameterWithIndex(args, 0);
+    }
+
+    private boolean resolveBooleanParameterWithIndex(JSONArray args, int index) throws JSONException {
         if (args.length() < 1) {
             throw new IllegalArgumentException("Cannot resolve boolean parameter from arguments");
         }
 
-        return args.getBoolean(0);
+        return args.getBoolean(index);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -1037,106 +1150,139 @@ public class MobileMessagingCordova extends CordovaPlugin {
     /**
      * User data mappers for JSON conversion
      */
-    private static class UserDataJson extends UserData {
+    private static class UserJson extends User {
 
-        private static final List<String> predefinedUserDataKeys = new ArrayList<String>() {{
-            for (PredefinedField field : PredefinedField.values()) {
-                add(field.getKey());
+        static JSONObject toJSON(final User user) {
+            if (user == null) {
+                return new JSONObject();
             }
-        }};
-
-        private UserDataJson(String externalUserId, Map<String, Object> predefinedData, Map<String, CustomUserDataValue> customData) {
-            super(externalUserId, predefinedData, customData);
-        }
-
-        static JSONObject toJSON(final UserData userData) {
             try {
-                JSONObject json = new JSONObject();
-                if (userData.getPredefinedUserData() != null) {
-                    for (String key : predefinedUserDataKeys) {
-                        json.putOpt(key, userData.getPredefinedUserData().get(key));
-                    }
-                }
-                if (userData.getExternalUserId() != null) {
-                    json.putOpt("externalUserId", userData.getExternalUserId());
-                }
-                if (userData.getCustomUserData() != null && !userData.getCustomUserData().isEmpty()) {
-                    JSONObject custom = new JSONObject();
-                    for (String key : userData.getCustomUserData().keySet()) {
-                        CustomUserDataValue value = userData.getCustomUserDataValue(key);
-                        switch (value.getType()) {
-                            case String:
-                                custom.putOpt(key, value.stringValue());
-                                break;
-                            case Number:
-                                custom.putOpt(key, value.numberValue());
-                                break;
-                            case Date:
-                                custom.putOpt(key, new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault()).format(value.dateValue()));
-                        }
-                    }
-                    json.putOpt("customData", custom);
-                }
-                return json;
+                JSONObject jsonObject = new JSONObject(UserMapper.toJson(user));
+                cleanupJsonMapForClient(user.getCustomAttributes(), jsonObject);
+                return jsonObject;
             } catch (JSONException e) {
-                Log.e(TAG, "Cannot convert user data to json: " + e.getMessage());
-                Log.d(TAG, Log.getStackTraceString(e));
+                e.printStackTrace();
                 return new JSONObject();
             }
         }
 
-        @NonNull
-        static UserData fromJSON(JSONObject json) {
-            String externalUserId = json.optString("externalUserId", null);
+        static User fromJSON(JSONObject json) {
+            User user = new User();
 
-            Map<String, Object> predefined = new HashMap<String, Object>();
-            for (String key : predefinedUserDataKeys) {
-                if (!json.has(key)) {
-                    continue;
+            try {
+                if (json.has(UserAtts.externalUserId)) {
+                    user.setExternalUserId(json.optString(UserAtts.externalUserId));
                 }
-
-                Object value = json.opt(key);
-                if (value instanceof String) {
-                    try {
-                        String toYMDString = DateTimeUtil.DateToYMDString(dateFromString((String) value));
-                        predefined.put(key, toYMDString);
-                    } catch (Exception ignored) {
-                        predefined.put(key, value);
-                    }
-                } else {
-                    predefined.put(key, value);
+                if (json.has(UserAtts.firstName)) {
+                    user.setFirstName(json.optString(UserAtts.firstName));
                 }
-            }
-
-            Map<String, CustomUserDataValue> custom = new HashMap<String, CustomUserDataValue>();
-            JSONObject jsonCustom = json.optJSONObject("customData");
-            Iterator<String> keys = jsonCustom != null ? jsonCustom.keys() : null;
-            while (keys != null && keys.hasNext()) {
-                String key = keys.next();
-                Object value = jsonCustom.opt(key);
-                if (value == null) {
-                    custom.put(key, null);
-                } else if (value instanceof Number) {
-                    custom.put(key, new CustomUserDataValue((Number) value));
-                } else if (value instanceof String) {
+                if (json.has(UserAtts.lastName)) {
+                    user.setLastName(json.optString(UserAtts.lastName));
+                }
+                if (json.has(UserAtts.middleName)) {
+                    user.setMiddleName(json.optString(UserAtts.middleName));
+                }
+                if (json.has(UserAtts.gender)) {
+                    user.setGender(UserMapper.genderFromBackend(json.optString(UserAtts.gender)));
+                }
+                if (json.has(UserAtts.birthday)) {
+                    Date bday = null;
                     try {
-                        custom.put(key, new CustomUserDataValue(dateFromString((String) value)));
-                    } catch (Exception ignored) {
-                        custom.put(key, new CustomUserDataValue((String) value));
+                        bday = DateTimeUtil.DateFromYMDString(json.optString(UserAtts.birthday));
+                        user.setBirthday(bday);
+                    } catch (ParseException e) {
                     }
                 }
+                if (json.has(UserAtts.phones)) {
+                    user.setPhones(jsonArrayFromJsonObjectToSet(json, UserAtts.phones));
+                }
+                if (json.has(UserAtts.emails)) {
+                    user.setEmails(jsonArrayFromJsonObjectToSet(json, UserAtts.emails));
+                }
+                if (json.has(UserAtts.tags)) {
+                    user.setTags(jsonArrayFromJsonObjectToSet(json, UserAtts.tags));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            return new UserDataJson(externalUserId, predefined, custom);
+            try {
+                if (json.has(UserAtts.customAttributes)) {
+                    Type type = new TypeToken<Map<String, Object>>() {
+                    }.getType();
+                    Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
+                    user.setCustomAttributes(UserMapper.customAttsFromBackend(customAttributes));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return user;
+        }
+    }
+
+    private static Set<String> jsonArrayFromJsonObjectToSet(JSONObject jsonObject, String arrayName) {
+        Set<String> set = new HashSet<>();
+        JSONArray jsonArray = jsonObject.optJSONArray(arrayName);
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                set.add(jsonArray.optString(i));
+            }
+        }
+        return set;
+    }
+
+    private static class InstallationJson extends Installation {
+
+        static JSONArray toJSON(final List<Installation> installations) {
+            JSONArray installationsJson = new JSONArray();
+            for (Installation installation : installations) {
+                installationsJson.put(toJSON(installation));
+            }
+            return installationsJson;
         }
 
-        private static Date dateFromString(String date) throws Exception {
+        static JSONObject toJSON(final Installation installation) {
             try {
-                return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault()).parse(date);
-            } catch (Exception ignored) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                format.setTimeZone(TimeZone.getTimeZone("UTC"));
-                return format.parse(date);
+                String json = InstallationMapper.toJson(installation);
+                JSONObject jsonObject = new JSONObject(json);
+                cleanupJsonMapForClient(installation.getCustomAttributes(), jsonObject);
+                return jsonObject;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return new JSONObject();
+            }
+        }
+
+        static Installation fromJSON(JSONObject json) {
+            Installation installation = new Installation();
+
+            try {
+                if (json.has("isPushRegistrationEnabled")) {
+                    installation.setPushRegistrationEnabled(json.optBoolean("isPushRegistrationEnabled"));
+                }
+                if (json.has("isPrimaryDevice")) {
+                    installation.setPrimaryDevice(json.optBoolean("isPrimaryDevice"));
+                }
+                if (json.has("customAttributes")) {
+                    Type type = new TypeToken<Map<String, Object>>() {
+                    }.getType();
+                    Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString("customAttributes"), type);
+                    installation.setCustomAttributes(UserMapper.customAttsFromBackend(customAttributes));
+                }
+            } catch (Exception e) {
+                //error parsing
+            }
+
+            return installation;
+        }
+    }
+
+    static void cleanupJsonMapForClient(Map<String, CustomAttributeValue> customAttributes, JSONObject jsonObject) throws JSONException {
+        jsonObject.remove("map");
+        if (jsonObject.has("customAttributes")) {
+            if (customAttributes != null) {
+                jsonObject.put("customAttributes", new JSONObject(UserMapper.customAttsToBackend(customAttributes)));
             }
         }
     }
