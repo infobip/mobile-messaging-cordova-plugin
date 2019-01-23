@@ -56,7 +56,6 @@ import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
 import org.infobip.mobile.messaging.mobile.InternalSdkError;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.infobip.mobile.messaging.mobile.Result;
-import org.infobip.mobile.messaging.mobile.user.InstallationsActionListener;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
 import org.infobip.mobile.messaging.util.DateTimeUtil;
@@ -580,17 +579,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, installationJson));
     }
 
-    private void personalize(JSONArray args, final CallbackContext callbackContext) {
-        UserIdentity userIdentity = new UserIdentity();
-        userIdentity.setExternalUserId("tereza");
-        UserAttributes userAttributes = null;
-        boolean forceDepersonalize = true;
-
-        //TODO finish up
+    private void personalize(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        PersonalizationCtx ctx = resolvePersonalizationCtx(args);
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                mobileMessaging().personalize(userIdentity, userAttributes, forceDepersonalize, new MobileMessaging.ResultListener<User>() {
+                mobileMessaging().personalize(ctx.userIdentity, ctx.userAttributes, ctx.forceDepersonalize, new MobileMessaging.ResultListener<User>() {
                     @Override
                     public void onResult(Result<User, MobileMessagingError> result) {
                         if (result.isSuccess()) {
@@ -663,17 +657,16 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     @NonNull
-    private InstallationsActionListener installationsResultListener(final CallbackContext callbackContext) {
-        return new InstallationsActionListener() {
+    private MobileMessaging.ResultListener<List<Installation>> installationsResultListener(final CallbackContext callbackContext) {
+        return new MobileMessaging.ResultListener<List<Installation>>() {
             @Override
-            public void onSuccess(List<Installation> installations) {
-                JSONArray json = InstallationJson.toJSON(installations);
-                sendCallbackSuccess(callbackContext, json);
-            }
-
-            @Override
-            public void onError(MobileMessagingError e) {
-                sendCallbackError(callbackContext, e.getMessage());
+            public void onResult(Result<List<Installation>, MobileMessagingError> result) {
+                if (result.isSuccess()) {
+                    JSONArray json = InstallationJson.toJSON(result.getData());
+                    sendCallbackSuccess(callbackContext, json);
+                } else {
+                    sendCallbackError(callbackContext, result.getError().getMessage());
+                }
             }
         };
     }
@@ -849,6 +842,19 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         return args.getString(0);
+    }
+
+    private static PersonalizationCtx resolvePersonalizationCtx(JSONArray args) throws JSONException {
+        if (args.length() < 1) {
+            throw new IllegalArgumentException("Cannot resolve personalization context from arguments");
+        }
+
+        JSONObject json = args.getJSONObject(0);
+        PersonalizationCtx ctx = new PersonalizationCtx();
+        ctx.forceDepersonalize = json.optBoolean("forceDepersonalize", false);
+        ctx.userIdentity = UserJson.userIdentityFromJson(json.getJSONObject("userIdentity"));
+        ctx.userAttributes = UserJson.userAttributesFromJson(json.optJSONObject("userAttributes"));
+        return ctx;
     }
 
     private int resolveIntParameter(JSONArray args) throws JSONException {
@@ -1219,6 +1225,79 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
             return user;
         }
+
+        static UserAttributes userAttributesFromJson(JSONObject json) {
+            if (json == null) {
+                return null;
+            }
+
+            UserAttributes userAttributes = new UserAttributes();
+
+            try {
+                if (json.has(UserAtts.firstName)) {
+                    userAttributes.setFirstName(json.optString(UserAtts.firstName));
+                }
+                if (json.has(UserAtts.lastName)) {
+                    userAttributes.setLastName(json.optString(UserAtts.lastName));
+                }
+                if (json.has(UserAtts.middleName)) {
+                    userAttributes.setMiddleName(json.optString(UserAtts.middleName));
+                }
+                if (json.has(UserAtts.gender)) {
+                    userAttributes.setGender(UserMapper.genderFromBackend(json.optString(UserAtts.gender)));
+                }
+                if (json.has(UserAtts.birthday)) {
+                    Date bday = null;
+                    try {
+                        bday = DateTimeUtil.DateFromYMDString(json.optString(UserAtts.birthday));
+                        userAttributes.setBirthday(bday);
+                    } catch (ParseException e) {
+                    }
+                }
+                if (json.has(UserAtts.tags)) {
+                    userAttributes.setTags(jsonArrayFromJsonObjectToSet(json, UserAtts.tags));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (json.has(UserAtts.customAttributes)) {
+                    Type type = new TypeToken<Map<String, Object>>() {
+                    }.getType();
+                    Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
+                    userAttributes.setCustomAttributes(UserMapper.customAttsFromBackend(customAttributes));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return userAttributes;
+        }
+
+        static UserIdentity userIdentityFromJson(JSONObject json) {
+            UserIdentity userIdentity = new UserIdentity();
+            try {
+                if (json.has(UserAtts.externalUserId)) {
+                    userIdentity.setExternalUserId(json.optString(UserAtts.externalUserId));
+                }
+                if (json.has(UserAtts.phones)) {
+                    userIdentity.setPhones(jsonArrayFromJsonObjectToSet(json, UserAtts.phones));
+                }
+                if (json.has(UserAtts.emails)) {
+                    userIdentity.setEmails(jsonArrayFromJsonObjectToSet(json, UserAtts.emails));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return userIdentity;
+        }
+    }
+
+    private static class PersonalizationCtx {
+        UserIdentity userIdentity;
+        UserAttributes userAttributes;
+        boolean forceDepersonalize;
     }
 
     private static Set<String> jsonArrayFromJsonObjectToSet(JSONObject jsonObject, String arrayName) {
