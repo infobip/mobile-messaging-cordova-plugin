@@ -327,9 +327,9 @@ The prerequisite for the invocation of this function is that the current user sh
 
 It is possible to manage other installations belonging to the current user if there are any. There are two methods intended to be used for this.
 
-`MobileMessaging.prototype.setInstallationAsPrimary(pushRegId, callback, errorCallback)` is intended to set other installation as primary. Note that only one installation can be primary so this call is going to remove the previous flag. You can obtain `pushRegId` of the installation from the list of installations in user data model.
+`MobileMessaging.prototype.setInstallationAsPrimary(pushRegistrationId, callback, errorCallback)` is intended to set other installation as primary. Note that only one installation can be primary so this call is going to remove the previous `isPrimaryDevice` flag. You can obtain `pushRegistrationId` of the installation from the list of installations in user data model.
 
-`MobileMessaging.prototype.depersonalizeInstallation(pushRegId, callback, errorCallback)` is intended to depersonalize other installation that is currently personalized with current user (remote logout).
+`MobileMessaging.prototype.depersonalizeInstallation(pushRegistrationId, callback, errorCallback)` is intended to depersonalize other installation that is currently personalized with current user (remote logout).
 
 ### Interacting with tags and custom attributes
 
