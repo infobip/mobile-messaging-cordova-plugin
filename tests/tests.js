@@ -42,7 +42,7 @@ describe('Initialization', function() {
 			'MobileMessagingCordova',
 			'registerReceiver',
 			jasmine.any(Array)
-			)
+			);
 		expect(cordova.exec).toHaveBeenCalledWith(
 			jasmine.any(Function),
 			jasmine.any(Function),

@@ -1,11 +1,14 @@
 def overrideAndroidSupportLibsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_SUPPORT_VER_OVERRIDE", "false")
 def overrideGmsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_GMS_VER_OVERRIDE", "false")
+def overrideFirebaseVersion = cdvHelpers.getConfigPreference("IB_ANDROID_FIREBASE_VER_OVERRIDE", "false")
 
 if (overrideAndroidSupportLibsVersion == "false") overrideAndroidSupportLibsVersion = ""
 if (overrideGmsVersion == "false") overrideGmsVersion = ""
+if (overrideFirebaseVersion == "false") overrideFirebaseVersion = ""
 
 if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion > "26") {
     repositories {
+        mavenLocal()
         maven {
             url 'https://maven.google.com/'
             name 'Google'
@@ -13,8 +16,20 @@ if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion
     }
 }
 
+buildscript {
+    repositories {
+        maven { url "https://maven.google.com" }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'com.android.tools.build:gradle:+'
+    }
+}
+
+
 dependencies {
-    def mmVersion = '1.17.1'
+    def mmVersion = '1.18.0-new_api_pre-SNAPSHOT'
     compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true; 
@@ -26,6 +41,9 @@ dependencies {
             exclude group: 'com.google.android.gms', module: 'play-services-gcm'
             exclude group: 'com.google.android.gms', module: 'play-services-location'
         }
+        if (!overrideFirebaseVersion.empty) {
+            exclude group: 'com.google.firebase', module: 'firebase-messaging'
+        }
     }
     if (!overrideAndroidSupportLibsVersion.empty) {
         compile "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"
@@ -35,4 +53,8 @@ dependencies {
         compile "com.google.android.gms:play-services-gcm:$overrideGmsVersion"
         compile "com.google.android.gms:play-services-location:$overrideGmsVersion"
     }
+    if (!overrideFirebaseVersion.empty) {
+        compile "com.google.firebase:firebase-messaging:$overrideFirebaseVersion"
+    }
 }
+
