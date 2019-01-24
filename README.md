@@ -76,7 +76,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 3. Configure platforms
 
     1. **iOS**: to enable Push Notifications: go to "Capabilities" tab (main target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
-    2. **Android**: add [`Firebase Sender ID`](https://dev.infobip.com/push-messaging/firebase-cloud-messaging-fcm-server-api-key-setup) for `android` platform of `config.xml` :
+    2. **Android**: add [`Firebase Sender ID`](https://dev.infobip.com/push-messaging/firebase-cloud-messaging-fcm-server-api-key-setup) via plugin variable in `config.xml` :
     ```xml
     <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
         <variable name="ANDROID_FIREBASE_SENDER_ID" value="Firebase Sender ID" />
