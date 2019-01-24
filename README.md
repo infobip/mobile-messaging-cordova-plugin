@@ -22,7 +22,7 @@ The document describes library integration steps for your Cordova project.
     + [Updating user](#updating-user)
     + [Personalize/Depersonalize](#personalizedepersonalize)
     + [Managing other installations](#managing-other-installations)
-    + [Interacting with tags and custom attributes](#interacting-with-tags-and-custom-attributes)
+    + [Tags, subscriptions and custom attributes](#tags-subscriptions-and-custom-attributes)
   * [Mark messages as seen](#mark-messages-as-seen)
   * [Geofencing](#geofencing)
     + [Android](#android)
