@@ -18,7 +18,7 @@
 	</js-module>
 	
 	<hook type="after_plugin_add" src="scripts/installDependencies.js"/>
-	<hook type="after_prepare" src="scripts/android_fix_google_buildscript_deps.js"/>
+	<!-- <hook type="after_prepare" src="scripts/android_fix_google_buildscript_deps.js"/> -->
 	<hook type="after_prepare" src="scripts/integrate_notification_extension.js"/>
 
 	<preference name="ANDROID_SUPPORT_VER_OVERRIDE" default="false" />
@@ -67,10 +67,6 @@
 	            </intent-filter>
 	        </receiver>
 		</config-file>
-
-		<config-file parent="/*" target="res/values/strings.xml">
-            <string name="google_app_id">$ANDROID_FIREBASE_SENDER_ID</string>
-        </config-file>
 		
 		<framework src="libs/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
 		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
