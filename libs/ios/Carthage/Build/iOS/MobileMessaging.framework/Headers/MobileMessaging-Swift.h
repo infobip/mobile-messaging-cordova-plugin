@@ -211,6 +211,11 @@ SWIFT_CLASS("_TtC15MobileMessaging17AnimatedImageView")
 
 
 
+
+SWIFT_PROTOCOL("_TtP15MobileMessaging13AttributeType_")
+@protocol AttributeType
+@end
+
 enum MessageDirection : int16_t;
 enum MessageDeliveryMethod : int16_t;
 
@@ -224,7 +229,6 @@ SWIFT_CLASS("_TtC15MobileMessaging11BaseMessage")
 @property (nonatomic, copy) NSString * _Nullable text;
 @property (nonatomic, readonly) BOOL isChatMessage;
 - (nonnull instancetype)initWithMessageId:(NSString * _Nonnull)messageId direction:(enum MessageDirection)direction originalPayload:(NSDictionary<NSString *, id> * _Nonnull)originalPayload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod OBJC_DESIGNATED_INITIALIZER;
-@property (nonatomic, readonly) NSUInteger hash;
 - (BOOL)isEqualWithObject:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
@@ -405,31 +409,6 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging27CustomPayloadSupportedTypes_")
 @protocol CustomPayloadSupportedTypes
 @end
 
-@class NSDate;
-@class NSNumber;
-@class NSNull;
-
-SWIFT_CLASS("_TtC15MobileMessaging19CustomUserDataValue")
-@interface CustomUserDataValue : NSObject
-@property (nonatomic, readonly, copy) NSString * _Nullable string;
-@property (nonatomic, readonly, strong) NSDate * _Nullable date;
-@property (nonatomic, readonly, strong) NSNumber * _Nullable number;
-- (nonnull instancetype)initWithOptionalLiteral:(id _Nullable)optionalLiteral;
-- (nonnull instancetype)initWithNilLiteral;
-- (nonnull instancetype)initWithIntegerLiteral:(NSInteger)value;
-- (nonnull instancetype)initWithFloatLiteral:(double)value;
-- (nonnull instancetype)initWithStringLiteral:(NSString * _Nonnull)value;
-- (nonnull instancetype)initWithExtendedGraphemeClusterLiteral:(NSString * _Nonnull)value;
-- (nonnull instancetype)initWithUnicodeScalarLiteral:(NSString * _Nonnull)value;
-- (nonnull instancetype)initWithDate:(NSDate * _Nonnull)date OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithInteger:(NSInteger)integer OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithDouble:(double)double_ OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithString:(NSString * _Nonnull)string OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithNull:(NSNull * _Nonnull)null OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
-
 @class DeliveryTimeInterval;
 
 SWIFT_CLASS("_TtC15MobileMessaging12DeliveryTime")
@@ -447,6 +426,11 @@ SWIFT_CLASS("_TtC15MobileMessaging20DeliveryTimeInterval")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
+
+typedef SWIFT_ENUM(NSInteger, Gender, closed) {
+  GenderFemale = 0,
+  GenderMale = 1,
+};
 
 @class MMRegion;
 
@@ -478,14 +462,21 @@ typedef SWIFT_ENUM(NSInteger, GeofencingCapabilityStatus, closed) {
   GeofencingCapabilityStatusNotAvailable = 3,
 };
 
+
+SWIFT_CLASS("_TtC15MobileMessaging22MobileMessagingService")
+@interface MobileMessagingService : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
 @class NSError;
 @class CLLocation;
 enum LocationServiceUsage : NSInteger;
 @class MMGeoMessage;
 
 SWIFT_CLASS("_TtC15MobileMessaging17GeofencingService")
-@interface GeofencingService : NSObject
-- (void)syncWithServer:(void (^ _Nullable)(NSError * _Nullable))completion;
+@interface GeofencingService : MobileMessagingService
+- (void)syncWithServer:(void (^ _Nonnull)(NSError * _Nullable))completion;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isGeofencingServiceEnabled;)
 + (BOOL)isGeofencingServiceEnabled SWIFT_WARN_UNUSED_RESULT;
 /// Returns current user location with accuracy <code>kCLLocationAccuracyHundredMeters</code>.
@@ -506,7 +497,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) enum GeofencingCapab
 /// Once the user granted the permissions, the service succesfully lauches.
 /// \param completion A block that will be triggered once the startup process is finished. Contains a Bool flag parameter, that indicates whether the startup succeded.
 ///
-- (void)start:(void (^ _Nullable)(BOOL))completion;
+- (void)start:(void (^ _Nonnull)(BOOL))completion;
 /// Stops the Geofencing Service
 - (void)stop:(void (^ _Nullable)(BOOL))completion;
 /// Accepts a geo message, which contains regions that should be monitored.
@@ -520,8 +511,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) enum GeofencingCapab
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <GeoEventHandling> _Nullable geoEventsHandler;)
 + (id <GeoEventHandling> _Nullable)geoEventsHandler SWIFT_WARN_UNUSED_RESULT;
 + (void)setGeoEventsHandler:(id <GeoEventHandling> _Nullable)value;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
 
@@ -579,6 +568,21 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging22OperationQueueDelegate_")
 - (void)operationQueue:(OperationQueue * _Nonnull)operationQueue operationDidFinish:(NSOperation * _Nonnull)operation withErrors:(NSArray<NSError *> * _Nonnull)errors;
 @end
 
+typedef SWIFT_ENUM(int16_t, InAppNotificationStyle, closed) {
+  InAppNotificationStyleModal = 0,
+  InAppNotificationStyleBanner = 1,
+};
+
+
+SWIFT_CLASS("_TtC15MobileMessaging12Installation")
+@interface Installation : NSObject <NSCoding>
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
 
 SWIFT_CLASS("_TtC15MobileMessaging31InteractiveMessageAlertSettings")
 @interface InteractiveMessageAlertSettings : NSObject
@@ -621,11 +625,6 @@ typedef SWIFT_ENUM(NSInteger, LocationServiceUsage, closed) {
   LocationServiceUsageWhenInUse = 0,
 /// This app is authorized to start location services at any time.
   LocationServiceUsageAlways = 1,
-};
-
-typedef SWIFT_ENUM(NSInteger, LogoutStatus, closed) {
-  LogoutStatusUndefined = 0,
-  LogoutStatusPending = 1,
 };
 
 typedef SWIFT_ENUM(int8_t, MMDay, closed) {
@@ -786,6 +785,7 @@ SWIFT_CLASS("_TtC15MobileMessaging9MTMessage")
 @property (nonatomic, readonly) BOOL isSilent;
 @property (nonatomic, readonly, copy) NSString * _Nullable contentUrl;
 @property (nonatomic, readonly) BOOL showInApp;
+@property (nonatomic, readonly) enum InAppNotificationStyle inAppStyle;
 @property (nonatomic, readonly) BOOL isGeoSignalingMessage;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable silentData;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable internalData;
@@ -808,29 +808,6 @@ SWIFT_CLASS("_TtC15MobileMessaging12MMGeoMessage")
 - (nullable instancetype)initWithPayload:(NSDictionary * _Nonnull)payload deliveryMethod:(enum MessageDeliveryMethod)deliveryMethod seenDate:(NSDate * _Nullable)seenDate deliveryReportDate:(NSDate * _Nullable)deliveryReportDate seenStatus:(enum MMSeenStatus)seenStatus isDeliveryReportSent:(BOOL)isDeliveryReportSent OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly) BOOL isNowAppropriateTimeForEntryNotification;
 @property (nonatomic, readonly) BOOL isNowAppropriateTimeForExitNotification;
-@end
-
-
-SWIFT_CLASS("_TtC15MobileMessaging14MMInstallation")
-@interface MMInstallation : NSObject
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-/// A read-only opaque identifier assigned by APNs to a specific app on a specific device. Each app instance receives its unique token when it registers with APNs and must share this token with its provider.
-@property (nonatomic, readonly, copy) NSString * _Nullable deviceToken;
-/// Explicitly tries to sync the entire installation (registration data, system data, user data) with the server.
-- (void)syncInstallationWithServerWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
-/// Explicitly tries to sync the system data with the server.
-- (void)syncSystemDataWithServerWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
-/// Syncs current primary device setting with the server
-/// Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device).
-/// If the value was changed on device, it trumps the server value, otherwise the servers value win.
-/// \param completion called after the setting is finished sync with the server
-///
-- (void)syncPrimarySettingWithServer:(void (^ _Nullable)(BOOL, NSError * _Nullable))completion;
-/// The number currently set as the badge of the app icon in Springboard.
-/// Set to 0 (zero) to hide the badge number. The default value of this property is 0.
-@property (nonatomic) NSInteger badgeNumber;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
 typedef SWIFT_ENUM(NSUInteger, MMLogLevel, closed) {
@@ -913,119 +890,6 @@ typedef SWIFT_ENUM(int16_t, MMSeenStatus, closed) {
   MMSeenStatusNotSeen = 0,
   MMSeenStatusSeenNotSent = 1,
   MMSeenStatusSeenSent = 2,
-};
-
-
-SWIFT_CLASS("_TtC15MobileMessaging6MMUser")
-@interface MMUser : NSObject
-@property (nonatomic, readonly) BOOL isChanged;
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-/// Unique push registration identifier issued by server. This identifier matches one to one with APNS cloud token of the particular application installation. This identifier is only available after <code>MMNotificationRegistrationUpdated</code> event.
-@property (nonatomic, readonly, copy) NSString * _Nullable pushRegistrationId;
-/// Returns user’s custom data. Arbitrary attributes that are related to a particular user. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSDictionary<NSString *, CustomUserDataValue *> * _Nullable customData;
-/// Saves the user’s custom data on the server asynchronously and executes the given callback block.
-/// \param customData The dictionary representing data you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithCustomData:(NSDictionary<NSString *, CustomUserDataValue *> * _Nonnull)customData completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// Returns the custom data value associated with a given key.
-/// \param key The key for which to return the corresponding value.
-///
-- (CustomUserDataValue * _Nullable)customDataForKey:(NSString * _Nonnull)key SWIFT_WARN_UNUSED_RESULT;
-/// Sets the custom data value for a given key. To save data, call <code>save(completion:)</code> method of <code>MMUser</code> object.
-/// \param key The key for <code>object</code>.
-///
-/// \param object The object for <code>key</code>. Pass <code>object</code> as either <code>nil</code> or <code>NSNull()</code> in order to remove the key-value pair on the server.
-///
-- (void)setWithCustomData:(CustomUserDataValue * _Nullable)object forKey:(NSString * _Nonnull)key;
-/// Sets the custom data value for a given key, immediately sends changes to the server asynchronously and executes the given callback block.
-/// \param key The key for <code>object</code>.
-///
-/// \param object The object for <code>key</code>. Pass <code>object</code> as either <code>nil</code> or <code>NSNull()</code> in order to remove the key-value pair on the server.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithCustomData:(CustomUserDataValue * _Nullable)object forKey:(NSString * _Nonnull)key completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// The user’s id you can provide in order to link your own unique user identifier with Mobile Messaging user id, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable externalId;
-/// Saves the External User Id on the server asynchronously and executes the given callback block.
-/// \param externalId The id you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithExternalId:(NSString * _Nullable)externalId completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// The user’s email address. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable email;
-/// Saves the email on the server asynchronously and executes the given callback block.
-/// \param email The email you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithEmail:(NSString * _Nullable)email completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// A user’s MSISDN. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable msisdn;
-/// Saves the MSISDN on the server asynchronously and executes the given callback block.
-/// \param msisdn The MSISDN you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithMsisdn:(NSString * _Nullable)msisdn completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// The user’s first name. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable firstName;
-/// Saves the first name on the server asynchronously and executes the given callback block.
-/// \param firstName The first name you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithFirstName:(NSString * _Nullable)firstName completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// A user’s last name. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable lastName;
-/// Saves the last name on the server asynchronously and executes the given callback block.
-/// \param lastName The last name you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithLastName:(NSString * _Nullable)lastName completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// A user’s middle name. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSString * _Nullable middleName;
-/// Saves the middle name on the server asynchronously and executes the given callback block.
-/// \param middleName The middle name you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithMiddleName:(NSString * _Nullable)middleName completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// A user’s birthdate. You can provide additional users information to the server, so that you will be able to send personalised targeted messages to exact user and other nice features.
-@property (nonatomic, copy) NSDate * _Nullable birthdate;
-/// Saves the birthdate on the server asynchronously and executes the given callback block.
-/// \param birthdate The birthdate you want to link with the current user.
-///
-/// \param completion The block to execute after the server responded.
-///
-- (void)saveWithBirthdate:(NSDate * _Nullable)birthdate completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// Explicitly tries to save all user data on the server.
-/// \param completion The block to execute after the server responded.
-///
-- (void)save:(void (^ _Nullable)(NSError * _Nullable))completion;
-/// Tries to fetch the user data from the server.
-/// \param completion The block to execute after the server responded.
-///
-- (void)fetchFromServerWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
-
-
-
-typedef SWIFT_ENUM(NSInteger, MMUserPredefinedDataKeys, closed) {
-  MMUserPredefinedDataKeysMSISDN = 0,
-  MMUserPredefinedDataKeysFirstName = 1,
-  MMUserPredefinedDataKeysLastName = 2,
-  MMUserPredefinedDataKeysMiddleName = 3,
-  MMUserPredefinedDataKeysGender = 4,
-  MMUserPredefinedDataKeysBirthdate = 5,
-  MMUserPredefinedDataKeysEmail = 6,
 };
 
 
@@ -1121,9 +985,7 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging22MessageStorageDelegate_")
 
 
 SWIFT_CLASS("_TtC15MobileMessaging10MobileChat")
-@interface MobileChat : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@interface MobileChat : MobileMessagingService
 @end
 
 
@@ -1136,7 +998,7 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging18MobileChatProtocol_")
 ///
 /// \param completion a block to be executed when sending is finished
 ///
-- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text completion:(void (^ _Nonnull)(ChatMessage * _Nullable, NSError * _Nullable))completion;
 /// Sends message with a specified text to a particular chat id.
 /// \param chatId id of destination chat
 ///
@@ -1146,13 +1008,13 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging18MobileChatProtocol_")
 ///
 /// \param completion a block to be executed when sending is finished. Contains a sent message object and an error
 ///
-- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text customPayload:(NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nonnull)customPayload completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text customPayload:(NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nonnull)customPayload completion:(void (^ _Nonnull)(ChatMessage * _Nullable, NSError * _Nullable))completion;
 /// Sets user info for curren chat user.
 /// \param info object representing chat user data
 ///
 /// \param completion a block to be executed when operation is finished. Contains an error object
 ///
-- (void)setUserInfoWithInfo:(ChatParticipant * _Nonnull)info completion:(void (^ _Nullable)(NSError * _Nullable))completion;
+- (void)setUserInfoWithInfo:(ChatParticipant * _Nonnull)info completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
 /// Returns chat users profile cached locally.
 ///
 /// returns:
@@ -1167,32 +1029,36 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging18MobileChatProtocol_")
 ///     completion: a block to be executed when operation is finished. Contains the fetched chat user data
 ///   </li>
 /// </ul>
-- (void)fetchUserInfoWithCompletion:(void (^ _Nullable)(ChatParticipant * _Nullable))completion;
+- (void)fetchUserInfoWithCompletion:(void (^ _Nonnull)(ChatParticipant * _Nullable))completion;
 /// Returns the default chat messsage storage if used. For more information see <code>MMDefaultMessageStorage</code> class description.
 @property (nonatomic, readonly, strong) MMDefaultChatStorage * _Nullable defaultChatStorage;
 /// Marks all messages as seen
-- (void)markAllMessagesSeenWithCompletion:(void (^ _Nullable)(void))completion;
+- (void)markAllMessagesSeenWithCompletion:(void (^ _Nonnull)(void))completion;
 /// Marks specific messages as seen
-- (void)markMessagesSeenWithMessageIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nullable)(void))completion;
+- (void)markMessagesSeenWithMessageIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(void))completion;
 /// A wrapper around NSFetchedResultsController set up to manage the results of a Core Data fetch request applied to chat message storage. Only available for default chat message storage (returns <code>nil</code> otherwise).
 @property (nonatomic, readonly, strong) ChatMessagesController * _Nullable chatMessagesController;
 @end
 
 
 @interface MobileChat (SWIFT_EXTENSION(MobileMessaging)) <MobileChatProtocol>
-- (void)markMessagesSeenWithMessageIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nullable)(void))completion;
-- (void)markAllMessagesSeenWithCompletion:(void (^ _Nullable)(void))completion;
+- (void)markMessagesSeenWithMessageIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(void))completion;
+- (void)markAllMessagesSeenWithCompletion:(void (^ _Nonnull)(void))completion;
 @property (nonatomic, readonly, strong) ChatMessagesController * _Nullable chatMessagesController;
 @property (nonatomic, readonly, strong) MMDefaultChatStorage * _Nullable defaultChatStorage;
-- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
-- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text customPayload:(NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nonnull)customPayload completion:(void (^ _Nullable)(ChatMessage * _Nullable, NSError * _Nullable))completion;
-- (void)setUserInfoWithInfo:(ChatParticipant * _Nonnull)info completion:(void (^ _Nullable)(NSError * _Nullable))completion;
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text completion:(void (^ _Nonnull)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+- (void)sendWithChatId:(NSString * _Nullable)chatId text:(NSString * _Nonnull)text customPayload:(NSDictionary<NSString *, id <CustomPayloadSupportedTypes>> * _Nonnull)customPayload completion:(void (^ _Nonnull)(ChatMessage * _Nullable, NSError * _Nullable))completion;
+- (void)setUserInfoWithInfo:(ChatParticipant * _Nonnull)info completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
 - (ChatParticipant * _Nullable)getUserInfo SWIFT_WARN_UNUSED_RESULT;
-- (void)fetchUserInfoWithCompletion:(void (^ _Nullable)(ChatParticipant * _Nullable))completion;
+- (void)fetchUserInfoWithCompletion:(void (^ _Nonnull)(ChatParticipant * _Nullable))completion;
 @end
 
 
 @class UILocalNotification;
+@class User;
+enum SuccessPending : NSInteger;
+@class UserIdentity;
+@class UserAttributes;
 @class UserAgent;
 @class NSURLSessionConfiguration;
 @class PrivacySettings;
@@ -1243,36 +1109,11 @@ SWIFT_CLASS("_TtC15MobileMessaging15MobileMessaging")
 - (void)start:(void (^ _Nullable)(void))completion;
 /// Syncronizes all available subservices with the server.
 + (void)sync;
-/// Sets primary device setting
-/// Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device).
-/// \param isPrimary defines whether to set current device as primery one or not
-///
-/// \param completion called after the setting is finished sync with the server
-///
-+ (void)setAsPrimaryDevice:(BOOL)isPrimary completion:(void (^ _Nullable)(NSError * _Nullable))completion;
-/// Synchronizes primary device setting with server
-+ (void)syncPrimaryDeviceWithCompletion:(void (^ _Nonnull)(BOOL, NSError * _Nullable))completion;
-/// Primary device setting
-/// Single user profile on Infobip Portal can have one or more mobile devices with the application installed. You might want to mark one of such devices as a primary device and send push messages only to this device (i.e. receive bank authorization codes only on one device).
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL isPrimaryDevice;)
-+ (BOOL)isPrimaryDevice SWIFT_WARN_UNUSED_RESULT;
-+ (void)setIsPrimaryDevice:(BOOL)newValue;
-/// Current push registration status.
-/// The status defines whether the device is allowed to be receiving push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
-/// MobileMessaging SDK has the push registration enabled by default.
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isPushRegistrationEnabled;)
-+ (BOOL)isPushRegistrationEnabled SWIFT_WARN_UNUSED_RESULT;
 /// Cleans up all internal persisted data.
 /// Use this method in order to completely drop any data persisted by the SDK (i.e. internal SDK data, optional user data, optional messages metadata).
 /// \param clearKeychain defines whether the internalId in keychain will be cleaned. True by default.
 ///
 + (void)cleanUpAndStop:(BOOL)clearKeychain;
-/// Enables the push registration so the device can receive push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
-/// MobileMessaging SDK has the push registration enabled by default.
-+ (void)enablePushRegistrationWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
-/// Disables the push registration so the device no longer receives any push notifications (regular push messages/geofencing campaign messages/messages fetched from the server).
-/// MobileMessaging SDK has the push registration enabled by default.
-+ (void)disablePushRegistrationWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
 /// Stops all the currently running Mobile Messaging services.
 /// attention:
 /// This function doesn’t disable push notifications, they are still being received by the OS.
@@ -1310,15 +1151,67 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MMLogging> _Nullab
 /// \param completion A block to be executed when local notification handling is finished
 ///
 + (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification completion:(void (^ _Nullable)(void))completion SWIFT_AVAILABILITY(ios,deprecated=10.0,message="If your apps minimum deployment target is iOS 10 or later, you don't need to forward your App Delegate calls to this method. Handling local notifications on iOS since 10.0 is done by Mobile Messaging SDK by implementing UNUserNotificationCenterDelegate under the hood.");
-/// Maintains attributes related to the current application installation such as APNs device token, badge number, etc.
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMInstallation * _Nullable currentInstallation;)
-+ (MMInstallation * _Nullable)currentInstallation SWIFT_WARN_UNUSED_RESULT;
 /// Returns the default message storage if used. For more information see <code>MMDefaultMessageStorage</code> class description.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMDefaultMessageStorage * _Nullable defaultMessageStorage;)
 + (MMDefaultMessageStorage * _Nullable)defaultMessageStorage SWIFT_WARN_UNUSED_RESULT;
-/// Maintains attributes related to the current user such as unique ID for the registered user, email, MSISDN, custom data, external id.
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMUser * _Nullable currentUser;)
-+ (MMUser * _Nullable)currentUser SWIFT_WARN_UNUSED_RESULT;
+/// Maintains attributes related to the current application installation such as APNs device token, badge number, etc.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) Installation * _Nullable installation;)
++ (Installation * _Nullable)installation SWIFT_WARN_UNUSED_RESULT;
+/// Maintains attributes related to the current user such as unique ID for the registered user, emails, phones, custom data, external id.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) User * _Nullable user;)
++ (User * _Nullable)user SWIFT_WARN_UNUSED_RESULT;
+/// Tries to fetch the user data from the server.
+/// \param completion The block to execute after the server responded.
+///
++ (void)fetchUserWithCompletion:(void (^ _Nonnull)(User * _Nullable, NSError * _Nullable))completion;
+/// Tries to fetch the installation data from the server.
+/// \param completion The block to execute after the server responded.
+///
++ (void)fetchInstallationWithCompletion:(void (^ _Nonnull)(Installation * _Nullable, NSError * _Nullable))completion;
+/// Explicitly tries to save all user data on the server.
+/// \param user User data to save on server
+///
+/// \param completion The block to execute after the server responded.
+///
++ (void)saveUser:(User * _Nonnull)user completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// Explicitly tries to sync the entire installation (registration data, system data, user data) with the server.
+/// \param installation Installation data to save on server
+///
+/// \param completion The block to execute after the server responded.
+///
++ (void)saveInstallation:(Installation * _Nonnull)installation completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
++ (void)persistUser:(User * _Nonnull)user;
++ (void)persistInstallation:(Installation * _Nonnull)installation;
+/// Erases currently stored UserData associated with push registration along with messages in SDK storage.
+/// User’s data synced over MobileMessaging is by default associated with created push registration. Depersonalizing an installation means that a push registration and device specific data will remain, but user’s data (such as first name, custom data, …) will be wiped out.
+/// If you depersonalize an installation, there is a way to personalize it again by providing new user data (either by UserDataService data setters or <code>InstallationDataService.personalize()</code> method) in order to target this user specifically.
+/// remark:
+/// There is another version of depersonalize method that doesn’t require a <code>completion</code> parameter which means the SDK will handle any unsuccessful depersonalize request by itself. See the method documentation for more details. Use this method in following cases:
+/// <ul>
+///   <li>
+///     you want to handle possible failures of server depersonalize request, retry and maintain pending depersonalize state by yourself
+///   </li>
+///   <li>
+///     you’re syncing user data to our server;
+///   </li>
+///   <li>
+///     your application has logout functionality;
+///   </li>
+///   <li>
+///     you don’t want new personalized installation to be targeted by other user’s data, e.g. first name;
+///   </li>
+///   <li>
+///     you want depersonalized installation to still receive broadcast notifications (otherwise, you need to disable push registration via Installation.isPushRegistrationEnabled).
+///   </li>
+/// </ul>
+/// \param completion The block to execute after the depersonalize procedure finished
+///
++ (void)depersonalizeWithCompletion:(void (^ _Nonnull)(enum SuccessPending, NSError * _Nullable))completion;
++ (void)personalizeWithUserIdentity:(UserIdentity * _Nonnull)identity userAttributes:(UserAttributes * _Nullable)userAttributes completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
++ (void)personalizeWithForceDepersonalize:(BOOL)forceDepersonalize userIdentity:(UserIdentity * _Nonnull)userIdentity userAttributes:(UserAttributes * _Nullable)userAttributes completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
++ (void)setInstallationWithPushRegistrationId:(NSString * _Nonnull)pushRegId asPrimary:(BOOL)primary completion:(void (^ _Nonnull)(NSArray<Installation *> * _Nullable, NSError * _Nullable))completion;
++ (void)depersonalizeInstallationWithPushRegistrationId:(NSString * _Nonnull)pushRegId completion:(void (^ _Nonnull)(NSArray<Installation *> * _Nullable, NSError * _Nullable))completion;
++ (void)fetchInstallationsWithCompletion:(void (^ _Nonnull)(NSArray<Installation *> * _Nullable, NSError * _Nullable))completion;
 /// This method sets seen status for messages and sends a corresponding request to the server. If something went wrong, the library will repeat the request until it reaches the server.
 /// \param messageIds Array of identifiers of messages that need to be marked as seen.
 ///
@@ -1328,7 +1221,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMUser * _Nu
 ///
 /// \param completion The block to execute after the server responded, passes an array of <code>MOMessage</code> messages, that cont
 ///
-+ (void)sendMessages:(NSArray<MOMessage *> * _Nonnull)messages completion:(void (^ _Nullable)(NSArray<MOMessage *> * _Nullable, NSError * _Nullable))completion;
++ (void)sendMessages:(NSArray<MOMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(NSArray<MOMessage *> * _Nullable, NSError * _Nullable))completion;
 /// An auxillary component provides the convinient access to the user agent data.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) UserAgent * _Nonnull userAgent;)
 + (UserAgent * _Nonnull)userAgent SWIFT_WARN_UNUSED_RESULT;
@@ -1345,54 +1238,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) NSURLSessionConfigurat
 /// The <code>PrivacySettings</code> class incapsulates privacy settings that affect the SDK behaviour and business logic.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySettings * _Nonnull privacySettings;)
 + (PrivacySettings * _Nonnull)privacySettings SWIFT_WARN_UNUSED_RESULT;
-/// Erases currently stored UserData associated with push registration along with messages in SDK storage.
-/// User’s data synced over MobileMessaging is by default associated with created push registration. Logging out user means that push registration and device specific data will remain, but user’s data (such as first name, custom data, …) will be wiped out.
-/// If you log out user, there is no mechanism to log him in again since he’s already subscribed for broadcast notifications from your app, but you might want to sync new user data to target this user specifically.
-/// remark:
-/// There is another version of logout method that doesn’t require a <code>completion</code> parameter which means the SDK will handle any unsuccessful logout request by itself. See the method documentation for more details. Use this method in following cases:
-/// <ul>
-///   <li>
-///     you want to handle possible failures of server logout request and retry and maintain pending logout state by yourself
-///   </li>
-///   <li>
-///     you’re syncing user data to our server;
-///   </li>
-///   <li>
-///     your application has logout option;
-///   </li>
-///   <li>
-///     you don’t want new logged in user to be targeted by other user’s data, e.g. first name;
-///   </li>
-///   <li>
-///     you want logged out user to still receive broadcast notifications (if not, you need to call MobileMessaging.disablePushRegistration()).
-///   </li>
-/// </ul>
-/// \param completion The block to execute after the logout procedure finished
-///
-+ (void)logoutWithCompletion:(void (^ _Nonnull)(enum LogoutStatus, NSError * _Nullable))completion;
-/// Erases currently stored UserData associated with push registration along with messages in SDK storage.
-/// User’s data synced over MobileMessaging is by default associated with created push registration. Logging out user means that push registration and device specific data will remain, but user’s data (such as first name, custom data, …) will be wiped out.
-/// If you log out user, there is no mechanism to log him in again since he’s already subscribed for broadcast notifications from your app, but you might want to sync new user data to target this user specifically.
-/// remark:
-/// There is another version of logout method that doesn’t require a <code>completion</code> parameter which means the SDK will handle any unsuccessful logout request by itself. See the method documentation for more details. Use this method in following cases:
-/// <ul>
-///   <li>
-///     you don’t need to hanlde networking failures and maintain pending logout state by yourself
-///   </li>
-///   <li>
-///     you’re syncing user data to our server;
-///   </li>
-///   <li>
-///     your application has logout option;
-///   </li>
-///   <li>
-///     you don’t want new logged in user to be targeted by other user’s data, e.g. first name;
-///   </li>
-///   <li>
-///     you want logged out user to still receive broadcast notifications (if not, you need to call MobileMessaging.disablePushRegistration()).
-///   </li>
-/// </ul>
-+ (void)logout;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -1457,6 +1302,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GeofencingSe
 @end
 
 
+
+
 @interface MobileMessaging (SWIFT_EXTENSION(MobileMessaging))
 /// This service manages Mobile Chat, provides API for sending and receiving mobile chat messages.
 /// You access the Mobile Chat service APIs through this property.
@@ -1508,12 +1355,8 @@ SWIFT_CLASS("_TtC15MobileMessaging43MobileMessagingNotificationServiceExtension"
 @end
 
 
-SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
-@protocol UserDataFoundationTypes
-@end
 
-
-@interface NSDate (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSDate (SWIFT_EXTENSION(MobileMessaging)) <AttributeType>
 @end
 
 
@@ -1535,19 +1378,19 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 
 
 
+@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <AttributeType>
+@end
+
+
 @interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
 @end
 
 
-@interface NSNull (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <AttributeType>
 @end
 
 
 @interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <CustomPayloadSupportedTypes>
-@end
-
-
-@interface NSNumber (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
 @end
 
 
@@ -1559,7 +1402,7 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging23UserDataFoundationTypes_")
 @end
 
 
-@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <UserDataFoundationTypes>
+@interface NSString (SWIFT_EXTENSION(MobileMessaging)) <AttributeType>
 @end
 
 @class NotificationActionOptions;
@@ -1666,8 +1509,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) Notification
 
 
 
-
-
 /// <code>OperationQueue</code> is an <code>NSOperationQueue</code> subclass that implements a large
 /// number of “extra features” related to the <code>Operation</code> class:
 /// <ul>
@@ -1760,6 +1601,12 @@ SWIFT_CLASS("_TtC15MobileMessaging5Query")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+typedef SWIFT_ENUM(NSInteger, SuccessPending, closed) {
+  SuccessPendingUndefined = 0,
+  SuccessPendingPending = 1,
+  SuccessPendingSuccess = 2,
+};
+
 
 /// Allows text input from the user
 SWIFT_CLASS("_TtC15MobileMessaging27TextInputNotificationAction") SWIFT_AVAILABILITY(ios,introduced=9.0)
@@ -1818,11 +1665,24 @@ SWIFT_CLASS("_TtC15MobileMessaging27TextInputNotificationAction") SWIFT_AVAILABI
 
 
 
+SWIFT_CLASS("_TtC15MobileMessaging14UserAttributes")
+@interface UserAttributes : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC15MobileMessaging4User")
+@interface User : UserAttributes
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+@end
+
+
 SWIFT_CLASS("_TtC15MobileMessaging9UserAgent")
 @interface UserAgent : NSObject
 @property (nonatomic, copy) NSString * _Nullable cordovaPluginVersion;
+@property (nonatomic, readonly, copy) NSString * _Nonnull language;
 @property (nonatomic, readonly) BOOL notificationsEnabled;
-@property (nonatomic, readonly, copy) NSString * _Nonnull currentUserAgentString;
 @property (nonatomic, readonly, copy) NSString * _Nonnull osVersion;
 @property (nonatomic, readonly, copy) NSString * _Nonnull osName;
 @property (nonatomic, readonly, copy) NSString * _Nonnull libraryVersion;
@@ -1831,21 +1691,27 @@ SWIFT_CLASS("_TtC15MobileMessaging9UserAgent")
 @property (nonatomic, readonly, copy) NSString * _Nonnull hostingAppName;
 @property (nonatomic, readonly, copy) NSString * _Nonnull deviceManufacturer;
 @property (nonatomic, readonly, copy) NSString * _Nonnull deviceName;
+@property (nonatomic, readonly, copy) NSString * _Nonnull deviceModelName;
 @property (nonatomic, readonly) BOOL deviceSecure;
+@property (nonatomic, readonly, copy) NSString * _Nullable deviceTimeZone;
+@property (nonatomic, readonly, copy) NSString * _Nonnull pushServiceType;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
 
 
-typedef SWIFT_ENUM(NSInteger, UserGender, closed) {
-  UserGenderFemale = 0,
-  UserGenderMale = 1,
-};
+
+SWIFT_CLASS("_TtC15MobileMessaging12UserIdentity")
+@interface UserIdentity : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
 
 
 SWIFT_CLASS("_TtC15MobileMessaging20UserNotificationType")
 @interface UserNotificationType : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)initWithOptions:(NSArray<UserNotificationType *> * _Nonnull)options OBJC_DESIGNATED_INITIALIZER;
 - (BOOL)containsWithOptions:(UserNotificationType * _Nonnull)options SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) UserNotificationType * _Nonnull none;)
