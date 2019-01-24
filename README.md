@@ -85,6 +85,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         </config-file>
     </platform>
    ```
+   **Note that this is subject to change and better configuration option would be provided in future versions of the plugin**
 
 4. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
