@@ -117,9 +117,6 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 ```javascript
 MobileMessaging.init({
         applicationCode: <String; Infobip Application Code from the Customer Portal obtained in step 2>,
-        android: {
-            senderId: <String; Cloud Messaging Sender ID obtained in step 1>
-        },
         ios: {
             notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>
         },
@@ -386,9 +383,6 @@ Mobile Messaging SDK supports a built-in message storage. `defaultMessageStorage
 MobileMessaging.init({
         applicationCode: '<your_application_code>',
         defaultMessageStorage: true,
-        android: {
-            senderId: '<sender id>'
-        },
         ios: {
             notificationTypes: ['alert', 'badge', 'sound']
         }
@@ -486,9 +480,6 @@ Then an external message storage has to be supplied with [initialization configu
 MobileMessaging.init({
         applicationCode: '<your_application_code>',
         messageStorage: myStorageImplementation,
-        android: {
-            senderId: '<sender id>'
-        },
         ios: {
             notificationTypes: ['alert', 'badge', 'sound']
         }
@@ -560,9 +551,6 @@ And Mobile Messaging can be initialized to use this storage as below:
 MobileMessaging.init({
         applicationCode: '<your_application_code>',
         messageStorage: localStorage,
-        android: {
-            senderId: '<sender id>'
-        },
         ios: {
             notificationTypes: ['alert', 'badge', 'sound']
         }
