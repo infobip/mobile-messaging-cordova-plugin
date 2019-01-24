@@ -39,9 +39,6 @@ var MobileMessagingCordova = function () {
  *		geofencingEnabled: true,
  *		messageStorage: '<Message storage save callback>',
  *		defaultMessageStorage: true,
- *		android: {
- *			senderId: 'sender_id'
- *		},
  *		ios: {
  *			notificationTypes: ['alert', 'sound', 'badge'],
  *			forceCleanup: <Boolean>,

@@ -77,14 +77,11 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
     1. **iOS**: to enable Push Notifications: go to "Capabilities" tab (main target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
     2. **Android**: add [`Firebase Sender ID`](https://dev.infobip.com/push-messaging/firebase-cloud-messaging-fcm-server-api-key-setup) for `android` platform of `config.xml` :
-   ```xml
-   <platform name="android">
-        ...
-        <config-file parent="/*" target="res/values/strings.xml">
-            <string name="google_app_id">Firebase sender ID</string>
-        </config-file>
-    </platform>
-   ```
+    ```xml
+    <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
+        <variable name="ANDROID_FIREBASE_SENDER_ID" value="Firebase Sender ID" />
+    </plugin>
+    ```
    **Note that this is subject to change and better configuration option would be provided in future versions of the plugin**
 
 4. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
