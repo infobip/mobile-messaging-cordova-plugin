@@ -76,11 +76,14 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 3. Configure platforms
 
     1. **iOS**: to enable Push Notifications: go to "Capabilities" tab (main target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
-    2. **Android**: add <a href="https://dev.infobip.com/push-messaging/firebase-cloud-messaging-fcm-server-api-key-setup" target="_blank">`Firebase Sender ID`</a> via `ANDROID_FIREBASE_SENDER_ID` variable to plugin section of `config.xml` :
+    2. **Android**: add `Firebase Sender ID` for `android` platform of `config.xml` :
    ```xml
-   <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
-       <variable name="ANDROID_FIREBASE_SENDER_ID" value="1041118334583" />
-   </plugin>
+   <platform name="android">
+        ...
+        <config-file parent="/*" target="res/values/strings.xml">
+            <string name="google_app_id">Firebase sender ID</string>
+        </config-file>
+    </platform>
    ```
 
 4. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
@@ -114,6 +117,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 ```javascript
 MobileMessaging.init({
         applicationCode: <String; Infobip Application Code from the Customer Portal obtained in step 2>,
+        android: {
+            senderId: <String; Cloud Messaging Sender ID obtained in step 1>
+        },
         ios: {
             notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>
         },
@@ -380,6 +386,9 @@ Mobile Messaging SDK supports a built-in message storage. `defaultMessageStorage
 MobileMessaging.init({
         applicationCode: '<your_application_code>',
         defaultMessageStorage: true,
+        android: {
+            senderId: '<sender id>'
+        },
         ios: {
             notificationTypes: ['alert', 'badge', 'sound']
         }
@@ -477,6 +486,9 @@ Then an external message storage has to be supplied with [initialization configu
 MobileMessaging.init({
         applicationCode: '<your_application_code>',
         messageStorage: myStorageImplementation,
+        android: {
+            senderId: '<sender id>'
+        },
         ios: {
             notificationTypes: ['alert', 'badge', 'sound']
         }
@@ -548,6 +560,9 @@ And Mobile Messaging can be initialized to use this storage as below:
 MobileMessaging.init({
         applicationCode: '<your_application_code>',
         messageStorage: localStorage,
+        android: {
+            senderId: '<sender id>'
+        },
         ios: {
             notificationTypes: ['alert', 'badge', 'sound']
         }
