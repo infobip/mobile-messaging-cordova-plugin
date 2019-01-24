@@ -1299,7 +1299,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private static Set<String> jsonArrayFromJsonObjectToSet(JSONObject jsonObject, String arrayName) {
-        Set<String> set = new HashSet<>();
+        Set<String> set = new HashSet<String>();
         JSONArray jsonArray = jsonObject.optJSONArray(arrayName);
         if (jsonArray != null) {
             for (int i = 0; i < jsonArray.length(); i++) {
