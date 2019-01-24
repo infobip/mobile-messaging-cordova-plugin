@@ -18,7 +18,7 @@
 	</js-module>
 	
 	<hook type="after_plugin_add" src="scripts/installDependencies.js"/>
-	<hook type="after_prepare" src="scripts/configure_android_compile.js"/>
+	<hook type="after_prepare" src="scripts/android_fix_google_buildscript_deps.js"/>
 	<hook type="after_prepare" src="scripts/integrate_notification_extension.js"/>
 
 	<preference name="ANDROID_SUPPORT_VER_OVERRIDE" default="false" />

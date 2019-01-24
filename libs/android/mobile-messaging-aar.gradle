@@ -27,9 +27,8 @@ buildscript {
     }
 }
 
-
 dependencies {
-    def mmVersion = '1.18.0-new_api_pre-SNAPSHOT'
+    def mmVersion = '2.0.0.27'
     compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true; 
