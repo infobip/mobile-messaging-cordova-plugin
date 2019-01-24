@@ -638,9 +638,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private void setInstallationAsPrimary(JSONArray args, final CallbackContext callbackContext) {
         String pushRegId = null;
         Boolean isPrimary = null;
+
         try {
-            pushRegId = resolveStringParameter(args);
-            isPrimary = resolveBooleanParameterWithIndex(args, 1);
+            JSONObject json = args.getJSONObject(0);
+            pushRegId = json.optString("pushRegistrationId");
+            isPrimary = json.optBoolean("isPrimaryDevice");
         } catch (Exception e) {
             sendCallbackError(callbackContext, "Empty data!!");
             return;
@@ -866,15 +868,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private boolean resolveBooleanParameter(JSONArray args) throws JSONException {
-        return resolveBooleanParameterWithIndex(args, 0);
-    }
-
-    private boolean resolveBooleanParameterWithIndex(JSONArray args, int index) throws JSONException {
         if (args.length() < 1) {
             throw new IllegalArgumentException("Cannot resolve boolean parameter from arguments");
         }
 
-        return args.getBoolean(index);
+        return args.getBoolean(0);
     }
 
     @SuppressWarnings("UnusedReturnValue")
