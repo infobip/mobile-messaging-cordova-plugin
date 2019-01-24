@@ -99,7 +99,6 @@ fileprivate class MobileMessagingEventsManager {
 		"geofenceEntered": MMNotificationGeographicalRegionDidEnter,
 		"notificationTapped": MMNotificationMessageTapped,
 		"actionTapped": MMNotificationActionTapped,
-		"primaryChanged": MMNotificationPrimaryDeviceSettingUpdated,
 		"depersonalized": MMNotificationDepersonalized,
 		"personalized": MMNotificationPersonalized,
 		"installationUpdated": MMNotificationInstallationSynced,
@@ -192,10 +191,6 @@ fileprivate class MobileMessagingEventsManager {
 					parameters.append(textInput)
 				}
 				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: parameters)
-			}
-		case MMNotificationPrimaryDeviceSettingUpdated: //TODO: align parameters passed with events
-			if let isPrimary = notification.userInfo?[MMNotificationKeyIsPrimaryDevice] as? Bool {
-				notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, isPrimary])
 			}
 		case MMNotificationDepersonalized:
 			notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
