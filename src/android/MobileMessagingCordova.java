@@ -574,7 +574,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private void personalize(JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        PersonalizationCtx ctx = resolvePersonalizationCtx(args);
+        final PersonalizationCtx ctx = resolvePersonalizationCtx(args);
         runInBackground(new Runnable() {
             @Override
             public void run() {
