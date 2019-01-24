@@ -229,7 +229,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         String applicationCode;
-        AndroidConfiguration android;
         boolean geofencingEnabled;
         Map<String, ?> messageStorage;
         boolean defaultMessageStorage;
