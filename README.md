@@ -710,6 +710,9 @@ You can send in-app messages through our [Push HTTP API](https://dev.infobip.com
 
 ## Migration guide from 0.x.x
 
+### Changed configuration
+Now for android you will have to set `Firebase Sender ID` via `config.xml` and not via javascript configuration. Refer to [Quick start guide](#quick-start-guide) for more details.
+
 ### Changed events
 
 | Events removed from 0.x.x | Event to use instead in 1.x.x |
