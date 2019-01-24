@@ -322,17 +322,26 @@ It is possible to manage other installations belonging to the current user if th
 
 `MobileMessaging.prototype.depersonalizeInstallation(pushRegistrationId, callback, errorCallback)` is intended to depersonalize other installation that is currently personalized with current user (remote logout).
 
-### Interacting with tags and custom attributes
+### Tags, subscriptions and custom attributes
 
-Custom attributes and tags, that you assign to the user can be used for future targeting. After you set the first tag, you can filter by this tag on the [people page](https://portal.infobip.com/people) on portal, you can also see this tag appear on [tag management page](https://portal.infobip.com/people/tags). The same is applied to `customAttributes`. After the first attribute is set, you can view it on [configuration](https://portal.infobip.com/people/configuration) page.
+Custom attributes and tags, that you assign to the user can be used as subscriptions for future targeting. After you set the first tag, you can filter by this tag on the [people page](https://portal.infobip.com/people) on portal, you can also see this tag appear on [tag management page](https://portal.infobip.com/people/tags). You can use `customAttributes` as subscriptions too. They can be configured for both user and installation. After you set custom attributes you can see them in person profiles at [people page](https://portal.infobip.com/people)
 
-For example after executing next snippet of code on client device
-
+Tags can be set using this snippet:
 ```javascript
 MobileMessaging.saveUser({ tags: ["NewCustomer"] });
 ```
 
-you can view this tag on [tag management page](https://portal.infobip.com/people/tags).
+Custom user attribute can be added like this:
+```javascript
+MobileMessaging.saveUser({ customAttributes: { NewCustomer: true } });
+```
+
+Custom attribute for installation can be set like:
+```javascript
+MobileMessaging.saveInstallation({ customAttributes: { NewCustomerDevice: true } });
+```
+
+Any of the mentioned solutions can be used as subscriptions for future communication targeting. You can also view all the applied tags, set custom attributes for user or installation on person profile on [people page](https://portal.infobip.com/people)
 
 ## Mark messages as seen
 
