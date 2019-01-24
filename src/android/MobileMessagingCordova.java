@@ -208,10 +208,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static class Configuration {
 
-        class AndroidConfiguration {
-            String senderId;
-        }
-
         class PrivacySettings {
             boolean userDataPersistingDisabled;
             boolean carrierInfoSendingDisabled;
@@ -422,8 +418,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         PreferenceHelper.saveString(cordova.getActivity().getApplication(), MobileMessagingProperty.SYSTEM_DATA_VERSION_POSTFIX, "cordova " + configuration.cordovaPluginVersion);
 
         MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
-                .withApplicationCode(configuration.applicationCode)
-                .withSenderId(configuration.android.senderId);
+                .withApplicationCode(configuration.applicationCode);
 
         if (configuration.privacySettings.userDataPersistingDisabled) {
             builder.withoutStoringUserData();
@@ -638,11 +633,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private void setInstallationAsPrimary(JSONArray args, final CallbackContext callbackContext) {
         String pushRegId = null;
         Boolean isPrimary = null;
-
         try {
-            JSONObject json = args.getJSONObject(0);
-            pushRegId = json.optString("pushRegistrationId");
-            isPrimary = json.optBoolean("isPrimaryDevice");
+            pushRegId = resolveStringParameter(args);
+            isPrimary = resolveBooleanParameterWithIndex(args, 1);
         } catch (Exception e) {
             sendCallbackError(callbackContext, "Empty data!!");
             return;
@@ -780,7 +773,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         Configuration config = new JsonSerializer().deserialize(args.getJSONObject(0).toString(), Configuration.class);
-        if (config == null || config.applicationCode == null || config.android.senderId == null) {
+        if (config == null || config.applicationCode == null) {
             throw new IllegalArgumentException("Configuration is invalid");
         }
 
@@ -868,11 +861,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private boolean resolveBooleanParameter(JSONArray args) throws JSONException {
+        return resolveBooleanParameterWithIndex(args, 0);
+    }
+
+    private boolean resolveBooleanParameterWithIndex(JSONArray args, int index) throws JSONException {
         if (args.length() < 1) {
             throw new IllegalArgumentException("Cannot resolve boolean parameter from arguments");
         }
 
-        return args.getBoolean(0);
+        return args.getBoolean(index);
     }
 
     @SuppressWarnings("UnusedReturnValue")
