@@ -66,27 +66,16 @@ For Android project:
 ## Quick start guide
 This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
 
-1. Prepare your push credentials for Android and iOS:
-    1. Get Sender ID and Server API Key for Android ([Cloud Messaging credentials](https://github.com/infobip/mobile-messaging-sdk-android/wiki/Firebase-Cloud-Messaging)).
-    2. Prepare your App ID, provisioning profiles and APNs certificate ([APNs Certificate Guide](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/APNs-Certificate-guide)).
+1. Make sure to [setup application at Infobip portal](https://dev.infobip.com/push-messaging), if you haven't already.
 
-2. Prepare your Infobip account (https://portal.infobip.com/push/) to get your Application Code:
-    1. [Create new application](https://dev.infobip.com/v1/docs/push-introduction-create-app) on Infobip Push portal.
-    2. Navigate to your Application where you will get the Application Code.
-    3. Mark the "Available on Android" checkbox and insert previously obtained GCM Server Key (Server API Key):
-    <center><img src="https://github.com/infobip/mobile-messaging-sdk-android/wiki/images/GCMAppSetup.png" alt="CUP Settings"/></center>
-
-    4. Mark the "Available on iOS" checkbox. Click on "UPLOAD" under "APNS Certificates" and locate the .p12 file you exported from your Keychain earlier (Mark the "Sandbox" checkbox if you are using sandbox environment for the application):
-    <center><img src="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Images/CUPCertificate.png?raw=true" alt="CUP Settings"/></center>
-
-3. Add MobileMessaging plugin to your project, run in terminal:
+2. Add MobileMessaging plugin to your project, run in terminal:
     ```bash
     $ cordova plugin add com-infobip-plugins-mobilemessaging --save
     ```
 
-4. Configure your iOS project, to enable Push Notifications: go to "Capabilities" tab (main target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
+3. Configure your iOS project, to enable Push Notifications: go to "Capabilities" tab (main target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
 
-5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
+4. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
     ```javascript
     onDeviceReady: function() {
