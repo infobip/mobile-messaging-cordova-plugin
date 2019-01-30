@@ -756,12 +756,12 @@ SWIFT_CLASS("_TtC15MobileMessaging15MMDefaultLogger")
 @property (nonatomic) enum MMLogLevel logLevel;
 @property (nonatomic, copy) NSString * _Nullable logFilePath;
 - (void)sendLogsFromViewController:(UIViewController * _Nonnull)vc;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (void)logDebugWithMessage:(NSString * _Nonnull)message;
 - (void)logInfoWithMessage:(NSString * _Nonnull)message;
 - (void)logErrorWithMessage:(NSString * _Nonnull)message;
 - (void)logWarnWithMessage:(NSString * _Nonnull)message;
 - (void)logVerboseWithMessage:(NSString * _Nonnull)message;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
