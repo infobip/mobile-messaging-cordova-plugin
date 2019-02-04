@@ -282,7 +282,7 @@ fileprivate class MobileMessagingEventsManager {
 			if let error = error {
 				self.commandDelegate?.send(error: error, for: command)
 			} else {
-				self.commandDelegate?.send(dict: MobileMessaging.user?.dictionaryRepresentation ?? [:], for: command)
+				self.commandDelegate?.send(dict: MobileMessaging.getUser()?.dictionaryRepresentation ?? [:], for: command)
 			}
 		})
 	}
@@ -292,13 +292,13 @@ fileprivate class MobileMessagingEventsManager {
 			if let error = error {
 				self.commandDelegate?.send(error: error, for: command)
 			} else {
-				self.commandDelegate?.send(dict: MobileMessaging.user?.dictionaryRepresentation ?? [:], for: command)
+				self.commandDelegate?.send(dict: MobileMessaging.getUser()?.dictionaryRepresentation ?? [:], for: command)
 			}
 		})
 	}
 
 	func getUser(_ command: CDVInvokedUrlCommand) {
-		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.user?.dictionaryRepresentation)
+		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.getUser()?.dictionaryRepresentation)
 		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 
@@ -313,7 +313,7 @@ fileprivate class MobileMessagingEventsManager {
 			if let error = error {
 				self.commandDelegate?.send(error: error, for: command)
 			} else {
-				self.commandDelegate?.send(dict: MobileMessaging.installation?.dictionaryRepresentation ?? [:], for: command)
+				self.commandDelegate?.send(dict: MobileMessaging.getInstallation()?.dictionaryRepresentation ?? [:], for: command)
 			}
 		})
 	}
@@ -329,7 +329,7 @@ fileprivate class MobileMessagingEventsManager {
 	}
 
 	func getInstallation(_ command: CDVInvokedUrlCommand) {
-		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.installation?.dictionaryRepresentation)
+		let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.getInstallation()?.dictionaryRepresentation)
 		self.commandDelegate?.send(successResult, callbackId: command.callbackId)
 	}
 
@@ -365,7 +365,7 @@ fileprivate class MobileMessagingEventsManager {
 			if let error = error {
 				self.commandDelegate?.send(error: error, for: command)
 			} else {
-				self.commandDelegate?.send(dict: MobileMessaging.user?.dictionaryRepresentation ?? [:], for: command)
+				self.commandDelegate?.send(dict: MobileMessaging.getUser()?.dictionaryRepresentation ?? [:], for: command)
 			}
 		}
 	}
