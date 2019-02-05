@@ -575,10 +575,11 @@ typedef SWIFT_ENUM(int16_t, InAppNotificationStyle, closed) {
 
 
 SWIFT_CLASS("_TtC15MobileMessaging12Installation")
-@interface Installation : NSObject <NSCoding>
+@interface Installation : NSObject <NSCoding, NSCopying>
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -1155,11 +1156,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MMLogging> _Nullab
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMDefaultMessageStorage * _Nullable defaultMessageStorage;)
 + (MMDefaultMessageStorage * _Nullable)defaultMessageStorage SWIFT_WARN_UNUSED_RESULT;
 /// Maintains attributes related to the current application installation such as APNs device token, badge number, etc.
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) Installation * _Nullable installation;)
-+ (Installation * _Nullable)installation SWIFT_WARN_UNUSED_RESULT;
++ (Installation * _Nullable)getInstallation SWIFT_WARN_UNUSED_RESULT;
 /// Maintains attributes related to the current user such as unique ID for the registered user, emails, phones, custom data, external id.
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) User * _Nullable user;)
-+ (User * _Nullable)user SWIFT_WARN_UNUSED_RESULT;
++ (User * _Nullable)getUser SWIFT_WARN_UNUSED_RESULT;
 /// Tries to fetch the user data from the server.
 /// \param completion The block to execute after the server responded.
 ///
@@ -1673,8 +1672,11 @@ SWIFT_CLASS("_TtC15MobileMessaging14UserAttributes")
 
 
 SWIFT_CLASS("_TtC15MobileMessaging4User")
-@interface User : UserAttributes
+@interface User : UserAttributes <NSCoding, NSCopying>
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
