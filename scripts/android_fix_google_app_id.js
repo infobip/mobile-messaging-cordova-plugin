@@ -6,6 +6,10 @@
 var fs = require('fs');
 var path = require('path');
 var readline = require("readline");
+var resourcesRelativeRoots = [
+    'platforms/android/app/src/main/res/values', // cordova 8
+    'platforms/android/res/values'               // cordova 7
+];
 
 module.exports = function(ctx) {
 
@@ -17,19 +21,31 @@ module.exports = function(ctx) {
     var appConfig = new ConfigParser('config.xml');
     var variables = appConfig.getPlugin(ctx.opts.plugin.id).variables;
 
+    var providedStringsXmlPath = ctx.opts.options.ANDROID_STRINGS_XML_RELATIVE_PATH || variables.ANDROID_STRINGS_XML_RELATIVE_PATH;
     var googleAppId = ctx.opts.options.ANDROID_FIREBASE_SENDER_ID || variables.ANDROID_FIREBASE_SENDER_ID;
     if (!googleAppId) {
     	console.log("ERROR: 'ANDROID_FIREBASE_SENDER_ID' not defined");
+        console.log('-----------------------------');
     	return;
     }
 
 	console.log('-----------------------------');
     console.log('Cordova Firebase Sender ID fix');
 
+    var resourcesRelativeRoot = providedStringsXmlPath || resourcesRelativeRoots.find(function(relativePath) {
+        return fs.existsSync(path.join(ctx.opts.projectRoot, relativePath));
+    });
+
+    if (!resourcesRelativeRoot) {
+        console.log('ERROR: cannot find `strings.xml` for android platform, firebase integration might be broken. Please supply path to `strings.xml` relative to your project root via `ANDROID_STRINGS_XML_RELATIVE_PATH` plugin parameter.');
+        console.log('-----------------------------');
+        return;
+    }
+
     var Q = ctx.requireCordovaModule('q');
     var deferred = Q.defer();
 
-    var resourcesRoot = path.join(ctx.opts.projectRoot, 'platforms/android/app/src/main/res/values');
+    var resourcesRoot = path.join(ctx.opts.projectRoot, resourcesRelativeRoot);
     var strings = path.join(resourcesRoot, 'strings.xml');
     console.log(strings);
     fs.readFile(strings, 'utf8', function (err,data) {
