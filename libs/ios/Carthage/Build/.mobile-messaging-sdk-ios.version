@@ -8,15 +8,15 @@
   "tvOS" : [
 
   ],
-  "commitish" : "5.1.2",
+  "commitish" : "5.1.3",
   "iOS" : [
     {
       "name" : "MobileMessaging",
-      "hash" : "873d8d9d203b48b1746e611040f77701e07114d462c9b36c11ff3d2df00feca3"
+      "hash" : "ce9995f7c1abe2194848748e090a47bec5ac5176267672aef5d8c2f3809db7dd"
     },
     {
       "name" : "MobileMessaging",
-      "hash" : "873d8d9d203b48b1746e611040f77701e07114d462c9b36c11ff3d2df00feca3"
+      "hash" : "ce9995f7c1abe2194848748e090a47bec5ac5176267672aef5d8c2f3809db7dd"
     }
   ]
 }
