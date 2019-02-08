@@ -654,6 +654,7 @@ SWIFT_PROTOCOL("_TtP15MobileMessaging21MessageStorageFinders_")
 - (void)countAllMessagesWithCompletion:(void (^ _Nonnull)(NSInteger))completion;
 - (void)findAllMessagesWithCompletion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
 - (void)findAllMessageIdsWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)findNonSeenMessageIdsWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
 - (void)findMessagesWithIds:(NSArray<NSString *> * _Nonnull)messageIds completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
 - (void)findMessagesWithQuery:(Query * _Nonnull)query completion:(void (^ _Nonnull)(NSArray<BaseMessage *> * _Nullable))completion;
 @end
@@ -713,6 +714,7 @@ SWIFT_CLASS("_TtC15MobileMessaging23MMDefaultMessageStorage")
 - (void)start;
 - (void)stop;
 - (void)findAllMessageIdsWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
+- (void)findNonSeenMessageIdsWithCompletion:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull))completion;
 - (void)insertWithOutgoing:(NSArray<BaseMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
 - (void)insertWithIncoming:(NSArray<BaseMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(void))completion;
 - (BaseMessage * _Nullable)findMessageWithId:(NSString * _Nonnull)messageId SWIFT_WARN_UNUSED_RESULT;
@@ -786,7 +788,6 @@ SWIFT_CLASS("_TtC15MobileMessaging9MTMessage")
 @property (nonatomic, readonly) BOOL isSilent;
 @property (nonatomic, readonly, copy) NSString * _Nullable contentUrl;
 @property (nonatomic, readonly) BOOL showInApp;
-@property (nonatomic, readonly) enum InAppNotificationStyle inAppStyle;
 @property (nonatomic, readonly) BOOL isGeoSignalingMessage;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable silentData;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable internalData;
@@ -1103,15 +1104,15 @@ SWIFT_CLASS("_TtC15MobileMessaging15MobileMessaging")
 /// remark:
 /// Don’t forget to register for Push Notifications explicitly by calling <code>MobileMessaging.registerForRemoteNotifications()</code>.
 - (MobileMessaging * _Nonnull)withoutRegisteringForRemoteNotifications SWIFT_WARN_UNUSED_RESULT;
-/// Starts a new Mobile Messaging session.
+/// Synchronously starts a new Mobile Messaging session.
 /// This method should be called form AppDelegate’s <code>application(_:didFinishLaunchingWithOptions:)</code> callback.
 /// remark:
 /// For now, Mobile Messaging SDK doesn’t support Badge. You should handle the badge counter by yourself.
 - (void)start:(void (^ _Nullable)(void))completion;
 /// Syncronizes all available subservices with the server.
 + (void)sync;
-/// Cleans up all internal persisted data.
-/// Use this method in order to completely drop any data persisted by the SDK (i.e. internal SDK data, optional user data, optional messages metadata).
+/// Synchronously cleans up all persisted data.
+/// Use this method to completely drop any data persisted by the SDK (i.e. internal SDK data, optional user data, optional messages metadata).
 /// \param clearKeychain defines whether the internalId in keychain will be cleaned. True by default.
 ///
 + (void)cleanUpAndStop:(BOOL)clearKeychain;
@@ -1149,41 +1150,65 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) id <MMLogging> _Nullab
 /// This method is called when a running app receives a local notification. The method should be called from AppDelegate’s <code>application(_:didReceiveLocalNotification:)</code> or <code>application(_:didReceive:)</code> callback.
 /// \param notification A local notification that encapsulates details about the notification, potentially including custom data.
 ///
-/// \param completion A block to be executed when local notification handling is finished
+/// \param completion A block to be executed when local notification handling is finished.
 ///
 + (void)didReceiveLocalNotification:(UILocalNotification * _Nonnull)notification completion:(void (^ _Nullable)(void))completion SWIFT_AVAILABILITY(ios,deprecated=10.0,message="If your apps minimum deployment target is iOS 10 or later, you don't need to forward your App Delegate calls to this method. Handling local notifications on iOS since 10.0 is done by Mobile Messaging SDK by implementing UNUserNotificationCenterDelegate under the hood.");
 /// Returns the default message storage if used. For more information see <code>MMDefaultMessageStorage</code> class description.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMDefaultMessageStorage * _Nullable defaultMessageStorage;)
 + (MMDefaultMessageStorage * _Nullable)defaultMessageStorage SWIFT_WARN_UNUSED_RESULT;
-/// Maintains attributes related to the current application installation such as APNs device token, badge number, etc.
+/// Synchronously retrieves current installation data such as APNs device token, badge number, etc.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
 + (Installation * _Nullable)getInstallation SWIFT_WARN_UNUSED_RESULT;
-/// Maintains attributes related to the current user such as unique ID for the registered user, emails, phones, custom data, external id.
+/// Synchronously retrieves current user data such as unique push registration id for the registered user, emails, phones, custom data, external user id, etc.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
 + (User * _Nullable)getUser SWIFT_WARN_UNUSED_RESULT;
-/// Tries to fetch the user data from the server.
+/// Asynchronously fetches the user data from the server.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/User-profile">User profile</a>
 /// \param completion The block to execute after the server responded.
+///
+/// \param user Fetched user. Contains actual data if not error happened.
+///
+/// \param error Optional error.
 ///
 + (void)fetchUserWithCompletion:(void (^ _Nonnull)(User * _Nullable, NSError * _Nullable))completion;
-/// Tries to fetch the installation data from the server.
+/// Asynchronously fetches the installation data from the server.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
 /// \param completion The block to execute after the server responded.
+///
+/// \param installation Fetched installation. Contains actual data if not error happened.
+///
+/// \param error Optional error.
 ///
 + (void)fetchInstallationWithCompletion:(void (^ _Nonnull)(Installation * _Nullable, NSError * _Nullable))completion;
-/// Explicitly tries to save all user data on the server.
-/// \param user User data to save on server
+/// Asynchronously saves changed user data on the server.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/User-profile">User profile</a>
+/// \param user User data to save on server.
 ///
 /// \param completion The block to execute after the server responded.
+///
+/// \param error Optional error.
 ///
 + (void)saveUser:(User * _Nonnull)user completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
-/// Explicitly tries to sync the entire installation (registration data, system data, user data) with the server.
-/// \param installation Installation data to save on server
+/// Asynchronously saves changed installation (registration data, custom installation attributes abd system data) on the server.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param installation Installation data to save on server.
 ///
 /// \param completion The block to execute after the server responded.
 ///
+/// \param error Optional error.
+///
 + (void)saveInstallation:(Installation * _Nonnull)installation completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// Synchronously persists user data to the disk. Pivacy settings are applied according to <code>MobileMessaging.privacySettings</code> settings.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param user User data to persist.
+///
 + (void)persistUser:(User * _Nonnull)user;
+/// Synchronously persists installation data to the disk. Pivacy settings are applied according to <code>MobileMessaging.privacySettings</code> settings.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
 + (void)persistInstallation:(Installation * _Nonnull)installation;
-/// Erases currently stored UserData associated with push registration along with messages in SDK storage.
+/// Asynchronously ereases currently persisted user data associated with push registration along with messages in SDK storage.
 /// User’s data synced over MobileMessaging is by default associated with created push registration. Depersonalizing an installation means that a push registration and device specific data will remain, but user’s data (such as first name, custom data, …) will be wiped out.
-/// If you depersonalize an installation, there is a way to personalize it again by providing new user data (either by UserDataService data setters or <code>InstallationDataService.personalize()</code> method) in order to target this user specifically.
+/// If you depersonalize an installation from person, there is a way to personalize it again by providing new user data (either by UserDataService data setters or <code>InstallationDataService.personalize()</code> method) in order to target this user specifically.
 /// remark:
 /// There is another version of depersonalize method that doesn’t require a <code>completion</code> parameter which means the SDK will handle any unsuccessful depersonalize request by itself. See the method documentation for more details. Use this method in following cases:
 /// <ul>
@@ -1200,25 +1225,93 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) MMDefaultMes
 ///     you don’t want new personalized installation to be targeted by other user’s data, e.g. first name;
 ///   </li>
 ///   <li>
-///     you want depersonalized installation to still receive broadcast notifications (otherwise, you need to disable push registration via Installation.isPushRegistrationEnabled).
+///     you want depersonalized installation from user and still be able to receive broadcast notifications (otherwise, you need to disable push registration via Installation.isPushRegistrationEnabled).
 ///   </li>
 /// </ul>
-/// \param completion The block to execute after the depersonalize procedure finished
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param completion The block to execute after the server responded.
+///
+/// \param status Current depersonalization status.
+///
+/// \param error Optional error.
 ///
 + (void)depersonalizeWithCompletion:(void (^ _Nonnull)(enum SuccessPending, NSError * _Nullable))completion;
+/// Asynchronously personalizes current installation with a person on the server.
+/// Each user can have Phone numbers, Emails and External user ID. These fields are unique identifiers of a user profile on Infobip platform and provide capability to personalize any app installation with a user profile. The platform provides data grouping functions based on these parameters. For example, if two installations of a particular app will try to save the same Phone number, then both of them will be collected under a single user. Phone number, Email and External user ID are also widely used when targeting users with messages across different channels via Infobip platform.
+/// remark:
+/// This API doesn’t depersonalize current installation from any person that it may be currently personalized with. In order to depersonalize current possible person from current installation and personalize it with another person at once, use another API:
+/// \code
+/// MobileMessaging.personalize(forceDepersonalize: true, userIdentity: userAttributes: completion:)
+///
+/// \endcodeFor more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param userIdentity A combination of phones, emails and an external user id that will form a unique key for a person.
+///
+/// \param userAttributes Optional user data to be saved for the person.
+///
+/// \param completion The block to execute after the server responded.
+///
+/// \param error Optional error.
+///
 + (void)personalizeWithUserIdentity:(UserIdentity * _Nonnull)identity userAttributes:(UserAttributes * _Nullable)userAttributes completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// Asynchronously personalizes current installation with a person on the server.
+/// Each user can have Phone numbers, Emails and External user ID. These fields are unique identifiers of a user profile on Infobip platform and provide capability to personalize any app installation with a user profile. The platform provides data grouping functions based on these parameters. For example, if two installations of a particular app will try to save the same Phone number, then both of them will be collected under a single user. Phone number, Email and External user ID are also widely used when targeting users with messages across different channels via Infobip platform.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param forceDepersonalize Determines whether or not the depersonalization should be performed on our server in order to depersonalize the installation from previous user profile.
+///
+/// \param userIdentity A combination of phones, emails and an external user id that will form a unique key for a person.
+///
+/// \param userAttributes Optional user data to be saved for the person.
+///
+/// \param completion The block to execute after the server responded.
+///
+/// \param error Optional error.
+///
 + (void)personalizeWithForceDepersonalize:(BOOL)forceDepersonalize userIdentity:(UserIdentity * _Nonnull)userIdentity userAttributes:(UserAttributes * _Nullable)userAttributes completion:(void (^ _Nonnull)(NSError * _Nullable))completion;
+/// Asynchronously sets a current users arbitrary installation as primary.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param pushRegId Push Registration Id of the installation to be updated.
+///
+/// \param primary New primary value.
+///
+/// \param completion The block to execute after the server responded.
+///
+/// \param installations A list of installations. Contains actual data if no error happened.
+///
+/// \param error Optional error.
+///
 + (void)setInstallationWithPushRegistrationId:(NSString * _Nonnull)pushRegId asPrimary:(BOOL)primary completion:(void (^ _Nonnull)(NSArray<Installation *> * _Nullable, NSError * _Nullable))completion;
+/// Asynchronously depersonalizes current users arbitrary installation from the current user.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param pushRegId Push Registration Id of the installation to be depersonalized.
+///
+/// \param completion The block to execute after the server responded.
+///
+/// \param installations A list of installations. Contains actual data if no error happened.
+///
+/// \param error Optional error.
+///
 + (void)depersonalizeInstallationWithPushRegistrationId:(NSString * _Nonnull)pushRegId completion:(void (^ _Nonnull)(NSArray<Installation *> * _Nullable, NSError * _Nullable))completion;
+/// Asynchronously fetches all installations personalized with the current user.
+/// For more information and examples see: <a href="https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Users-and-installations">Users and installations</a>
+/// \param completion The block to execute after the server responded.
+///
+/// \param installations A list of fetched installations. Contains actual data if no error happened.
+///
+/// \param error Optional error.
+///
 + (void)fetchInstallationsWithCompletion:(void (^ _Nonnull)(NSArray<Installation *> * _Nullable, NSError * _Nullable))completion;
-/// This method sets seen status for messages and sends a corresponding request to the server. If something went wrong, the library will repeat the request until it reaches the server.
+/// Asynchronously sets seen status for messages and sends a corresponding request to the server. If something went wrong, the library will repeat the request until it reaches the server.
 /// \param messageIds Array of identifiers of messages that need to be marked as seen.
 ///
 + (void)setSeenWithMessageIds:(NSArray<NSString *> * _Nonnull)messageIds;
-/// This method sends mobile originated messages to the server.
+/// Asynchronously sends mobile originated messages to the server.
 /// \param messages Array of objects of <code>MOMessage</code> class that need to be sent.
 ///
 /// \param completion The block to execute after the server responded, passes an array of <code>MOMessage</code> messages, that cont
+///
+/// \param messages List of messages sent if no error happened
+///
+/// \param error Optional error
 ///
 + (void)sendMessages:(NSArray<MOMessage *> * _Nonnull)messages completion:(void (^ _Nonnull)(NSArray<MOMessage *> * _Nullable, NSError * _Nullable))completion;
 /// An auxillary component provides the convinient access to the user agent data.
@@ -1237,6 +1330,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) NSURLSessionConfigurat
 /// The <code>PrivacySettings</code> class incapsulates privacy settings that affect the SDK behaviour and business logic.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PrivacySettings * _Nonnull privacySettings;)
 + (PrivacySettings * _Nonnull)privacySettings SWIFT_WARN_UNUSED_RESULT;
+/// The number currently set as the badge of the app icon in Springboard.
+/// Set to 0 (zero) to hide the badge number. The default value of this property is 0.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) NSInteger badgeNumber;)
++ (NSInteger)badgeNumber SWIFT_WARN_UNUSED_RESULT;
++ (void)setBadgeNumber:(NSInteger)newValue;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
