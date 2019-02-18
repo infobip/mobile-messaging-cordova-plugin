@@ -5,9 +5,6 @@
 Mobile Messaging SDK is designed and developed to easily enable push notification channel in your mobile application. In almost no time of implementation you get push notification in your application and access to the features of [Infobip IP Messaging Platform](https://portal.infobip.com/push/). 
 The document describes library integration steps for your Cordova project.
 
-> ### Notice
-> We highly encourage to configure [Notification Service Extension](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Delivery-improvements-and-rich-content-notifications) for iOS. Apart from providing support for rich content it also dramatically improves delivery reporting for Push Notification on iOS. Upon implementing Notification Service Extension, SDK will be able to report delivery even when the application is killed.
-
   * [Requirements](#requirements)
   * [Quick start guide](#quick-start-guide)
   * [Initialization configuration](#initialization-configuration)
@@ -38,7 +35,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 3. Configure platforms
 
-    1. **iOS**: to enable Push Notifications: go to "Capabilities" tab (main target settings) and turn on "Push Notifications" section (we strongly recommend to re-enable it even though it is already enabled).
+    1. **iOS**: [Integrate Notification Service Extension](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10) into your app in order to obtain:
+        - more accurate processing of messages and delivery stats
+        - support of rich notifications on the lock screen
     2. **Android**: add [`Firebase Sender ID`](https://dev.infobip.com/push-messaging/firebase-cloud-messaging-fcm-server-api-key-setup) via plugin variable in `config.xml` :
     ```xml
     <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
