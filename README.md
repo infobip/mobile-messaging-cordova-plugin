@@ -35,7 +35,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
 3. Configure platforms
 
-    1. **iOS**: [Integrate Notification Service Extension](https://github.com/infobip/mobile-messaging-sdk-ios/wiki/Notification-Service-Extension-for-Rich-Notifications-and-better-delivery-reporting-on-iOS-10) into your app in order to obtain:
+    1. **iOS**: [Integrate Notification Service Extension](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Delivery-improvements-and-rich-content-notifications) into your app in order to obtain:
         - more accurate processing of messages and delivery stats
         - support of rich notifications on the lock screen
     2. **Android**: add [`Firebase Sender ID`](https://dev.infobip.com/push-messaging/firebase-cloud-messaging-fcm-server-api-key-setup) via plugin variable in `config.xml` :
