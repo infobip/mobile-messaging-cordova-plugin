@@ -79,6 +79,10 @@ MobileMessaging.init({
         ios: {
             notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>
         },
+        android: { // optional
+            notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>,
+            multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>
+        },
         geofencingEnabled: <Boolean; set to 'true' to enable geofencing inside the library>, // optional
         messageStorage: <Object; message storage implementation>, // optional
         defaultMessageStorage: <Boolean; set to 'true' to enable default message storage implementation>, // optional
