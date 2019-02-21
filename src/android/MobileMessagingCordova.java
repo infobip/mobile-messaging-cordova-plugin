@@ -2,6 +2,7 @@ package org.apache.cordova.plugin;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -34,6 +36,7 @@ import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.MobileMessagingCore;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
+import org.infobip.mobile.messaging.NotificationSettings;
 import org.infobip.mobile.messaging.SuccessPending;
 import org.infobip.mobile.messaging.User;
 import org.infobip.mobile.messaging.UserAttributes;
@@ -208,6 +211,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static class Configuration {
 
+        class AndroidConfiguration {
+            String notificationIcon;
+            boolean multipleNotifications;
+        }
+
         class PrivacySettings {
             boolean userDataPersistingDisabled;
             boolean carrierInfoSendingDisabled;
@@ -228,6 +236,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             List<Action> actions;
         }
 
+        AndroidConfiguration android;
         String applicationCode;
         boolean geofencingEnabled;
         Map<String, ?> messageStorage;
@@ -410,13 +419,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return;
         }
 
+        final Application context = cordova.getActivity().getApplication();
+
         if (configuration.loggingEnabled) {
             MobileMessagingLogger.enforce();
         }
 
-        PreferenceHelper.saveString(cordova.getActivity().getApplication(), MobileMessagingProperty.SYSTEM_DATA_VERSION_POSTFIX, "cordova " + configuration.cordovaPluginVersion);
+        PreferenceHelper.saveString(context, MobileMessagingProperty.SYSTEM_DATA_VERSION_POSTFIX, "cordova " + configuration.cordovaPluginVersion);
 
-        MobileMessaging.Builder builder = new MobileMessaging.Builder(cordova.getActivity().getApplication())
+        MobileMessaging.Builder builder = new MobileMessaging.Builder(context)
                 .withApplicationCode(configuration.applicationCode);
 
         if (configuration.privacySettings.userDataPersistingDisabled) {
@@ -434,7 +445,18 @@ public class MobileMessagingCordova extends CordovaPlugin {
             builder.withMessageStore(SQLiteMessageStore.class);
         }
 
-        builder.build(new MobileMessaging.InitListener() {
+        NotificationSettings.Builder notificationBuilder = new NotificationSettings.Builder(context);
+        if (configuration.android.notificationIcon != null) {
+            int resId = getResId(context.getResources(), configuration.android.notificationIcon, context.getPackageName());
+            if (resId != 0) {
+                notificationBuilder.withDefaultIcon(resId);
+            }
+        }
+        if (configuration.android.multipleNotifications) {
+            notificationBuilder.withMultipleNotifications();
+        }
+
+        builder.withDisplayNotification(notificationBuilder.build()).build(new MobileMessaging.InitListener() {
             @SuppressLint("MissingPermission")
             @Override
             public void onSuccess() {
@@ -465,6 +487,26 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 }
             }
         });
+    }
+
+    /**
+     * Gets resource ID
+     *
+     * @param res         the resources where to look for
+     * @param resPath     the name of the resource
+     * @param packageName name of the package where the resource should be searched for
+     * @return resource identifier or 0 if not found
+     */
+    private int getResId(Resources res, String resPath, String packageName) {
+        int resId = res.getIdentifier(resPath, "mipmap", packageName);
+        if (resId == 0) {
+            resId = res.getIdentifier(resPath, "drawable", packageName);
+        }
+        if (resId == 0) {
+            resId = res.getIdentifier(resPath, "raw", packageName);
+        }
+
+        return resId;
     }
 
     private void setForeground() {
