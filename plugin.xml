@@ -20,7 +20,7 @@
 	<hook type="after_plugin_add" src="scripts/installDependencies.js"/>
 	<hook type="after_prepare" src="scripts/android_fix_google_app_id.js"/>
 	<hook type="after_prepare" src="scripts/integrate_notification_extension.js"/>
-	<hook type="before_prepare" src="scripts/build_ios_framework.js">
+	<hook type="before_prepare" src="scripts/build_ios_framework.js"/>
 
 	<preference name="ANDROID_SUPPORT_VER_OVERRIDE" default="false" />
 	<preference name="ANDROID_GMS_VER_OVERRIDE" default="false" />
