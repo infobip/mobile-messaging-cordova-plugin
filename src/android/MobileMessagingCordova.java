@@ -445,18 +445,21 @@ public class MobileMessagingCordova extends CordovaPlugin {
             builder.withMessageStore(SQLiteMessageStore.class);
         }
 
-        NotificationSettings.Builder notificationBuilder = new NotificationSettings.Builder(context);
-        if (configuration.android.notificationIcon != null) {
-            int resId = getResId(context.getResources(), configuration.android.notificationIcon, context.getPackageName());
-            if (resId != 0) {
-                notificationBuilder.withDefaultIcon(resId);
+        if (configuration.android != null) {
+            NotificationSettings.Builder notificationBuilder = new NotificationSettings.Builder(context);
+            if (configuration.android.notificationIcon != null) {
+                int resId = getResId(context.getResources(), configuration.android.notificationIcon, context.getPackageName());
+                if (resId != 0) {
+                    notificationBuilder.withDefaultIcon(resId);
+                }
             }
-        }
-        if (configuration.android.multipleNotifications) {
-            notificationBuilder.withMultipleNotifications();
+            if (configuration.android.multipleNotifications) {
+                notificationBuilder.withMultipleNotifications();
+            }
+            builder.withDisplayNotification(notificationBuilder.build());
         }
 
-        builder.withDisplayNotification(notificationBuilder.build()).build(new MobileMessaging.InitListener() {
+        builder.build(new MobileMessaging.InitListener() {
             @SuppressLint("MissingPermission")
             @Override
             public void onSuccess() {
