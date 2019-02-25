@@ -25,7 +25,7 @@ module.exports = function(ctx) {
                     ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate --cordova\
                     -a ${appCode}\
                     -p "${ctx.opts.projectRoot}/${projectPath}"\
-                    -t ${projectMainTarget}\
+                    -t "${projectMainTarget}"\
                     -g ${appGroup}
                     export GEM_HOME=$GEM_PATH`;
 
