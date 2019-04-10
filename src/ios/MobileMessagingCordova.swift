@@ -402,8 +402,9 @@ fileprivate class MobileMessagingEventsManager {
 			self.commandDelegate?.send(errorText: "Could not retrieve message ids from arguments", for: command)
 			return
 		}
-		MobileMessaging.setSeen(messageIds: messageIds)
-		self.commandDelegate?.send(array: messageIds, for: command)
+		MobileMessaging.setSeen(messageIds: messageIds, completion: {
+			self.commandDelegate?.send(array: messageIds, for: command)
+		})
 	}
 
 	func showDialogForError(_ command: CDVInvokedUrlCommand) {
