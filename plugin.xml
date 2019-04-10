@@ -25,6 +25,7 @@
 	<preference name="ANDROID_GMS_VER_OVERRIDE" default="false" />
 
 	<platform name="ios">
+		<hook type="before_plugin_install" src="scripts/build_mobile_messaging_framework.sh"/>
 		<config-file parent="UIBackgroundModes" target="*Info.plist">
             <array>
                 <string>remote-notification</string>
