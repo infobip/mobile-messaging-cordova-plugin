@@ -16,14 +16,6 @@ echo RELEASE_COMMIT_LOG="${RELEASE_COMMIT_LOG//$'\n'/\\n}" > $PROPERTIES_FILE
 # Remove package lock (temporary)
 rm -f package-lock.json
 
-# Install Carthage
-# brew install carthage
-cd libs/ios/
-/usr/local/bin/carthage update --cache-builds
-rm -f Carthage/Build/iOS/*.bcsymbolmap
-rm -f Carthage/Build/iOS/*.dSYM
-cd ../../
-
 git add .
 
 # Commit release version
