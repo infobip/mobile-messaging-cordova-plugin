@@ -3,6 +3,7 @@
 // Credit: https://gist.github.com/kkleokrish/ac794fc3280bf23e81cce9b6a7f138f9
 // Define hook in your config <hook src="scripts/cordova-classpath-deps-fix.js" type="before_prepare" />
 
+var Q = require('./q.js');
 var fs = require('fs');
 var path = require('path');
 var readline = require("readline");
@@ -18,9 +19,15 @@ module.exports = function(ctx) {
     }
 
     var ConfigParser = ctx.requireCordovaModule('cordova-common').ConfigParser;
-    var appConfig = new ConfigParser('config.xml');
-    var variables = appConfig.getPlugin(ctx.opts.plugin.id).variables;
+    var pluginConfig = new ConfigParser('config.xml').getPlugin(ctx.opts.plugin.id);
 
+    if (pluginConfig === undefined) {
+        console.log("ERROR: Missing plugin variables. It's required to provide 'ANDROID_FIREBASE_SENDER_ID'");
+        console.log('-----------------------------');
+        return;
+    }
+
+    var variables = pluginConfig.variables;
     var providedStringsXmlPath = ctx.opts.options.ANDROID_STRINGS_XML_RELATIVE_PATH || variables.ANDROID_STRINGS_XML_RELATIVE_PATH;
     var googleAppId = ctx.opts.options.ANDROID_FIREBASE_SENDER_ID || variables.ANDROID_FIREBASE_SENDER_ID;
     if (!googleAppId) {
@@ -42,9 +49,7 @@ module.exports = function(ctx) {
         return;
     }
 
-    var Q = ctx.requireCordovaModule('q');
     var deferred = Q.defer();
-
     var resourcesRoot = path.join(ctx.opts.projectRoot, resourcesRelativeRoot);
     var strings = path.join(resourcesRoot, 'strings.xml');
     console.log(strings);

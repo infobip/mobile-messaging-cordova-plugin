@@ -81,7 +81,8 @@ MobileMessaging.init({
         },
         android: { // optional
             notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>,
-            multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>
+            multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
+            notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>
         },
         geofencingEnabled: <Boolean; set to 'true' to enable geofencing inside the library>, // optional
         messageStorage: <Object; message storage implementation>, // optional

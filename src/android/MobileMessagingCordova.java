@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -214,6 +215,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         class AndroidConfiguration {
             String notificationIcon;
             boolean multipleNotifications;
+            String notificationAccentColor;
         }
 
         class PrivacySettings {
@@ -455,6 +457,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
             if (configuration.android.multipleNotifications) {
                 notificationBuilder.withMultipleNotifications();
+            }
+            if (configuration.android.notificationAccentColor != null) {
+                int color = Color.parseColor(configuration.android.notificationAccentColor);
+                notificationBuilder.withColor(color);
             }
             builder.withDisplayNotification(notificationBuilder.build());
         }

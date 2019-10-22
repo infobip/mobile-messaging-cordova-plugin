@@ -23,14 +23,14 @@ buildscript {
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.2.0'
-        classpath 'com.android.tools.build:gradle:+'
+        classpath 'com.android.tools.build:gradle:3.5.0'
     }
 }
 
 dependencies {
-    def mmVersion = '2.0.9.27'
-    compile "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
-    compile("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
+    def mmVersion = '2.2.1'
+    implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
+    implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true; 
         if (!overrideAndroidSupportLibsVersion.empty) {    
             exclude group: 'com.android.support', module: 'support-v4'   
@@ -45,15 +45,15 @@ dependencies {
         }
     }
     if (!overrideAndroidSupportLibsVersion.empty) {
-        compile "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"
-        compile "com.android.support:appcompat-v7:$overrideAndroidSupportLibsVersion"
+        implementation "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"
+        implementation "com.android.support:appcompat-v7:$overrideAndroidSupportLibsVersion"
     }
     if (!overrideGmsVersion.empty) {
-        compile "com.google.android.gms:play-services-gcm:$overrideGmsVersion"
-        compile "com.google.android.gms:play-services-location:$overrideGmsVersion"
+        implementation "com.google.android.gms:play-services-gcm:$overrideGmsVersion"
+        implementation "com.google.android.gms:play-services-location:$overrideGmsVersion"
     }
     if (!overrideFirebaseVersion.empty) {
-        compile "com.google.firebase:firebase-messaging:$overrideFirebaseVersion"
+        implementation "com.google.firebase:firebase-messaging:$overrideFirebaseVersion"
     }
 }
 
