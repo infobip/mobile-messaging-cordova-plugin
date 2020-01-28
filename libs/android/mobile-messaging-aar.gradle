@@ -28,7 +28,7 @@ buildscript {
 }
 
 dependencies {
-    def mmVersion = '2.2.2'
+    def mmVersion = '2.3.1'
     implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
         transitive = true; 
