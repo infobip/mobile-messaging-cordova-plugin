@@ -37,7 +37,6 @@ dependencies {
             exclude group: 'com.android.support', module: 'appcompat-v7'
         }
         if (!overrideGmsVersion.empty) {
-            exclude group: 'com.google.android.gms', module: 'play-services-gcm'
             exclude group: 'com.google.android.gms', module: 'play-services-location'
         }
         if (!overrideFirebaseVersion.empty) {
@@ -49,7 +48,6 @@ dependencies {
         implementation "com.android.support:appcompat-v7:$overrideAndroidSupportLibsVersion"
     }
     if (!overrideGmsVersion.empty) {
-        implementation "com.google.android.gms:play-services-gcm:$overrideGmsVersion"
         implementation "com.google.android.gms:play-services-location:$overrideGmsVersion"
     }
     if (!overrideFirebaseVersion.empty) {
