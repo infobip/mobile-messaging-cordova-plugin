@@ -505,7 +505,8 @@ fileprivate class MobileMessagingEventsManager {
 		if let categories = configuration.categories {
 			mobileMessaging = mobileMessaging?.withInteractiveNotificationCategories(Set(categories))
 		}
-		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
+
+		MobileMessaging.userAgent.pluginVersion = "cordova \(configuration.cordovaPluginVersion)"
 		if (configuration.logging) {
 			MobileMessaging.logger = MMDefaultLogger()
 		}
