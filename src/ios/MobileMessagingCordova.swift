@@ -673,7 +673,8 @@ class MessageStorageAdapter: MessageStorage {
 
 	func findResult(_ command: CDVInvokedUrlCommand) {
 		guard let dictionary = command.arguments[0] as? [String: Any] else {
-			plugin.commandDelegate?.send(errorText: "Invalid parameter for find", for: command)
+            foundMessage = nil
+            findSemaphore.signal()
 			return
 		}
 
