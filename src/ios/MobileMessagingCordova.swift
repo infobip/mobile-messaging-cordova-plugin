@@ -230,7 +230,7 @@ fileprivate class MobileMessagingEventsManager {
 	override func pluginInitialize() {
 		super.pluginInitialize()
 		self.messageStorageAdapter = MessageStorageAdapter(plugin: self)
-		MobileMessagingCordovaApplicationDelegate.install()
+		MobileMessagingPluginApplicationDelegate.install()
 		self.eventsManager = MobileMessagingEventsManager(plugin: self)
 		performEarlyStartIfPossible()
 	}
@@ -505,7 +505,8 @@ fileprivate class MobileMessagingEventsManager {
 		if let categories = configuration.categories {
 			mobileMessaging = mobileMessaging?.withInteractiveNotificationCategories(Set(categories))
 		}
-		MobileMessaging.userAgent.cordovaPluginVersion = configuration.cordovaPluginVersion
+
+		MobileMessaging.userAgent.pluginVersion = "cordova \(configuration.cordovaPluginVersion)"
 		if (configuration.logging) {
 			MobileMessaging.logger = MMDefaultLogger()
 		}
