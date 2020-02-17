@@ -8,7 +8,14 @@ module.exports = function(ctx) {
 
     var ConfigParser = ctx.requireCordovaModule('cordova-common').ConfigParser;
     var appConfig = new ConfigParser('config.xml');
-    var variables = appConfig.getPlugin(ctx.opts.plugin.id).variables;
+    var pluginConfig = appConfig.getPlugin(ctx.opts.plugin.id);
+
+    if (pluginConfig === undefined) {
+        console.log("ERROR: Missing plugin variables. It's required to provide 'IOS_EXTENSION_APP_CODE' and 'IOS_EXTENSION_APP_GROUP'");
+        console.log('-----------------------------');
+        return;
+    }
+    var variables = pluginConfig.variables;
     var appName = appConfig.name();
 
     var appCode = ctx.opts.options.IOS_EXTENSION_APP_CODE || variables.IOS_EXTENSION_APP_CODE;
@@ -17,6 +24,8 @@ module.exports = function(ctx) {
     var projectMainTarget = ctx.opts.options.IOS_EXTENSION_PROJECT_MAIN_TARGET || variables.IOS_EXTENSION_PROJECT_MAIN_TARGET || appName;
 
     if (!(appCode && appGroup && projectPath && projectMainTarget)) {
+        console.log("ERROR: 'IOS_EXTENSION_APP_CODE' or 'IOS_EXTENSION_APP_GROUP' or 'IOS_EXTENSION_PROJECT_PATH' or 'IOS_EXTENSION_PROJECT_MAIN_TARGET' not defined");
+        console.log('-----------------------------');
         return;
     }
 

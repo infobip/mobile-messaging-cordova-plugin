@@ -616,25 +616,26 @@ class MessageStorageAdapter: MessageStorage {
 	}
 
 	func insert(outgoing messages: [BaseMessage], completion: @escaping () -> Void) {
-		// MO not supported yet
+		// Implementation not needed. This method is intended for client usage.
 	}
 
 	func insert(incoming messages: [BaseMessage], completion: @escaping () -> Void) {
 		sendCallback(for: "messageStorage.save", withArray: messages.map({
 			$0.dictionary()
 		}))
+		completion()
 	}
 
 	func update(messageSeenStatus status: MMSeenStatus, for messageId: MessageId, completion: @escaping () -> Void) {
-		// Message seen status not supported
+		// Implementation not needed. This method is intended for client usage.
 	}
 
 	func update(deliveryReportStatus isDelivered: Bool, for messageId: MessageId, completion: @escaping () -> Void) {
-		// Delivery report status not supported
+		// Implementation not needed. This method is intended for client usage.
 	}
 
 	func update(messageSentStatus status: MOMessageSentStatus, for messageId: MessageId, completion: @escaping () -> Void) {
-		// MO not supported
+		// Implementation not needed. This method is intended for client usage.
 	}
 
 	func findMessage(withId messageId: MessageId) -> BaseMessage? {
@@ -646,7 +647,7 @@ class MessageStorageAdapter: MessageStorage {
 	}
 
 	func findAllMessageIds(completion: @escaping ([String]) -> Void) {
-		// chat not supported yet
+		// Implementation not needed. This method is intended for client usage.
 	}
 
 	func register(_ command: CDVInvokedUrlCommand) {
