@@ -32,7 +32,22 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     ```bash
     $ cordova plugin add com-infobip-plugins-mobilemessaging --save
     ```
+    
+    You can add typings if you are using TypeScript in yours project
+    ```bash
+    npm install --save-dev @types/mobile-messaging-cordova
+    ```
+    
+    <details><summary>expand to see Ionic code</summary>
+    <p>
 
+    ```bash
+    ionic cordova plugin add add com-infobip-plugins-mobilemessaging --save
+    npm install @ionic-native/mobilemessaging --save
+    ```
+
+    </p>
+    </details>
 3. Configure platforms
 
     1. **iOS**: [Integrate Notification Service Extension](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Delivery-improvements-and-rich-content-notifications) into your app in order to obtain:
@@ -55,6 +70,11 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
                 geofencingEnabled: '<true/false>',
                 ios: {
                     notificationTypes: ['alert', 'badge', 'sound']
+                },
+                android: {
+                    notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>,
+                    multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
+                    notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>
                 }
             },
             function(error) {
@@ -71,6 +91,71 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         ...
     }
     ```
+    <details><summary>expand to see Ionic code</summary>
+    <p>
+
+    #### Add this code to app.module.ts::
+    ```typescript
+    import { MobileMessaging } from '@ionic-native/mobile-messaging/ngx';
+
+    ...
+
+    @NgModule({
+     ...
+
+      providers: [
+        ...
+        MobileMessaging
+        ...
+      ]
+      ...
+    })
+    export class AppModule { }
+    ```
+ 
+    #### Usage sample:
+    ```typescript
+    import {Message, MobileMessaging, UserData} from '@ionic-native/mobile-messaging/ngx';
+
+    ...
+ 
+    @Component({
+      selector: 'app-root',
+      templateUrl: 'app.component.html',
+      styleUrls: ['app.component.scss']
+    })
+    export class AppComponent {
+      constructor(
+        private platform: Platform,
+        private splashScreen: SplashScreen,
+        private statusBar: StatusBar,
+        private mobileMessaging: MobileMessaging
+      ) {
+        this.initializeApp();
+      }
+   
+    ...
+    
+      this.mobileMessaging.init({
+        applicationCode: '<your_application_code>',
+        geofencingEnabled: '<true/false>',
+        ios: {
+          notificationTypes: ['alert', 'badge', 'sound']
+        },
+        android: {
+          notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>,
+          multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
+          notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>
+       }}, (err) => {
+         ...
+       });
+     
+       this.mobileMessaging.register('messageReceived').subscribe((message: Message) => {
+         ...
+       });
+    ```
+    </p>
+    </details>
 
 ## Initialization configuration
 ```javascript
