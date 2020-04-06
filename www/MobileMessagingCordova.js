@@ -7,7 +7,7 @@ function execEventHandlerIfExists(parameters) {
 	}
 	var eventName = parameters[0];
 	var handlers = eventHandlers[eventName] || [];
-			   
+
 	handlers.forEach(function(handler) {
 		if (typeof handler !== 'function') {
 			return;
@@ -22,7 +22,7 @@ function execEventHandlerIfExists(parameters) {
 
 /**
  * Constructor
-*/
+ */
 var MobileMessagingCordova = function () {
 	this.eventHandlers = eventHandlers;
 	this.supportedEvents = supportedEvents;
@@ -65,7 +65,7 @@ var MobileMessagingCordova = function () {
  *						textInputActionButtonTitle: <String>,
  *						textInputPlaceholder: <String>
  *					}
- *				]	
+ *				]
  *			}
  *		]
  *	}
@@ -139,11 +139,11 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
  * @param {Function} handler will be called when event occurs
  */
 MobileMessagingCordova.prototype.register = function(eventName, handler) {
-   if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
-	   var handlers = eventHandlers[eventName] || [];
-	   handlers.push(handler);
-	   eventHandlers[eventName] = handlers;
-   }
+	if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
+		var handlers = eventHandlers[eventName] || [];
+		handlers.push(handler);
+		eventHandlers[eventName] = handlers;
+	}
 };
 
 MobileMessagingCordova.prototype.on = MobileMessagingCordova.prototype.register;
@@ -159,7 +159,7 @@ MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
 	var handlers = eventHandlers[eventName] || [];
 	var index = handlers.indexOf(handler);
 	if (index > -1) {
-	   handlers.splice(index, 1);
+		handlers.splice(index, 1);
 	}
 	eventHandlers[eventName] = handlers;
 };
@@ -173,7 +173,7 @@ MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregist
  * @param {Object} userData. An object containing user data
  * {
  *   externalUserId: "myID",
- *   firstName: "John", 
+ *   firstName: "John",
  *   lastName: "Smith",
  *   middleName: "D",
  *   gender: "Male",
@@ -224,7 +224,7 @@ MobileMessagingCordova.prototype.getUser = function(callback, errorCallback) {
  * @param {Object} installation. An object containing installation data
  * {
  *   isPrimaryDevice: true,
- *   isPushRegistrationEnabled: true, 
+ *   isPushRegistrationEnabled: true,
  *   notificationsEnabled: true,
  *   geoEnabled: false,
  *   sdkVersion: "1.2.3",
@@ -292,15 +292,15 @@ MobileMessagingCordova.prototype.setInstallationAsPrimary = function(pushRegistr
  *
  * @name personalize
  * @param {Object} context. An object containing user identity information as well as additional user attributes.
- * { 
+ * {
  *   userIdentity: {
  * 	   phones: ["79210000000", "79110000000"],
  *     emails: ["one@email.com", "two@email.com"],
- *     externalUserId: "myID"	
+ *     externalUserId: "myID"
  *   },
  *   userAttributes: {
  *	   firstName: "John",
- *     lastName: "Smith" 
+ *     lastName: "Smith"
  *   },
  *   forceDepersonalize: false
  * }
@@ -396,6 +396,46 @@ function messageStorage_findAll() {
 		cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'messageStorage_findAllResult', messages);
 	});
 }
+
+/**
+ * Sends an event to the server eventually, handles possible errors and do retries for you.
+ *
+ * @name submitEvent
+ * @param {Object} eventData. An object containing event data
+ * {
+ *   definitionId: "eventDefinitionId"
+ *   properties: {
+ *     "stringAttribute": "string",
+ *     "numberAttribute": 1,
+ *     "dateAttribute": "2020-02-26T09:41:57Z",
+ *     "booleanAttribute": true
+ *   }
+ * }
+ */
+MobileMessagingCordova.prototype.submitEvent = function(eventData) {
+	cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'submitEvent', [eventData]);
+};
+
+/**
+ * Sends an event to the server immediately.
+ * You have to handle possible connection or server errors, do retries yourself.
+ *
+ * @name submitEventImmediately
+ * @param {Object} eventData. An object containing event data
+ * {
+ *   definitionId: "eventDefinitionId"
+ *   properties: {
+ *     "stringAttribute": "string",
+ *     "numberAttribute": 1,
+ *     "dateAttribute": "2020-02-26T09:41:57Z",
+ *     "booleanAttribute": true
+ *   }
+ * }
+ * @param {Function} callback will be called on result, you have to handle error and do retries yourself
+ */
+MobileMessagingCordova.prototype.submitEventImmediately = function(eventData, callback) {
+	cordova.exec(function(){}, callback, 'MobileMessagingCordova', 'submitEventImmediately', [eventData]);
+};
 
 MobileMessaging = new MobileMessagingCordova();
 module.exports = MobileMessaging;

@@ -30,6 +30,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.infobip.mobile.messaging.BroadcastParameter;
 import org.infobip.mobile.messaging.CustomAttributeValue;
+import org.infobip.mobile.messaging.CustomAttributesMapper;
 import org.infobip.mobile.messaging.Event;
 import org.infobip.mobile.messaging.Installation;
 import org.infobip.mobile.messaging.InstallationMapper;
@@ -44,6 +45,7 @@ import org.infobip.mobile.messaging.UserAttributes;
 import org.infobip.mobile.messaging.UserIdentity;
 import org.infobip.mobile.messaging.UserMapper;
 import org.infobip.mobile.messaging.api.appinstance.UserAtts;
+import org.infobip.mobile.messaging.api.appinstance.UserCustomEventAtts;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
 import org.infobip.mobile.messaging.app.ActivityLifecycleMonitor;
 import org.infobip.mobile.messaging.dal.json.JSONArrayAdapter;
@@ -60,6 +62,7 @@ import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
 import org.infobip.mobile.messaging.mobile.InternalSdkError;
 import org.infobip.mobile.messaging.mobile.MobileMessagingError;
 import org.infobip.mobile.messaging.mobile.Result;
+import org.infobip.mobile.messaging.CustomEvent;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
 import org.infobip.mobile.messaging.util.DateTimeUtil;
@@ -109,6 +112,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_DEF_MESSAGESTORAGE_FINDALL = "defaultMessageStorage_findAll";
     private static final String FUNCTION_DEF_MESSAGESTORAGE_DELETE = "defaultMessageStorage_delete";
     private static final String FUNCTION_DEF_MESSAGESTORAGE_DELETEALL = "defaultMessageStorage_deleteAll";
+
+    private static final String FUNCTION_SUBMIT_EVENT_IMMEDIATELY = "submitEventImmediately";
+    private static final String FUNCTION_SUBMIT_EVENT = "submitEvent";
 
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
@@ -404,6 +410,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_DEF_MESSAGESTORAGE_DELETEALL.equals(action)) {
             defaultMessageStorage_deleteAll(callbackContext);
+            return true;
+        } else if (FUNCTION_SUBMIT_EVENT_IMMEDIATELY.equals(action)) {
+            submitEventImmediately(args, callbackContext);
+            return true;
+        } else if (FUNCTION_SUBMIT_EVENT.equals(action)) {
+            submitEvent(args, callbackContext);
             return true;
         }
 
@@ -814,6 +826,75 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
         messageStore.deleteAll(context);
         sendCallbackSuccess(callbackContext);
+    }
+
+    private void submitEventImmediately(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        final CustomEvent customEvent = resolveCustomEvent(args);
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().submitEvent(customEvent, new MobileMessaging.ResultListener<CustomEvent>(){
+                    @Override
+                    public void onResult(Result<CustomEvent, MobileMessagingError> result) {
+                        if (result.isSuccess()) {
+                            sendCallbackSuccess(callbackContext);
+                        } else if (result.getError() != null) {
+                            sendCallbackError(callbackContext, result.getError().getMessage());
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void submitEvent(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        final CustomEvent customEvent = resolveCustomEvent(args);
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().submitEvent(customEvent);
+            }
+        });
+    }
+
+    @NonNull
+    private static CustomEvent resolveCustomEvent(JSONArray args) throws JSONException {
+        if (args.length() < 1 || args.getJSONObject(0) == null) {
+            throw new IllegalArgumentException("Cannot resolve custom event from arguments");
+        }
+
+        return CustomEventJson.fromJSON(args.getJSONObject(0));
+    }
+
+    /**
+     * Custom Event data mapper for JSON conversion
+     */
+    private static class CustomEventJson extends CustomEvent {
+
+        static CustomEvent fromJSON(JSONObject json) {
+            CustomEvent customEvent = new CustomEvent();
+
+            try {
+                if (json.has(UserCustomEventAtts.definitionId)) {
+                    customEvent.setDefinitionId(json.optString(UserCustomEventAtts.definitionId));
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Error when serializing CustomEvent object:" + Log.getStackTraceString(e));
+            }
+
+            try {
+                if (json.has(UserCustomEventAtts.properties)) {
+                    Type type = new TypeToken<Map<String, Object>>() {
+                    }.getType();
+                    Map<String, Object> properties = new JsonSerializer().deserialize(json.optString(UserCustomEventAtts.properties), type);
+                    customEvent.setProperties(CustomAttributesMapper.customAttsFromBackend(properties));
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Error when serializing CustomEvent object:" + Log.getStackTraceString(e));
+            }
+
+            return customEvent;
+        }
     }
 
     @NonNull
@@ -1239,7 +1320,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 if (json.has(UserAtts.birthday)) {
                     Date bday = null;
                     try {
-                        bday = DateTimeUtil.DateFromYMDString(json.optString(UserAtts.birthday));
+                        bday = DateTimeUtil.dateFromYMDString(json.optString(UserAtts.birthday));
                         user.setBirthday(bday);
                     } catch (ParseException e) {
                     }
@@ -1262,7 +1343,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     Type type = new TypeToken<Map<String, Object>>() {
                     }.getType();
                     Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
-                    user.setCustomAttributes(UserMapper.customAttsFromBackend(customAttributes));
+                    user.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1294,7 +1375,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 if (json.has(UserAtts.birthday)) {
                     Date bday = null;
                     try {
-                        bday = DateTimeUtil.DateFromYMDString(json.optString(UserAtts.birthday));
+                        bday = DateTimeUtil.dateFromYMDString(json.optString(UserAtts.birthday));
                         userAttributes.setBirthday(bday);
                     } catch (ParseException e) {
                     }
@@ -1311,7 +1392,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     Type type = new TypeToken<Map<String, Object>>() {
                     }.getType();
                     Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
-                    userAttributes.setCustomAttributes(UserMapper.customAttsFromBackend(customAttributes));
+                    userAttributes.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1392,7 +1473,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     Type type = new TypeToken<Map<String, Object>>() {
                     }.getType();
                     Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString("customAttributes"), type);
-                    installation.setCustomAttributes(UserMapper.customAttsFromBackend(customAttributes));
+                    installation.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
                 }
             } catch (Exception e) {
                 //error parsing
@@ -1406,7 +1487,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         jsonObject.remove("map");
         if (jsonObject.has("customAttributes")) {
             if (customAttributes != null) {
-                jsonObject.put("customAttributes", new JSONObject(UserMapper.customAttsToBackend(customAttributes)));
+                jsonObject.put("customAttributes", new JSONObject(CustomAttributesMapper.customAttsToBackend(customAttributes)));
             }
         }
     }

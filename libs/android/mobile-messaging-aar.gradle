@@ -28,12 +28,12 @@ buildscript {
 }
 
 dependencies {
-    def mmVersion = '2.3.1'
+    def mmVersion = '2.4.2'
     implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
     implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
-        transitive = true; 
-        if (!overrideAndroidSupportLibsVersion.empty) {    
-            exclude group: 'com.android.support', module: 'support-v4'   
+        transitive = true;
+        if (!overrideAndroidSupportLibsVersion.empty) {
+            exclude group: 'com.android.support', module: 'support-v4'
             exclude group: 'com.android.support', module: 'appcompat-v7'
         }
         if (!overrideGmsVersion.empty) {

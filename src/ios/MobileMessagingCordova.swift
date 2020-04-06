@@ -475,6 +475,32 @@ fileprivate class MobileMessagingEventsManager {
 		}
 	}
 
+	func submitEvent(_ command: CDVInvokedUrlCommand) {
+		guard let eventDataDictionary = command.arguments[0] as? [String: Any],
+			let event = CustomEvent(dictRepresentation: eventDataDictionary) else
+		{
+			self.commandDelegate?.send(errorText: "Could not retrieve event data from argument", for: command)
+			return
+		}
+		MobileMessaging.submitEvent(event)
+	}
+
+	func submitEventImmediately(_ command: CDVInvokedUrlCommand) {
+		guard let eventDataDictionary = command.arguments[0] as? [String: Any],
+			let event = CustomEvent(dictRepresentation: eventDataDictionary) else
+		{
+			self.commandDelegate?.send(errorText: "Could not retrieve event data from argument", for: command)
+			return
+		}
+		MobileMessaging.submitEvent(event) { (error) in
+			if let error = error {
+				self.commandDelegate?.send(error: error, for: command)
+			} else {
+				self.commandDelegate?.sendSuccess(for: command)
+			}
+		}
+	}
+
 	//MARK: Utils
 
 	private func performEarlyStartIfPossible() {

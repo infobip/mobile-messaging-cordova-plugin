@@ -371,6 +371,28 @@ describe('Base methods', function() {
 
 		expect(defaultMessageStorage).toBeUndefined();
 	});
+
+	it('should submitEvent', function() {
+		MobileMessaging.submitEvent({definitionId: "eventDefinitionId1"});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'submitEvent',
+			[{definitionId: "eventDefinitionId1"}]);
+	});
+
+	it('should submitEventImmediately', function() {
+		MobileMessaging.submitEventImmediately({definitionId: "eventDefinitionId1"}, function(err) {});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'submitEventImmediately',
+			[{definitionId: "eventDefinitionId1"}]);
+	});
 });
 
 describe('defaultMessageStorage methods', function() {
