@@ -384,7 +384,7 @@ describe('Base methods', function() {
 	});
 
 	it('should submitEventImmediately', function() {
-		MobileMessaging.submitEventImmediately({definitionId: "eventDefinitionId1"}, function(err) {});
+		MobileMessaging.submitEventImmediately({definitionId: "eventDefinitionId1"}, function() {}, function(err) {});
 
 		expect(cordova.exec).toHaveBeenCalledWith(
 			jasmine.any(Function),

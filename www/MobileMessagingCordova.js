@@ -431,10 +431,11 @@ MobileMessagingCordova.prototype.submitEvent = function(eventData) {
  *     "booleanAttribute": true
  *   }
  * }
- * @param {Function} callback will be called on result, you have to handle error and do retries yourself
+ * @param {Function} successCallback will be called upon completion
+ * @param {Function} errorCallback will be called on error, you have to handle error and do retries yourself
  */
-MobileMessagingCordova.prototype.submitEventImmediately = function(eventData, callback) {
-	cordova.exec(function(){}, callback, 'MobileMessagingCordova', 'submitEventImmediately', [eventData]);
+MobileMessagingCordova.prototype.submitEventImmediately = function(eventData, successCallback, errorCallback) {
+	cordova.exec(successCallback, errorCallback, 'MobileMessagingCordova', 'submitEventImmediately', [eventData]);
 };
 
 MobileMessaging = new MobileMessagingCordova();
