@@ -26,7 +26,7 @@ For Android project:
 ## Quick start guide
 This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
 
-1. Make sure to [setup application at Infobip portal](https://dev.infobip.com/push-messaging), if you haven't already.
+1. Make sure to [setup application at Infobip portal](https://www.infobip.com/docs/mobile-app-messaging/create-mobile-application-profile), if you haven't already.
 
 2. Add MobileMessaging plugin to your project, run in terminal:
     ```bash
