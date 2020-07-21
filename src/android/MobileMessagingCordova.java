@@ -21,8 +21,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
+/*import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;*/
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.cordova.CallbackContext;
@@ -59,9 +59,9 @@ import org.infobip.mobile.messaging.interactive.MobileInteractive;
 import org.infobip.mobile.messaging.interactive.NotificationAction;
 import org.infobip.mobile.messaging.interactive.NotificationCategory;
 import org.infobip.mobile.messaging.logging.MobileMessagingLogger;
-import org.infobip.mobile.messaging.mobile.InternalSdkError;
-import org.infobip.mobile.messaging.mobile.MobileMessagingError;
-import org.infobip.mobile.messaging.mobile.Result;
+import org.infobip.mobile.messaging.mobileapi.InternalSdkError;
+import org.infobip.mobile.messaging.mobileapi.MobileMessagingError;
+import org.infobip.mobile.messaging.mobileapi.Result;
 import org.infobip.mobile.messaging.CustomEvent;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
@@ -323,7 +323,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
         CallbackContext callbackContext = showErrorDialogContext.callbackContext;
         showErrorDialogContext.reset();
 
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        // fIXME: Add platform independant code
+/*        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int playServicesAvailabilityResult = googleApiAvailability.isGooglePlayServicesAvailable(cordova.getActivity());
         if (playServicesAvailabilityResult != ConnectionResult.SUCCESS) {
             try {
@@ -332,7 +333,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 sendCallbackError(callbackContext, e.getMessage());
             }
             return;
-        }
+        }*/
 
         sendCallbackSuccess(callbackContext);
     }
@@ -741,18 +742,19 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void showDialogForError(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final int errorCode = resolveIntParameter(args);
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        // FIXME:
+/*        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         if (!googleApiAvailability.isUserResolvableError(errorCode)) {
             sendCallbackError(callbackContext, "Error code [" + errorCode + "] is not user resolvable");
             return;
-        }
+        }*/
 
         showErrorDialogContext.args = args;
         showErrorDialogContext.callbackContext = callbackContext;
 
         cordova.setActivityResultCallback(MobileMessagingCordova.this);
 
-        googleApiAvailability
+/*        googleApiAvailability
                 .getErrorDialog(
                         cordova.getActivity(),
                         errorCode,
@@ -764,7 +766,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                                 sendCallbackError(callbackContext, "Error dialog was cancelled by user");
                             }
                         })
-                .show();
+                .show();*/
     }
 
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {
