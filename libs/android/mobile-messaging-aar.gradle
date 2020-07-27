@@ -1,7 +1,6 @@
 def overrideAndroidSupportLibsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_SUPPORT_VER_OVERRIDE", "false")
 def overrideGmsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_GMS_VER_OVERRIDE", "false")
 def overrideFirebaseVersion = cdvHelpers.getConfigPreference("IB_ANDROID_FIREBASE_VER_OVERRIDE", "false")
-def enableHmsSupport = cdvHelpers.getConfigPreference("IB_ENABLE_HMS_SUPPORT", "false")
 
 if (overrideAndroidSupportLibsVersion == "false") overrideAndroidSupportLibsVersion = ""
 if (overrideGmsVersion == "false") overrideGmsVersion = ""
@@ -59,7 +58,7 @@ dependencies {
     // Android dependencies end
 
     // Hms dependencies start
-    if (!enableHmsSupport.empty && isHmsBuild) {
+    if (isHmsBuild) {
         implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-huawei-geo-sdk:$mmHmsVersion@aar"
         implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-huawei-sdk:$mmHmsVersion@aar") {
             transitive = true;
