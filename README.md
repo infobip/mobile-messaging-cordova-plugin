@@ -88,7 +88,8 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
             }
        
        ```
-    3. Change `plaform/android/app/build.gradle` to provide config for <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137#EN-US_TOPIC_0000001050170137__section193351110105114"  target="_blank">Generated Signing Certificate Fingerprint</a> at previous step
+    3. Sign your app to provide config for <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137#EN-US_TOPIC_0000001050170137__section193351110105114"  target="_blank">Generated Signing Certificate Fingerprint</a> at previous step.
+You can change `plaform/android/app/build.gradle` or write sign config to `build.json`
         ```gradle
        
            android {
