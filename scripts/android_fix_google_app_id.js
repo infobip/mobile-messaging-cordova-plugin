@@ -18,6 +18,13 @@ module.exports = function(ctx) {
         return;
     }
 
+    var args = process.argv.slice(2);
+    var hmsBuild = args.includes("--hms");
+    if (hmsBuild) {
+        console.log("HMS enabled. Skip checking google_app_id");
+        return;
+    }
+
     var ConfigParser = ctx.requireCordovaModule('cordova-common').ConfigParser;
     var pluginConfig = new ConfigParser('config.xml').getPlugin(ctx.opts.plugin.id);
 

@@ -13,12 +13,14 @@ if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion
             url 'https://maven.google.com/'
             name 'Google'
         }
+        maven { url 'http://developer.huawei.com/repo/' }
     }
 }
 
 buildscript {
     repositories {
         maven { url "https://maven.google.com" }
+        maven { url 'http://developer.huawei.com/repo/' }
         jcenter()
     }
     dependencies {
@@ -27,22 +29,46 @@ buildscript {
     }
 }
 
+// apply plugin: 'com.huawei.agconnect'
+
 dependencies {
-    def mmVersion = '2.4.2'
-    implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmVersion@aar"
-    implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmVersion@aar") {
-        transitive = true;
-        if (!overrideAndroidSupportLibsVersion.empty) {
-            exclude group: 'com.android.support', module: 'support-v4'
-            exclude group: 'com.android.support', module: 'appcompat-v7'
-        }
-        if (!overrideGmsVersion.empty) {
-            exclude group: 'com.google.android.gms', module: 'play-services-location'
-        }
-        if (!overrideFirebaseVersion.empty) {
-            exclude group: 'com.google.firebase', module: 'firebase-messaging'
+    def mmHmsVersion = '1.0.1'
+    def mmFcmVersion = '3.1.1'
+    // to enable run: cordova build android --hms
+    def isHmsBuild = false
+
+    // Android dependencies start
+    if (!isHmsBuild) {
+        implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmFcmVersion@aar"
+        implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmFcmVersion@aar") {
+            transitive = true;
+            if (!overrideAndroidSupportLibsVersion.empty) {
+                exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'appcompat-v7'
+            }
+            if (!overrideGmsVersion.empty) {
+                exclude group: 'com.google.android.gms', module: 'play-services-location'
+            }
+            if (!overrideFirebaseVersion.empty) {
+                exclude group: 'com.google.firebase', module: 'firebase-messaging'
+            }
         }
     }
+    // Android dependencies end
+
+    // Hms dependencies start
+    if (isHmsBuild) {
+        implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-huawei-geo-sdk:$mmHmsVersion@aar"
+        implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-huawei-sdk:$mmHmsVersion@aar") {
+            transitive = true;
+            if (!overrideAndroidSupportLibsVersion.empty) {
+                exclude group: 'com.android.support', module: 'support-v4'
+                exclude group: 'com.android.support', module: 'appcompat-v7'
+            }
+        }
+    }
+    // Hms dependencies end
+
     if (!overrideAndroidSupportLibsVersion.empty) {
         implementation "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"
         implementation "com.android.support:appcompat-v7:$overrideAndroidSupportLibsVersion"

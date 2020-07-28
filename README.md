@@ -23,6 +23,11 @@ For Android project:
 - Android Studio
 - API Level: 14 (Android 4.0 - Ice Cream Sandwich)
 
+For Huawei:
+- Android Studio
+- Installed <a href="https://huaweimobileservices.com/appgallery/" target="_blank">AppGallery</a> with HMS Core at device
+- API level: 19 (Android 4.4 - KitKat)
+
 ## Quick start guide
 This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
 
@@ -53,14 +58,72 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     1. **iOS**: [Integrate Notification Service Extension](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Delivery-improvements-and-rich-content-notifications) into your app in order to obtain:
         - more accurate processing of messages and delivery stats
         - support of rich notifications on the lock screen
-    2. **Android**: add [`Firebase Sender ID`](https://dev.infobip.com/push-messaging/firebase-cloud-messaging-fcm-server-api-key-setup) via plugin variable in `config.xml` :
+    2. **Android**: add [`Firebase Sender ID`](https://www.infobip.com/docs/mobile-app-messaging/fcm-server-api-key-setup-guide) via plugin variable in `config.xml` :
     ```xml
     <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
         <variable name="ANDROID_FIREBASE_SENDER_ID" value="Firebase Sender ID" />
     </plugin>
     ```
+4. Configure Huawei build
 
-4. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
+    1. Configure <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137" target="_blank">Huawei application</a>
+    2. Change `plaform/android/app/build.gradle` at the begging 
+        ```gradle
+       
+            apply plugin: 'com.android.application'
+            apply plugin: 'com.huawei.agconnect' // Added
+            
+            buildscript {
+                repositories {
+                    mavenCentral()
+                    google()
+                    jcenter()
+                    maven { url 'http://developer.huawei.com/repo/' } // Added
+                }
+            
+                dependencies {
+                    classpath 'com.android.tools.build:gradle:3.3.0'
+                    classpath 'com.huawei.agconnect:agcp:1.2.1.301' // Added
+                }
+            }
+       
+       ```
+    3. Change `plaform/android/app/build.gradle` to provide config for <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137#EN-US_TOPIC_0000001050170137__section193351110105114"  target="_blank">Generated Signing Certificate Fingerprint</a> at previous step
+        ```gradle
+       
+           android {
+       
+                    .......
+       
+                   signingConfigs {
+                      "debug": {
+                       "keystore": "<debugKeystore>",
+                       "storePassword": "<debugStorePassword>",
+                       "alias": "<debugKeyAlias>",
+                       "password" : "<debugKeyPassword>",
+                   },
+                   "release": {
+                       "keystore": "<releaseKeystore>",
+                       "storePassword": "<releaseStorePassword>",
+                       "alias": "<releaseKeyAlias>",
+                       "password" : "<releaseKeyPassword>",
+                   }
+               }
+           }
+       
+        ```
+    4. Download `agconnect-services.json` from <a href="https://developer.huawei.com/consumer/ru/service/josp/agc/index.html"  target="_blank">AppGallery Connect </a> and copy it to `platforms/android/app`.
+        
+        a. Find your App from the list and click the link under Android App in the Mobile phone column.
+        
+        b. Go to Develop > Overview.
+        
+        c. In the App information area, Click `agconnect-services.json` to download the configuration file.
+    5. Run `cordova build android --hms` to make build for HMS.
+        
+        **Note** that if you are developing / testing FCM and HMS at the same device then better to remove cache for installed app, remove app and after that install build with other push cloud. 
+
+5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
     ```javascript
     onDeviceReady: function() {
