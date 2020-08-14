@@ -48,7 +48,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
     ```bash
     ionic cordova plugin add com-infobip-plugins-mobilemessaging --save
-    npm install @ionic-native/mobilemessaging --save
+    npm install @ionic-native/mobile-messaging --save
     ```
 
     </p>
