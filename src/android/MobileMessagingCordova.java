@@ -66,6 +66,7 @@ import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
 import org.infobip.mobile.messaging.util.DateTimeUtil;
 import org.infobip.mobile.messaging.util.PreferenceHelper;
+import org.infobip.mobile.messaging.chat.InAppChat;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,6 +130,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_MESSAGESTORAGE_START = "messageStorage.start";
     private static final String EVENT_MESSAGESTORAGE_SAVE = "messageStorage.save";
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
+
+    private static final String FUNCTION_SHOW_INAPP_CHAT = "showChat";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
@@ -416,6 +419,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_SUBMIT_EVENT.equals(action)) {
             submitEvent(args, callbackContext);
+            return true;
+        } else if (FUNCTION_SHOW_INAPP_CHAT.equals(action)) {
+            showInAppChat(args, callbackContext);
             return true;
         }
 
@@ -765,6 +771,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
                             }
                         })
                 .show();
+    }
+
+    private void showInAppChat(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatView().show();
     }
 
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -1137,7 +1147,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("contentUrl", message.getContentUrl())
                     .putOpt("seen", message.getSeenTimestamp() != 0)
                     .putOpt("seenDate", message.getSeenTimestamp())
-                    .putOpt("geo", hasGeo(message));
+                    .putOpt("geo", hasGeo(message))
+                    .putOpt("chat", message.isChatMessage());
         } catch (JSONException e) {
             Log.w(TAG, "Cannot convert message to JSON: " + e.getMessage());
             Log.d(TAG, Log.getStackTraceString(e));
@@ -1199,6 +1210,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         message.setFrom(json.optString("from", null));
         message.setReceivedTimestamp(json.optLong("receivedTimestamp", 0));
         message.setCustomPayload(json.optJSONObject("customPayload"));
+        message.setMessageType(json.optString("messageType", null));
         return message;
     }
 

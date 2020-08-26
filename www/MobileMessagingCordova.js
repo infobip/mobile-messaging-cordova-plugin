@@ -20,6 +20,15 @@ function execEventHandlerIfExists(parameters) {
 	});
 }
 
+function isEmpty(obj) {
+	for(var prop in obj) {
+		if(obj.hasOwnProperty(prop))
+			return false;
+	}
+
+	return true;
+}
+
 /**
  * Constructor
  */
@@ -37,6 +46,7 @@ var MobileMessagingCordova = function () {
  *	{
  *		applicationCode: '<The application code of your Application from Push Portal website>',
  *		geofencingEnabled: true,
+ *		inAppChatEnabled: true,
  *		messageStorage: '<Message storage save callback>',
  *		defaultMessageStorage: true,
  *		ios: {
@@ -436,6 +446,46 @@ MobileMessagingCordova.prototype.submitEvent = function(eventData) {
  */
 MobileMessagingCordova.prototype.submitEventImmediately = function(eventData, successCallback, errorCallback) {
 	cordova.exec(successCallback, errorCallback, 'MobileMessagingCordova', 'submitEventImmediately', [eventData]);
+};
+
+/**
+ * Shows In-app chat screen.
+ * iOS - it's screen with top bar and `x` button on the right corner.
+ * Android - it's screen with top bar and back navigation button.
+ * @name showChat
+ * @param {Object} presentingOptions. You can configure how chat will be presented.
+ * Now only one option for iOS is supported: `shouldBePresentedModally`, false by default.
+ * If it's true - in-app chat View Controller for iOS will be presented modally.
+ * example:
+ * {
+ *     ios: {
+ *         shouldBePresentedModally: true
+ *     }
+ * }
+ */
+MobileMessagingCordova.prototype.showChat = function(presentingOptions) {
+	if (presentingOptions !== null && !isEmpty(presentingOptions)) {
+		cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'showChat', [presentingOptions]);
+	} else {
+		cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'showChat', []);
+	}
+};
+
+/**
+ * You can define custom appearance for iOS chat view by providing a chat settings.
+ * @name setupiOSChatSettings
+ * @param {Object} chatSettings. An object with chat settings
+ * Chat settings format:
+ *	{
+ *		title: '<chat title>',
+ *	    sendButtonColor: '<hex color string>',
+ *	    navigationBarItemsColor:'<hex color string>',
+ *	    navigationBarColor:'<hex color string>',
+ *	    navigationBarTitleColor:'<hex color string>'
+ *	}
+ */
+MobileMessagingCordova.prototype.setupiOSChatSettings = function(chatSettings) {
+	cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'setupiOSChatSettings', [chatSettings]);
 };
 
 MobileMessaging = new MobileMessagingCordova();

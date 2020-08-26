@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com-infobip-plugins-mobilemessaging"
 	version="1.4.0">
-	
+
 	<name>MobileMessagingCordova</name>
 	<keywords>Infobip,push,cordova</keywords>
 	<engines>
@@ -16,7 +16,7 @@
 	<js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
 		<clobbers target="mobileMessaging" />
 	</js-module>
-	
+
 	<hook type="before_build" src="scripts/hms_fix_dependencies.js"/>
 	<hook type="after_plugin_add" src="scripts/installDependencies.js"/>
 	<hook type="after_prepare" src="scripts/android_fix_google_app_id.js"/>
@@ -49,10 +49,18 @@
             <string>production</string>
         </config-file>
 
+		<config-file parent="com.apple.developer.icloud-services" target="*/Entitlements-Debug.plist">
+			<array><string>CloudDocuments</string></array>
+		</config-file>
+
+		<config-file parent="com.apple.developer.icloud-services" target="*/Entitlements-Release.plist">
+			<array><string>CloudDocuments</string></array>
+		</config-file>
+
 		<framework src="libs/ios/Carthage/Build/iOS/MobileMessaging.framework" custom="true" embed="true"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
-	
+
 	<platform name="android">
 		<config-file target="config.xml" parent="/*">
 			<feature name="MobileMessagingCordova">
@@ -72,9 +80,11 @@
 	            </intent-filter>
 	        </receiver>
 		</config-file>
-		
+
 		<framework src="libs/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
+		<framework src="com.android.support:appcompat-v7:+"/>
+		<framework src="com.android.support:design:28.+"/>
 		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
 	</platform>
-	
+
 </plugin>

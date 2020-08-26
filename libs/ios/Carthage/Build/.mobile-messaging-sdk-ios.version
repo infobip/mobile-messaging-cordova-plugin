@@ -8,12 +8,12 @@
   "tvOS" : [
 
   ],
-  "commitish" : "6.2.2",
+  "commitish" : "8.2.3",
   "iOS" : [
     {
       "name" : "MobileMessaging",
-      "hash" : "591d520a160f752f477e575005bbd0c116261042a344999dfafd432a17798f4d",
-      "swiftToolchainVersion" : "5.2.2 (swiftlang-1103.0.32.6 clang-1103.0.32.51)"
+      "hash" : "6e3429d7dec8cd51e39602eaee76727326ad1927d9cd0b470395965a13f642ac",
+      "swiftToolchainVersion" : "5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)"
     }
   ]
 }

@@ -17,7 +17,7 @@ The document describes library integration steps for your Cordova project.
 For iOS project:
 - Xcode 10
 - Carthage (`brew install carthage`)
-- Minimum deployment target 9.0
+- Minimum deployment target 10.0
 
 For Android project: 
 - Android Studio

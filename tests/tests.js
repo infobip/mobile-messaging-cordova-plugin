@@ -22,7 +22,7 @@ window.cordova = {
 
 /* tests */
 describe('Initialization', function() {
-	
+
 	beforeEach(function() {
 		spyOn(cordova, 'exec');
 	});
@@ -158,7 +158,7 @@ describe('Base methods', function() {
 		  handler2: spy2
 	};
     var expectedHandlers = [handlersSpies.handler1, handlersSpies.handler2];
-    
+
 	beforeEach(function() {
 		var config = {
 			applicationCode: '12345',
@@ -175,7 +175,7 @@ describe('Base methods', function() {
 
 		MobileMessaging.init(config, function(err) {});
 	});
-    
+
 	it('should register', function() {
 		var supportedEvents = MobileMessaging.supportedEvents;
 		for (i = 0; i < supportedEvents.length; i++) {
@@ -191,9 +191,9 @@ describe('Base methods', function() {
 		}
 
 	});
-	
+
 	it('should call handler', function() {
-	
+
 		var actualHandlers = MobileMessaging.eventHandlers['messageReceived'];
 		console.log("should call handler: Actual handlers -" + JSON.stringify(actualHandlers, null, 4));
 		MobileMessaging.init({applicationCode: '12345'}, function() {});
@@ -231,7 +231,7 @@ describe('Base methods', function() {
 			expect(actualHandlers).toEqual([]);
 		}
 	});
-	
+
 	it('should saveUser', function() {
 		MobileMessaging.saveUser({firstName: "firstName"}, function(data) {}, function(err) {});
 
@@ -321,7 +321,7 @@ describe('Base methods', function() {
 				lastName: "Smith"
 			},
 			forceDepersonalize: true
-		};	
+		};
 
 		MobileMessaging.personalize(ctx, function(data) {}, function(err) {});
 
@@ -417,7 +417,7 @@ describe('defaultMessageStorage methods', function() {
 
 	it('should defaultMessageStorage find', function() {
 		var defaultMessageStorage = MobileMessaging.defaultMessageStorage();
-		
+
 		defaultMessageStorage.find(1, function() {});
 
 		expect(cordova.exec).toHaveBeenCalledWith(
@@ -465,5 +465,49 @@ describe('defaultMessageStorage methods', function() {
 			'MobileMessagingCordova',
 			'defaultMessageStorage_deleteAll',
 			[]);
+	});
+});
+
+describe('inAppChat methods', function() {
+
+	beforeEach(function() {
+		var config = {
+			applicationCode: '12345',
+			inAppChatEnabled: true
+		};
+
+		spyOn(cordova, 'exec');
+
+		MobileMessaging.init(config, function(err) {});
+	});
+
+	it('should show chat', function() {
+		MobileMessaging.showChat(null);
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'showChat',
+			[]);
+	});
+
+	it('should setup iOS chat settings ', function() {
+		MobileMessaging.setupiOSChatSettings(
+			{
+				title: "chat title",
+				sendButtonColor: "#ffffff"
+		    }
+		);
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'setupiOSChatSettings',
+			[{
+				title: "chat title",
+				sendButtonColor: "#ffffff"
+			}]);
 	});
 });

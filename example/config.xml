@@ -16,7 +16,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <platform name="ios">
-        <preference name="deployment-target" value="8.4" />
+        <preference name="deployment-target" value="10.0" />
         <preference name="pods_use_frameworks" value="true" />
         <config-file parent="UIBackgroundModes" platform="ios" target="*-Info.plist">
             <array>

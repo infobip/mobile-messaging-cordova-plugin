@@ -33,7 +33,7 @@ buildscript {
 
 dependencies {
     def mmHmsVersion = '1.0.1'
-    def mmFcmVersion = '3.1.1'
+    def mmFcmVersion = '3.1.2'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
 
@@ -68,6 +68,8 @@ dependencies {
         }
     }
     // Hms dependencies end
+
+    implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-chat-sdk:$mmFcmVersion@aar"
 
     if (!overrideAndroidSupportLibsVersion.empty) {
         implementation "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"

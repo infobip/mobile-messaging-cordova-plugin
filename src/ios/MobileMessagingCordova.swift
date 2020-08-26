@@ -12,6 +12,7 @@ class MMConfiguration {
 		static let systemInfoSendingDisabled = "systemInfoSendingDisabled"
 		static let applicationCodePersistingDisabled = "applicationCodePersistingDisabled"
 		static let geofencingEnabled = "geofencingEnabled"
+        static let inAppChatEnabled = "inAppChatEnabled"
 		static let applicationCode = "applicationCode"
 		static let forceCleanup = "forceCleanup"
 		static let logging = "logging"
@@ -24,6 +25,7 @@ class MMConfiguration {
 
 	let appCode: String
 	let geofencingEnabled: Bool
+    let inAppChatEnabled: Bool
 	let messageStorageEnabled: Bool
 	let defaultMessageStorage: Bool
 	let notificationType: UserNotificationType
@@ -42,6 +44,7 @@ class MMConfiguration {
 
 		self.appCode = appCode
 		self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].unwrap(orDefault: false)
+        self.inAppChatEnabled = rawConfig[MMConfiguration.Keys.inAppChatEnabled].unwrap(orDefault: false)
 		self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
 		self.logging = ios[MMConfiguration.Keys.logging].unwrap(orDefault: false)
 		self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
@@ -501,6 +504,33 @@ fileprivate class MobileMessagingEventsManager {
 		}
 	}
 
+    func showChat(_ command: CDVInvokedUrlCommand) {
+        var presentVCModally = false
+        if command.arguments.count > 0,
+            let presentingOptions = command.arguments[0] as? [String: Any],
+            let iosOptions = presentingOptions["ios"] as? [String: Any],
+            let shouldBePresentedModally = iosOptions["shouldBePresentedModally"] as? Bool {
+            presentVCModally = shouldBePresentedModally
+        }
+
+        let vc = presentVCModally ? ChatViewController.makeRootNavigationViewController(): ChatViewController.makeRootNavigationViewControllerWithCustomTransition()
+        if presentVCModally {
+            vc.modalPresentationStyle = .fullScreen
+        }
+        if let rootVc = UIApplication.shared.keyWindow?.rootViewController {
+            rootVc.present(vc, animated: true, completion: nil)
+        } else {
+            MMLogDebug("[InAppChat] could not define root vc to present in-app-chat")
+        }
+        self.commandDelegate.sendSuccess(for: command)
+    }
+
+    func setupiOSChatSettings(_ command: CDVInvokedUrlCommand) {
+        if let chatSettings = command.arguments[0] as? [String: AnyObject] {
+             MobileMessaging.inAppChat?.settings.configureWith(rawConfig: chatSettings)
+        }
+    }
+
 	//MARK: Utils
 
 	private func performEarlyStartIfPossible() {
@@ -523,6 +553,11 @@ fileprivate class MobileMessagingEventsManager {
 		if configuration.geofencingEnabled {
 			mobileMessaging = mobileMessaging?.withGeofencingService()
 		}
+
+        if configuration.inAppChatEnabled {
+            mobileMessaging = mobileMessaging?.withInAppChat()
+        }
+
 		if let storageAdapter = messageStorageAdapter, configuration.messageStorageEnabled {
 			mobileMessaging = mobileMessaging?.withMessageStorage(storageAdapter)
 		} else if configuration.defaultMessageStorage {
@@ -561,6 +596,7 @@ extension MTMessage {
 		result["seen"] = seenStatus != .NotSeen
 		result["seenDate"] = seenDate?.timeIntervalSince1970
 		result["geo"] = isGeoMessage
+        result["chat"] = isChatMessage
 		return result
 	}
 
