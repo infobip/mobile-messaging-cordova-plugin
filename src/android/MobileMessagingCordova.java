@@ -838,7 +838,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackSuccess(callbackContext);
     }
 
-    private void submitEventImmediately(JSONArray args, CallbackContext callbackContext) throws JSONException {
+    private void submitEventImmediately(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final CustomEvent customEvent = resolveCustomEvent(args);
         runInBackground(new Runnable() {
             @Override
