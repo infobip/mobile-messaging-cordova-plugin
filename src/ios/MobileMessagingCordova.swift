@@ -597,6 +597,10 @@ extension MTMessage {
 		result["seenDate"] = seenDate?.timeIntervalSince1970
 		result["geo"] = isGeoMessage
         result["chat"] = isChatMessage
+        result["browserUrl"] = browserUrl
+        result["deeplink"] = deeplink
+        result["inAppOpenTitle"] = inAppOpenTitle
+        result["inAppDismissTitle"] = inAppDismissTitle
 		return result
 	}
 

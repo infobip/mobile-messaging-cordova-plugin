@@ -1148,7 +1148,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("seen", message.getSeenTimestamp() != 0)
                     .putOpt("seenDate", message.getSeenTimestamp())
                     .putOpt("geo", hasGeo(message))
-                    .putOpt("chat", message.isChatMessage());
+                    .putOpt("chat", message.isChatMessage())
+                    .putOpt("browserUrl", message.getBrowserUrl())
+                    .putOpt("deeplink", message.getDeeplink())
+                    .putOpt("inAppOpenTitle", message.getInAppOpenTitle())
+                    .putOpt("inAppDismissTitle", message.getInAppDismissTitle());
         } catch (JSONException e) {
             Log.w(TAG, "Cannot convert message to JSON: " + e.getMessage());
             Log.d(TAG, Log.getStackTraceString(e));
