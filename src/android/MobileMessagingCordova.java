@@ -1148,7 +1148,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("seen", message.getSeenTimestamp() != 0)
                     .putOpt("seenDate", message.getSeenTimestamp())
                     .putOpt("geo", hasGeo(message))
-                    .putOpt("isChat", message.isChatMessage())
+                    .putOpt("chat", message.isChatMessage())
                     .putOpt("browserUrl", message.getBrowserUrl())
                     .putOpt("deeplink", message.getDeeplink())
                     .putOpt("inAppOpenTitle", message.getInAppOpenTitle())
