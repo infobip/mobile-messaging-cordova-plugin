@@ -120,7 +120,14 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
         b. Go to Develop > Overview.
         
         c. In the App information area, Click `agconnect-services.json` to download the configuration file.
-    5. Run `cordova build android --hms` to make build for HMS.
+    5. Add [`Huawei App ID`](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137) via plugin variable in `config.xml` :   
+        ```xml
+        <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
+            <variable name="HUAWEI_SENDER_ID" value="Huawei App ID" />
+        </plugin>
+        ```       
+        You can take this value from `agconnect-services.json`.
+    6. Run `cordova build android --hms` to make build for HMS.
         
         **Note** that if you are developing / testing FCM and HMS at the same device then better to remove cache for installed app, remove app and after that install build with other push cloud. 
 
