@@ -67,11 +67,8 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 4. Configure Huawei build
 
     1. Configure <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137" target="_blank">Huawei application</a>
-    2. Change `plaform/android/app/build.gradle` at the begging 
+    2. Change `plaform/android/build.gradle` at the begging 
         ```gradle
-       
-            apply plugin: 'com.android.application'
-            apply plugin: 'com.huawei.agconnect' // Added
             
             buildscript {
                 repositories {
@@ -87,47 +84,70 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
                 }
             }
        
+            allprojects {
+                repositories {
+                    google()
+                    jcenter()
+                    maven {url 'https://developer.huawei.com/repo/'} // Added
+                }
+                ...
+            }
+       
+       ```    
+    3. Change `plaform/android/app/build.gradle` at the begging 
+        ```gradle
+       
+            apply plugin: 'com.android.application'
+            apply plugin: 'com.huawei.agconnect' // Added
+            
+            dependencies {
+                   implementation 'com.huawei.hms:push:5.0.0.300'
+                   implementation('com.huawei.hms:location:5.0.0.300') // Add it if you will use Geofencing feature
+            }
+       
        ```
-    3. Sign your app to provide config for <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137#EN-US_TOPIC_0000001050170137__section193351110105114"  target="_blank">Generated Signing Certificate Fingerprint</a> at previous step.
+    4. Sign your app to provide config for <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137#EN-US_TOPIC_0000001050170137__section193351110105114"  target="_blank">Generated Signing Certificate Fingerprint</a> at previous step.
 You can change `plaform/android/app/build.gradle` or write sign config to `build.json`
         ```gradle
        
            android {
-       
-                    .......
-       
-                   signingConfigs {
-                      "debug": {
-                       "keystore": "<debugKeystore>",
-                       "storePassword": "<debugStorePassword>",
-                       "alias": "<debugKeyAlias>",
-                       "password" : "<debugKeyPassword>",
-                   },
-                   "release": {
-                       "keystore": "<releaseKeystore>",
-                       "storePassword": "<releaseStorePassword>",
-                       "alias": "<releaseKeyAlias>",
-                       "password" : "<releaseKeyPassword>",
+
+               signingConfigs {
+                   release {
+                       storeFile file(<path to *.jks file>)
+                       storePassword "<password>"
+                       keyAlias "<alias>"
+                       keyPassword "<password>"
                    }
                }
-           }
+               buildTypes {
+                   release {
+                       signingConfig signingConfigs.release
+                   }
+                   debug {
+                       signingConfig signingConfigs.release
+                   }
+               }
+       
+               ...
        
         ```
-    4. Download `agconnect-services.json` from <a href="https://developer.huawei.com/consumer/ru/service/josp/agc/index.html"  target="_blank">AppGallery Connect </a> and copy it to `platforms/android/app`.
+    5. Download `agconnect-services.json` from <a href="https://developer.huawei.com/consumer/ru/service/josp/agc/index.html"  target="_blank">AppGallery Connect </a> and copy it to `platforms/android/app`.
         
         a. Find your App from the list and click the link under Android App in the Mobile phone column.
         
         b. Go to Develop > Overview.
         
         c. In the App information area, Click `agconnect-services.json` to download the configuration file.
-    5. Add [`Huawei App ID`](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137) via plugin variable in `config.xml` :   
+    6. Add [`Huawei App ID`](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137) via plugin variable in `config.xml` :   
         ```xml
         <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
             <variable name="HUAWEI_SENDER_ID" value="Huawei App ID" />
         </plugin>
         ```       
         You can take this value from `agconnect-services.json`.
-    6. Run `cordova build android --hms` to make build for HMS.
+        
+    7. Run `cordova build android --hms` to make build for HMS.
         
         **Note** that if you are developing / testing FCM and HMS at the same device then better to remove cache for installed app, remove app and after that install build with other push cloud. 
 
