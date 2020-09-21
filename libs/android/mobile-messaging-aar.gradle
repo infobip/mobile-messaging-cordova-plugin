@@ -32,7 +32,7 @@ buildscript {
 // apply plugin: 'com.huawei.agconnect'
 
 dependencies {
-    def mmHmsVersion = '1.0.3'
+    def mmHmsVersion = '1.0.4'
     def mmFcmVersion = '3.4.1'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
