@@ -34,7 +34,7 @@ module.exports = function(ctx) {
         var pluginConfig = new ConfigParser('config.xml').getPlugin(ctx.opts.plugin.id);
 
         if (pluginConfig === undefined) {
-            console.log("ERROR: Missing plugin variables. It's required to provide 'ANDROID_FIREBASE_SENDER_ID'");
+            console.log("ERROR: Missing plugin variables. It's required to provide '" + appIdParamName + "'");
             console.log('-----------------------------');
             return;
         }

@@ -1215,6 +1215,13 @@ public class MobileMessagingCordova extends CordovaPlugin {
         message.setReceivedTimestamp(json.optLong("receivedTimestamp", 0));
         message.setCustomPayload(json.optJSONObject("customPayload"));
         message.setMessageType(json.optString("messageType", null));
+        message.setContentUrl(json.optString("contentUrl", null));
+        message.setSeenTimestamp(json.optLong("seenDate", 0));
+        message.setBrowserUrl(json.optString("browserUrl", null));
+        message.setDeeplink(json.optString("deeplink", null));
+        message.setInAppOpenTitle(json.optString("inAppOpenTitle", null));
+        message.setInAppDismissTitle(json.optString("inAppDismissTitle", null));
+
         return message;
     }
 
