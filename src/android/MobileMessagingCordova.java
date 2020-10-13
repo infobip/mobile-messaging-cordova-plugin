@@ -249,6 +249,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         AndroidConfiguration android;
         String applicationCode;
         boolean geofencingEnabled;
+        boolean inAppChatEnabled;
         Map<String, ?> messageStorage;
         boolean defaultMessageStorage;
         boolean loggingEnabled;
@@ -514,6 +515,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 }
             }
         });
+
+        if (configuration.inAppChatEnabled) {
+            InAppChat.getInstance(context).activate();
+        }
     }
 
     /**
