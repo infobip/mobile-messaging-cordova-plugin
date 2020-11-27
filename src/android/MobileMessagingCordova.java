@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -122,6 +123,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_USER_UPDATED = "userUpdated";
     private static final String EVENT_PERSONALIZED = "personalized";
     private static final String EVENT_DEPERSONALIZED = "depersonalized";
+    private static final String EVENT_DEEPLINK = "deeplink";
 
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
     private static final String EVENT_NOTIFICATION_TAPPED = "notificationTapped";
@@ -441,6 +443,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         final Application context = cordova.getActivity().getApplication();
+
+        //Opening the application by the deeplink
+        final Intent intent = cordova.getActivity().getIntent();
+        if (intent != null && intent.getDataString() != null) {
+            sendCallbackEvent(EVENT_DEEPLINK, libraryEventReceiver, intent.getDataString());
+        }
 
         if (configuration.loggingEnabled) {
             MobileMessagingLogger.enforce();

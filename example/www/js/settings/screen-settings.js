@@ -65,7 +65,7 @@
             var _this = this;
 
             Layout.busy(true);
-            MobileMessaging.fetchUserData(
+            MobileMessaging.fetchUser(
                 function(userData) {
                     _this._populateUserData(userData);
                     Layout.busy(false);
@@ -83,7 +83,16 @@
             for (var i = 0, max = formInputNodes.length; i < max; i++) {
                 var inputNode = formInputNodes[i];
                 var name = inputNode.getAttribute("name");
-                inputNode.value = userData[name] || "";
+                if (name === "emails" || name === "phones") {
+                    var list = userData[name];
+                    if (list) {
+                        inputNode.value = list.join(",");
+                    } else {
+                        inputNode.value = "";
+                    }
+                } else {
+                    inputNode.value = userData[name] || "";
+                }
                 inputNode.classList.remove("changed");
             }
         },
@@ -96,7 +105,7 @@
             var userData = this._collectUserData();
 
             Layout.busy(true);
-            MobileMessaging.syncUserData(
+            MobileMessaging.saveUser(
                 userData,
 
                 function(userData) {
@@ -130,7 +139,11 @@
                     value = null;
                 }
 
-                userData[name] = value;
+                if (name === "emails" || name === "phones") {
+                    userData[name] = value.split(",").map(String);
+                } else {
+                    userData[name] = value;
+                }
             }
 
             return userData;

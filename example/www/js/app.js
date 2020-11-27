@@ -8,8 +8,7 @@
     var InboxScreen = global.InboxScreen;
     var SettingsScreen = global.SettingsScreen;
 
-    var APP_CODE = "your-app-code-here";
-    var ANDROID_SENDER_ID = "android-sender-id-here";
+    var APP_CODE = <your application code>;
 
     /**
      * Bootstrap object
@@ -21,12 +20,14 @@
         init: function() {
             this.screens = {};
 
-            this.initMobileMessaging();
-
             Layout.init();
             this.addScreen(InboxScreen);
             this.addScreen(SettingsScreen);
             this.show(InboxScreen.NAME);
+
+            this.registerForEvents();
+
+            this.initMobileMessaging();
         },
 
         addScreen: function(screen) {
@@ -66,11 +67,9 @@
                     applicationCode: APP_CODE,
                     geofencingEnabled: true,
                     defaultMessageStorage: true,    // use build in message storage or not
-                    android: {
-                        senderId: ANDROID_SENDER_ID
-                    },
                     ios: {
-                        notificationTypes: ['alert', 'badge', 'sound']
+                        notificationTypes: ['alert', 'badge', 'sound'],
+                        logging: true,
                     }
                 },
 
@@ -78,13 +77,31 @@
                     utils.log('Init error: ' + error);
                 }
             );
-
+        },
+        registerForEvents: function() {
+            var _this = this;
             MobileMessaging.register("notificationTapped", function(message) {
-                if (message.customPayload && message.customPayload.url) {
-                    var url = message.customPayload.url;
-                    cordova.InAppBrowser.open(url, "_blank", "location=yes");
+                if (!message.deeplink) {
+                    return;
                 }
+                _this.handleDeeplinkEvent(message.deeplink);
             });
+
+            MobileMessaging.register("deeplink", function(deeplinkPath) {
+                _this.handleDeeplinkEvent(deeplinkPath);
+            });
+        },
+        handleDeeplinkEvent: function (deeplink) {
+            if (!deeplink) {
+                utils.log('Deeplink is not provided');
+                return;
+            }
+            var pathSegments = new URL(deeplink).pathname.split('/');
+            for (var pathSegment of pathSegments) {
+                if (pathSegment && this.screens[pathSegment]) {
+                    this.show(pathSegment);
+                }
+            }
         }
     };
 
