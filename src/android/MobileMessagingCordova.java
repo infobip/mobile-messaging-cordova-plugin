@@ -575,13 +575,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private void saveUser(JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        final User user = resolveUser(args);
-        runInBackground(new Runnable() {
-            @Override
-            public void run() {
-                mobileMessaging().saveUser(user, userResultListener(callbackContext));
-            }
-        });
+        try {
+            final User user = resolveUser(args);
+            runInBackground(new Runnable() {
+                @Override
+                public void run() {
+                    mobileMessaging().saveUser(user, userResultListener(callbackContext));
+                }
+            });
+        } catch (IllegalArgumentException exception) {
+            sendCallbackError(callbackContext, exception.getMessage());
+        }
     }
 
     private void fetchUser(final CallbackContext callbackContext) {
@@ -656,23 +660,27 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private void personalize(JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        final PersonalizationCtx ctx = resolvePersonalizationCtx(args);
-        runInBackground(new Runnable() {
-            @Override
-            public void run() {
-                mobileMessaging().personalize(ctx.userIdentity, ctx.userAttributes, ctx.forceDepersonalize, new MobileMessaging.ResultListener<User>() {
-                    @Override
-                    public void onResult(Result<User, MobileMessagingError> result) {
-                        if (result.isSuccess()) {
-                            JSONObject json = UserJson.toJSON(result.getData());
-                            sendCallbackSuccess(callbackContext, json);
-                        } else {
-                            sendCallbackError(callbackContext, result.getError().getMessage());
+        try {
+            final PersonalizationCtx ctx = resolvePersonalizationCtx(args);
+            runInBackground(new Runnable() {
+                @Override
+                public void run() {
+                    mobileMessaging().personalize(ctx.userIdentity, ctx.userAttributes, ctx.forceDepersonalize, new MobileMessaging.ResultListener<User>() {
+                        @Override
+                        public void onResult(Result<User, MobileMessagingError> result) {
+                            if (result.isSuccess()) {
+                                JSONObject json = UserJson.toJSON(result.getData());
+                                sendCallbackSuccess(callbackContext, json);
+                            } else {
+                                sendCallbackError(callbackContext, result.getError().getMessage());
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        } catch (IllegalArgumentException exception) {
+            sendCallbackError(callbackContext, exception.getMessage());
+        }
     }
 
     private void depersonalize(final CallbackContext callbackContext) {
@@ -935,7 +943,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     @NonNull
-    private static User resolveUser(JSONArray args) throws JSONException {
+    private static User resolveUser(JSONArray args) throws JSONException, IllegalArgumentException {
         if (args.length() < 1 || args.getJSONObject(0) == null) {
             throw new IllegalArgumentException("Cannot resolve user from arguments");
         }
@@ -993,7 +1001,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return args.getString(0);
     }
 
-    private static PersonalizationCtx resolvePersonalizationCtx(JSONArray args) throws JSONException {
+    private static PersonalizationCtx resolvePersonalizationCtx(JSONArray args) throws JSONException, IllegalArgumentException {
         if (args.length() < 1) {
             throw new IllegalArgumentException("Cannot resolve personalization context from arguments");
         }
@@ -1334,7 +1342,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
         }
 
-        static User fromJSON(JSONObject json) {
+        static User fromJSON(JSONObject json) throws IllegalArgumentException {
             User user = new User();
 
             try {
@@ -1379,6 +1387,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     Type type = new TypeToken<Map<String, Object>>() {
                     }.getType();
                     Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
+                    if (!CustomAttributesMapper.validate(customAttributes)) {
+                        throw new IllegalArgumentException("Custom attributes are invalid.");
+                    }
                     user.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
                 }
             } catch (Exception e) {
@@ -1388,7 +1399,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return user;
         }
 
-        static UserAttributes userAttributesFromJson(JSONObject json) {
+        static UserAttributes userAttributesFromJson(JSONObject json) throws IllegalArgumentException {
             if (json == null) {
                 return null;
             }
@@ -1428,6 +1439,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     Type type = new TypeToken<Map<String, Object>>() {
                     }.getType();
                     Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
+                    if (!CustomAttributesMapper.validate(customAttributes)) {
+                        throw new IllegalArgumentException("Custom attributes are invalid.");
+                    }
                     userAttributes.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
                 }
             } catch (Exception e) {
