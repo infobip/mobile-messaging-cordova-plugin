@@ -276,8 +276,6 @@ fileprivate class MobileMessagingEventsManager {
         // this procedure guarantees delivery for the library events in cases when JavaScript environment set itself up later than real native events happen.
         eventsManager?.start()
 
-        MobileMessaging.messageHandlingDelegate = CordovaMMMessageHandlingDelegate()
-
         isStarted = true
         commandDelegate?.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
     }
@@ -841,12 +839,6 @@ fileprivate extension CDVCommandDelegate {
     }
     func sendSuccess(for command: CDVInvokedUrlCommand) {
         self.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
-    }
-}
-
-class CordovaMMMessageHandlingDelegate : MessageHandlingDelegate {
-    func inAppWebViewPresentingViewController(for message: MTMessage) -> UIViewController? {
-        return UIApplication.topViewController()
     }
 }
 
