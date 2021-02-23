@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.infobip.mobilemessaging.cordova.example" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="com.infobip.mobilemessaging.cordova.example" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>CordovaMobilePushDemo</name>
     <description>
         A sample Cordova mobile push demo.
@@ -21,32 +21,27 @@
         <allow-intent href="itms-apps:*" />
         <config-file parent="CFBundleURLTypes" platform="ios" target="*-Info.plist">
             <array>
-              <dict>
-                <key>CFBundleTypeRole</key>
-                <string>Editor</string>
-                <key>CFBundleURLName</key>
-                <string>com.infobip.mobilemessaging.cordova.example</string>
-                <key>CFBundleURLSchemes</key>
-                <array>
-                  <string>com.infobip.mobilemessaging</string>
-                </array>
-              </dict>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLName</key>
+                    <string>com.infobip.mobilemessaging.cordova.example</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>com.infobip.mobilemessaging</string>
+                    </array>
+                </dict>
             </array>
         </config-file>
     </platform>
     <platform name="android">
-    <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:name='MainActivity']">
-        <intent-filter>
-            <data android:scheme="com.infobip.mobilemessaging" />
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-        </intent-filter>
-    </config-file>
+        <config-file parent="/manifest/application/activity[@android:name='MainActivity']" target="AndroidManifest.xml">
+            <intent-filter>
+                <data android:scheme="com.infobip.mobilemessaging" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </config-file>
     </platform>
-    <plugin name="com-infobip-plugins-mobilemessaging" spec="^1.6.3">
-        <variable name="IOS_EXTENSION_APP_CODE" value=<your application code> />
-        <variable name="IOS_EXTENSION_APP_GROUP" value=<your extension app group> />
-        <variable name="ANDROID_FIREBASE_SENDER_ID" value=<your android sender id> />
-    </plugin>
 </widget>

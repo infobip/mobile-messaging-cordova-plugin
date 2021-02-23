@@ -18,6 +18,7 @@ For iOS project:
 - Xcode 10
 - Carthage (`brew install carthage`)
 - Minimum deployment target 10.0
+- Ruby version 2.3.8
 
 For Android project: 
 - Android Studio
