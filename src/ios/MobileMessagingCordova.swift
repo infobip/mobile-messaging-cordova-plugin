@@ -29,12 +29,12 @@ class MMConfiguration {
     let inAppChatEnabled: Bool
     let messageStorageEnabled: Bool
     let defaultMessageStorage: Bool
-    let notificationType: UserNotificationType
+    let notificationType: MMUserNotificationType
     let forceCleanup: Bool
     let logging: Bool
     let privacySettings: [String: Any]
     let cordovaPluginVersion: String
-    let categories: [NotificationCategory]?
+    let categories: [MMNotificationCategory]?
     let webViewSettings: [String: AnyObject]?
 
     init?(rawConfig: [String: AnyObject]) {
@@ -66,23 +66,23 @@ class MMConfiguration {
 
         self.cordovaPluginVersion = rawConfig[MMConfiguration.Keys.cordovaPluginVersion].unwrap(orDefault: "unknown")
 
-        self.categories = (rawConfig[MMConfiguration.Keys.notificationCategories] as? [[String: Any]])?.compactMap(NotificationCategory.init)
+        self.categories = (rawConfig[MMConfiguration.Keys.notificationCategories] as? [[String: Any]])?.compactMap(MMNotificationCategory.init)
 
         if let notificationTypeNames =  ios[MMConfiguration.Keys.notificationTypes] as? [String] {
-            let options = notificationTypeNames.reduce([], { (result, notificationTypeName) -> [UserNotificationType] in
+            let options = notificationTypeNames.reduce([], { (result, notificationTypeName) -> [MMUserNotificationType] in
                 var result = result
                 switch notificationTypeName {
-                case "badge": result.append(UserNotificationType.badge)
-                case "sound": result.append(UserNotificationType.sound)
-                case "alert": result.append(UserNotificationType.alert)
+                case "badge": result.append(MMUserNotificationType.badge)
+                case "sound": result.append(MMUserNotificationType.sound)
+                case "alert": result.append(MMUserNotificationType.alert)
                 default: break
                 }
                 return result
             })
 
-            self.notificationType = UserNotificationType(options: options)
+            self.notificationType = MMUserNotificationType(options: options)
         } else {
-            self.notificationType = UserNotificationType.none
+            self.notificationType = MMUserNotificationType.none
         }
 
         if let rawWebViewSettings = ios[MMConfiguration.Keys.webViewSettings] as? [String: AnyObject] {
@@ -182,7 +182,7 @@ fileprivate class MobileMessagingEventsManager {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, url.absoluteString])
             }
         case MMNotificationMessageReceived:
-            if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+            if let message = notification.userInfo?[MMNotificationKeyMessage] as? MM_MTMessage {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary()])
             }
         case MMNotificationDeviceTokenReceived:
@@ -198,11 +198,11 @@ fileprivate class MobileMessagingEventsManager {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, region.dictionary()])
             }
         case MMNotificationMessageTapped:
-            if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage {
+            if let message = notification.userInfo?[MMNotificationKeyMessage] as? MM_MTMessage {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary()])
             }
         case MMNotificationActionTapped:
-            if let message = notification.userInfo?[MMNotificationKeyMessage] as? MTMessage, let actionIdentifier = notification.userInfo?[MMNotificationKeyActionIdentifier] as? String {
+            if let message = notification.userInfo?[MMNotificationKeyMessage] as? MM_MTMessage, let actionIdentifier = notification.userInfo?[MMNotificationKeyActionIdentifier] as? String {
                 var parameters = [cordovaEventName, message.dictionary(), actionIdentifier] as [Any]
                 if let textInput = notification.userInfo?[MMNotificationKeyActionTextInput] as? String {
                     parameters.append(textInput)
@@ -214,11 +214,11 @@ fileprivate class MobileMessagingEventsManager {
         case MMNotificationPersonalized:
             notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
         case MMNotificationInstallationSynced:
-            if let installation = notification.userInfo?[MMNotificationKeyInstallation] as? Installation {
+            if let installation = notification.userInfo?[MMNotificationKeyInstallation] as? MMInstallation {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, installation.dictionaryRepresentation])
             }
         case MMNotificationUserSynced:
-            if let user = notification.userInfo?[MMNotificationKeyUser] as? User {
+            if let user = notification.userInfo?[MMNotificationKeyUser] as? MMUser {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, user.dictionaryRepresentation])
             }
         default: break
@@ -289,7 +289,7 @@ fileprivate class MobileMessagingEventsManager {
     }
 
     func saveUser(_ command: CDVInvokedUrlCommand) {
-        guard let userDataDictionary = command.arguments[0] as? [String: Any], let user = User(dictRepresentation: userDataDictionary) else
+        guard let userDataDictionary = command.arguments[0] as? [String: Any], let user = MMUser(dictRepresentation: userDataDictionary) else
         {
             self.commandDelegate?.send(errorText: "Could not retrieve user data from argument", for: command)
             return
@@ -320,7 +320,7 @@ fileprivate class MobileMessagingEventsManager {
     }
 
     func saveInstallation(_ command: CDVInvokedUrlCommand) {
-        guard let installationDictionary = command.arguments[0] as? [String: Any], let installation = Installation(dictRepresentation: installationDictionary) else
+        guard let installationDictionary = command.arguments[0] as? [String: Any], let installation = MMInstallation(dictRepresentation: installationDictionary) else
         {
             self.commandDelegate?.send(errorText: "Could not retrieve installation data from argument", for: command)
             return
@@ -371,13 +371,13 @@ fileprivate class MobileMessagingEventsManager {
             self.commandDelegate?.send(errorText: "Could not retrieve context from argument", for: command)
             return
         }
-        guard let ui = UserIdentity(phones: uiDict["phones"] as? [String], emails: uiDict["emails"] as? [String], externalUserId: uiDict["externalUserId"] as? String) else
+        guard let ui = MMUserIdentity(phones: uiDict["phones"] as? [String], emails: uiDict["emails"] as? [String], externalUserId: uiDict["externalUserId"] as? String) else
         {
             self.commandDelegate?.send(errorText: "userIdentity must have at least one non-nil property", for: command)
             return
         }
         let uaDict = context["userAttributes"] as? [String: Any]
-        let ua = uaDict == nil ? nil : UserAttributes(dictRepresentation: uaDict!)
+        let ua = uaDict == nil ? nil : MMUserAttributes(dictRepresentation: uaDict!)
         MobileMessaging.personalize(withUserIdentity: ui, userAttributes: ua) { (error) in
             if let error = error {
                 self.commandDelegate?.send(error: error, for: command)
@@ -389,7 +389,7 @@ fileprivate class MobileMessagingEventsManager {
 
     func depersonalize(_ command: CDVInvokedUrlCommand) {
         MobileMessaging.depersonalize(completion: { (status, error) in
-            if (status == SuccessPending.pending) {
+            if (status == MMSuccessPending.pending) {
                 self.commandDelegate?.send(message: "pending", for: command)
             } else if let error = error {
                 self.commandDelegate?.send(error: error, for: command)
@@ -494,7 +494,7 @@ fileprivate class MobileMessagingEventsManager {
 
     func submitEvent(_ command: CDVInvokedUrlCommand) {
         guard let eventDataDictionary = command.arguments[0] as? [String: Any],
-            let event = CustomEvent(dictRepresentation: eventDataDictionary) else
+            let event = MMCustomEvent(dictRepresentation: eventDataDictionary) else
         {
             self.commandDelegate?.send(errorText: "Could not retrieve event data from argument", for: command)
             return
@@ -504,7 +504,7 @@ fileprivate class MobileMessagingEventsManager {
 
     func submitEventImmediately(_ command: CDVInvokedUrlCommand) {
         guard let eventDataDictionary = command.arguments[0] as? [String: Any],
-            let event = CustomEvent(dictRepresentation: eventDataDictionary) else
+            let event = MMCustomEvent(dictRepresentation: eventDataDictionary) else
         {
             self.commandDelegate?.send(errorText: "Could not retrieve event data from argument", for: command)
             return
@@ -527,7 +527,7 @@ fileprivate class MobileMessagingEventsManager {
             presentVCModally = shouldBePresentedModally
         }
 
-        let vc = presentVCModally ? ChatViewController.makeRootNavigationViewController(): ChatViewController.makeRootNavigationViewControllerWithCustomTransition()
+        let vc = presentVCModally ? MMChatViewController.makeRootNavigationViewController(): MMChatViewController.makeRootNavigationViewControllerWithCustomTransition()
         if presentVCModally {
             vc.modalPresentationStyle = .fullScreen
         }
@@ -600,7 +600,7 @@ fileprivate class MobileMessagingEventsManager {
     }
 }
 
-extension MTMessage {
+extension MM_MTMessage {
     override func dictionary() -> [String: Any] {
         var result = [String: Any]()
         result["messageId"] = messageId
@@ -630,15 +630,15 @@ extension MTMessage {
 
 }
 
-extension BaseMessage {
-    class func createFrom(dictionary: [String: Any]) -> BaseMessage? {
+extension MMBaseMessage {
+    class func createFrom(dictionary: [String: Any]) -> MMBaseMessage? {
         guard let messageId = dictionary["messageId"] as? String,
-            let originalPayload = dictionary["originalPayload"] as? StringKeyPayload else
+            let originalPayload = dictionary["originalPayload"] as? MMStringKeyPayload else
         {
             return nil
         }
 
-        return BaseMessage(messageId: messageId, direction: MessageDirection.MT, originalPayload: originalPayload, deliveryMethod: .undefined)
+        return MMBaseMessage(messageId: messageId, direction: MMMessageDirection.MT, originalPayload: originalPayload, deliveryMethod: .undefined)
     }
 
     func dictionary() -> [String: Any] {
@@ -647,13 +647,13 @@ extension BaseMessage {
         result["customPayload"] = originalPayload["customPayload"]
         result["originalPayload"] = originalPayload
 
-        if let aps = originalPayload["aps"] as? StringKeyPayload {
+        if let aps = originalPayload["aps"] as? MMStringKeyPayload {
             result["body"] = aps["body"]
             result["sound"] = aps["sound"]
         }
 
-        if let internalData = originalPayload["internalData"] as? StringKeyPayload,
-            let _ = internalData["silent"] as? StringKeyPayload {
+        if let internalData = originalPayload["internalData"] as? MMStringKeyPayload,
+            let _ = internalData["silent"] as? MMStringKeyPayload {
             result["silent"] = true
         } else if let silent = originalPayload["silent"] as? Bool {
             result["silent"] = silent
@@ -681,12 +681,12 @@ extension MMRegion {
     }
 }
 
-class MessageStorageAdapter: MessageStorage {
+class MessageStorageAdapter: MMMessageStorage {
     var registeredCallbacks = [String: String]()
     let queue = DispatchQueue(label: "MessageStoreAdapterQueue")
     let findSemaphore = DispatchSemaphore(value: 0)
     let plugin: CDVPlugin
-    var foundMessage:BaseMessage?
+    var foundMessage:MMBaseMessage?
 
     init(plugin: CDVPlugin) {
         self.plugin = plugin
@@ -700,11 +700,11 @@ class MessageStorageAdapter: MessageStorage {
         sendCallback(for: "messageStorage.stop")
     }
 
-    func insert(outgoing messages: [BaseMessage], completion: @escaping () -> Void) {
+    func insert(outgoing messages: [MMBaseMessage], completion: @escaping () -> Void) {
         // Implementation not needed. This method is intended for client usage.
     }
 
-    func insert(incoming messages: [BaseMessage], completion: @escaping () -> Void) {
+    func insert(incoming messages: [MMBaseMessage], completion: @escaping () -> Void) {
         sendCallback(for: "messageStorage.save", withArray: messages.map({
             $0.dictionary()
         }))
@@ -719,11 +719,11 @@ class MessageStorageAdapter: MessageStorage {
         // Implementation not needed. This method is intended for client usage.
     }
 
-    func update(messageSentStatus status: MOMessageSentStatus, for messageId: MessageId, completion: @escaping () -> Void) {
+    func update(messageSentStatus status: MM_MOMessageSentStatus, for messageId: MessageId, completion: @escaping () -> Void) {
         // Implementation not needed. This method is intended for client usage.
     }
 
-    func findMessage(withId messageId: MessageId) -> BaseMessage? {
+    func findMessage(withId messageId: MessageId) -> MMBaseMessage? {
         queue.sync() {
             sendCallback(for: "messageStorage.find", withMessage: messageId)
             _ = findSemaphore.wait(wallTimeout: DispatchWallTime.now() + DispatchTimeInterval.seconds(30))
@@ -765,7 +765,7 @@ class MessageStorageAdapter: MessageStorage {
             return
         }
 
-        foundMessage = BaseMessage.createFrom(dictionary: dictionary)
+        foundMessage = MMBaseMessage.createFrom(dictionary: dictionary)
         findSemaphore.signal()
     }
 
