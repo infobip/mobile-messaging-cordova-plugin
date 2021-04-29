@@ -14,6 +14,7 @@ if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion
             name 'Google'
         }
         maven { url 'http://developer.huawei.com/repo/' }
+        mavenCentral()
     }
 }
 
@@ -22,6 +23,7 @@ buildscript {
         maven { url "https://maven.google.com" }
         maven { url 'http://developer.huawei.com/repo/' }
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.2.0'
@@ -32,15 +34,15 @@ buildscript {
 // apply plugin: 'com.huawei.agconnect'
 
 dependencies {
-    def mmHmsVersion = '2.0.0'
-    def mmFcmVersion = '5.0.1'
+    def mmHmsVersion = '2.1.2'
+    def mmFcmVersion = '5.2.1'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
 
     // Android dependencies start
     if (!isHmsBuild) {
-        implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-geo-sdk:$mmFcmVersion@aar"
-        implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-sdk:$mmFcmVersion@aar") {
+        implementation "com.infobip:infobip-mobile-messaging-android-geo-sdk:$mmFcmVersion@aar"
+        implementation("com.infobip:infobip-mobile-messaging-android-sdk:$mmFcmVersion@aar") {
             transitive = true;
             if (!overrideAndroidSupportLibsVersion.empty) {
                 exclude group: 'com.android.support', module: 'support-v4'
@@ -58,8 +60,8 @@ dependencies {
 
     // Hms dependencies start
     if (isHmsBuild) {
-        implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-huawei-geo-sdk:$mmHmsVersion@aar"
-        implementation("org.infobip.mobile.messaging.api:infobip-mobile-messaging-huawei-sdk:$mmHmsVersion@aar") {
+        implementation "com.infobip:infobip-mobile-messaging-huawei-geo-sdk:$mmHmsVersion@aar"
+        implementation("com.infobip:infobip-mobile-messaging-huawei-sdk:$mmHmsVersion@aar") {
             transitive = true;
             if (!overrideAndroidSupportLibsVersion.empty) {
                 exclude group: 'com.android.support', module: 'support-v4'
@@ -69,7 +71,7 @@ dependencies {
     }
     // Hms dependencies end
 
-    implementation "org.infobip.mobile.messaging.api:infobip-mobile-messaging-android-chat-sdk:$mmFcmVersion@aar"
+    implementation "com.infobip:infobip-mobile-messaging-android-chat-sdk:$mmFcmVersion@aar"
 
     if (!overrideAndroidSupportLibsVersion.empty) {
         implementation "com.android.support:support-v4:$overrideAndroidSupportLibsVersion"
