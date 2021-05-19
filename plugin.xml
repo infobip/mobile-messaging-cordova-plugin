@@ -57,7 +57,7 @@
 			<array><string>CloudDocuments</string></array>
 		</config-file>
 
-		<framework src="libs/ios/Carthage/Build/MobileMessaging.xcframework" custom="true" embed="true"/>
+		<framework src="libs/ios/Carthage/Build/iOS/MobileMessaging.framework" custom="true" embed="true"/>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
 
