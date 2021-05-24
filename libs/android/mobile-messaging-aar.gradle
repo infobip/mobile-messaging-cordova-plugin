@@ -62,7 +62,7 @@ dependencies {
     // Hms dependencies start
     if (isHmsBuild) {
         implementation "com.infobip:infobip-mobile-messaging-huawei-geo-sdk:$mmHmsVersion@aar"
-        implementation "com.infobip:infobip-mobile-messaging-huawei-chat-sdk:$mmFcmVersion@aar"
+        implementation "com.infobip:infobip-mobile-messaging-huawei-chat-sdk:$mmHmsVersion@aar"
         implementation("com.infobip:infobip-mobile-messaging-huawei-sdk:$mmHmsVersion@aar") {
             transitive = true;
             if (!overrideAndroidSupportLibsVersion.empty) {
