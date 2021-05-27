@@ -30,7 +30,7 @@ module.exports = function(ctx) {
     }
 
     var command = ` export GEM_HOME=plugins/${ctx.opts.plugin.id}/gems;
-                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine -v 0.9.2 --default;
+                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine;
                     ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate --cordova\
                     -a ${appCode}\
                     -p "${ctx.opts.projectRoot}/${projectPath}"\
