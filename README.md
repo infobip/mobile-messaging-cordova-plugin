@@ -10,13 +10,13 @@ The document describes library integration steps for your Cordova project.
   * [Initialization configuration](#initialization-configuration)
 
 ## Requirements
-- Cordova 7.0+ (`sudo npm install -g cordova`)
-- npm (tested with 4.1.2)
-- node (tested with 7.5.0)
+- Cordova 10.0+ (`sudo npm install -g cordova`)
+- npm (tested with 7.6.0)
+- node (tested with 15.11.0)
 
 For iOS project:
-- Xcode 10
-- Carthage (`brew install carthage`)
+- Xcode 12.5
+- Carthage >= 0.37.0 (`brew install carthage`)
 - Minimum deployment target 10.0
 - Ruby version 2.3.8
 
