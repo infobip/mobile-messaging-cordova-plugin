@@ -31,11 +31,10 @@ module.exports = function(ctx) {
 
     var command = ` export GEM_HOME=plugins/${ctx.opts.plugin.id}/gems;
                     gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine;
-                    ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate --cordova\
-                    -a ${appCode}\
+                    ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate -a ${appCode}\
                     -p "${ctx.opts.projectRoot}/${projectPath}"\
                     -t "${projectMainTarget}"\
-                    -g ${appGroup}
+                    -g ${appGroup} -c -x
                     export GEM_HOME=$GEM_PATH`;
 
     var exec = require('child_process').exec, child;
