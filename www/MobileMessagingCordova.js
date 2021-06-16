@@ -177,6 +177,16 @@ MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
 MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregister;
 
 /**
+ * Un register all handlers for MobileMessaging library event.
+ *
+ * @name unregisterAllHandlers
+ * @param {String} eventName
+ */
+MobileMessagingCordova.prototype.unregisterAllHandlers = function(eventName) {
+	eventHandlers[eventName] = [];
+};
+
+/**
  * Saves user data to the server.
  *
  * @name saveUser
