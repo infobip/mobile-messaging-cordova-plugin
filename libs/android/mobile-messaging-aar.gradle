@@ -19,6 +19,8 @@ if (overrideAndroidSupportLibsVersion.empty || overrideAndroidSupportLibsVersion
 }
 
 buildscript {
+    def overrideGoogleServicesVersion = cdvHelpers.getConfigPreference("IB_ANDROID_GOOGLE_SERVICES_VER", "4.2.0")
+
     repositories {
         maven { url "https://maven.google.com" }
         maven { url 'http://developer.huawei.com/repo/' }
@@ -26,7 +28,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.google.gms:google-services:4.2.0'
+        classpath "com.google.gms:google-services:${overrideGoogleServicesVersion}"
         classpath 'com.android.tools.build:gradle:3.5.2'
     }
 }
