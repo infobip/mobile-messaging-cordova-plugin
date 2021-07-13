@@ -65,6 +65,8 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         <variable name="ANDROID_FIREBASE_SENDER_ID" value="Firebase Sender ID" />
     </plugin>
     ```
+    Do not add "ANDROID_FIREBASE_SENDER_ID" variable if you're using <a href="https://developers.google.com/android/guides/google-services-plugin" target="_blank">Google Services Gradle Plugin</a> and `google-services.json`, check [How To](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/How-to-use-Google-Services-Gradle-plugin) in this case.
+
 4. Configure Huawei build
 
     1. Configure <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137" target="_blank">Huawei application</a>
