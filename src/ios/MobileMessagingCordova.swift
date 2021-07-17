@@ -174,7 +174,7 @@ fileprivate class MobileMessagingEventsManager {
     }
 
     private func handleMMNotification(cordovaEventName: String, callbackId: String, notification: Notification) {
-        var notificationResult: CDVPluginResult?
+        var notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
         switch notification.name.rawValue {
         case NSNotification.Name.CDVPluginHandleOpenURLWithAppSourceAndAnnotation.rawValue:
             if let dictionary = notification.object as? [String: Any],
@@ -225,7 +225,7 @@ fileprivate class MobileMessagingEventsManager {
         }
 
         notificationResult?.setKeepCallbackAs(true)
-
+        
         plugin.commandDelegate?.send(notificationResult, callbackId: callbackId)
     }
 
