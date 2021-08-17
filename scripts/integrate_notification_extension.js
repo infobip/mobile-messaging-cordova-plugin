@@ -1,5 +1,5 @@
 module.exports = function(ctx) {
-	if (ctx.opts.platforms.indexOf('ios') < 0) { // project doesn't support ios at all
+    if (ctx.opts.platforms.indexOf('ios') < 0) { // project doesn't support ios at all
         return;
     }
     if (ctx.opts.cordova.platforms.length > 0 && ctx.opts.cordova.platforms.indexOf('ios') < 0) { // corodova prepare was explicitly called for non-ios platforms
@@ -30,7 +30,7 @@ module.exports = function(ctx) {
     }
 
     var command = ` export GEM_HOME=plugins/${ctx.opts.plugin.id}/gems;
-                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine;
+                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine -v 0.9.8;
                     ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate -a ${appCode}\
                     -p "${ctx.opts.projectRoot}/${projectPath}"\
                     -t "${projectMainTarget}"\
@@ -44,10 +44,10 @@ module.exports = function(ctx) {
                 console.log('stdout: ' + stdout);
             }
             if (stderr) {
-               console.log('stderr: ' + stderr);
+                console.log('stderr: ' + stderr);
             }
             if (error !== null) {
-               console.log('exec error: ' + error);
-           }
-       });
+                console.log('exec error: ' + error);
+            }
+        });
 }
