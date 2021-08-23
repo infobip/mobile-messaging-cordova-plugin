@@ -1,5 +1,5 @@
 module.exports = function(ctx) {
-	if (ctx.opts.platforms.indexOf('ios') < 0) { // project doesn't support ios at all
+    if (ctx.opts.platforms.indexOf('ios') < 0) { // project doesn't support ios at all
         return;
     }
     if (ctx.opts.cordova.platforms.length > 0 && ctx.opts.cordova.platforms.indexOf('ios') < 0) { // corodova prepare was explicitly called for non-ios platforms
@@ -22,6 +22,8 @@ module.exports = function(ctx) {
     var appGroup = ctx.opts.options.IOS_EXTENSION_APP_GROUP || variables.IOS_EXTENSION_APP_GROUP;
     var projectPath = ctx.opts.options.IOS_EXTENSION_PROJECT_PATH || variables.IOS_EXTENSION_PROJECT_PATH || `platforms/ios/${appName}.xcodeproj`;
     var projectMainTarget = ctx.opts.options.IOS_EXTENSION_PROJECT_MAIN_TARGET || variables.IOS_EXTENSION_PROJECT_MAIN_TARGET || appName;
+    var overrideSigning = ctx.opts.options.IOS_OVERRIDE_EXTENSION_SIGNING || variables.IOS_OVERRIDE_EXTENSION_SIGNING;
+
 
     if (!(appCode && appGroup && projectPath && projectMainTarget)) {
         console.log("ERROR: 'IOS_EXTENSION_APP_CODE' or 'IOS_EXTENSION_APP_GROUP' or 'IOS_EXTENSION_PROJECT_PATH' or 'IOS_EXTENSION_PROJECT_MAIN_TARGET' not defined");
@@ -30,13 +32,23 @@ module.exports = function(ctx) {
     }
 
     var command = ` export GEM_HOME=plugins/${ctx.opts.plugin.id}/gems;
-                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine -v 0.9.8;
-                    ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate --cordova\
-                    -a ${appCode}\
+                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems /Users/okoroleva/mobile-messaging-mmine/mmine-0.9.9.gem;
+                    ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate -a ${appCode}\
                     -p "${ctx.opts.projectRoot}/${projectPath}"\
                     -t "${projectMainTarget}"\
-                    -g ${appGroup}
-                    export GEM_HOME=$GEM_PATH`;
+                    -g ${appGroup}\
+                    -c -x\
+                    -v`;
+
+    if (overrideSigning === "true") {
+        command += '-s ';
+    }
+    command += ';';
+    command += '\nexport GEM_HOME=$GEM_PATH';
+
+    console.log("Command:  " + command);
+
+
 
     var exec = require('child_process').exec, child;
     child = exec(command,
@@ -45,10 +57,10 @@ module.exports = function(ctx) {
                 console.log('stdout: ' + stdout);
             }
             if (stderr) {
-               console.log('stderr: ' + stderr);
+                console.log('stderr: ' + stderr);
             }
             if (error !== null) {
-               console.log('exec error: ' + error);
-           }
-       });
+                console.log('exec error: ' + error);
+            }
+        });
 }
