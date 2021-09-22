@@ -1,4 +1,4 @@
-var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized", "deeplink"];
+var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized", "deeplink", "inAppChat.unreadMessageCounterUpdated"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
@@ -496,6 +496,26 @@ MobileMessagingCordova.prototype.showChat = function(presentingOptions) {
  */
 MobileMessagingCordova.prototype.setupiOSChatSettings = function(chatSettings) {
 	cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'setupiOSChatSettings', [chatSettings]);
+};
+
+/**
+ * @name resetMessageCounter
+ * MobileMessaging plugin automatically resets the counter to 0 whenever user opens the chat screen.
+ * However, use the following API in case you need to manually reset the counter.
+ */
+MobileMessagingCordova.prototype.resetMessageCounter = function() {
+	cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'resetMessageCounter', []);
+};
+
+/**
+ * @name getMessageCounter
+ * The counter increments each time the application receives in-app chat push message
+ * (this usually happens when chat screen is inactive or the application is in background/terminated state).
+ * In order to get current counter value use following API
+ * @param {Function} resultCallback will be called upon completion with integer counter value.
+ */
+MobileMessagingCordova.prototype.getMessageCounter = function(resultCallback) {
+	cordova.exec(resultCallback, function(){}, 'MobileMessagingCordova', 'getMessageCounter', []);
 };
 
 MobileMessaging = new MobileMessagingCordova();

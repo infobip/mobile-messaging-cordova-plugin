@@ -510,4 +510,26 @@ describe('inAppChat methods', function() {
 				sendButtonColor: "#ffffff"
 			}]);
 	});
+
+	it('should reset message Counter ', function() {
+		MobileMessaging.resetMessageCounter();
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'resetMessageCounter',
+			[]);
+	});
+
+	it('should get message Counter ', function() {
+		MobileMessaging.getMessageCounter(function(){});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'getMessageCounter',
+			[]);
+	});
 });

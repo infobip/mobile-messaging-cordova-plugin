@@ -22,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
 import org.infobip.mobile.messaging.mobileapi.apiavailability.ApiAvailability;
 import com.google.gson.reflect.TypeToken;
 
@@ -124,6 +125,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_PERSONALIZED = "personalized";
     private static final String EVENT_DEPERSONALIZED = "depersonalized";
     private static final String EVENT_DEEPLINK = "deeplink";
+    private static final String EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED = "inAppChat.unreadMessageCounterUpdated";
 
     private static final String EVENT_GEOFENCE_ENTERED = "geofenceEntered";
     private static final String EVENT_NOTIFICATION_TAPPED = "notificationTapped";
@@ -134,6 +136,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
 
     private static final String FUNCTION_SHOW_INAPP_CHAT = "showChat";
+    private static final String FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER = "getMessageCounter";
+    private static final String FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER = "resetMessageCounter";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
@@ -144,6 +148,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         put(Event.DEPERSONALIZED.getKey(), EVENT_DEPERSONALIZED);
         put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
         put(InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey(), EVENT_NOTIFICATION_ACTION_TAPPED);
+        put(InAppChatEvent.UNREAD_MESSAGES_COUNTER_UPDATED.getKey(), EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED);
     }};
 
     private static final Map<String, String> messageBroadcastEventMap = new HashMap<String, String>() {{
@@ -203,11 +208,13 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 return;
             }
 
-            String data = null;
+            Object data = null;
             if (Event.TOKEN_RECEIVED.getKey().equals(intent.getAction())) {
                 data = intent.getStringExtra(BroadcastParameter.EXTRA_CLOUD_TOKEN);
             } else if (Event.REGISTRATION_CREATED.getKey().equals(intent.getAction())) {
                 data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
+            } else if (InAppChatEvent.UNREAD_MESSAGES_COUNTER_UPDATED.getKey().equals(intent.getAction())) {
+                data = intent.getIntExtra(BroadcastParameter.EXTRA_UNREAD_CHAT_MESSAGES_COUNT, 0);
             }
 
             if (libraryEventReceiver != null) {
@@ -425,6 +432,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_SHOW_INAPP_CHAT.equals(action)) {
             showInAppChat(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER.equals(action)) {
+            getMessageCounter(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER.equals(action)) {
+            resetMessageCounter(args, callbackContext);
             return true;
         }
 
@@ -796,6 +809,14 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void showInAppChat(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatView().show();
+    }
+
+    private void getMessageCounter(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, InAppChat.getInstance(cordova.getActivity().getApplication()).getMessageCounter()));
+    }
+
+    private void resetMessageCounter(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        InAppChat.getInstance(cordova.getActivity().getApplication()).resetMessageCounter();
     }
 
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {

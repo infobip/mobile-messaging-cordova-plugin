@@ -115,6 +115,7 @@ fileprivate class MobileMessagingEventsManager {
         "installationUpdated": MMNotificationInstallationSynced,
         "userUpdated": MMNotificationUserSynced,
         "deeplink": NSNotification.Name.CDVPluginHandleOpenURLWithAppSourceAndAnnotation.rawValue,
+        "inAppChat.unreadMessageCounterUpdated": MMNotificationInAppChatUnreadMessagesCounterUpdated,
     ]
 
     init(plugin: MobileMessagingCordova) {
@@ -221,11 +222,15 @@ fileprivate class MobileMessagingEventsManager {
             if let user = notification.userInfo?[MMNotificationKeyUser] as? MMUser {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, user.dictionaryRepresentation])
             }
+        case MMNotificationInAppChatUnreadMessagesCounterUpdated:
+            if let counter = notification.userInfo?[MMNotificationKeyInAppChatUnreadMessagesCounter] as? Int {
+                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, counter])
+            }
         default: break
         }
 
         notificationResult?.setKeepCallbackAs(true)
-        
+
         plugin.commandDelegate?.send(notificationResult, callbackId: callbackId)
     }
 
@@ -543,6 +548,16 @@ fileprivate class MobileMessagingEventsManager {
         if let chatSettings = command.arguments[0] as? [String: AnyObject] {
             MobileMessaging.inAppChat?.settings.configureWith(rawConfig: chatSettings)
         }
+    }
+
+    func getMessageCounter(_ command: CDVInvokedUrlCommand) {
+        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.inAppChat?.getMessageCounter ?? 0)
+        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+    }
+
+    func resetMessageCounter(_ command: CDVInvokedUrlCommand) {
+        MobileMessaging.inAppChat?.resetMessageCounter()
+        self.commandDelegate.sendSuccess(for: command)
     }
 
     //MARK: Utils
