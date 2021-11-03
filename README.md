@@ -17,17 +17,17 @@ The document describes library integration steps for your Cordova project.
 For iOS project:
 - Xcode 12.5
 - Carthage >= 0.37.0 (`brew install carthage`)
-- Minimum deployment target 10.0
+- Minimum deployment target 11.0
 - Ruby version 2.3.8
 
 For Android project: 
 - Android Studio
-- API Level: 14 (Android 4.0 - Ice Cream Sandwich)
+- Minimum API Level: 14 (Android 4.0 - Ice Cream Sandwich)
 
 For Huawei:
 - Android Studio
 - Installed <a href="https://huaweimobileservices.com/appgallery/" target="_blank">AppGallery</a> with HMS Core at device
-- API level: 19 (Android 4.4 - KitKat)
+- Minimum API level: 19 (Android 4.4 - KitKat)
 
 ## Quick start guide
 This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
