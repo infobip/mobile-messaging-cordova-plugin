@@ -605,7 +605,6 @@ fileprivate class MobileMessagingEventsManager {
             mobileMessaging?.webViewSettings.configureWith(rawConfig: webViewSettings)
         }
         mobileMessaging?.start()
-        MobileMessaging.sync()
     }
 
     private func stop() {
