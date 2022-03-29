@@ -22,6 +22,9 @@ class MMConfiguration {
         static let cordovaPluginVersion = "cordovaPluginVersion"
         static let notificationCategories = "notificationCategories"
         static let webViewSettings = "webViewSettings"
+        static let registeringForRemoteNotificationsDisabled = "registeringForRemoteNotificationsDisabled"
+        static let overridingNotificationCenterDelegateDisabled = "overridingNotificationCenterDelegateDisabled"
+        static let unregisteringForRemoteNotificationsDisabled = "unregisteringForRemoteNotificationsDisabled"
     }
 
     let appCode: String
@@ -36,6 +39,9 @@ class MMConfiguration {
     let cordovaPluginVersion: String
     let categories: [MMNotificationCategory]?
     let webViewSettings: [String: AnyObject]?
+    let registeringForRemoteNotificationsDisabled: Bool
+    let overridingNotificationCenterDelegateDisabled: Bool
+    let unregisteringForRemoteNotificationsDisabled: Bool
 
     init?(rawConfig: [String: AnyObject]) {
         guard let appCode = rawConfig[MMConfiguration.Keys.applicationCode] as? String,
@@ -51,7 +57,10 @@ class MMConfiguration {
         self.logging = ios[MMConfiguration.Keys.logging].unwrap(orDefault: false)
         self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
         self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
-
+        self.registeringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.registeringForRemoteNotificationsDisabled].unwrap(orDefault: false)
+        self.overridingNotificationCenterDelegateDisabled = ios[MMConfiguration.Keys.overridingNotificationCenterDelegateDisabled].unwrap(orDefault: false)
+        self.unregisteringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.unregisteringForRemoteNotificationsDisabled].unwrap(orDefault: false)
+        
         if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
             var ps = [String: Any]()
             ps[MMConfiguration.Keys.userDataPersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
@@ -59,9 +68,9 @@ class MMConfiguration {
             ps[MMConfiguration.Keys.systemInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].unwrap(orDefault: false)
             ps[MMConfiguration.Keys.applicationCodePersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].unwrap(orDefault: false)
 
-            privacySettings = ps
+            self.privacySettings = ps
         } else {
-            privacySettings = [:]
+            self.privacySettings = [:]
         }
 
         self.cordovaPluginVersion = rawConfig[MMConfiguration.Keys.cordovaPluginVersion].unwrap(orDefault: "unknown")
@@ -585,6 +594,18 @@ fileprivate class MobileMessagingEventsManager {
 
         if configuration.inAppChatEnabled {
             mobileMessaging = mobileMessaging?.withInAppChat()
+        }
+        
+        if configuration.registeringForRemoteNotificationsDisabled {
+            mobileMessaging = mobileMessaging?.withoutRegisteringForRemoteNotifications()
+        }
+        
+        if configuration.overridingNotificationCenterDelegateDisabled {
+            mobileMessaging = mobileMessaging?.withoutOverridingNotificationCenterDelegate()
+        }
+        
+        if configuration.unregisteringForRemoteNotificationsDisabled {
+            mobileMessaging = mobileMessaging?.withoutUnregisteringForRemoteNotifications()
         }
 
         if let storageAdapter = messageStorageAdapter, configuration.messageStorageEnabled {
