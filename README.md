@@ -78,7 +78,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
                     mavenCentral()
                     google()
                     jcenter()
-                    maven { url 'http://developer.huawei.com/repo/' } // Added
+                    maven { url 'https://developer.huawei.com/repo/' } // Added
                 }
             
                 dependencies {
