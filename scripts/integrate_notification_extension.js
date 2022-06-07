@@ -37,7 +37,7 @@ module.exports = function(ctx) {
     }
 
     var command = ` export GEM_HOME=plugins/${ctx.opts.plugin.id}/gems;
-                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine -v 0.9.9;
+                    gem install --install-dir plugins/${ctx.opts.plugin.id}/gems mmine -v 0.10.0;
                     ./plugins/${ctx.opts.plugin.id}/gems/bin/mmine integrate -a ${appCode}\
                     -p "${ctx.opts.projectRoot}/${projectPath}"\
                     -t "${projectMainTarget}"\
