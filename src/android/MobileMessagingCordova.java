@@ -16,14 +16,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
 import org.infobip.mobile.messaging.mobileapi.apiavailability.ApiAvailability;
+
+//import com.google.firebase.FirebaseOptions;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.cordova.CallbackContext;
@@ -51,10 +53,10 @@ import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerialize
 import org.infobip.mobile.messaging.app.ActivityLifecycleMonitor;
 import org.infobip.mobile.messaging.dal.json.JSONArrayAdapter;
 import org.infobip.mobile.messaging.dal.json.JSONObjectAdapter;
-import org.infobip.mobile.messaging.geo.Area;
-import org.infobip.mobile.messaging.geo.Geo;
-import org.infobip.mobile.messaging.geo.GeoEvent;
-import org.infobip.mobile.messaging.geo.MobileGeo;
+//import org.infobip.mobile.messaging.geo.Area;
+//import org.infobip.mobile.messaging.geo.Geo;
+//import org.infobip.mobile.messaging.geo.GeoEvent;
+//import org.infobip.mobile.messaging.geo.MobileGeo;
 import org.infobip.mobile.messaging.interactive.InteractiveEvent;
 import org.infobip.mobile.messaging.interactive.MobileInteractive;
 import org.infobip.mobile.messaging.interactive.NotificationAction;
@@ -66,7 +68,9 @@ import org.infobip.mobile.messaging.mobileapi.Result;
 import org.infobip.mobile.messaging.CustomEvent;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
+import org.infobip.mobile.messaging.util.Cryptor;
 import org.infobip.mobile.messaging.util.DateTimeUtil;
+import org.infobip.mobile.messaging.util.DeviceInformation;
 import org.infobip.mobile.messaging.util.PreferenceHelper;
 import org.infobip.mobile.messaging.chat.InAppChat;
 import org.json.JSONArray;
@@ -146,7 +150,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         put(Event.USER_UPDATED.getKey(), EVENT_USER_UPDATED);
         put(Event.PERSONALIZED.getKey(), EVENT_PERSONALIZED);
         put(Event.DEPERSONALIZED.getKey(), EVENT_DEPERSONALIZED);
-        put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
+//        put(GeoEvent.GEOFENCE_AREA_ENTERED.getKey(), EVENT_GEOFENCE_ENTERED);
         put(InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey(), EVENT_NOTIFICATION_ACTION_TAPPED);
         put(InAppChatEvent.UNREAD_MESSAGES_COUNTER_UPDATED.getKey(), EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED);
     }};
@@ -173,15 +177,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
             if (event == null) {
                 return;
             }
-
-            if (GeoEvent.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
-                for (JSONObject geo : geosFromBundle(intent.getExtras())) {
-                    if (libraryEventReceiver != null) {
-                        sendCallbackEvent(event, libraryEventReceiver, geo);
-                    }
-                }
-                return;
-            }
+//            MM-GEO
+//            if (GeoEvent.GEOFENCE_AREA_ENTERED.getKey().equals(intent.getAction())) {
+//                for (JSONObject geo : geosFromBundle(intent.getExtras())) {
+//                    if (libraryEventReceiver != null) {
+//                        sendCallbackEvent(event, libraryEventReceiver, geo);
+//                    }
+//                }
+//                return;
+//            }
 
             if (InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey().equals(intent.getAction())) {
                 Message message = Message.createFrom(intent.getExtras());
@@ -233,6 +237,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             String notificationIcon;
             boolean multipleNotifications;
             String notificationAccentColor;
+//            FirebaseOptions firebaseOptions;
         }
 
         class PrivacySettings {
@@ -503,15 +508,34 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 notificationBuilder.withColor(color);
             }
             builder.withDisplayNotification(notificationBuilder.build());
+            //TODO:
+//            if (configuration.android.firebaseOptions != null) {
+//                builder.withFirebaseOptions(configuration.android.firebaseOptions);
+//            }
+
+            // Checking do we need to migrate data saved with old cryptor,
+            // if withCryptorMigration project ext property is set, ECBCryptorImpl class will exist.
+            Cryptor cryptor = null;
+            try {
+                Class cls = Class.forName("org.infobip.mobile.messaging.cryptor.ECBCryptorImpl");
+                cryptor = (Cryptor) cls.getDeclaredConstructor(String.class).newInstance(DeviceInformation.getDeviceID(context));
+            } catch (Exception e) {
+                Log.d(TAG, "Will not migrate cryptor: ");
+                e.printStackTrace();
+            }
+            if (cryptor != null) {
+                builder.withCryptorMigration(cryptor);
+            }
         }
 
         builder.build(new MobileMessaging.InitListener() {
             @SuppressLint("MissingPermission")
             @Override
             public void onSuccess() {
-                if (configuration.geofencingEnabled) {
-                    MobileGeo.getInstance(cordova.getActivity().getApplication()).activateGeofencing();
-                }
+                //MM-GEO
+//                if (configuration.geofencingEnabled) {
+//                    MobileGeo.getInstance(cordova.getActivity().getApplication()).activateGeofencing();
+//                }
 
                 NotificationCategory categories[] = notificationCategoriesFromConfiguration(configuration.notificationCategories);
                 if (categories.length > 0) {
@@ -1189,7 +1213,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .putOpt("contentUrl", message.getContentUrl())
                     .putOpt("seen", message.getSeenTimestamp() != 0)
                     .putOpt("seenDate", message.getSeenTimestamp())
-                    .putOpt("geo", hasGeo(message))
+//                    .putOpt("geo", hasGeo(message))
                     .putOpt("chat", message.isChatMessage())
                     .putOpt("browserUrl", message.getBrowserUrl())
                     .putOpt("deeplink", message.getDeeplink())
@@ -1202,18 +1226,18 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
     }
 
-    private static boolean hasGeo(Message message) {
-        if (message == null || message.getInternalData() == null) {
-            return false;
-        }
-
-        try {
-            JSONObject geo = new JSONObject(message.getInternalData());
-            return geo.getJSONArray("geo") != null && geo.getJSONArray("geo").length() > 0;
-        } catch (JSONException e) {
-            return false;
-        }
-    }
+//          MM-GEO
+//    private static boolean hasGeo(Message message) {
+//        if (message == null || message.getInternalData() == null) {
+//            return false;
+//        }
+//        try {
+//            JSONObject geo = new JSONObject(message.getInternalData());
+//            return geo.getJSONArray("geo") != null && geo.getJSONArray("geo").length() > 0;
+//        } catch (JSONException e) {
+//            return false;
+//        }
+//    }
 
     /**
      * Creates array of json objects from list of messages
@@ -1267,40 +1291,41 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return message;
     }
 
-    /**
-     * Geo mapper
-     *
-     * @param bundle where to read geo objects from
-     * @return list of json objects representing geo objects
-     */
-    @NonNull
-    private static List<JSONObject> geosFromBundle(Bundle bundle) {
-        Geo geo = Geo.createFrom(bundle);
-        JSONObject message = messageBundleToJSON(bundle);
-        if (geo == null || geo.getAreasList() == null || geo.getAreasList().isEmpty() || message == null) {
-            return new ArrayList<JSONObject>();
-        }
-
-        List<JSONObject> geos = new ArrayList<JSONObject>();
-        for (final Area area : geo.getAreasList()) {
-            try {
-                geos.add(new JSONObject()
-                        .put("area", new JSONObject()
-                                .put("id", area.getId())
-                                .put("center", new JSONObject()
-                                        .put("lat", area.getLatitude())
-                                        .put("lon", area.getLongitude()))
-                                .put("radius", area.getRadius())
-                                .put("title", area.getTitle()))
-                );
-            } catch (JSONException e) {
-                Log.w(TAG, "Cannot convert geo to JSON: " + e.getMessage());
-                Log.d(TAG, Log.getStackTraceString(e));
-            }
-        }
-
-        return geos;
-    }
+//    MM-GEO
+//    /**
+//     * Geo mapper
+//     *
+//     * @param bundle where to read geo objects from
+//     * @return list of json objects representing geo objects
+//     */
+//    @NonNull
+//    private static List<JSONObject> geosFromBundle(Bundle bundle) {
+//        Geo geo = Geo.createFrom(bundle);
+//        JSONObject message = messageBundleToJSON(bundle);
+//        if (geo == null || geo.getAreasList() == null || geo.getAreasList().isEmpty() || message == null) {
+//            return new ArrayList<JSONObject>();
+//        }
+//
+//        List<JSONObject> geos = new ArrayList<JSONObject>();
+//        for (final Area area : geo.getAreasList()) {
+//            try {
+//                geos.add(new JSONObject()
+//                        .put("area", new JSONObject()
+//                                .put("id", area.getId())
+//                                .put("center", new JSONObject()
+//                                        .put("lat", area.getLatitude())
+//                                        .put("lon", area.getLongitude()))
+//                                .put("radius", area.getRadius())
+//                                .put("title", area.getTitle()))
+//                );
+//            } catch (JSONException e) {
+//                Log.w(TAG, "Cannot convert geo to JSON: " + e.getMessage());
+//                Log.d(TAG, Log.getStackTraceString(e));
+//            }
+//        }
+//
+//        return geos;
+//    }
 
     /**
      * Converts notification categories in configuration into library format

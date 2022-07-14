@@ -70,6 +70,7 @@
 			<preference name="IB_ANDROID_GMS_VER_OVERRIDE" value="$ANDROID_GMS_VER_OVERRIDE"/>
 			<preference name="IB_ANDROID_FIREBASE_VER_OVERRIDE" value="$ANDROID_FIREBASE_VER_OVERRIDE"/>
 			<preference name="IB_ENABLE_HMS_SUPPORT" value="$ENABLE_HMS_SUPPORT"/>
+			<preference name="IB_ANDROID_USE_CRYPTOR_MIGRATION" value="$ANDROID_USE_CRYPTOR_MIGRATION"/>
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
