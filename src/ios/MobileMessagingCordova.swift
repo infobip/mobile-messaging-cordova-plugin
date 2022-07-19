@@ -552,6 +552,14 @@ fileprivate class MobileMessagingEventsManager {
         }
         self.commandDelegate.sendSuccess(for: command)
     }
+    
+    func setLanguage(_ command: CDVInvokedUrlCommand) {
+        guard let localeString = command.arguments[0] as? String else {
+            self.commandDelegate?.send(errorText: "Could not retrieve locale string from arguments", for: command)
+            return
+        }
+        MobileMessaging.inAppChat?.setLanguage(localeString)
+    }
 
     func setupiOSChatSettings(_ command: CDVInvokedUrlCommand) {
         if let chatSettings = command.arguments[0] as? [String: AnyObject] {

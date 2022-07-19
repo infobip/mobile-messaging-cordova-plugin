@@ -521,5 +521,17 @@ MobileMessagingCordova.prototype.getMessageCounter = function(resultCallback) {
     cordova.exec(resultCallback, function(){}, 'MobileMessagingCordova', 'getMessageCounter', []);
 };
 
+/**
+ * Sets chat language.
+ *
+ * @name setLanguage
+ * @param {String} language to be set
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.setLanguage = function(language, errorCallback) {
+    cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'setLanguage', [language])
+};
+
+
 MobileMessaging = new MobileMessagingCordova();
 module.exports = MobileMessaging;

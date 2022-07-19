@@ -142,6 +142,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_SHOW_INAPP_CHAT = "showChat";
     private static final String FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER = "getMessageCounter";
     private static final String FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER = "resetMessageCounter";
+    private static final String FUNCTION_INAPP_CHAT_SET_LANGUAGE = "setLanguage";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
@@ -443,6 +444,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER.equals(action)) {
             resetMessageCounter(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_SET_LANGUAGE.equals(action)) {
+            setLanguage(args, callbackContext);
             return true;
         }
 
@@ -841,6 +845,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void resetMessageCounter(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         InAppChat.getInstance(cordova.getActivity().getApplication()).resetMessageCounter();
+    }
+
+    private void setLanguage(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        String language = null;
+        try {
+            language = resolveStringParameter(args);
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Could not retrieve locale string from arguments");
+            return;
+        }
+        InAppChat.getInstance(cordova.getActivity().getApplication()).setLanguage(language);
     }
 
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {
