@@ -84,7 +84,11 @@ dependencies {
         implementation "com.google.firebase:firebase-messaging:$overrideFirebaseVersion"
     }
     if (withCryptorMigration.toBoolean()) {
-        implementation "com.infobip:infobip-mobile-messaging-android-cryptor-migration:$mmFcmVersion@aar"
+        if (isHmsBuild) {
+            implementation "com.infobip:infobip-mobile-messaging-huawei-cryptor-migration:$mmHmsVersion@aar"
+        } else {
+            implementation "com.infobip:infobip-mobile-messaging-android-cryptor-migration:$mmFcmVersion@aar"
+        }
     }
 }
 

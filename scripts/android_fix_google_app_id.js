@@ -23,9 +23,6 @@ module.exports = function(ctx) {
     if (hmsBuild) {
         console.log("HMS enabled. Start checking app_id");
         return updateConfig("HUAWEI_SENDER_ID", "app_id");
-    } else {
-        console.log("FCM enabled. Start checking google_app_id");
-        return updateConfig("ANDROID_FIREBASE_SENDER_ID", "google_app_id");
     }
 
     function updateConfig(appIdParamName, configParamName) {

@@ -10,9 +10,11 @@ The document describes library integration steps for your Cordova project.
   * [Initialization configuration](#initialization-configuration)
 
 ## Requirements
-- Cordova 11.0.0 (`sudo npm install -g cordova`)
-- npm (tested with 7.6.0)
-- node (tested with 15.11.0)
+- cordova 11.0.0 (`sudo npm install -g cordova`)
+- cordova android@10.x.x or newer
+- cordova ios@6.x.x or newer
+- npm (tested with 8.13.2)
+- node (version 16.10.0 or higher)
 
 For iOS project:
 - Xcode 13.4.1
@@ -22,12 +24,12 @@ For iOS project:
 
 For Android project: 
 - Android Studio
-- Minimum API Level: 14 (Android 4.0 - Ice Cream Sandwich)
+- Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 31 (Android 12.0)
 
 For Huawei:
 - Android Studio
 - Installed <a href="https://huaweimobileservices.com/appgallery/" target="_blank">AppGallery</a> with HMS Core at device
-- Minimum API level: 19 (Android 4.4 - KitKat)
+- Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 31 (Android 12.0)
 
 ## Quick start guide
 This guide is designed to get you up and running with Mobile Messaging SDK plugin for Cordova:
@@ -59,53 +61,55 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     1. **iOS**: [Integrate Notification Service Extension](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Delivery-improvements-and-rich-content-notifications) into your app in order to obtain:
         - more accurate processing of messages and delivery stats
         - support of rich notifications on the lock screen
-    2. **Android**: add [`Firebase Sender ID`](https://www.infobip.com/docs/mobile-app-messaging/fcm-server-api-key-setup-guide) via plugin variable in `config.xml` :
-    ```xml
-    <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
-        <variable name="ANDROID_FIREBASE_SENDER_ID" value="Firebase Sender ID" />
-    </plugin>
-    ```
-    Do not add "ANDROID_FIREBASE_SENDER_ID" variable if you're using <a href="https://developers.google.com/android/guides/google-services-plugin" target="_blank">Google Services Gradle Plugin</a> and `google-services.json`, check [How To](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/How-to-use-Google-Services-Gradle-plugin) in this case.
-
+    2. **Android**: 
+       2.1 Get the Firebase configuration file (google-services.json) as described in <a href="https://firebase.google.com/docs/android/setup#add-config-file" target="_blank">`Firebase documentation`</a> and put it to the root application folder.
+       2.2 Add following to your config.xml
+           ```xml
+              <platform name="android">
+                 <resource-file src="google-services.json" target="app/google-services.json" />
+                 <preference name="GradlePluginGoogleServicesEnabled" value="true"/>
+                 ...
+              </platform>
+           ```
 4. Configure Huawei build
 
     1. Configure <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137" target="_blank">Huawei application</a>
-    2. Change `plaform/android/build.gradle` at the begging 
+    2. Change `plaform/android/build.gradle`
         ```gradle
             
             buildscript {
                 repositories {
                     mavenCentral()
                     google()
-                    jcenter()
-                    maven { url 'https://developer.huawei.com/repo/' } // Added
+                    maven { url 'https://developer.huawei.com/repo/' } // Added for Huawei support
                 }
             
                 dependencies {
-                    classpath 'com.android.tools.build:gradle:3.3.0'
-                    classpath 'com.huawei.agconnect:agcp:1.2.1.301' // Added
+                    ...
+                    classpath 'com.huawei.agconnect:agcp:1.6.0.300' // Added for Huawei support
                 }
             }
        
             allprojects {
                 repositories {
+                    mavenCentral()
                     google()
-                    jcenter()
-                    maven {url 'https://developer.huawei.com/repo/'} // Added
+                    maven {url 'https://developer.huawei.com/repo/'} // Added for Huawei support
                 }
                 ...
             }
        
        ```    
-    3. Change `plaform/android/app/build.gradle` at the begging 
+    3. Change `plaform/android/app/build.gradle`
         ```gradle
        
             apply plugin: 'com.android.application'
-            apply plugin: 'com.huawei.agconnect' // Added
+            apply plugin: 'com.huawei.agconnect' // Added for Huawei support
             
             dependencies {
-                   implementation 'com.huawei.hms:push:5.0.0.300'
-                   implementation('com.huawei.hms:location:5.0.0.300') // Add it if you will use Geofencing feature
+                   implementation 'com.huawei.hms:push:6.3.0.302' // Added for Huawei support
+                   // Geofencing isn't supported in this rc release, will be added in next releases
+                   // implementation('com.huawei.hms:location:6.3.0.300') // Add it if you will use Geofencing feature
             }
        
        ```
@@ -144,13 +148,21 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
         c. In the App information area, Click `agconnect-services.json` to download the configuration file.
     6. Add [`Huawei App ID`](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137) via plugin variable in `config.xml` :   
         ```xml
-        <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
-            <variable name="HUAWEI_SENDER_ID" value="Huawei App ID" />
-        </plugin>
-        ```       
+           <plugin name="com-infobip-plugins-mobilemessaging" spec="...">
+               <variable name="HUAWEI_SENDER_ID" value="Huawei App ID" />
+           </plugin>
+        ```
         You can take this value from `agconnect-services.json`.
+    7. Remove, if following was added to `config.xml`
+       ```xml
+          <platform name="android">
+              <resource-file src="google-services.json" target="app/google-services.json" />
+              <preference name="GradlePluginGoogleServicesEnabled" value="true"/>
+              ...
+          </platform>
+        ```
         
-    7. Run `cordova build android --hms` to make build for HMS.
+    8. Run `cordova build android --hms` to make build for HMS.
         
         **Note** that if you are developing / testing FCM and HMS at the same device then better to remove cache for installed app, remove app and after that install build with other push cloud. 
 

@@ -35,6 +35,8 @@
         </config-file>
     </platform>
     <platform name="android">
+        <preference name="GradlePluginGoogleServicesEnabled" value="true"/>
+        <resource-file src="google-services.json" target="app/google-services.json" />
         <config-file parent="/manifest/application/activity[@android:name='MainActivity']" target="AndroidManifest.xml">
             <intent-filter>
                 <data android:scheme="com.infobip.mobilemessaging" />
@@ -42,6 +44,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.CAMERA" />
         </config-file>
     </platform>
 </widget>
