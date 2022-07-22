@@ -71,6 +71,9 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
                  ...
               </platform>
            ```
+   > ### Notice:
+   > Geofencing is not supported in 3.0.0-rc release, will be added in next releases
+
 4. Configure Huawei build
 
     1. Configure <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-config-agc-0000001050170137" target="_blank">Huawei application</a>
