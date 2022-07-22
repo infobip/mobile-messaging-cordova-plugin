@@ -41,7 +41,8 @@ dependencies {
 
     // Android dependencies start
     if (!isHmsBuild) {
-        implementation "com.infobip:infobip-mobile-messaging-android-geo-sdk:$mmFcmVersion@aar"
+        // geofencing is disabled for rc version, will be enabled in next releases
+//        implementation "com.infobip:infobip-mobile-messaging-android-geo-sdk:$mmFcmVersion@aar"
         implementation "com.infobip:infobip-mobile-messaging-android-chat-sdk:$mmFcmVersion@aar"
         implementation("com.infobip:infobip-mobile-messaging-android-sdk:$mmFcmVersion@aar") {
             transitive = true;
@@ -61,6 +62,7 @@ dependencies {
 
     // Hms dependencies start
     if (isHmsBuild) {
+        // geofencing is disabled for rc version, will be enabled in next releases
 //        implementation "com.infobip:infobip-mobile-messaging-huawei-geo-sdk:$mmHmsVersion@aar"
         implementation "com.infobip:infobip-mobile-messaging-huawei-chat-sdk:$mmHmsVersion@aar"
         implementation("com.infobip:infobip-mobile-messaging-huawei-sdk:$mmHmsVersion@aar") {

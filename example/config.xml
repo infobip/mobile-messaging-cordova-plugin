@@ -37,6 +37,7 @@
     <platform name="android">
         <preference name="GradlePluginGoogleServicesEnabled" value="true"/>
         <resource-file src="google-services.json" target="app/google-services.json" />
+        <preference name="IB_ANDROID_USE_CRYPTOR_MIGRATION" value="true" />
         <config-file parent="/manifest/application/activity[@android:name='MainActivity']" target="AndroidManifest.xml">
             <intent-filter>
                 <data android:scheme="com.infobip.mobilemessaging" />
