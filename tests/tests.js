@@ -543,4 +543,19 @@ describe('inAppChat methods', function() {
     		'setLanguage',
     		['en-US']);
     });
+
+    it('should send contextual data ', function() {
+        	MobileMessaging.sendContextualData(
+        	 '{"test_attribute_string":"test_attribute_value"}',
+        	 true,
+        	 function(){}
+        	 );
+
+        	expect(cordova.exec).toHaveBeenCalledWith(
+        		jasmine.any(Function),
+        		jasmine.any(Function),
+        		'MobileMessagingCordova',
+        		'sendContextualData',
+        		['{"test_attribute_string":"test_attribute_value"}',true]);
+        });
 });

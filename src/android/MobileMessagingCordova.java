@@ -143,6 +143,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER = "getMessageCounter";
     private static final String FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER = "resetMessageCounter";
     private static final String FUNCTION_INAPP_CHAT_SET_LANGUAGE = "setLanguage";
+    private static final String FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA = "sendContextualData";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
@@ -447,6 +448,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_INAPP_CHAT_SET_LANGUAGE.equals(action)) {
             setLanguage(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA.equals(action)) {
+            sendContextualData(args, callbackContext);
             return true;
         }
 
@@ -857,6 +861,20 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return;
         }
         InAppChat.getInstance(cordova.getActivity().getApplication()).setLanguage(language);
+    }
+
+    private void sendContextualData(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        String data = null;
+        boolean allMultiThreadStrategy = false;
+        try {
+            data = resolveStringParameter(args);
+            allMultiThreadStrategy = resolveBooleanParameterWithIndex(args, 1);
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Could not retrieve contextual data or multi-thread strategy flag from arguments");
+            return;
+        }
+
+        InAppChat.getInstance(cordova.getActivity().getApplication()).sendContextualData(data, allMultiThreadStrategy);
     }
 
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {

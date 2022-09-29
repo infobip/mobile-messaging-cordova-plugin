@@ -532,6 +532,17 @@ MobileMessagingCordova.prototype.setLanguage = function(language, errorCallback)
     cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'setLanguage', [language])
 };
 
+/**
+ * Set contextual data of the widget
+ *
+ * @param {String} data - contextual data in the form of JSON string
+ * @param {Boolean} allMultiThreadStrategy multi-thread strategy flag, true -> ALL, false -> ACTIVE
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.sendContextualData = function(data, allMultiThreadStrategy, errorCallback) {
+    cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'sendContextualData', [data, allMultiThreadStrategy])
+};
+
 
 MobileMessaging = new MobileMessagingCordova();
 module.exports = MobileMessaging;

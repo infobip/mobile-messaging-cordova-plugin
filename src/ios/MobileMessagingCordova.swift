@@ -540,7 +540,7 @@ fileprivate class MobileMessagingEventsManager {
             let shouldBePresentedModally = iosOptions["shouldBePresentedModally"] as? Bool {
             presentVCModally = shouldBePresentedModally
         }
-
+        
         let vc = presentVCModally ? MMChatViewController.makeRootNavigationViewController(): MMChatViewController.makeRootNavigationViewControllerWithCustomTransition()
         if presentVCModally {
             vc.modalPresentationStyle = .fullScreen
@@ -559,6 +559,25 @@ fileprivate class MobileMessagingEventsManager {
             return
         }
         MobileMessaging.inAppChat?.setLanguage(localeString)
+    }
+
+    func sendContextualData(_ command: CDVInvokedUrlCommand) {
+        guard command.arguments.count > 0,
+              let metadata = command.arguments[0] as? String,
+              let allMultiThreadStrategy = command.arguments[1] as? Bool else {
+            self.commandDelegate?.send(errorText: "Could not retrieve contextual data or multi-thread strategy flag from arguments", for: command)
+            return
+        }
+        
+        if let chatVC = UIApplication.topViewController() as? MMChatViewController {
+            let mtStrategy: MMChatMultiThreadStrategy = allMultiThreadStrategy ? .ALL : .ACTIVE
+            chatVC.sendContextualData(metadata, multiThreadStrategy: mtStrategy) { error in
+                guard let error = error else {
+                    return
+                }
+                self.commandDelegate?.send(errorText: "Could not send metadata, error \(error.localizedDescription) from arguments", for: command)
+            }
+        }
     }
 
     func setupiOSChatSettings(_ command: CDVInvokedUrlCommand) {
