@@ -841,7 +841,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private void showInAppChat(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatView().show();
+        InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatScreen().show();
     }
 
     private void getMessageCounter(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
