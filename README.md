@@ -49,7 +49,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
 
     ```bash
     ionic cordova plugin add com-infobip-plugins-mobilemessaging --save
-    npm install @ionic-native/mobile-messaging --save
+    npm install @awesome-cordova-plugins/mobile-messaging --save
     ```
 
     </p>
@@ -157,7 +157,7 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
 5. Add code to your project to initialize the library after `deviceready` event with configuration options and library event listener:
 
     ```javascript
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         ...
         MobileMessaging.init({
                 applicationCode: '<your_application_code>',
@@ -244,7 +244,7 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
          ...
        });
      
-       this.mobileMessaging.register('messageReceived').subscribe((message: Message) => {
+       this.mobileMessaging.register('messageReceived', function (message: any) {
          ...
        });
     ```
