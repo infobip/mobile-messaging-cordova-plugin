@@ -543,6 +543,13 @@ MobileMessagingCordova.prototype.sendContextualData = function(data, allMultiThr
     cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'sendContextualData', [data, allMultiThreadStrategy])
 };
 
+/**
+ * Registers for Android POST_NOTIFICATIONS permission
+ * @name registerForAndroidRemoteNotifications
+ */
+MobileMessagingCordova.prototype.registerForAndroidRemoteNotifications = function () {
+    cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'registerForAndroidRemoteNotifications', []);
+}
 
 MobileMessaging = new MobileMessagingCordova();
 module.exports = MobileMessaging;

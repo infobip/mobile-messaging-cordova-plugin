@@ -34,6 +34,10 @@
                 _this._setLanguage(language);
             });
 
+            this.formNode.addEventListener("click", function() {
+                _this._registerForAndroidRemoteNotifications();
+            })
+
             try {
                 this._loadMessages(function() {
                     _this._initMessageReceiver();
@@ -140,6 +144,13 @@
          */
         _showChat: function() {
             MobileMessaging.showChat();
+        },
+
+        /**
+         * Register for Android 13 Notifications
+         */
+        _registerForAndroidRemoteNotifications: function() {
+            MobileMessaging.registerForAndroidRemoteNotifications();
         }
     };
 

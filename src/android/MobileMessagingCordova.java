@@ -14,6 +14,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
@@ -95,6 +96,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static final int REQ_CODE_LOC_PERMISSION_FOR_INIT = 1;
     private static final int REQ_CODE_RESOLVE_GOOGLE_ERROR = 2;
+    private static final int REQ_CODE_POST_NOTIFICATIONS = 3;
 
     private static final String FUNCTION_INIT = "init";
     private static final String FUNCTION_REGISTER_RECEIVER = "registerReceiver";
@@ -121,6 +123,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static final String FUNCTION_SUBMIT_EVENT_IMMEDIATELY = "submitEventImmediately";
     private static final String FUNCTION_SUBMIT_EVENT = "submitEvent";
+
+    private static final String FUNCTION_REGISTER_FOR_POST_NOTIFICATIONS = "registerForAndroidRemoteNotifications";
 
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
@@ -171,6 +175,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private final CordovaCallContext initContext = new CordovaCallContext();
     private final CordovaCallContext showErrorDialogContext = new CordovaCallContext();
+    private static CallbackContext registerForAndroidPermissionContext;
 
     private static final BroadcastReceiver commonLibraryBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -310,6 +315,17 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     @Override
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
+        if (requestCode == REQ_CODE_POST_NOTIFICATIONS) {
+            if (registerForAndroidPermissionContext == null) {
+                Log.e(TAG, "Callback context was null for POST_NOTIFICATIONS permission");
+                return;
+            }
+            if (!cordova.hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
+                sendCallbackError(registerForAndroidPermissionContext, "POST_NOTIFICATIONS is not granted");
+                return;
+            }
+        }
+
         if (requestCode != REQ_CODE_LOC_PERMISSION_FOR_INIT) {
             return;
         }
@@ -452,6 +468,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA.equals(action)) {
             sendContextualData(args, callbackContext);
             return true;
+        } else if (FUNCTION_REGISTER_FOR_POST_NOTIFICATIONS.equals(action)) {
+            registerForAndroidRemoteNotifications(args, callbackContext);
+            return true;
         }
 
         return false;
@@ -483,6 +502,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         PreferenceHelper.saveString(context, MobileMessagingProperty.SYSTEM_DATA_VERSION_POSTFIX, "cordova " + configuration.cordovaPluginVersion);
 
         MobileMessaging.Builder builder = new MobileMessaging.Builder(context)
+                .withoutRegisteringForRemoteNotifications()
                 .withApplicationCode(configuration.applicationCode);
 
         if (configuration.privacySettings.userDataPersistingDisabled) {
@@ -943,7 +963,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         runInBackground(new Runnable() {
             @Override
             public void run() {
-                mobileMessaging().submitEvent(customEvent, new MobileMessaging.ResultListener<CustomEvent>(){
+                mobileMessaging().submitEvent(customEvent, new MobileMessaging.ResultListener<CustomEvent>() {
                     @Override
                     public void onResult(Result<CustomEvent, MobileMessagingError> result) {
                         if (result.isSuccess()) {
@@ -974,6 +994,13 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         return CustomEventJson.fromJSON(args.getJSONObject(0));
+    }
+
+    public void registerForAndroidRemoteNotifications(final JSONArray args, final CallbackContext callbackContext) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerForAndroidPermissionContext = callbackContext;
+            cordova.requestPermission(this, REQ_CODE_POST_NOTIFICATIONS, Manifest.permission.POST_NOTIFICATIONS);
+        }
     }
 
     /**

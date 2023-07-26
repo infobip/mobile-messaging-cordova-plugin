@@ -27,7 +27,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
@@ -35,7 +35,7 @@ buildscript {
 
 dependencies {
     def mmHmsVersion = '4.0.2'
-    def mmFcmVersion = '8.1.4'
+    def mmFcmVersion = '8.4.0'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
 
