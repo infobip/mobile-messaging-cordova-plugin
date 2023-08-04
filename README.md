@@ -20,11 +20,13 @@ For iOS project:
 - Xcode 13.4.1
 - Carthage >= 0.37.0 (`brew install carthage`)
 - Minimum deployment target 12.0
+- cordova-ios@6.3.0
 - Ruby version 2.3.8
 
 For Android project: 
 - Android Studio
 - Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 31 (Android 12.0)
+- cordova-android@12.0.0
 
 For Huawei:
 - Android Studio
