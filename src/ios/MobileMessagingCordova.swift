@@ -582,7 +582,7 @@ fileprivate class MobileMessagingEventsManager {
 
     func setupiOSChatSettings(_ command: CDVInvokedUrlCommand) {
         if let chatSettings = command.arguments[0] as? [String: AnyObject] {
-            MobileMessaging.inAppChat?.settings.configureWith(rawConfig: chatSettings)
+            MMChatSettings.settings.configureWith(rawConfig: chatSettings)
         }
     }
 
