@@ -17,10 +17,10 @@ The document describes library integration steps for your Cordova project.
 - node (version 16.10.0 or higher)
 
 For iOS project:
-- Xcode 13.4.1
+- Xcode 15.0.1
 - Carthage >= 0.37.0 (`brew install carthage`)
 - Minimum deployment target 12.0
-- cordova-ios@6.x.x
+- cordova-ios@7.x.x
 - Ruby version 2.3.8
 
 For Android project: 
