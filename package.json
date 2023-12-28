@@ -1,6 +1,6 @@
 {
   "name": "com-infobip-plugins-mobilemessaging",
-  "version": "3.0.0-rc4",
+  "version": "3.0.0-rc10",
   "description": "Infobip Mobile Messaging Cordova Plugin",
   "main": "www/MobileMessagingCordova.js",
   "directories": {
@@ -31,12 +31,12 @@
   "devDependencies": {
     "browserify": "^14.1.0",
     "jasmine-core": "^2.5.2",
-    "karma": "^1.5.0",
-    "karma-browserify": "^5.1.1",
+    "karma": "^6.4.2",
+    "karma-browserify": "^8.1.0",
     "karma-jasmine": "^1.1.0",
     "karma-junit-reporter": "^1.2.0",
-    "karma-phantomjs-launcher": "^1.0.2",
-    "watchify": "^3.9.0"
+    "karma-phantomjs-launcher": "^1.0.4",
+    "watchify": "^4.0.0"
   },
   "cordova": {
     "id": "com-infobip-plugins-mobilemessaging",

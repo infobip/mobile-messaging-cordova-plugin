@@ -65,7 +65,8 @@
         initMobileMessaging: function() {
             MobileMessaging.init({
                     applicationCode: APP_CODE,
-                    geofencingEnabled: true,
+                    // geofencingEnabled: true,
+                    inAppChatEnabled: true,
                     defaultMessageStorage: true,    // use build in message storage or not
                     ios: {
                         notificationTypes: ['alert', 'badge', 'sound'],

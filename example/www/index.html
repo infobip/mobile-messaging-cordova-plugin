@@ -1,130 +1,171 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" />
-        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' gap://ready ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'" />-->
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <link rel="stylesheet" type="text/css" href="css/icons.css" />
-        <title>Cordova Mobile Push Demo</title>
-    </head>
-    <body>
-        <!-- layout -->
-        <div class="app">
-            <div class="head">
-                <span class="title"></span>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' gap://ready ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'" />-->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/icons.css" />
+    <title>Cordova Mobile Push Demo</title>
+</head>
+<body>
+<!-- layout -->
+<div class="app">
+    <div class="head">
+        <span class="title"></span>
+    </div>
+    <div class="content"></div>
+    <div class="navi"></div>
+</div>
+
+<!-- components -->
+
+<div class="dialog-busy" style="display: none;">
+    <div class="bg"></div>
+    <div class="content">
+        <div class="loading"></div>
+    </div>
+</div>
+
+<!-- templates -->
+
+<div id="screen-inbox" class="template screen inbox">
+    <div class="no-messages">You have no messages yet...</div>
+    <br><br>
+    <form class="in-app-chat">
+        <div class="field">
+            <label for="languages_select">Choose InAppChat language:</label>
+            <select name="languages" id="languages_select">
+                <option value="en">ENGLISH</option>
+                <option value="tr">TURKISH</option>
+                <option value="ko">KOREAN</option>
+                <option value="ru">RUSSIAN</option>
+                <option value="zh">CHINESE</option>
+                <option value="es">SPANISH</option>
+                <option value="es">SPANISH_LA</option>
+                <option value="pt">PORTUGUESE</option>
+                <option value="pt">PORTUGUESE_BR</option>
+                <option value="pl">POLISH</option>
+                <option value="ro">ROMANIAN</option>
+                <option value="ar">ARABIC</option>
+                <option value="bs">BOSNIAN</option>
+                <option value="hr">CROATIAN</option>
+                <option value="el">GREEK</option>
+                <option value="sv">SWEDISH</option>
+                <option value="th">THAI</option>
+                <option value="lt">LITHUANIAN</option>
+                <option value="da">DANISH</option>
+                <option value="lv">LATVIAN</option>
+                <option value="hu">HUNGARIAN</option>
+                <option value="it">ITALIAN</option>
+                <option value="fr">FRENCH</option>
+                <option value="sl">SLOVENIAN</option>
+                <option value="uk">UKRAINIAN</option>
+                <option value="ja">JAPANESE</option>
+            </select>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+            <button type="submit">Show InAppChat</button>
+        </div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button type="button" id="register-android">Register for Android Notifications</button>
+        </div>
+    </form>
+</div>
+
+<div id="screen-settings" class="template screen settings">
+    <form class="user-data">
+        <h3>External user id</h3>
+        <div class="field">
+            <div class="caption">External user id:</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="text" name="externalUserId" title="External user id" />
             </div>
-            <div class="content"></div>
-            <div class="navi"></div>
         </div>
-
-        <!-- components -->
-
-        <div class="dialog-busy" style="display: none;">
-            <div class="bg"></div>
-            <div class="content">
-                <div class="loading"></div>
+        <h3>Predefined user data</h3>
+        <div class="field">
+            <div class="caption">Phones:</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="text" name="phones" title="Phones" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="caption">Emails:</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="text" name="emails" title="Emails" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="caption">First name:</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="text" name="firstName" title="First name" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="caption">Last name:</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="text" name="lastName" title="Last name" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="caption">Middle name:</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="text" name="middleName" title="Middle name" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="caption">Gender (M/F):</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="text" name="gender" title="Gender (M/F)" />
+            </div>
+        </div>
+        <div class="field">
+            <div class="caption">Birthdate:</div>
+            <div class="input">
+                <div class="title"></div>
+                <input type="date" name="birthdate" title="Birthdate" />
             </div>
         </div>
 
-        <!-- templates -->
-
-        <div id="screen-inbox" class="template screen inbox">
-            <div class="no-messages">You have no messages yet...</div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button type="submit">Save</button>
         </div>
+    </form>
+</div>
 
-        <div id="screen-settings" class="template screen settings">
-            <form class="user-data">
-                <h3>External user id</h3>
-                <div class="field">
-                    <div class="caption">External user id:</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="text" name="externalUserId" title="External user id" />
-                    </div>
-                </div>
-                <h3>Predefined user data</h3>
-                <div class="field">
-                    <div class="caption">Phones:</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="text" name="phones" title="Phones" />
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="caption">Emails:</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="text" name="emails" title="Emails" />
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="caption">First name:</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="text" name="firstName" title="First name" />
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="caption">Last name:</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="text" name="lastName" title="Last name" />
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="caption">Middle name:</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="text" name="middleName" title="Middle name" />
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="caption">Gender (M/F):</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="text" name="gender" title="Gender (M/F)" />
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="caption">Birthdate:</div>
-                    <div class="input">
-                        <div class="title"></div>
-                        <input type="date" name="birthdate" title="Birthdate" />
-                    </div>
-                </div>
+<ul id="list" class="template list"></ul>
+<li id="list-item" class="template list-item">
+    <!--<span class="mark"></span>-->
+    <div class="button-right"><i class="icon icon-info"></i></div>
+    <div class="time"></div>
+    <div class="message"></div>
+</li>
 
-                <div style="text-align: center; margin-top: 15px;">
-                    <button type="submit">Save</button>
-                </div>
-            </form>
-        </div>
+<div id="navi-button" class="template navi-button">
+    <div style="margin-top: 0.5em;"><i class="icon"></i></div>
+    <div class="text" style="margin-top: 5px;"></div>
+</div>
 
-        <ul id="list" class="template list"></ul>
-        <li id="list-item" class="template list-item">
-            <!--<span class="mark"></span>-->
-            <div class="button-right"><i class="icon icon-info"></i></div>
-            <div class="time"></div>
-            <div class="message"></div>
-        </li>
+<!-- scripts -->
 
-        <div id="navi-button" class="template navi-button">
-            <div style="margin-top: 0.5em;"><i class="icon"></i></div>
-            <div class="text" style="margin-top: 5px;"></div>
-        </div>
-
-        <!-- scripts -->
-
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/scope.js"></script>
-        <script type="text/javascript" src="js/mm-mock.js"></script>
-        <script type="text/javascript" src="js/utils.js"></script>
-        <script type="text/javascript" src="js/layout/layout.js"></script>
-        <script type="text/javascript" src="js/inbox/list.js"></script>
-        <script type="text/javascript" src="js/inbox/screen-inbox.js"></script>
-        <script type="text/javascript" src="js/settings/screen-settings.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
-    </body>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/scope.js"></script>
+<script type="text/javascript" src="js/mm-mock.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/layout/layout.js"></script>
+<script type="text/javascript" src="js/inbox/list.js"></script>
+<script type="text/javascript" src="js/inbox/screen-inbox.js"></script>
+<script type="text/javascript" src="js/settings/screen-settings.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+</body>
 </html>

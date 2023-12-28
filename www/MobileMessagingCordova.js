@@ -1,4 +1,4 @@
-var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "geofenceEntered", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized", "deeplink", "inAppChat.unreadMessageCounterUpdated"];
+var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized", "deeplink", "inAppChat.unreadMessageCounterUpdated"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
@@ -45,7 +45,7 @@ var MobileMessagingCordova = function () {
  * Configuration format:
  *  {
  *      applicationCode: '<The application code of your Application from Push Portal website>',
- *      geofencingEnabled: true,
+ *      geofencingEnabled: false,
  *      inAppChatEnabled: true,
  *      messageStorage: '<Message storage save callback>',
  *      defaultMessageStorage: true,
@@ -144,7 +144,6 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
  *   - notificationTapped
  *   - registrationUpdated
  *   - tokenReceived (iOS only)
- *   - geofenceEntered
  *   - actionTapped
  *
  * @name register
@@ -520,6 +519,36 @@ MobileMessagingCordova.prototype.resetMessageCounter = function() {
 MobileMessagingCordova.prototype.getMessageCounter = function(resultCallback) {
     cordova.exec(resultCallback, function(){}, 'MobileMessagingCordova', 'getMessageCounter', []);
 };
+
+/**
+ * Sets chat language.
+ *
+ * @name setLanguage
+ * @param {String} language to be set
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.setLanguage = function(language, errorCallback) {
+    cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'setLanguage', [language])
+};
+
+/**
+ * Set contextual data of the widget
+ *
+ * @param {String} data - contextual data in the form of JSON string
+ * @param {Boolean} allMultiThreadStrategy multi-thread strategy flag, true -> ALL, false -> ACTIVE
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.sendContextualData = function(data, allMultiThreadStrategy, errorCallback) {
+    cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'sendContextualData', [data, allMultiThreadStrategy])
+};
+
+/**
+ * Registers for Android POST_NOTIFICATIONS permission
+ * @name registerForAndroidRemoteNotifications
+ */
+MobileMessagingCordova.prototype.registerForAndroidRemoteNotifications = function () {
+    cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'registerForAndroidRemoteNotifications', []);
+}
 
 MobileMessaging = new MobileMessagingCordova();
 module.exports = MobileMessaging;

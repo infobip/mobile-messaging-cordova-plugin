@@ -532,4 +532,30 @@ describe('inAppChat methods', function() {
 			'getMessageCounter',
 			[]);
 	});
+
+	it('should set language ', function() {
+    	MobileMessaging.setLanguage('en-US', function(){});
+
+    	expect(cordova.exec).toHaveBeenCalledWith(
+    		jasmine.any(Function),
+    		jasmine.any(Function),
+    		'MobileMessagingCordova',
+    		'setLanguage',
+    		['en-US']);
+    });
+
+    it('should send contextual data ', function() {
+        	MobileMessaging.sendContextualData(
+        	 '{"test_attribute_string":"test_attribute_value"}',
+        	 true,
+        	 function(){}
+        	 );
+
+        	expect(cordova.exec).toHaveBeenCalledWith(
+        		jasmine.any(Function),
+        		jasmine.any(Function),
+        		'MobileMessagingCordova',
+        		'sendContextualData',
+        		['{"test_attribute_string":"test_attribute_value"}',true]);
+        });
 });

@@ -51,7 +51,7 @@ class MMConfiguration {
         }
 
         self.appCode = appCode
-        self.geofencingEnabled = rawConfig[MMConfiguration.Keys.geofencingEnabled].unwrap(orDefault: false)
+        self.geofencingEnabled = false
         self.inAppChatEnabled = rawConfig[MMConfiguration.Keys.inAppChatEnabled].unwrap(orDefault: false)
         self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
         self.logging = ios[MMConfiguration.Keys.logging].unwrap(orDefault: false)
@@ -60,7 +60,7 @@ class MMConfiguration {
         self.registeringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.registeringForRemoteNotificationsDisabled].unwrap(orDefault: false)
         self.overridingNotificationCenterDelegateDisabled = ios[MMConfiguration.Keys.overridingNotificationCenterDelegateDisabled].unwrap(orDefault: false)
         self.unregisteringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.unregisteringForRemoteNotificationsDisabled].unwrap(orDefault: false)
-        
+
         if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
             var ps = [String: Any]()
             ps[MMConfiguration.Keys.userDataPersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
@@ -116,7 +116,6 @@ fileprivate class MobileMessagingEventsManager {
         "messageReceived": MMNotificationMessageReceived,
         "tokenReceived":  MMNotificationDeviceTokenReceived,
         "registrationUpdated":  MMNotificationRegistrationUpdated,
-        "geofenceEntered": MMNotificationGeographicalRegionDidEnter,
         "notificationTapped": MMNotificationMessageTapped,
         "actionTapped": MMNotificationActionTapped,
         "depersonalized": MMNotificationDepersonalized,
@@ -202,10 +201,6 @@ fileprivate class MobileMessagingEventsManager {
         case MMNotificationRegistrationUpdated:
             if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, internalId])
-            }
-        case MMNotificationGeographicalRegionDidEnter:
-            if let region = notification.userInfo?[MMNotificationKeyGeographicalRegion] as? MMRegion {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, region.dictionary()])
             }
         case MMNotificationMessageTapped:
             if let message = notification.userInfo?[MMNotificationKeyMessage] as? MM_MTMessage {
@@ -553,9 +548,36 @@ fileprivate class MobileMessagingEventsManager {
         self.commandDelegate.sendSuccess(for: command)
     }
 
+    func setLanguage(_ command: CDVInvokedUrlCommand) {
+        guard let localeString = command.arguments[0] as? String else {
+            self.commandDelegate?.send(errorText: "Could not retrieve locale string from arguments", for: command)
+            return
+        }
+        MobileMessaging.inAppChat?.setLanguage(localeString)
+    }
+
+    func sendContextualData(_ command: CDVInvokedUrlCommand) {
+        guard command.arguments.count > 0,
+              let metadata = command.arguments[0] as? String,
+              let allMultiThreadStrategy = command.arguments[1] as? Bool else {
+            self.commandDelegate?.send(errorText: "Could not retrieve contextual data or multi-thread strategy flag from arguments", for: command)
+            return
+        }
+
+        if let chatVC = UIApplication.topViewController() as? MMChatViewController {
+            let mtStrategy: MMChatMultiThreadStrategy = allMultiThreadStrategy ? .ALL : .ACTIVE
+            chatVC.sendContextualData(metadata, multiThreadStrategy: mtStrategy) { error in
+                guard let error = error else {
+                    return
+                }
+                self.commandDelegate?.send(errorText: "Could not send metadata, error \(error.localizedDescription) from arguments", for: command)
+            }
+        }
+    }
+
     func setupiOSChatSettings(_ command: CDVInvokedUrlCommand) {
         if let chatSettings = command.arguments[0] as? [String: AnyObject] {
-            MobileMessaging.inAppChat?.settings.configureWith(rawConfig: chatSettings)
+            MMChatSettings.settings.configureWith(rawConfig: chatSettings)
         }
     }
 
@@ -588,22 +610,18 @@ fileprivate class MobileMessagingEventsManager {
 
         var mobileMessaging = MobileMessaging.withApplicationCode(configuration.appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
 
-        if configuration.geofencingEnabled {
-            mobileMessaging = mobileMessaging?.withGeofencingService()
-        }
-
         if configuration.inAppChatEnabled {
             mobileMessaging = mobileMessaging?.withInAppChat()
         }
-        
+
         if configuration.registeringForRemoteNotificationsDisabled {
             mobileMessaging = mobileMessaging?.withoutRegisteringForRemoteNotifications()
         }
-        
+
         if configuration.overridingNotificationCenterDelegateDisabled {
             mobileMessaging = mobileMessaging?.withoutOverridingNotificationCenterDelegate()
         }
-        
+
         if configuration.unregisteringForRemoteNotificationsDisabled {
             mobileMessaging = mobileMessaging?.withoutUnregisteringForRemoteNotifications()
         }
@@ -648,7 +666,6 @@ extension MM_MTMessage {
         result["contentUrl"] = contentUrl
         result["seen"] = seenStatus != .NotSeen
         result["seenDate"] = seenDate?.timeIntervalSince1970
-        result["geo"] = isGeoMessage
         result["chat"] = isChatMessage
         result["browserUrl"] = browserUrl?.absoluteString
         result["deeplink"] = deeplink?.absoluteString
@@ -656,11 +673,6 @@ extension MM_MTMessage {
         result["inAppOpenTitle"] = inAppOpenTitle
         result["inAppDismissTitle"] = inAppDismissTitle
         return result
-    }
-
-    var isGeoMessage: Bool {
-        let geoAreasDicts = (originalPayload["internalData"] as? [String: Any])?["geo"] as? [[String: Any]]
-        return geoAreasDicts != nil
     }
 
 }
