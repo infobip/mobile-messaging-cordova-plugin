@@ -47,6 +47,7 @@ var MobileMessagingCordova = function () {
  *      applicationCode: '<The application code of your Application from Push Portal website>',
  *      geofencingEnabled: false,
  *      inAppChatEnabled: true,
+ *      fullFeaturedInAppsEnabled: true,
  *      messageStorage: '<Message storage save callback>',
  *      defaultMessageStorage: true,
  *      ios: {

@@ -10,14 +10,12 @@ The document describes library integration steps for your Cordova project.
   * [Initialization configuration](#initialization-configuration)
 
 ## Requirements
-- cordova 11.0.0 (`sudo npm install -g cordova`)
-- cordova android@10.x.x or newer
-- cordova ios@6.x.x or newer
+- cordova 12.0.0 (`sudo npm install -g cordova`)
 - npm (tested with 8.13.2)
 - node (version 16.10.0 or higher)
 
 For iOS project:
-- Xcode 15.0.1
+- Xcode 15
 - Carthage >= 0.37.0 (`brew install carthage`)
 - Minimum deployment target 12.0
 - cordova-ios@7.x.x
@@ -64,8 +62,8 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
         - more accurate processing of messages and delivery stats
         - support of rich notifications on the lock screen
     2. **Android**: 
-       2.1 Get the Firebase configuration file (google-services.json) as described in <a href="https://firebase.google.com/docs/android/setup#add-config-file" target="_blank">`Firebase documentation`</a> and put it to the root application folder.
-       2.2 Add following to your config.xml
+       1. Get the Firebase configuration file (google-services.json) as described in <a href="https://firebase.google.com/docs/android/setup#add-config-file" target="_blank">`Firebase documentation`</a> and put it to the root application folder.
+       2. Add following to your config.xml
            ```xml
               <platform name="android">
                  <resource-file src="google-services.json" target="app/google-services.json" />

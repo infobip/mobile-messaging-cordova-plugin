@@ -13,6 +13,7 @@ class MMConfiguration {
         static let applicationCodePersistingDisabled = "applicationCodePersistingDisabled"
         static let geofencingEnabled = "geofencingEnabled"
         static let inAppChatEnabled = "inAppChatEnabled"
+        static let fullFeaturedInAppsEnabled = "fullFeaturedInAppsEnabled"
         static let applicationCode = "applicationCode"
         static let forceCleanup = "forceCleanup"
         static let logging = "logging"
@@ -30,6 +31,7 @@ class MMConfiguration {
     let appCode: String
     let geofencingEnabled: Bool
     let inAppChatEnabled: Bool
+    let fullFeaturedInAppsEnabled: Bool
     let messageStorageEnabled: Bool
     let defaultMessageStorage: Bool
     let notificationType: MMUserNotificationType
@@ -53,6 +55,7 @@ class MMConfiguration {
         self.appCode = appCode
         self.geofencingEnabled = false
         self.inAppChatEnabled = rawConfig[MMConfiguration.Keys.inAppChatEnabled].unwrap(orDefault: false)
+        self.fullFeaturedInAppsEnabled = rawConfig[MMConfiguration.Keys.fullFeaturedInAppsEnabled].unwrap(orDefault: false)
         self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
         self.logging = ios[MMConfiguration.Keys.logging].unwrap(orDefault: false)
         self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
@@ -612,6 +615,10 @@ fileprivate class MobileMessagingEventsManager {
 
         if configuration.inAppChatEnabled {
             mobileMessaging = mobileMessaging?.withInAppChat()
+        }
+
+        if configuration.fullFeaturedInAppsEnabled {
+            mobileMessaging = mobileMessaging?.withFullFeaturedInApps()
         }
 
         if configuration.registeringForRemoteNotificationsDisabled {

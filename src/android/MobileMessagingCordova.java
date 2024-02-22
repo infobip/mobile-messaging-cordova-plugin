@@ -256,6 +256,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         String applicationCode;
         boolean geofencingEnabled = false;
         boolean inAppChatEnabled;
+        boolean fullFeaturedInAppsEnabled;
         Map<String, ?> messageStorage;
         boolean defaultMessageStorage;
         boolean loggingEnabled;
@@ -496,6 +497,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             builder.withMessageStore(MessageStoreAdapter.class);
         } else if (configuration.defaultMessageStorage) {
             builder.withMessageStore(SQLiteMessageStore.class);
+        }
+        if (configuration.fullFeaturedInAppsEnabled) {
+            builder.withFullFeaturedInApps();
         }
 
         if (configuration.android != null) {
