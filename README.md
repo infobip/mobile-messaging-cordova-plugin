@@ -11,20 +11,20 @@ The document describes library integration steps for your Cordova project.
 
 ## Requirements
 - cordova 12.0.0 (`sudo npm install -g cordova`)
-- npm (tested with 8.13.2)
+- npm (version 8.13.x or higher)
 - node (version 16.10.0 or higher)
 
 For iOS project:
 - Xcode 15
-- Carthage >= 0.37.0 (`brew install carthage`)
+- Carthage >= 0.39.0 (`brew install carthage`)
 - Minimum deployment target 12.0
-- cordova-ios@7.x.x
-- Ruby version 2.3.8
+- [cordova-ios@7.x.x](https://cordova.apache.org/announcements/2023/07/10/cordova-ios-7.0.0.html)
+- Ruby (2.7.x - 3.1.x)
 
 For Android project: 
 - Android Studio
 - Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 33 (Android 13.0)
-- cordova-android@12.x.x
+- [cordova-android@12.x.x](https://cordova.apache.org/announcements/2023/05/22/cordova-android-12.0.0.html)
 
 For Huawei:
 - Android Studio
