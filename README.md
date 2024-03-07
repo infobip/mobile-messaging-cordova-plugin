@@ -23,7 +23,7 @@ For iOS project:
 
 For Android project: 
 - Android Studio
-- Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 33 (Android 13.0)
+- Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 34 (Android 14.0)
 - [cordova-android@12.x.x](https://cordova.apache.org/announcements/2023/05/22/cordova-android-12.0.0.html)
 
 For Huawei:
