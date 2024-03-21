@@ -16,7 +16,7 @@ The document describes library integration steps for your Cordova project.
 
 For iOS project:
 - Xcode 15
-- Carthage >= 0.39.0 (`brew install carthage`)
+- Cocoapods 1.14.x
 - Minimum deployment target 12.0
 - [cordova-ios@7.x.x](https://cordova.apache.org/announcements/2023/07/10/cordova-ios-7.0.0.html)
 - Ruby (2.7.x - 3.1.x)

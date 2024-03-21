@@ -27,7 +27,6 @@
 	<preference name="ANDROID_FIREBASE_VER_OVERRIDE" default="false" />
 
 	<platform name="ios">
-		<hook type="before_plugin_install" src="scripts/build_mobile_messaging_framework.sh"/>
 		<config-file parent="UIBackgroundModes" target="*Info.plist">
             <array>
                 <string>remote-notification</string>
@@ -57,7 +56,14 @@
 			<array><string>CloudDocuments</string></array>
 		</config-file>
 
-		<framework src="libs/ios/Carthage/Build/MobileMessaging.xcframework" custom="true" embed="true"/>
+		<podspec>
+			<pods use-frameworks="true">
+				<pod name="MobileMessaging" spec="12.3.6" />
+				<pod name="MobileMessaging/Geofencing" spec="12.3.6" />
+				<pod name="MobileMessaging/InAppChat" spec="12.3.6" />
+				<pod name="MobileMessaging/Geofencing" spec="12.3.6" />
+			</pods>
+		</podspec>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 	</platform>
 
