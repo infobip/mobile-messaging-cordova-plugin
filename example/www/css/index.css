@@ -175,21 +175,83 @@ form .title {
     color: #3D5869;
 }
 
+/* screen-local-inbox */
+
+.app > .content > .screen.local-inbox {
+    margin-top: 0;
+}
+
+.app > .content > .screen.local-inbox > .no-messages {
+    display: none;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.app > .content > .screen.local-inbox.empty > .no-messages {
+    display: block;
+}
+
+
+/* screen-inbox */
+
 .app > .content > .screen.inbox {
     margin-top: 0;
 }
 
-/* inbox-screen */
-
 .app > .content > .screen.inbox > .no-messages {
     display: none;
-    margin-top: 100px;
+    margin-top: 50px;
     text-align: center;
 }
 
 .app > .content > .screen.inbox.empty > .no-messages {
     display: block;
 }
+
+.app > .content > .screen.inbox h3 {
+    color: #F07D00;
+    border-bottom: 1px solid #7A94A6;
+    margin-top: 15px;
+    padding-bottom: 3px;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.inbox-filtering-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*height: 100vh; /* Set the form height to the full viewport height */
+}
+
+.field {
+    margin-bottom: 20px; /* Adjust spacing between fields */
+}
+
+.caption {
+    font-weight: bold;
+}
+
+.input {
+    margin-top: 5px; /* Adjust spacing between caption and input */
+}
+
+/*.app > .content > .screen.inbox form input {*/
+/*    width: 50%;*/
+/*    margin-left: 25%;*/
+/*    margin-right: 25%;*/
+/*    box-sizing: border-box;*/
+/*    border: 1px solid #C0C0C0;*/
+/*    padding: 2px 5px;*/
+/*    align-content: center;*/
+/*}*/
+
+/*.app > .content > .screen.inbox form caption {*/
+/*    margin-left: 25%;*/
+/*    margin-right: 25%;*/
+/*    align-content: center;*/
+/*}*/
 
 /* settings-screen */
 

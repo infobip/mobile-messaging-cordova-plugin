@@ -42,6 +42,7 @@ dependencies {
     // Android dependencies start
     if (!isHmsBuild) {
         implementation "com.infobip:infobip-mobile-messaging-android-chat-sdk:$mmFcmVersion@aar"
+        implementation "com.infobip:infobip-mobile-messaging-android-inbox-sdk:$mmFcmVersion@aar"
         implementation("com.infobip:infobip-mobile-messaging-android-sdk:$mmFcmVersion@aar") {
             transitive = true;
             if (!overrideAndroidSupportLibsVersion.empty) {
@@ -58,6 +59,7 @@ dependencies {
     // Hms dependencies start
     if (isHmsBuild) {
         implementation "com.infobip:infobip-mobile-messaging-huawei-chat-sdk:$mmHmsVersion@aar"
+        implementation "com.infobip:infobip-mobile-messaging-huawei-inbox-sdk:$mmHmsVersion@aar"
         implementation("com.infobip:infobip-mobile-messaging-huawei-sdk:$mmHmsVersion@aar") {
             transitive = true;
             if (!overrideAndroidSupportLibsVersion.empty) {

@@ -5,6 +5,7 @@
 (function(global) {
     var utils = global.utils;
     var Layout = global.Layout;
+    var LocalInboxScreen = global.LocalInboxScreen;
     var InboxScreen = global.InboxScreen;
     var SettingsScreen = global.SettingsScreen;
 
@@ -21,9 +22,10 @@
             this.screens = {};
 
             Layout.init();
+            this.addScreen(LocalInboxScreen);
             this.addScreen(InboxScreen);
             this.addScreen(SettingsScreen);
-            this.show(InboxScreen.NAME);
+            this.show(LocalInboxScreen.NAME);
 
             this.registerForEvents();
 
@@ -35,7 +37,7 @@
             screen.init();
             this.screens[screen.NAME] = screen;
             var options = screen.meta();
-            options.width = "50%";
+            options.width = "33%";
             Layout.addButton(screen.NAME, options, function() {
                 _this.show(screen.NAME);
             });

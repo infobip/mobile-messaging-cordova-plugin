@@ -44,6 +44,12 @@ import org.infobip.mobile.messaging.MobileMessagingCore;
 import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.NotificationSettings;
 import org.infobip.mobile.messaging.SuccessPending;
+import org.infobip.mobile.messaging.inbox.Inbox;
+import org.infobip.mobile.messaging.inbox.InboxMessage;
+import org.infobip.mobile.messaging.inbox.MobileInbox;
+import org.infobip.mobile.messaging.inbox.InboxMapper;
+import org.infobip.mobile.messaging.inbox.InboxDataMapper;
+import org.infobip.mobile.messaging.inbox.MobileInboxFilterOptions;
 import org.infobip.mobile.messaging.User;
 import org.infobip.mobile.messaging.UserAttributes;
 import org.infobip.mobile.messaging.UserIdentity;
@@ -143,6 +149,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER = "resetMessageCounter";
     private static final String FUNCTION_INAPP_CHAT_SET_LANGUAGE = "setLanguage";
     private static final String FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA = "sendContextualData";
+
+    private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
+    private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
+    private static final String FUNCTION_MOBILE_INBOX_SET_SEEN = "setInboxMessagesSeen";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
@@ -456,6 +466,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_REGISTER_FOR_POST_NOTIFICATIONS.equals(action)) {
             registerForAndroidRemoteNotifications(args, callbackContext);
+            return true;
+        } else if (FUNCTION_MOBILE_FETCH_INBOX.equals(action)) {
+            fetchInboxMessages(args, callbackContext);
+            return true;
+        } else if (FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN.equals(action)) {
+            fetchInboxMessagesWithoutToken(args, callbackContext);
+            return true;
+        } else if (FUNCTION_MOBILE_INBOX_SET_SEEN.equals(action)) {
+            setInboxMessagesSeen(args, callbackContext);
             return true;
         }
 
@@ -838,6 +857,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 .show();
     }
 
+
     private void showInAppChat(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatScreen().show();
     }
@@ -1035,6 +1055,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return UserJson.fromJSON(args.getJSONObject(0));
     }
 
+
     @NonNull
     private static Installation resolveInstallation(JSONArray args) throws JSONException {
         if (args.length() < 1 || args.getJSONObject(0) == null) {
@@ -1056,6 +1077,107 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         return array;
+    }
+
+    private void setInboxMessagesSeen(JSONArray args, final CallbackContext callbackContext) {
+        try {
+            String externalUserId = args.getString(0);
+            String[] messageIds = resolveStringArray(args.getJSONArray(1));
+            if (externalUserId == null || messageIds == null) {
+                sendCallbackError(callbackContext, "Failed setting inbox messages as seen, invalid arguments");
+                return;
+            } else {
+                runInBackground(new Runnable() {
+                    @Override
+                    public void run() {
+                        MobileInbox.getInstance(cordova.getActivity().getApplication()).setSeen(externalUserId, messageIds, setSeenResultListener(callbackContext));
+                    }
+                });
+            }
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Failed setting inbox messages as seen " + e.getMessage());
+        }
+    }
+
+    private static MobileMessaging.ResultListener<String[]> setSeenResultListener(CallbackContext callbackContext) {
+        return new MobileMessaging.ResultListener<String[]>() {
+            @Override
+            public void onResult(Result<String[], MobileMessagingError> result) {
+                if (result.isSuccess()) {
+                    try {
+                        sendCallbackSuccess(callbackContext, new JSONArray(result.getData()));
+                    } catch (JSONException e) {
+                        sendCallbackError(callbackContext, e.getMessage());
+                    }
+                } else {
+                    sendCallbackError(callbackContext, result.getError().getMessage());
+                }
+            }
+        };
+    }
+
+    private void fetchInboxMessages(JSONArray args, final CallbackContext callbackContext) {
+        if (args.length() < 3) {
+            sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid number of arguments");
+            return;
+        }
+        try {
+            String token = args.getString(0);
+            String externalUserId = args.getString(1);
+            MobileInboxFilterOptions filterOptions = mobileInboxFilterOptionsFromJSON(args.getJSONObject(2));
+            if (externalUserId == null || token == null) {
+                sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid arguments");
+                return;
+            } else {
+                runInBackground(new Runnable() {
+                    @Override
+                    public void run() {
+                        MobileInbox.getInstance(cordova.getActivity().getApplication()).fetchInbox(token, externalUserId, filterOptions, inboxResultListener(callbackContext));
+                    }
+                });
+            }
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, e.getMessage());
+        }
+    }
+
+    private void fetchInboxMessagesWithoutToken(JSONArray args, final CallbackContext callbackContext) {
+        if (args.length() < 2) {
+            sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid number of arguments");
+            return;
+        }
+        try {
+            String externalUserId = args.getString(0);
+            MobileInboxFilterOptions filterOptions = mobileInboxFilterOptionsFromJSON(args.getJSONObject(1));
+            if (externalUserId == null) {
+                sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid arguments");
+                return;
+            } else {
+                runInBackground(new Runnable() {
+                    @Override
+                    public void run() {
+                        MobileInbox.getInstance(cordova.getActivity().getApplication()).fetchInbox(externalUserId, filterOptions, inboxResultListener(callbackContext));
+                    }
+                });
+            }
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, e.getMessage());
+        }
+    }
+
+    @NonNull
+    private MobileMessaging.ResultListener<Inbox> inboxResultListener(final CallbackContext callbackContext) {
+        return new MobileMessaging.ResultListener<Inbox>() {
+            @Override
+            public void onResult(Result<Inbox, MobileMessagingError> result) {
+                if (result.isSuccess()) {
+                    JSONObject json = InboxJson.toJSON(result.getData());
+                    sendCallbackSuccess(callbackContext, json);
+                } else {
+                    sendCallbackError(callbackContext, result.getError().getMessage());
+                }
+            }
+        };
     }
 
     @NonNull
@@ -1283,6 +1405,43 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     /**
+     * Creates new InboxMessages from json object
+     *
+     * @param json json object
+     * @return new {@link InboxMessage} object.
+     */
+    private static InboxMessage inboxMessageFromJSON(JSONObject json) {
+        if (json == null) {
+            return null;
+        }
+        return InboxMessage.createFrom(messageFromJSON(json), InboxDataMapper.inboxDataFromInternalData(json.optString("inboxData")));
+    }
+
+    /**
+     * Creates MobileInboxFilterOptions from json object
+     *
+     * @param json json object
+     * @return new {@link MobileInboxFilterOptions} object.
+     */
+    private static MobileInboxFilterOptions mobileInboxFilterOptionsFromJSON(JSONObject json) {
+        if (json == null) {
+            return null;
+        }
+
+        try {
+            return new MobileInboxFilterOptions(
+                    DateTimeUtil.ISO8601DateFromString(json.getString("fromDateTime")),
+                    DateTimeUtil.ISO8601DateFromString(json.getString("toDateTime")),
+                    json.optString("topic"),
+                    json.optInt("limit")
+            );
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
      * Creates new messages from json object
      *
      * @param json json object
@@ -1502,6 +1661,24 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 e.printStackTrace();
             }
             return userIdentity;
+        }
+    }
+
+    /**
+     * Inbox data mapper for JSON conversion
+     */
+    private static class InboxJson extends Inbox {
+
+        static JSONObject toJSON(final Inbox inbox) {
+            if (inbox == null) {
+                return new JSONObject();
+            }
+            try {
+                return new JSONObject(inbox.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return new JSONObject();
+            }
         }
     }
 
