@@ -254,6 +254,60 @@ describe('Base methods', function() {
 			[]);
 	});
 
+	it('should fetchInboxMessagesWithToken', function() {
+
+		const filterOptions = {
+			fromDateTime: "2017-07-13T12:00:00Z",
+			toDateTime: "2017-07-13T12:00:00Z",
+			topic: "topic",
+			limit: 10
+		};
+
+		MobileMessaging.fetchInboxMessages("Token123", "externalUserId", filterOptions, function(data) {}, function(err) {})
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'fetchInboxMessages',
+			["Token123", "externalUserId", filterOptions]);
+	});
+
+	it('should fetchInboxMessages', function() {
+
+		const filterOptions = {
+			fromDateTime: "2017-07-13T12:00:00Z",
+			toDateTime: "2017-07-13T12:00:00Z",
+			topic: "topic",
+			limit: 10
+		};
+
+		MobileMessaging.fetchInboxMessagesWithoutToken("externalUserId", filterOptions, function(data) {}, function(err) {
+			if (err.code === "UNAUTHORIZED") {
+
+			}
+		})
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'fetchInboxMessagesWithoutToken',
+			["externalUserId", filterOptions]);
+	});
+
+	it('should setInboxMessagesSeen', function() {
+
+		MobileMessaging.setInboxMessagesSeen("externalUserId", ["1","2","3"], function(data) {}, function(err) {})
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'setInboxMessagesSeen',
+			["externalUserId", ["1","2","3"]]);
+	});
+
 	it('should getUser', function() {
 		MobileMessaging.getUser(function(data) {}, function(err) {});
 

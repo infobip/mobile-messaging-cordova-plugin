@@ -31,12 +31,12 @@
 
 <!-- templates -->
 
-<div id="screen-inbox" class="template screen inbox">
+<div id="screen-local-inbox" class="template screen local-inbox">
     <div class="no-messages">You have no messages yet...</div>
     <br><br>
-    <form class="in-app-chat">
+    <form class="local-inbox">
         <div class="field">
-            <label for="languages_select">Choose InAppChat language:</label>
+            <label for="languages_select">Choose Local inbox language:</label>
             <select name="languages" id="languages_select">
                 <option value="en">ENGLISH</option>
                 <option value="tr">TURKISH</option>
@@ -72,6 +72,52 @@
         </div>
         <div style="text-align: center; margin-top: 15px;">
             <button type="button" id="register-android">Register for Android Notifications</button>
+        </div>
+    </form>
+</div>
+
+<div id="screen-inbox" class="template screen inbox">
+    <div class="no-messages" style="align-content: center">You have no messages yet...</div>
+    <br><br>
+    <h3>Filter options for Inbox</h3>
+    <br>
+    <form class="inbox-filtering-form">
+        <div class="field" style="align-content: center">
+            <div class="caption">DateTime From:</div>
+            <div class="input">
+                <input type="datetime-local" name="fromDateTime" />
+            </div>
+        </div>
+
+        <div class="field" style="align-content: center">
+            <div class="caption">DateTime to:</div>
+            <div class="input">
+                <input type="datetime-local" name="toDateTime" />
+            </div>
+        </div>
+
+        <div class="field" style="align-content: center">
+            <div class="caption">Topic:</div>
+            <div class="input">
+                <input type="text" name="topic"/>
+            </div>
+        </div>
+
+        <div class="field" style="align-content: center">
+            <div class="caption">Limit:</div>
+            <div class="input">
+                <input type="number" name="limit"/>
+            </div>
+        </div>
+    </form>
+    <form class="get-inbox">
+        <div style="text-align: center; margin-top: 15px;">
+            <button type="button" id="get-inbox-messages">Get Inbox Messages</button>
+        </div>
+    </form>
+    <form class="set-inbox-seen">
+        <div style="text-align: center; margin-top: 15px;">
+            <button type="button" id="set-inbox-seen">Set Inbox Messages Seen</button>
         </div>
     </form>
 </div>
@@ -163,7 +209,8 @@
 <script type="text/javascript" src="js/mm-mock.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/layout/layout.js"></script>
-<script type="text/javascript" src="js/inbox/list.js"></script>
+<script type="text/javascript" src="js/local-inbox/list.js"></script>
+<script type="text/javascript" src="js/local-inbox/screen-local-inbox.js"></script>
 <script type="text/javascript" src="js/inbox/screen-inbox.js"></script>
 <script type="text/javascript" src="js/settings/screen-settings.js"></script>
 <script type="text/javascript" src="js/app.js"></script>

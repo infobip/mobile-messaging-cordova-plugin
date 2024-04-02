@@ -8,12 +8,12 @@ function execEventHandlerIfExists(parameters) {
     var eventName = parameters[0];
     var handlers = eventHandlers[eventName] || [];
 
-    handlers.forEach(function(handler) {
+    handlers.forEach(function (handler) {
         if (typeof handler !== 'function') {
             return;
         } else {
             var eventParameters = parameters.slice(1);
-            setTimeout(function() {
+            setTimeout(function () {
                 handler.apply(null, eventParameters);
             }, 100);
         }
@@ -21,8 +21,8 @@ function execEventHandlerIfExists(parameters) {
 }
 
 function isEmpty(obj) {
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop))
             return false;
     }
 
@@ -85,9 +85,10 @@ var MobileMessagingCordova = function () {
  *  }
  * @param {Function} onInitError. Error callback
  */
-MobileMessagingCordova.prototype.init = function(config, onInitError) {
+MobileMessagingCordova.prototype.init = function (config, onInitError) {
     var messageStorage = config.messageStorage;
-    var _onInitErrorHandler = onInitError || function() {};
+    var _onInitErrorHandler = onInitError || function () {
+    };
 
     this.configuration = config;
 
@@ -118,11 +119,11 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
             return;
         }
 
-        cordova.exec(messageStorage.start, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.start']);
-        cordova.exec(messageStorage.stop, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.stop']);
-        cordova.exec(messageStorage.save, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.save']);
-        cordova.exec(messageStorage_find, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.find']);
-        cordova.exec(messageStorage_findAll, function(){}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.findAll']);
+        cordova.exec(messageStorage.start, function () {}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.start']);
+        cordova.exec(messageStorage.stop, function () {}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.stop']);
+        cordova.exec(messageStorage.save, function () {}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.save']);
+        cordova.exec(messageStorage_find, function () {}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.find']);
+        cordova.exec(messageStorage_findAll, function () {}, 'MobileMessagingCordova', 'messageStorage_register', ['messageStorage.findAll']);
     }
 
     config.cordovaPluginVersion = cordova.require("cordova/plugin_list").metadata["com-infobip-plugins-mobilemessaging"];
@@ -133,8 +134,10 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
         return;
     }
 
-    cordova.exec(execEventHandlerIfExists, function(){}, 'MobileMessagingCordova', 'registerReceiver', [supportedEvents]);
-    cordova.exec(function() {}, _onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
+    cordova.exec(execEventHandlerIfExists, function () {
+    }, 'MobileMessagingCordova', 'registerReceiver', [supportedEvents]);
+    cordova.exec(function () {
+    }, _onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
 };
 
 /**
@@ -151,7 +154,7 @@ MobileMessagingCordova.prototype.init = function(config, onInitError) {
  * @param {String} eventName
  * @param {Function} handler will be called when event occurs
  */
-MobileMessagingCordova.prototype.register = function(eventName, handler) {
+MobileMessagingCordova.prototype.register = function (eventName, handler) {
     if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
         var handlers = eventHandlers[eventName] || [];
         handlers.push(handler);
@@ -168,7 +171,7 @@ MobileMessagingCordova.prototype.on = MobileMessagingCordova.prototype.register;
  * @param {String} eventName
  * @param {Function} handler will be unregistered from event
  */
-MobileMessagingCordova.prototype.unregister = function(eventName, handler) {
+MobileMessagingCordova.prototype.unregister = function (eventName, handler) {
     var handlers = eventHandlers[eventName] || [];
     var index = handlers.indexOf(handler);
     if (index > -1) {
@@ -185,7 +188,7 @@ MobileMessagingCordova.prototype.off = MobileMessagingCordova.prototype.unregist
  * @name unregisterAllHandlers
  * @param {String} eventName
  */
-MobileMessagingCordova.prototype.unregisterAllHandlers = function(eventName) {
+MobileMessagingCordova.prototype.unregisterAllHandlers = function (eventName) {
     eventHandlers[eventName] = [];
 };
 
@@ -214,7 +217,7 @@ MobileMessagingCordova.prototype.unregisterAllHandlers = function(eventName) {
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.saveUser = function(userData, callback, errorCallback) {
+MobileMessagingCordova.prototype.saveUser = function (userData, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'saveUser', [userData])
 };
 
@@ -225,7 +228,7 @@ MobileMessagingCordova.prototype.saveUser = function(userData, callback, errorCa
  * @param {Function} callback will be called with fetched user data on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.fetchUser = function(callback, errorCallback) {
+MobileMessagingCordova.prototype.fetchUser = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchUser', [])
 };
 
@@ -236,8 +239,47 @@ MobileMessagingCordova.prototype.fetchUser = function(callback, errorCallback) {
  * @param {Function} callback will be called with fetched user data on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.getUser = function(callback, errorCallback) {
+MobileMessagingCordova.prototype.getUser = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getUser', [])
+};
+
+/**
+ * Fetch mobile inbox data from the server.
+ *
+ * @name fetchInboxMessages
+ * @param token access token (JWT in a strictly predefined format) required for current user to have access to the Inbox messages
+ * @param externalUserId External User ID is meant to be an ID of a user in an external (non-Infobip) service
+ * @param filterOptions filtering options applied to messages list in response. Nullable, will return default number of messages
+ * @param callback will be called on success
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.fetchInboxMessages = function (token, externalUserId, filterOptions, callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchInboxMessages', [token, externalUserId, filterOptions])
+};
+
+/**
+ * Fetch mobile inbox without token from the server.
+ *
+ * @name fetchInboxMessagesWithoutToken
+ * @param externalUserId External User ID is meant to be an ID of a user in an external (non-Infobip) service
+ * @param filterOptions filtering options applied to messages list in response. Nullable, will return default number of messages
+ * @param callback will be called on success
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.fetchInboxMessagesWithoutToken = function (externalUserId, filterOptions, callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchInboxMessagesWithoutToken', [externalUserId, filterOptions])
+};
+
+/**
+ * Asynchronously marks inbox messages as seen
+ *
+ * @param externalUserId External User ID is meant to be an ID of a user in an external (non-Infobip) service
+ * @param messageIds array of inbox messages identifiers that need to be marked as seen
+ * @param callback will be called on success
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.setInboxMessagesSeen = function (externalUserId, messageIds, callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setInboxMessagesSeen', [externalUserId, messageIds])
 };
 
 /**
@@ -271,7 +313,7 @@ MobileMessagingCordova.prototype.getUser = function(callback, errorCallback) {
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.saveInstallation = function(installation, callback, errorCallback) {
+MobileMessagingCordova.prototype.saveInstallation = function (installation, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'saveInstallation', [installation])
 };
 
@@ -282,7 +324,7 @@ MobileMessagingCordova.prototype.saveInstallation = function(installation, callb
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.fetchInstallation = function(callback, errorCallback) {
+MobileMessagingCordova.prototype.fetchInstallation = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchInstallation', [])
 };
 
@@ -293,7 +335,7 @@ MobileMessagingCordova.prototype.fetchInstallation = function(callback, errorCal
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.getInstallation = function(callback, errorCallback) {
+MobileMessagingCordova.prototype.getInstallation = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getInstallation', [])
 };
 
@@ -306,7 +348,7 @@ MobileMessagingCordova.prototype.getInstallation = function(callback, errorCallb
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.setInstallationAsPrimary = function(pushRegistrationId, primary, callback, errorCallback) {
+MobileMessagingCordova.prototype.setInstallationAsPrimary = function (pushRegistrationId, primary, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setInstallationAsPrimary', [pushRegistrationId, primary])
 };
 
@@ -330,7 +372,7 @@ MobileMessagingCordova.prototype.setInstallationAsPrimary = function(pushRegistr
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.personalize = function(context, callback, errorCallback) {
+MobileMessagingCordova.prototype.personalize = function (context, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'personalize', [context])
 };
 
@@ -341,7 +383,7 @@ MobileMessagingCordova.prototype.personalize = function(context, callback, error
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.depersonalize = function(callback, errorCallback) {
+MobileMessagingCordova.prototype.depersonalize = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'depersonalize', [])
 };
 
@@ -352,7 +394,7 @@ MobileMessagingCordova.prototype.depersonalize = function(callback, errorCallbac
  * @param {Function} callback will be called on success
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.depersonalizeInstallation = function(pushRegistrationId, callback, errorCallback) {
+MobileMessagingCordova.prototype.depersonalizeInstallation = function (pushRegistrationId, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'depersonalizeInstallation', [pushRegistrationId])
 };
 
@@ -364,7 +406,7 @@ MobileMessagingCordova.prototype.depersonalizeInstallation = function(pushRegist
  * @param {Function} callback will be called upon completion
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callback, errorCallback) {
+MobileMessagingCordova.prototype.markMessagesSeen = function (messageIds, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'markMessagesSeen', messageIds)
 };
 
@@ -376,31 +418,31 @@ MobileMessagingCordova.prototype.markMessagesSeen = function(messageIds, callbac
  * @param {Function} callback will be called upon completion
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.showDialogForError = function(errorCode, callback, errorCallback) {
+MobileMessagingCordova.prototype.showDialogForError = function (errorCode, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'showDialogForError', [errorCode])
 };
 
-MobileMessagingCordova.prototype.defaultMessageStorage = function() {
+MobileMessagingCordova.prototype.defaultMessageStorage = function () {
     var config = this.configuration;
     if (!config.defaultMessageStorage) {
         return undefined;
     }
 
     var defaultMessageStorage = {
-        find: function(messageId, callback) {
-            cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_find', [messageId]);
+        find: function (messageId, callback) {
+            cordova.exec(callback, function () {}, 'MobileMessagingCordova', 'defaultMessageStorage_find', [messageId]);
         },
 
-        findAll: function(callback) {
-            cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_findAll', []);
+        findAll: function (callback) {
+            cordova.exec(callback, function () {}, 'MobileMessagingCordova', 'defaultMessageStorage_findAll', []);
         },
 
-        delete: function(messageId, callback) {
-            cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_delete', [messageId]);
+        delete: function (messageId, callback) {
+            cordova.exec(callback, function () {}, 'MobileMessagingCordova', 'defaultMessageStorage_delete', [messageId]);
         },
 
-        deleteAll: function(callback) {
-            cordova.exec(callback, function(){}, 'MobileMessagingCordova', 'defaultMessageStorage_deleteAll', []);
+        deleteAll: function (callback) {
+            cordova.exec(callback, function () {}, 'MobileMessagingCordova', 'defaultMessageStorage_deleteAll', []);
         }
     };
     return defaultMessageStorage;
@@ -408,15 +450,19 @@ MobileMessagingCordova.prototype.defaultMessageStorage = function() {
 
 function messageStorage_find(messageId) {
     var messageStorage = this.configuration.messageStorage;
-    messageStorage.find(messageId, function(message) {
-        cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'messageStorage_findResult', [message]);
+    messageStorage.find(messageId, function (message) {
+        cordova.exec(function () {
+        }, function () {
+        }, 'MobileMessagingCordova', 'messageStorage_findResult', [message]);
     });
 }
 
 function messageStorage_findAll() {
     var messageStorage = this.configuration.messageStorage;
-    messageStorage.findAll(function(messages) {
-        cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'messageStorage_findAllResult', messages);
+    messageStorage.findAll(function (messages) {
+        cordova.exec(function () {
+        }, function () {
+        }, 'MobileMessagingCordova', 'messageStorage_findAllResult', messages);
     });
 }
 
@@ -435,8 +481,10 @@ function messageStorage_findAll() {
  *   }
  * }
  */
-MobileMessagingCordova.prototype.submitEvent = function(eventData) {
-    cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'submitEvent', [eventData]);
+MobileMessagingCordova.prototype.submitEvent = function (eventData) {
+    cordova.exec(function () {
+    }, function () {
+    }, 'MobileMessagingCordova', 'submitEvent', [eventData]);
 };
 
 /**
@@ -457,7 +505,7 @@ MobileMessagingCordova.prototype.submitEvent = function(eventData) {
  * @param {Function} successCallback will be called upon completion
  * @param {Function} errorCallback will be called on error, you have to handle error and do retries yourself
  */
-MobileMessagingCordova.prototype.submitEventImmediately = function(eventData, successCallback, errorCallback) {
+MobileMessagingCordova.prototype.submitEventImmediately = function (eventData, successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, 'MobileMessagingCordova', 'submitEventImmediately', [eventData]);
 };
 
@@ -476,11 +524,15 @@ MobileMessagingCordova.prototype.submitEventImmediately = function(eventData, su
  *     }
  * }
  */
-MobileMessagingCordova.prototype.showChat = function(presentingOptions) {
+MobileMessagingCordova.prototype.showChat = function (presentingOptions) {
     if (presentingOptions !== null && !isEmpty(presentingOptions)) {
-        cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'showChat', [presentingOptions]);
+        cordova.exec(function () {
+        }, function () {
+        }, 'MobileMessagingCordova', 'showChat', [presentingOptions]);
     } else {
-        cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'showChat', []);
+        cordova.exec(function () {
+        }, function () {
+        }, 'MobileMessagingCordova', 'showChat', []);
     }
 };
 
@@ -497,8 +549,10 @@ MobileMessagingCordova.prototype.showChat = function(presentingOptions) {
  *      navigationBarTitleColor:'<hex color string>'
  *  }
  */
-MobileMessagingCordova.prototype.setupiOSChatSettings = function(chatSettings) {
-    cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'setupiOSChatSettings', [chatSettings]);
+MobileMessagingCordova.prototype.setupiOSChatSettings = function (chatSettings) {
+    cordova.exec(function () {
+    }, function () {
+    }, 'MobileMessagingCordova', 'setupiOSChatSettings', [chatSettings]);
 };
 
 /**
@@ -506,8 +560,10 @@ MobileMessagingCordova.prototype.setupiOSChatSettings = function(chatSettings) {
  * MobileMessaging plugin automatically resets the counter to 0 whenever user opens the chat screen.
  * However, use the following API in case you need to manually reset the counter.
  */
-MobileMessagingCordova.prototype.resetMessageCounter = function() {
-    cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'resetMessageCounter', []);
+MobileMessagingCordova.prototype.resetMessageCounter = function () {
+    cordova.exec(function () {
+    }, function () {
+    }, 'MobileMessagingCordova', 'resetMessageCounter', []);
 };
 
 /**
@@ -517,8 +573,9 @@ MobileMessagingCordova.prototype.resetMessageCounter = function() {
  * In order to get current counter value use following API
  * @param {Function} resultCallback will be called upon completion with integer counter value.
  */
-MobileMessagingCordova.prototype.getMessageCounter = function(resultCallback) {
-    cordova.exec(resultCallback, function(){}, 'MobileMessagingCordova', 'getMessageCounter', []);
+MobileMessagingCordova.prototype.getMessageCounter = function (resultCallback) {
+    cordova.exec(resultCallback, function () {
+    }, 'MobileMessagingCordova', 'getMessageCounter', []);
 };
 
 /**
@@ -528,8 +585,9 @@ MobileMessagingCordova.prototype.getMessageCounter = function(resultCallback) {
  * @param {String} language to be set
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.setLanguage = function(language, errorCallback) {
-    cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'setLanguage', [language])
+MobileMessagingCordova.prototype.setLanguage = function (language, errorCallback) {
+    cordova.exec(function () {
+    }, errorCallback, 'MobileMessagingCordova', 'setLanguage', [language])
 };
 
 /**
@@ -539,8 +597,9 @@ MobileMessagingCordova.prototype.setLanguage = function(language, errorCallback)
  * @param {Boolean} allMultiThreadStrategy multi-thread strategy flag, true -> ALL, false -> ACTIVE
  * @param {Function} errorCallback will be called on error
  */
-MobileMessagingCordova.prototype.sendContextualData = function(data, allMultiThreadStrategy, errorCallback) {
-    cordova.exec(function(){}, errorCallback, 'MobileMessagingCordova', 'sendContextualData', [data, allMultiThreadStrategy])
+MobileMessagingCordova.prototype.sendContextualData = function (data, allMultiThreadStrategy, errorCallback) {
+    cordova.exec(function () {
+    }, errorCallback, 'MobileMessagingCordova', 'sendContextualData', [data, allMultiThreadStrategy])
 };
 
 /**
@@ -548,7 +607,9 @@ MobileMessagingCordova.prototype.sendContextualData = function(data, allMultiThr
  * @name registerForAndroidRemoteNotifications
  */
 MobileMessagingCordova.prototype.registerForAndroidRemoteNotifications = function () {
-    cordova.exec(function(){}, function(){}, 'MobileMessagingCordova', 'registerForAndroidRemoteNotifications', []);
+    cordova.exec(function () {
+    }, function () {
+    }, 'MobileMessagingCordova', 'registerForAndroidRemoteNotifications', []);
 }
 
 MobileMessaging = new MobileMessagingCordova();

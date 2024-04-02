@@ -331,6 +331,56 @@ fileprivate class MobileMessagingEventsManager {
         self.commandDelegate?.send(successResult, callbackId: command.callbackId)
     }
 
+    func fetchInboxMessages(_ command: CDVInvokedUrlCommand) {
+        guard let token = command.argument(at: 0) as? String,
+              let extUserId = command.argument(at: 1) as? String else {
+            self.commandDelegate?.send(errorText: "Could not retrieve inbox data from argument", for: command)
+            return
+        }
+
+        let filters = MMInboxFilterOptions(dictRepresentation: command.argument(at: 2) as? [String : Any] ?? [:])
+
+        MobileMessaging.inbox?.fetchInbox(token: token, externalUserId: extUserId, options: filters, completion: { (inbox, error) in
+                   if let error = error {
+                       self.commandDelegate?.send(error: error, for: command)
+                   } else {
+                       self.commandDelegate?.send(dict: inbox?.dictionary() ?? [:], for: command)
+                   }
+               })
+    }
+
+    func fetchInboxMessagesWithoutToken(_ command: CDVInvokedUrlCommand) {
+        guard let extUserId = command.argument(at: 0) as? String else {
+                self.commandDelegate?.send(errorText: "Could not retrieve inbox data from argument", for: command)
+                return
+            }
+
+            let filters = MMInboxFilterOptions(dictRepresentation: command.argument(at: 1) as? [String : Any] ?? [:])
+
+            MobileMessaging.inbox?.fetchInbox(externalUserId: extUserId, options: filters, completion: { (inbox, error) in
+                if let error = error {
+                    self.commandDelegate?.send(error: error, for: command)
+                } else {
+                    self.commandDelegate?.send(dict: inbox?.dictionary() ?? [:], for: command)
+                }
+            })
+    }
+
+    func setInboxMessagesSeen(_ command: CDVInvokedUrlCommand) {
+        guard let extUserId = command.argument(at: 0) as? String,
+              let mIds = command.argument(at: 1) as? [String] else {
+                   self.commandDelegate?.send(errorText: "Could not retrieve messages data from argument", for: command)
+                   return
+              }
+        MobileMessaging.inbox?.setSeen(externalUserId: extUserId, messageIds: mIds, completion: { error in
+            if let error = error {
+                self.commandDelegate?.send(error: error, for: command)
+            } else {
+                self.commandDelegate?.send(array: mIds, for: command)
+            }
+        })
+    }
+
     func saveInstallation(_ command: CDVInvokedUrlCommand) {
         guard let installationDictionary = command.arguments[0] as? [String: Any], let installation = MMInstallation(dictRepresentation: installationDictionary) else
         {
@@ -660,6 +710,16 @@ fileprivate class MobileMessagingEventsManager {
     }
 }
 
+extension MMInbox {
+    func dictionary() -> [String: Any] {
+        var result = [String: Any]()
+        result["countTotal"] = countTotal
+        result["countUnread"] = countUnread
+        result["messages"] = messages.map { $0.dictionary() }
+        return result
+    }
+}
+
 extension MM_MTMessage {
     override func dictionary() -> [String: Any] {
         var result = [String: Any]()
@@ -679,6 +739,7 @@ extension MM_MTMessage {
         result["webViewUrl"] = webViewUrl?.absoluteString
         result["inAppOpenTitle"] = inAppOpenTitle
         result["inAppDismissTitle"] = inAppDismissTitle
+        result["topic"] = topic
         return result
     }
 
