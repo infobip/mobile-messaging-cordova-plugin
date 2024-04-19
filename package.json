@@ -1,6 +1,6 @@
 {
   "name": "com-infobip-plugins-mobilemessaging",
-  "version": "6.0.0-rc1",
+  "version": "6.0.0-rc2",
   "description": "Infobip Mobile Messaging Cordova Plugin",
   "main": "www/MobileMessagingCordova.js",
   "directories": {
