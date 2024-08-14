@@ -71,8 +71,8 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
                  ...
               </platform>
            ```
-   > ### Notice:
-   > Geofencing is not supported in 3.0.0-rc release, will be added in next releases
+   > ### Notice (when targeting Android 13):
+   > Starting from Android 13, Google requires to ask user for notification permission. Follow <a href="https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Android-13-Notification-Permission-Handling" target="_blank">this guide</a> to make a permission request.
 
 4. Configure Huawei build
 

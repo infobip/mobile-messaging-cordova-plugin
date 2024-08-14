@@ -1,7 +1,16 @@
-def overrideAndroidSupportLibsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_SUPPORT_VER_OVERRIDE", "false")
-def overrideGmsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_GMS_VER_OVERRIDE", "false")
-def overrideFirebaseVersion = cdvHelpers.getConfigPreference("IB_ANDROID_FIREBASE_VER_OVERRIDE", "false")
-def withCryptorMigration = cdvHelpers.getConfigPreference("IB_ANDROID_USE_CRYPTOR_MIGRATION", "false")
+def overrideAndroidSupportLibsVersion = "false"
+def overrideGmsVersion = "false"
+def overrideFirebaseVersion = "false"
+def withCryptorMigration = "false"
+
+try {
+    if (cdvHelpers != null) { //not available for Capacitor
+        overrideAndroidSupportLibsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_SUPPORT_VER_OVERRIDE", "false")
+        overrideGmsVersion = cdvHelpers.getConfigPreference("IB_ANDROID_GMS_VER_OVERRIDE", "false")
+        overrideFirebaseVersion = cdvHelpers.getConfigPreference("IB_ANDROID_FIREBASE_VER_OVERRIDE", "false")
+        withCryptorMigration = cdvHelpers.getConfigPreference("IB_ANDROID_USE_CRYPTOR_MIGRATION", "false")
+    }
+} catch (ignored) {}
 
 if (overrideAndroidSupportLibsVersion == "false") overrideAndroidSupportLibsVersion = ""
 if (overrideGmsVersion == "false") overrideGmsVersion = ""
@@ -34,8 +43,8 @@ buildscript {
 // apply plugin: 'com.huawei.agconnect'
 
 dependencies {
-    def mmHmsVersion = '6.2.0'
-    def mmFcmVersion = '12.3.0'
+    def mmHmsVersion = '6.6.1'
+    def mmFcmVersion = '12.9.1'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
 
