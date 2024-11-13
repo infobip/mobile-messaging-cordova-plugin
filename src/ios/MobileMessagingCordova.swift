@@ -440,7 +440,8 @@ fileprivate class MobileMessagingEventsManager {
         }
         let uaDict = context["userAttributes"] as? [String: Any]
         let ua = uaDict == nil ? nil : MMUserAttributes(dictRepresentation: uaDict!)
-        MobileMessaging.personalize(withUserIdentity: ui, userAttributes: ua) { (error) in
+        let forceDepersonalize = context["forceDepersonalize"] as? Bool ?? false
+        MobileMessaging.personalize(forceDepersonalize: forceDepersonalize, userIdentity: ui, userAttributes: ua) { (error) in
             if let error = error {
                 self.commandDelegate?.send(error: error, for: command)
             } else {
