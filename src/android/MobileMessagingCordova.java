@@ -50,6 +50,12 @@ import org.infobip.mobile.messaging.inbox.MobileInbox;
 import org.infobip.mobile.messaging.inbox.InboxMapper;
 import org.infobip.mobile.messaging.inbox.InboxDataMapper;
 import org.infobip.mobile.messaging.inbox.MobileInboxFilterOptions;
+import org.infobip.mobile.messaging.inbox.MobileInboxFilterOptionsJson;
+import org.infobip.mobile.messaging.plugins.CustomEventJson;
+import org.infobip.mobile.messaging.plugins.InstallationJson;
+import org.infobip.mobile.messaging.plugins.MessageJson;
+import org.infobip.mobile.messaging.plugins.PersonalizationCtx;
+import org.infobip.mobile.messaging.plugins.UserJson;
 import org.infobip.mobile.messaging.User;
 import org.infobip.mobile.messaging.UserAttributes;
 import org.infobip.mobile.messaging.UserIdentity;
@@ -193,7 +199,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 Message message = Message.createFrom(intent.getExtras());
                 NotificationAction notificationAction = NotificationAction.createFrom(intent.getExtras());
                 if (libraryEventReceiver != null) {
-                    sendCallbackEvent(event, libraryEventReceiver, messageToJSON(message), notificationAction.getId(), notificationAction.getInputText());
+                    sendCallbackEvent(event, libraryEventReceiver, MessageJson.toJSON(message), notificationAction.getId(), notificationAction.getInputText());
                 }
                 return;
             }
@@ -299,7 +305,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 return;
             }
 
-            JSONObject message = messageBundleToJSON(intent.getExtras());
+            JSONObject message = MessageJson.bundleToJSON(intent.getExtras());
             if (libraryEventReceiver == null) {
                 CacheManager.saveEvent(context, event, message);
                 return;
@@ -639,7 +645,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void saveUser(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         try {
-            final User user = resolveUser(args);
+            final User user = UserJson.resolveUser(args.getJSONObject(0));
             runInBackground(new Runnable() {
                 @Override
                 public void run() {
@@ -682,7 +688,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private void saveInstallation(JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        final Installation installation = resolveInstallation(args);
+        final Installation installation = InstallationJson.resolveInstallation(args.getJSONObject(0));
         runInBackground(new Runnable() {
             @Override
             public void run() {
@@ -724,7 +730,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void personalize(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         try {
-            final PersonalizationCtx ctx = resolvePersonalizationCtx(args);
+            final PersonalizationCtx ctx = PersonalizationCtx.resolvePersonalizationCtx(args.getJSONObject(0));
             runInBackground(new Runnable() {
                 @Override
                 public void run() {
@@ -906,7 +912,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         for (Message m : messageStore.findAll(context)) {
             if (messageId.equals(m.getMessageId())) {
-                sendCallbackSuccess(callbackContext, messageToJSON(m));
+                sendCallbackSuccess(callbackContext, MessageJson.toJSON(m));
                 return;
             }
         }
@@ -921,7 +927,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return;
         }
         List<Message> messages = messageStore.findAll(context);
-        sendCallbackSuccess(callbackContext, messagesToJSONArray(messages.toArray(new Message[messages.size()])));
+        sendCallbackSuccess(callbackContext, MessageJson.toJSONArray(messages.toArray(new Message[messages.size()])));
     }
 
     private synchronized void defaultMessageStorage_delete(JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -1047,25 +1053,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     @NonNull
-    private static User resolveUser(JSONArray args) throws JSONException, IllegalArgumentException {
-        if (args.length() < 1 || args.getJSONObject(0) == null) {
-            throw new IllegalArgumentException("Cannot resolve user from arguments");
-        }
-
-        return UserJson.fromJSON(args.getJSONObject(0));
-    }
-
-
-    @NonNull
-    private static Installation resolveInstallation(JSONArray args) throws JSONException {
-        if (args.length() < 1 || args.getJSONObject(0) == null) {
-            throw new IllegalArgumentException("Cannot resolve installation from arguments");
-        }
-
-        return InstallationJson.fromJSON(args.getJSONObject(0));
-    }
-
-    @NonNull
     private static String[] resolveStringArray(JSONArray args) throws JSONException {
         if (args.length() < 1 || args.getString(0) == null) {
             throw new IllegalArgumentException("Cannot resolve string parameters from arguments");
@@ -1124,7 +1111,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         try {
             String token = args.getString(0);
             String externalUserId = args.getString(1);
-            MobileInboxFilterOptions filterOptions = mobileInboxFilterOptionsFromJSON(args.getJSONObject(2));
+            MobileInboxFilterOptions filterOptions = MobileInboxFilterOptionsJson.mobileInboxFilterOptionsFromJSON(args.getJSONObject(2));
             if (externalUserId == null || token == null) {
                 sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid arguments");
                 return;
@@ -1148,7 +1135,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
         try {
             String externalUserId = args.getString(0);
-            MobileInboxFilterOptions filterOptions = mobileInboxFilterOptionsFromJSON(args.getJSONObject(1));
+            MobileInboxFilterOptions filterOptions = MobileInboxFilterOptionsJson.mobileInboxFilterOptionsFromJSON(args.getJSONObject(1));
             if (externalUserId == null) {
                 sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid arguments");
                 return;
@@ -1171,7 +1158,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             @Override
             public void onResult(Result<Inbox, MobileMessagingError> result) {
                 if (result.isSuccess()) {
-                    JSONObject json = InboxJson.toJSON(result.getData());
+                    JSONObject json = InboxMapper.toJSON(result.getData());
                     sendCallbackSuccess(callbackContext, json);
                 } else {
                     sendCallbackError(callbackContext, result.getError().getMessage());
@@ -1181,43 +1168,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     @NonNull
-    private static List<Message> resolveMessages(JSONArray args) throws JSONException {
-        if (args == null || args.length() < 1 || args.getString(0) == null) {
-            throw new IllegalArgumentException("Cannot resolve messages from arguments");
-        }
-
-        List<Message> messages = new ArrayList<Message>(args.length());
-        for (int i = 0; i < args.length(); i++) {
-            Message m = messageFromJSON(args.optJSONObject(i));
-            if (m == null) {
-                continue;
-            }
-
-            messages.add(m);
-        }
-        return messages;
-    }
-
-    @NonNull
     private String resolveStringParameter(JSONArray args) throws JSONException {
         if (args.length() < 1 || args.getString(0) == null) {
             throw new IllegalArgumentException("Cannot resolve string parameter from arguments");
         }
 
         return args.getString(0);
-    }
-
-    private static PersonalizationCtx resolvePersonalizationCtx(JSONArray args) throws JSONException, IllegalArgumentException {
-        if (args.length() < 1) {
-            throw new IllegalArgumentException("Cannot resolve personalization context from arguments");
-        }
-
-        JSONObject json = args.getJSONObject(0);
-        PersonalizationCtx ctx = new PersonalizationCtx();
-        ctx.forceDepersonalize = json.optBoolean("forceDepersonalize", false);
-        ctx.userIdentity = UserJson.userIdentityFromJson(json.getJSONObject("userIdentity"));
-        ctx.userAttributes = UserJson.userAttributesFromJson(json.optJSONObject("userAttributes"));
-        return ctx;
     }
 
     private int resolveIntParameter(JSONArray args) throws JSONException {
@@ -1337,145 +1293,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     /**
-     * Creates new json object based on message bundle
-     *
-     * @param bundle message bundle
-     * @return message object in json format
-     */
-    private static JSONObject messageBundleToJSON(Bundle bundle) {
-        Message message = Message.createFrom(bundle);
-        if (message == null) {
-            return null;
-        }
-
-        return messageToJSON(message);
-    }
-
-    /**
-     * Creates json from a message object
-     *
-     * @param message message object
-     * @return message json
-     */
-    private static JSONObject messageToJSON(Message message) {
-        try {
-            return new JSONObject()
-                    .putOpt("messageId", message.getMessageId())
-                    .putOpt("title", message.getTitle())
-                    .putOpt("body", message.getBody())
-                    .putOpt("sound", message.getSound())
-                    .putOpt("vibrate", message.isVibrate())
-                    .putOpt("icon", message.getIcon())
-                    .putOpt("silent", message.isSilent())
-                    .putOpt("category", message.getCategory())
-                    .putOpt("from", message.getFrom())
-                    .putOpt("receivedTimestamp", message.getReceivedTimestamp())
-                    .putOpt("customPayload", message.getCustomPayload())
-                    .putOpt("contentUrl", message.getContentUrl())
-                    .putOpt("seen", message.getSeenTimestamp() != 0)
-                    .putOpt("seenDate", message.getSeenTimestamp())
-                    .putOpt("chat", message.isChatMessage())
-                    .putOpt("browserUrl", message.getBrowserUrl())
-                    .putOpt("deeplink", message.getDeeplink())
-                    .putOpt("inAppOpenTitle", message.getInAppOpenTitle())
-                    .putOpt("inAppDismissTitle", message.getInAppDismissTitle());
-        } catch (JSONException e) {
-            Log.w(TAG, "Cannot convert message to JSON: " + e.getMessage());
-            Log.d(TAG, Log.getStackTraceString(e));
-            return null;
-        }
-    }
-
-    /**
-     * Creates array of json objects from list of messages
-     *
-     * @param messages list of messages
-     * @return array of jsons representing messages
-     */
-    private static JSONArray messagesToJSONArray(@NonNull Message messages[]) {
-        JSONArray array = new JSONArray();
-        for (Message message : messages) {
-            JSONObject json = messageToJSON(message);
-            if (json == null) {
-                continue;
-            }
-            array.put(json);
-        }
-        return array;
-    }
-
-    /**
-     * Creates new InboxMessages from json object
-     *
-     * @param json json object
-     * @return new {@link InboxMessage} object.
-     */
-    private static InboxMessage inboxMessageFromJSON(JSONObject json) {
-        if (json == null) {
-            return null;
-        }
-        return InboxMessage.createFrom(messageFromJSON(json), InboxDataMapper.inboxDataFromInternalData(json.optString("inboxData")));
-    }
-
-    /**
-     * Creates MobileInboxFilterOptions from json object
-     *
-     * @param json json object
-     * @return new {@link MobileInboxFilterOptions} object.
-     */
-    private static MobileInboxFilterOptions mobileInboxFilterOptionsFromJSON(JSONObject json) {
-        if (json == null) {
-            return null;
-        }
-
-        try {
-            return new MobileInboxFilterOptions(
-                    DateTimeUtil.ISO8601DateFromString(json.getString("fromDateTime")),
-                    DateTimeUtil.ISO8601DateFromString(json.getString("toDateTime")),
-                    json.optString("topic"),
-                    json.optInt("limit")
-            );
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    /**
-     * Creates new messages from json object
-     *
-     * @param json json object
-     * @return new {@link Message} object.
-     */
-    private static Message messageFromJSON(JSONObject json) {
-        if (json == null) {
-            return null;
-        }
-
-        Message message = new Message();
-        message.setMessageId(json.optString("messageId", null));
-        message.setTitle(json.optString("title", null));
-        message.setBody(json.optString("body", null));
-        message.setSound(json.optString("sound", null));
-        message.setVibrate(json.optBoolean("vibrate", true));
-        message.setIcon(json.optString("icon", null));
-        message.setSilent(json.optBoolean("silent", false));
-        message.setCategory(json.optString("category", null));
-        message.setFrom(json.optString("from", null));
-        message.setReceivedTimestamp(json.optLong("receivedTimestamp", 0));
-        message.setCustomPayload(json.optJSONObject("customPayload"));
-        message.setMessageType(json.optString("messageType", null));
-        message.setContentUrl(json.optString("contentUrl", null));
-        message.setSeenTimestamp(json.optLong("seenDate", 0));
-        message.setBrowserUrl(json.optString("browserUrl", null));
-        message.setDeeplink(json.optString("deeplink", null));
-        message.setInAppOpenTitle(json.optString("inAppOpenTitle", null));
-        message.setInAppDismissTitle(json.optString("inAppDismissTitle", null));
-
-        return message;
-    }
-
-    /**
      * Converts notification categories in configuration into library format
      *
      * @param categories notification categories from cordova
@@ -1515,243 +1332,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .build();
         }
         return notificationActions;
-    }
-
-    /**
-     * User data mappers for JSON conversion
-     */
-    private static class UserJson extends User {
-
-        static JSONObject toJSON(final User user) {
-            if (user == null) {
-                return new JSONObject();
-            }
-            try {
-                JSONObject jsonObject = new JSONObject(UserMapper.toJson(user));
-                cleanupJsonMapForClient(user.getCustomAttributes(), jsonObject);
-                return jsonObject;
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return new JSONObject();
-            }
-        }
-
-        static User fromJSON(JSONObject json) throws IllegalArgumentException {
-            User user = new User();
-
-            try {
-                if (json.has(UserAtts.externalUserId)) {
-                    user.setExternalUserId(json.optString(UserAtts.externalUserId));
-                }
-                if (json.has(UserAtts.firstName)) {
-                    user.setFirstName(json.optString(UserAtts.firstName));
-                }
-                if (json.has(UserAtts.lastName)) {
-                    user.setLastName(json.optString(UserAtts.lastName));
-                }
-                if (json.has(UserAtts.middleName)) {
-                    user.setMiddleName(json.optString(UserAtts.middleName));
-                }
-                if (json.has(UserAtts.gender)) {
-                    user.setGender(UserMapper.genderFromBackend(json.optString(UserAtts.gender)));
-                }
-                if (json.has(UserAtts.birthday)) {
-                    Date bday = null;
-                    try {
-                        bday = DateTimeUtil.dateFromYMDString(json.optString(UserAtts.birthday));
-                        user.setBirthday(bday);
-                    } catch (ParseException e) {
-                    }
-                }
-                if (json.has(UserAtts.phones)) {
-                    user.setPhones(jsonArrayFromJsonObjectToSet(json, UserAtts.phones));
-                }
-                if (json.has(UserAtts.emails)) {
-                    user.setEmails(jsonArrayFromJsonObjectToSet(json, UserAtts.emails));
-                }
-                if (json.has(UserAtts.tags)) {
-                    user.setTags(jsonArrayFromJsonObjectToSet(json, UserAtts.tags));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (json.has(UserAtts.customAttributes)) {
-                    Type type = new TypeToken<Map<String, Object>>() {
-                    }.getType();
-                    Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
-                    if (!CustomAttributesMapper.validate(customAttributes)) {
-                        throw new IllegalArgumentException("Custom attributes are invalid.");
-                    }
-                    user.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return user;
-        }
-
-        static UserAttributes userAttributesFromJson(JSONObject json) throws IllegalArgumentException {
-            if (json == null) {
-                return null;
-            }
-
-            UserAttributes userAttributes = new UserAttributes();
-
-            try {
-                if (json.has(UserAtts.firstName)) {
-                    userAttributes.setFirstName(json.optString(UserAtts.firstName));
-                }
-                if (json.has(UserAtts.lastName)) {
-                    userAttributes.setLastName(json.optString(UserAtts.lastName));
-                }
-                if (json.has(UserAtts.middleName)) {
-                    userAttributes.setMiddleName(json.optString(UserAtts.middleName));
-                }
-                if (json.has(UserAtts.gender)) {
-                    userAttributes.setGender(UserMapper.genderFromBackend(json.optString(UserAtts.gender)));
-                }
-                if (json.has(UserAtts.birthday)) {
-                    Date bday = null;
-                    try {
-                        bday = DateTimeUtil.dateFromYMDString(json.optString(UserAtts.birthday));
-                        userAttributes.setBirthday(bday);
-                    } catch (ParseException e) {
-                    }
-                }
-                if (json.has(UserAtts.tags)) {
-                    userAttributes.setTags(jsonArrayFromJsonObjectToSet(json, UserAtts.tags));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (json.has(UserAtts.customAttributes)) {
-                    Type type = new TypeToken<Map<String, Object>>() {
-                    }.getType();
-                    Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString(UserAtts.customAttributes), type);
-                    if (!CustomAttributesMapper.validate(customAttributes)) {
-                        throw new IllegalArgumentException("Custom attributes are invalid.");
-                    }
-                    userAttributes.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return userAttributes;
-        }
-
-        static UserIdentity userIdentityFromJson(JSONObject json) {
-            UserIdentity userIdentity = new UserIdentity();
-            try {
-                if (json.has(UserAtts.externalUserId)) {
-                    userIdentity.setExternalUserId(json.optString(UserAtts.externalUserId));
-                }
-                if (json.has(UserAtts.phones)) {
-                    userIdentity.setPhones(jsonArrayFromJsonObjectToSet(json, UserAtts.phones));
-                }
-                if (json.has(UserAtts.emails)) {
-                    userIdentity.setEmails(jsonArrayFromJsonObjectToSet(json, UserAtts.emails));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return userIdentity;
-        }
-    }
-
-    /**
-     * Inbox data mapper for JSON conversion
-     */
-    private static class InboxJson extends Inbox {
-
-        static JSONObject toJSON(final Inbox inbox) {
-            if (inbox == null) {
-                return new JSONObject();
-            }
-            try {
-                return new JSONObject(inbox.toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return new JSONObject();
-            }
-        }
-    }
-
-    private static class PersonalizationCtx {
-        UserIdentity userIdentity;
-        UserAttributes userAttributes;
-        boolean forceDepersonalize;
-    }
-
-    private static Set<String> jsonArrayFromJsonObjectToSet(JSONObject jsonObject, String arrayName) {
-        Set<String> set = new HashSet<String>();
-        JSONArray jsonArray = jsonObject.optJSONArray(arrayName);
-        if (jsonArray != null) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                set.add(jsonArray.optString(i));
-            }
-        }
-        return set;
-    }
-
-    private static class InstallationJson extends Installation {
-
-        static JSONArray toJSON(final List<Installation> installations) {
-            JSONArray installationsJson = new JSONArray();
-            for (Installation installation : installations) {
-                installationsJson.put(toJSON(installation));
-            }
-            return installationsJson;
-        }
-
-        static JSONObject toJSON(final Installation installation) {
-            try {
-                String json = InstallationMapper.toJson(installation);
-                JSONObject jsonObject = new JSONObject(json);
-                cleanupJsonMapForClient(installation.getCustomAttributes(), jsonObject);
-                return jsonObject;
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return new JSONObject();
-            }
-        }
-
-        static Installation fromJSON(JSONObject json) {
-            Installation installation = new Installation();
-
-            try {
-                if (json.has("isPushRegistrationEnabled")) {
-                    installation.setPushRegistrationEnabled(json.optBoolean("isPushRegistrationEnabled"));
-                }
-                if (json.has("isPrimaryDevice")) {
-                    installation.setPrimaryDevice(json.optBoolean("isPrimaryDevice"));
-                }
-                if (json.has("customAttributes")) {
-                    Type type = new TypeToken<Map<String, Object>>() {
-                    }.getType();
-                    Map<String, Object> customAttributes = new JsonSerializer().deserialize(json.optString("customAttributes"), type);
-                    installation.setCustomAttributes(CustomAttributesMapper.customAttsFromBackend(customAttributes));
-                }
-            } catch (Exception e) {
-                //error parsing
-            }
-
-            return installation;
-        }
-    }
-
-    static void cleanupJsonMapForClient(Map<String, CustomAttributeValue> customAttributes, JSONObject jsonObject) throws JSONException {
-        jsonObject.remove("map");
-        if (jsonObject.has("customAttributes")) {
-            if (customAttributes != null) {
-                jsonObject.put("customAttributes", new JSONObject(CustomAttributesMapper.customAttsToBackend(customAttributes)));
-            }
-        }
     }
 
     static class CacheManager {
@@ -1948,7 +1528,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 try {
                     findAllResults.wait(SYNC_CALL_TIMEOUT_MS);
                     if (!findAllResults.isEmpty()) {
-                        return resolveMessages(findAllResults.get(0));
+                        return MessageJson.resolveMessages(findAllResults.get(0));
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "Cannot find messages: " + e);
@@ -1972,7 +1552,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             if (callback == null) {
                 return false;
             }
-            sendCallback(callback, new PluginResult(PluginResult.Status.OK, messagesToJSONArray(messages)));
+            sendCallback(callback, new PluginResult(PluginResult.Status.OK, MessageJson.toJSONArray(messages)));
             return true;
         }
 
