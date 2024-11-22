@@ -3,6 +3,7 @@ package org.apache.cordova.plugin;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -243,6 +244,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         class AndroidConfiguration {
             String notificationIcon;
+            String notificationChannelId;
+            String notificationChannelName;
+            String notificationSound;
             boolean multipleNotifications;
             String notificationAccentColor;
 //            FirebaseOptions firebaseOptions;
@@ -542,6 +546,14 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 int color = Color.parseColor(configuration.android.notificationAccentColor);
                 notificationBuilder.withColor(color);
             }
+            if (configuration.android.notificationChannelId != null && !configuration.android.notificationChannelId.isEmpty()
+                    && configuration.android.notificationChannelName != null && !configuration.android.notificationChannelName.isEmpty()
+                    && configuration.android.notificationSound != null && !configuration.android.notificationSound.isEmpty()) {
+                builder.withCustomNotificationChannel(configuration.android.notificationChannelId,
+                        configuration.android.notificationChannelName,
+                        configuration.android.notificationSound);
+            }
+
             builder.withDisplayNotification(notificationBuilder.build());
             //TODO:
 //            if (configuration.android.firebaseOptions != null) {
