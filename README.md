@@ -16,7 +16,7 @@ The document describes library integration steps for your Cordova project.
 
 For iOS project:
 - Xcode 16.x
-- Carthage >= 0.39.0 (`brew install carthage`)
+- Cocoapods 1.14.x
 - Minimum deployment target 12.0
 - [cordova-ios@7.x.x](https://cordova.apache.org/announcements/2023/07/10/cordova-ios-7.0.0.html)
 - Ruby (2.7.x - 3.1.x)
@@ -245,7 +245,6 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
     
       this.mobileMessaging.init({
         applicationCode: '<your_application_code>',
-        geofencingEnabled: '<true/false>',
         ios: {
           notificationTypes: ['alert', 'badge', 'sound']
         },
@@ -276,7 +275,6 @@ MobileMessaging.init({
             multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
             notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>
         },
-        geofencingEnabled: <Boolean; set to 'true' to enable geofencing inside the library>, // optional
         messageStorage: <Object; message storage implementation>, // optional
         defaultMessageStorage: <Boolean; set to 'true' to enable default message storage implementation>, // optional
         notificationCategories: [ // optional

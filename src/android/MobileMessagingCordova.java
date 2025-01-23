@@ -274,7 +274,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         AndroidConfiguration android;
         String applicationCode;
-        boolean geofencingEnabled = false;
         boolean inAppChatEnabled;
         boolean fullFeaturedInAppsEnabled;
         Map<String, ?> messageStorage;

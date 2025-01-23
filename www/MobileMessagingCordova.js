@@ -45,7 +45,6 @@ var MobileMessagingCordova = function () {
  * Configuration format:
  *  {
  *      applicationCode: '<The application code of your Application from Push Portal website>',
- *      geofencingEnabled: false,
  *      inAppChatEnabled: true,
  *      fullFeaturedInAppsEnabled: true,
  *      messageStorage: '<Message storage save callback>',
@@ -291,7 +290,6 @@ MobileMessagingCordova.prototype.setInboxMessagesSeen = function (externalUserId
  *   isPrimaryDevice: true,
  *   isPushRegistrationEnabled: true,
  *   notificationsEnabled: true,
- *   geoEnabled: false,
  *   sdkVersion: "1.2.3",
  *   appVersion: "2.3.4"
  *   os: "iOS",

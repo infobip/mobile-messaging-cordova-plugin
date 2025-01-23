@@ -42,7 +42,7 @@ module.exports = function(ctx) {
                     -p "${ctx.opts.projectRoot}/${projectPath}"\
                     -t "${projectMainTarget}"\
                     -g ${appGroup}\
-                    -c -x`;
+                    -c`;
 
     if (overrideSigning === "true") {
         command += '-s ';
