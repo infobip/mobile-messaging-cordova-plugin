@@ -25,7 +25,8 @@ git commit -a -m "Release: $RELEASE_VERSION"
 git tag $RELEASE_VERSION -m "Release: $RELEASE_VERSION"
 
 # Setting username and password for HTTPS to BitBucket
-git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@git.ib-ci.com/scm/mml/infobip-mobile-messaging-cordova-plugin.git
+# commented to make ssh release
+#git remote set-url origin https://$GIT_PASSNAMEUSERWORD@git.ib-ci.com/scm/mml/infobip-mobile-messaging-cordova-plugin.git
 
 # Push changes
 git push origin master --tags
