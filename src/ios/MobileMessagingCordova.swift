@@ -999,18 +999,28 @@ fileprivate extension CDVCommandDelegate {
 }
 
 extension UIApplication {
-    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-        if let navigationController = controller as? UINavigationController {
+    public var firstKeyWindow: UIWindow? {
+        return connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first(where: { $0.activationState == .foregroundActive })?
+            .windows
+            .first(where: { $0.isKeyWindow })
+    }
+
+    class func topViewController(controller: UIViewController? = nil) -> UIViewController? {
+        let rootController = controller ?? UIApplication.shared.firstKeyWindow?.rootViewController
+
+        if let navigationController = rootController as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
         }
-        if let tabController = controller as? UITabBarController {
+        if let tabController = rootController as? UITabBarController {
             if let selected = tabController.selectedViewController {
                 return topViewController(controller: selected)
             }
         }
-        if let presented = controller?.presentedViewController {
+        if let presented = rootController?.presentedViewController {
             return topViewController(controller: presented)
         }
-        return controller
+        return rootController
     }
 }
