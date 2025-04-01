@@ -304,7 +304,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         public void onReceive(Context context, Intent intent) {
             String event = messageBroadcastEventMap.get(intent.getAction());
             if (event == null) {
-                Log.w(TAG, "Cannot process event for broadcast: " + intent.getAction());
+                Logger.w(TAG, "Cannot process event for broadcast: " + intent.getAction());
                 return;
             }
 
@@ -322,7 +322,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
         if (requestCode == REQ_CODE_POST_NOTIFICATIONS) {
             if (registerForAndroidPermissionContext == null) {
-                Log.e(TAG, "Callback context was null for POST_NOTIFICATIONS permission");
+                Logger.e(TAG, "Callback context was null for POST_NOTIFICATIONS permission");
                 return;
             }
             if (!cordova.hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
@@ -341,7 +341,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         if (!initContext.isValid()) {
-            Log.e(TAG, "Initialization context is not valid, cannot complete initialization");
+            Logger.e(TAG, "Initialization context is not valid, cannot complete initialization");
             return;
         }
 
@@ -356,7 +356,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         if (!showErrorDialogContext.isValid()) {
-            Log.e(TAG, "Show dialog context is invalid, cannot forward information to Cordova");
+            Logger.e(TAG, "Show dialog context is invalid, cannot forward information to Cordova");
             return;
         }
 
@@ -387,7 +387,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        Log.d(TAG, "execute: " + action + " args: " + args.toString());
+        Logger.d(TAG, "execute: " + action + " args: " + args.toString());
 
         if (FUNCTION_INIT.equals(action)) {
             init(args, callbackContext);
@@ -504,6 +504,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         if (configuration.loggingEnabled) {
             MobileMessagingLogger.enforce();
+            Logger.init(true);
+        } else {
+            Logger.init(false);
         }
 
         PreferenceHelper.saveString(context, MobileMessagingProperty.SYSTEM_DATA_VERSION_POSTFIX, "cordova " + configuration.cordovaPluginVersion);
@@ -568,8 +571,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             Class cls = Class.forName("org.infobip.mobile.messaging.cryptor.ECBCryptorImpl");
             cryptor = (Cryptor) cls.getDeclaredConstructor(String.class).newInstance(DeviceInformation.getDeviceID(context));
         } catch (Exception e) {
-            Log.d(TAG, "Will not migrate cryptor: ");
-            e.printStackTrace();
+            Logger.d(TAG, "Will not migrate cryptor: " + Log.getStackTraceString(e));
         }
         if (cryptor != null) {
             builder.withCryptorMigration(cryptor);
@@ -599,7 +601,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 if (callbackContext != null) {
                     sendCallbackError(callbackContext, e.get(), googleErrorCode);
                 } else {
-                    Log.e(TAG, "Cannot start SDK: " + e.get() + " errorCode: " + googleErrorCode);
+                    Logger.e(TAG, "Cannot start SDK: " + e.get() + " errorCode: " + googleErrorCode);
                 }
             }
         });
@@ -1031,7 +1033,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     customEvent.setDefinitionId(json.optString(UserCustomEventAtts.definitionId));
                 }
             } catch (Exception e) {
-                Log.w(TAG, "Error when serializing CustomEvent object:" + Log.getStackTraceString(e));
+                Logger.w(TAG, "Error when serializing CustomEvent object:" + Log.getStackTraceString(e));
             }
 
             try {
@@ -1042,7 +1044,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     customEvent.setProperties(CustomAttributesMapper.customAttsFromBackend(properties));
                 }
             } catch (Exception e) {
-                Log.w(TAG, "Error when serializing CustomEvent object:" + Log.getStackTraceString(e));
+                Logger.w(TAG, "Error when serializing CustomEvent object:" + Log.getStackTraceString(e));
             }
 
             return customEvent;
@@ -1250,7 +1252,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             json.put("description", message);
             json.put("code", errorCode);
         } catch (JSONException e) {
-            Log.w(TAG, "Error when serializing error object:" + Log.getStackTraceString(e));
+            Logger.w(TAG, "Error when serializing error object:" + Log.getStackTraceString(e));
         }
         sendCallbackWithResult(callback, new PluginResult(PluginResult.Status.ERROR, json));
     }
@@ -1460,14 +1462,14 @@ public class MobileMessagingCordova extends CordovaPlugin {
         @Override
         public void save(Context context, Message... messages) {
             if (!saveJS(messages)) {
-                Log.w(TAG, "JS storage not available yet, will cache");
+                Logger.w(TAG, "JS storage not available yet, will cache");
                 CacheManager.saveMessages(context, messages);
             }
         }
 
         @Override
         public void deleteAll(Context context) {
-            Log.e(TAG, "deleteAll is not implemented because it should not be called from within library");
+            Logger.e(TAG, "deleteAll is not implemented because it should not be called from within library");
         }
 
         static void register(Context context, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -1492,10 +1494,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
 
             if (saveJS(messages)) {
-                Log.d(TAG, "Saved " + messages.length + " messages from cache");
+                Logger.d(TAG, "Saved " + messages.length + " messages from cache");
             } else {
                 CacheManager.saveMessages(context, messages);
-                Log.w(TAG, "Cannot save messages from cache, postpone");
+                Logger.w(TAG, "Cannot save messages from cache, postpone");
             }
         }
 
@@ -1542,7 +1544,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                         return MessageJson.resolveMessages(findAllResults.get(0));
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "Cannot find messages: " + e);
+                    Logger.e(TAG, "Cannot find messages: " + e);
                 }
                 return new ArrayList<Message>();
             }
@@ -1570,6 +1572,32 @@ public class MobileMessagingCordova extends CordovaPlugin {
         static void sendCallback(CallbackContext callbackContext, PluginResult pluginResult) {
             pluginResult.setKeepCallback(true);
             callbackContext.sendPluginResult(pluginResult);
+        }
+    }
+
+    private static class Logger {
+        private static boolean isDebugLoggingEnabled = false;
+
+        static void init(boolean enableDebugLogging) {
+            isDebugLoggingEnabled = enableDebugLogging;
+        }
+
+        static void d(String tag, String message) {
+            if (isDebugLoggingEnabled) {
+                Log.d(tag, message);
+            }
+        }
+
+        static void w(String tag, String message) {
+            Log.w(tag, message);
+        }
+
+        static void e(String tag, String message) {
+            Log.e(tag, message);
+        }
+
+        static void e(String tag, String message, Throwable e) {
+            Log.e(tag, message, e);
         }
     }
 }
