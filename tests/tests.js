@@ -28,7 +28,7 @@ describe('Initialization', function() {
 	});
 
 	it('should fail if no application code', function(done) {
-		MobileMessaging.init({}, function(error) {
+		MobileMessaging.init({}, function() {}, function(error) {
 			expect(error).toBe('No application code provided');
 			done();
 		});
@@ -73,7 +73,7 @@ describe('Initialization with message storage', function() {
 			}
 		};
 
-		MobileMessaging.init(config, function(error) {
+		MobileMessaging.init(config, function() {}, function(error) {
 			expect(error).toBe('Missing messageStorage.start function definition');
 			done();
 		});
@@ -90,7 +90,7 @@ describe('Initialization with message storage', function() {
 			}
 		};
 
-		MobileMessaging.init(config, function(error) {
+		MobileMessaging.init(config, function() {}, function(error) {
 			expect(error).toBe('Missing messageStorage.stop function definition');
 			done();
 		});
@@ -107,7 +107,7 @@ describe('Initialization with message storage', function() {
 			}
 		};
 
-		MobileMessaging.init(config, function(error) {
+		MobileMessaging.init(config, function() {}, function(error) {
 			expect(error).toBe('Missing messageStorage.save function definition');
 			done();
 		});
@@ -124,7 +124,7 @@ describe('Initialization with message storage', function() {
 			}
 		};
 
-		MobileMessaging.init(config, function(error) {
+		MobileMessaging.init(config, function() {}, function(error) {
 			expect(error).toBe('Missing messageStorage.find function definition');
 			done();
 		});
@@ -141,7 +141,7 @@ describe('Initialization with message storage', function() {
 			}
 		};
 
-		MobileMessaging.init(config, function(error) {
+		MobileMessaging.init(config, function() {}, function(error) {
 			expect(error).toBe('Missing messageStorage.findAll function definition');
 			done();
 		});

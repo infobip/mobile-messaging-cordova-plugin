@@ -82,12 +82,15 @@ var MobileMessagingCordova = function () {
  *          }
  *      ]
  *  }
+ *  @param {Function} callback. Called after successful start of Mobile Messaging SDK initialization. Notice: no Mobile Messaging SDK
+ *  methods can be called in this callback as it is not yet initialized. To know when Mobile Messaging SDK is fully initialized, subscribe
+ *  to "registrationUpdated" event.
  * @param {Function} onInitError. Error callback
  */
-MobileMessagingCordova.prototype.init = function (config, onInitError) {
+MobileMessagingCordova.prototype.init = function (config, callback, onInitError) {
     var messageStorage = config.messageStorage;
-    var _onInitErrorHandler = onInitError || function () {
-    };
+    var _onInitErrorHandler = onInitError || function () {};
+    var _successCallback = callback || function () {};
 
     this.configuration = config;
 
@@ -135,8 +138,7 @@ MobileMessagingCordova.prototype.init = function (config, onInitError) {
 
     cordova.exec(execEventHandlerIfExists, function () {
     }, 'MobileMessagingCordova', 'registerReceiver', [supportedEvents]);
-    cordova.exec(function () {
-    }, _onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
+    cordova.exec(_successCallback, _onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
 };
 
 /**

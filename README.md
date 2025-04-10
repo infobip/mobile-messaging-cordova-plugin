@@ -184,6 +184,9 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
                     notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>
                 }
             },
+            function() {
+                console.log(`Mobile Messaging SDK has started initialization process. Register for registrationUpdated event to know when it's ready to be used.`);
+            },
             function(error) {
                 console.log('Init error: ' + error.description);
             }
@@ -252,7 +255,9 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
           notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>,
           multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
           notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>
-       }}, (err) => {
+       }}, 
+        () => {},
+        (err) => {
          ...
        });
      
@@ -264,6 +269,11 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
     </details>
 
 ## Initialization configuration
+> ### Notice:
+> The callback function will be called after successful start of Mobile Messaging SDK initialization. When the callback is called,
+> it does not mean that the Mobile Messaging SDK is fully initialized and no Mobile Messaging SDK methods should be called inside the callback.
+> To know when the Mobile Messaging SDK is fully initialized, you should subscribe to the [registrationUpdated](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Library-events) event.
+
 ```javascript
 MobileMessaging.init({
         applicationCode: <String; Infobip Application Code from the Customer Portal obtained in step 2>,
@@ -305,6 +315,9 @@ MobileMessaging.init({
             systemInfoSendingDisabled: <Boolean; defines if MM SDK should send system information to the server; false by default>,
             userDataPersistingDisabled: <Boolean; defines if MM SDK should persist User Data locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself; false by default>
         }
+    },
+    function() {
+        console.log(`Mobile Messaging SDK has started initialization process. Register for registrationUpdated event to know when it's ready to be used.`);
     },
     function(error) {
         console.log('Init error: ' + error.description);

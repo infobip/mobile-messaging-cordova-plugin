@@ -76,7 +76,9 @@
                         logging: true,
                     }
                 },
-
+                function () {
+                    console.log(`Mobile Messaging SDK has started initialization process. Register for registrationUpdated event to know when it's ready to be used.`)
+                },
                 function(error) {
                     utils.log('Init error: ' + error);
                 }
