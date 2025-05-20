@@ -12,7 +12,7 @@ The document describes library integration steps for your Cordova project.
 ## Requirements
 - cordova 12.0.0 (`sudo npm install -g cordova`)
 - npm (version 8.13.x or higher)
-- node (version 16.10.0 or higher)
+- node (version 16.13.0 or higher)
 
 For iOS project:
 - Xcode 16.x
@@ -23,8 +23,8 @@ For iOS project:
 
 For Android project: 
 - Android Studio
-- Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 34 (Android 14.0)
-- [cordova-android@12.x.x](https://cordova.apache.org/announcements/2023/05/22/cordova-android-12.0.0.html)
+- Supported API Levels: 22 ( Android 5.1 - [Lollipop](https://developer.android.com/about/versions/lollipop)) - 35 (Android 15)
+- [cordova-android@14.x.x](https://cordova.apache.org/announcements/2025/04/30/cordova-android-14.0.1.html)
 
 For Huawei:
 - Android Studio

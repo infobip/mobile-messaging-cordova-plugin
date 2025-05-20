@@ -36,15 +36,15 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.7.3'
     }
 }
 
 // apply plugin: 'com.huawei.agconnect'
 
 dependencies {
-    def mmHmsVersion = '6.10.0'
-    def mmFcmVersion = '13.5.0'
+    def mmHmsVersion = '7.4.2'
+    def mmFcmVersion = '13.13.3'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
 

@@ -22,18 +22,6 @@
             this.listView.itemRenderer(this._itemRenderer);
             this.formNode = this.rootNode.querySelector("form.local-inbox");
 
-            this.formNode.addEventListener("submit", function() {
-                var selected_index = _this.formNode.elements["languages"].selectedIndex;
-                var language
-                if(selected_index > 0) {
-                    language = _this.formNode.elements["languages"].options[selected_index].value;
-                } else {
-                    language = "en";
-                }
-                _this._showChat();
-                _this._setLanguage(language);
-            });
-
             this.formNode.addEventListener("click", function() {
                 _this._registerForAndroidRemoteNotifications();
             })
@@ -128,22 +116,6 @@
             if (listNode.parentNode !== this.rootNode) {
                 this.rootNode.appendChild(listNode);
             }
-        },
-
-        /**
-         * Set chat language
-         */
-        _setLanguage: function(language) {
-            MobileMessaging.setLanguage(language,function(e) {
-                utils.log("Error set language: " + e);
-            });
-        },
-
-        /**
-         * Show in app chat
-         */
-        _showChat: function() {
-            MobileMessaging.showChat();
         },
 
         /**
