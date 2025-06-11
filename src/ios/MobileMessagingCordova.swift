@@ -25,6 +25,7 @@ class MMConfiguration {
         static let registeringForRemoteNotificationsDisabled = "registeringForRemoteNotificationsDisabled"
         static let overridingNotificationCenterDelegateDisabled = "overridingNotificationCenterDelegateDisabled"
         static let unregisteringForRemoteNotificationsDisabled = "unregisteringForRemoteNotificationsDisabled"
+        static let userDataJwt = "userDataJwt"
     }
 
     static let ignoreKeysWhenComparing: [String] = [Keys.applicationCode, Keys.cordovaPluginVersion]
@@ -43,6 +44,7 @@ class MMConfiguration {
     let registeringForRemoteNotificationsDisabled: Bool
     let overridingNotificationCenterDelegateDisabled: Bool
     let unregisteringForRemoteNotificationsDisabled: Bool
+    let userDataJwt: String?
 
     init?(rawConfig: [String: AnyObject]) {
         guard let ios = rawConfig["ios"] as? [String: AnyObject] else
@@ -59,6 +61,7 @@ class MMConfiguration {
         self.registeringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.registeringForRemoteNotificationsDisabled].unwrap(orDefault: false)
         self.overridingNotificationCenterDelegateDisabled = ios[MMConfiguration.Keys.overridingNotificationCenterDelegateDisabled].unwrap(orDefault: false)
         self.unregisteringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.unregisteringForRemoteNotificationsDisabled].unwrap(orDefault: false)
+        self.userDataJwt = rawConfig[MMConfiguration.Keys.userDataJwt].unwrap(orDefault: nil)
 
         if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
             var ps = [String: Any]()
@@ -276,8 +279,8 @@ fileprivate class MobileMessagingEventsManager {
     }
 
     @objc(init:)
-    func start(command: CDVInvokedUrlCommand) { 
-        guard var userConfigDict = command.arguments[0] as? [String: AnyObject], 
+    func start(command: CDVInvokedUrlCommand) {
+        guard var userConfigDict = command.arguments[0] as? [String: AnyObject],
             let applicationCode = userConfigDict.removeValue(forKey: MMConfiguration.Keys.applicationCode) as? String,
             let userConfiguration = MMConfiguration(rawConfig: userConfigDict) else
         {
@@ -511,6 +514,11 @@ fileprivate class MobileMessagingEventsManager {
         self.commandDelegate?.send(errorText: "Not supported", for: command)
     }
 
+    func setUserDataJwt(_ command: CDVInvokedUrlCommand) {
+        let jwtString = command.arguments.first as? String
+        MobileMessaging.jwtSupplier = VariableJwtSupplier(jwt: jwtString)
+    }
+
     //MARK: MessageStorage
     func messageStorage_register(_ command: CDVInvokedUrlCommand) {
         messageStorageAdapter?.register(command)
@@ -686,6 +694,8 @@ fileprivate class MobileMessagingEventsManager {
         } else {
             mobileMessaging = MobileMessaging.withSavedApplicationCode(notificationType: configuration.notificationType)
         }
+
+        mobileMessaging = mobileMessaging?.withJwtSupplier(VariableJwtSupplier(jwt: configuration.userDataJwt))
 
         guard let mobileMessaging = mobileMessaging else {
             MMLogDebug("Failed to initialize MobileMessaging instance, SDK can't start.")
@@ -1022,5 +1032,15 @@ extension UIApplication {
             return topViewController(controller: presented)
         }
         return rootController
+    }
+}
+
+class VariableJwtSupplier: NSObject, MMJwtSupplier {
+    let jwt: String?
+    init(jwt: String?) {
+        self.jwt = jwt
+    }
+    func getJwt() -> String? {
+        return jwt
     }
 }

@@ -3,42 +3,34 @@ package org.apache.cordova.plugin;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.ContentResolver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
 import org.infobip.mobile.messaging.mobileapi.apiavailability.ApiAvailability;
 
-//import com.google.firebase.FirebaseOptions;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.infobip.mobile.messaging.BroadcastParameter;
-import org.infobip.mobile.messaging.CustomAttributeValue;
 import org.infobip.mobile.messaging.CustomAttributesMapper;
 import org.infobip.mobile.messaging.Event;
 import org.infobip.mobile.messaging.Installation;
-import org.infobip.mobile.messaging.InstallationMapper;
 import org.infobip.mobile.messaging.Message;
 import org.infobip.mobile.messaging.MobileMessaging;
 import org.infobip.mobile.messaging.MobileMessagingCore;
@@ -46,22 +38,15 @@ import org.infobip.mobile.messaging.MobileMessagingProperty;
 import org.infobip.mobile.messaging.NotificationSettings;
 import org.infobip.mobile.messaging.SuccessPending;
 import org.infobip.mobile.messaging.inbox.Inbox;
-import org.infobip.mobile.messaging.inbox.InboxMessage;
 import org.infobip.mobile.messaging.inbox.MobileInbox;
 import org.infobip.mobile.messaging.inbox.InboxMapper;
-import org.infobip.mobile.messaging.inbox.InboxDataMapper;
 import org.infobip.mobile.messaging.inbox.MobileInboxFilterOptions;
 import org.infobip.mobile.messaging.inbox.MobileInboxFilterOptionsJson;
-import org.infobip.mobile.messaging.plugins.CustomEventJson;
 import org.infobip.mobile.messaging.plugins.InstallationJson;
 import org.infobip.mobile.messaging.plugins.MessageJson;
 import org.infobip.mobile.messaging.plugins.PersonalizationCtx;
 import org.infobip.mobile.messaging.plugins.UserJson;
 import org.infobip.mobile.messaging.User;
-import org.infobip.mobile.messaging.UserAttributes;
-import org.infobip.mobile.messaging.UserIdentity;
-import org.infobip.mobile.messaging.UserMapper;
-import org.infobip.mobile.messaging.api.appinstance.UserAtts;
 import org.infobip.mobile.messaging.api.appinstance.UserCustomEventAtts;
 import org.infobip.mobile.messaging.api.support.http.serialization.JsonSerializer;
 import org.infobip.mobile.messaging.app.ActivityLifecycleMonitor;
@@ -79,7 +64,6 @@ import org.infobip.mobile.messaging.CustomEvent;
 import org.infobip.mobile.messaging.storage.MessageStore;
 import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
 import org.infobip.mobile.messaging.util.Cryptor;
-import org.infobip.mobile.messaging.util.DateTimeUtil;
 import org.infobip.mobile.messaging.util.DeviceInformation;
 import org.infobip.mobile.messaging.util.PreferenceHelper;
 import org.infobip.mobile.messaging.chat.InAppChat;
@@ -88,11 +72,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -160,6 +142,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
     private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
     private static final String FUNCTION_MOBILE_INBOX_SET_SEEN = "setInboxMessagesSeen";
+    private static final String FUNCTION_SET_USER_DATA_JWT = "setUserDataJwt";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
@@ -282,6 +265,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         String cordovaPluginVersion = "unknown";
         PrivacySettings privacySettings = new PrivacySettings();
         List<Category> notificationCategories = new ArrayList<Category>();
+        String userDataJwt;
     }
 
     private static class CordovaCallContext {
@@ -485,6 +469,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_MOBILE_INBOX_SET_SEEN.equals(action)) {
             setInboxMessagesSeen(args, callbackContext);
             return true;
+        } else if (FUNCTION_SET_USER_DATA_JWT.equals(action)) {
+            setJwtSupplier(args, callbackContext);
         }
 
         return false;
@@ -563,6 +549,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
 //            }
 
         }
+
+        builder.withJwtSupplier(() -> configuration.userDataJwt);
 
         // Checking do we need to migrate data saved with old cryptor,
         // if withCryptorMigration project ext property is set, ECBCryptorImpl class will exist.
@@ -1345,6 +1333,15 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     .build();
         }
         return notificationActions;
+    }
+
+    private void setJwtSupplier(final JSONArray args, final CallbackContext callbackContext) {
+        try {
+            String jwt = resolveStringParameter(args);
+            mobileMessaging().setJwtSupplier(() -> jwt);
+        } catch (Exception e) {
+            mobileMessaging().setJwtSupplier(() -> null);
+        }
     }
 
     static class CacheManager {

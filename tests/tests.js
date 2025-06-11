@@ -35,7 +35,7 @@ describe('Initialization', function() {
 	});
 
 	it('should provide configuration to cordova.exec()', function() {
-		MobileMessaging.init({applicationCode: '12345'}, function() {});
+		MobileMessaging.init({applicationCode: '12345', userDataJwt: 'jwt'}, function() {});
 		expect(cordova.exec).toHaveBeenCalledWith(
 			jasmine.any(Function),
 			jasmine.any(Function),
@@ -49,6 +49,7 @@ describe('Initialization', function() {
 			'MobileMessagingCordova',
 			'init',
 			[{
+				userDataJwt: 'jwt',
 				applicationCode: '12345',
 				cordovaPluginVersion: '1.2.3-test'
 			}]);
@@ -447,6 +448,17 @@ describe('Base methods', function() {
 			'submitEventImmediately',
 			[{definitionId: "eventDefinitionId1"}]);
 	});
+
+	it('should set user data JWT', function() {
+		MobileMessaging.setUserDataJwt('jwt', function(){});
+
+		expect(cordova.exec).toHaveBeenCalledWith(
+			jasmine.any(Function),
+			jasmine.any(Function),
+			'MobileMessagingCordova',
+			'setUserDataJwt',
+			['jwt']);
+	})
 });
 
 describe('defaultMessageStorage methods', function() {
@@ -613,3 +625,4 @@ describe('inAppChat methods', function() {
         		['{"test_attribute_string":"test_attribute_value"}',true]);
         });
 });
+

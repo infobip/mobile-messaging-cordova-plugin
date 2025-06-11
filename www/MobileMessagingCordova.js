@@ -49,6 +49,7 @@ var MobileMessagingCordova = function () {
  *      fullFeaturedInAppsEnabled: true,
  *      messageStorage: '<Message storage save callback>',
  *      defaultMessageStorage: true,
+ *      userDataJwt: '<JWT token for authorization of user data related operations>',
  *      ios: {
  *          notificationTypes: ['alert', 'sound', 'badge'],
  *          forceCleanup: <Boolean>,
@@ -610,6 +611,17 @@ MobileMessagingCordova.prototype.registerForAndroidRemoteNotifications = functio
     cordova.exec(function () {
     }, function () {
     }, 'MobileMessagingCordova', 'registerForAndroidRemoteNotifications', []);
+}
+
+/**
+ * Updates JWT used for user data fetching and personalization.
+ * @name setJwt
+ * @param {String} jwt - JWT token in a predefined format
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.setUserDataJwt = function (jwt, errorCallback) {
+    cordova.exec(function () {
+    }, errorCallback, 'MobileMessagingCordova', 'setUserDataJwt', [jwt]);
 }
 
 MobileMessaging = new MobileMessagingCordova();
