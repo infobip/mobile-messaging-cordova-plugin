@@ -676,7 +676,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     JSONObject json = UserJson.toJSON(result.getData());
                     sendCallbackSuccess(callbackContext, json);
                 } else {
-                    sendCallbackError(callbackContext, result.getError().getMessage());
+                    sendCallbackError(callbackContext, result.getError().getMessage(), result.getError().getCode());
                 }
             }
         };
@@ -742,7 +742,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                                 JSONObject json = UserJson.toJSON(result.getData());
                                 sendCallbackSuccess(callbackContext, json);
                             } else {
-                                sendCallbackError(callbackContext, result.getError().getMessage());
+                                sendCallbackError(callbackContext, result.getError().getMessage(), result.getError().getCode());
                             }
                         }
                     });
@@ -1234,11 +1234,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
         sendCallbackError(callback, message, null);
     }
 
-    private static void sendCallbackError(CallbackContext callback, String message, @Nullable Integer errorCode) {
+    private static void sendCallbackError(CallbackContext callback, String message, @Nullable Object errorCode) {
         JSONObject json = new JSONObject();
         try {
             json.put("description", message);
-            json.put("code", errorCode);
+            json.put("code", errorCode == null ? null : String.valueOf(errorCode));
         } catch (JSONException e) {
             Logger.w(TAG, "Error when serializing error object:" + Log.getStackTraceString(e));
         }

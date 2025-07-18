@@ -968,10 +968,10 @@ extension Dictionary {
 }
 
 private func createErrorPluginResult(error: NSError) -> CDVPluginResult {
-    return createErrorPluginResult(description: error.description, errorCode: error.code, domain: error.domain)
+    return createErrorPluginResult(description: error.localizedDescription, errorCode: error.mm_code ?? error.code, domain: error.domain)
 }
 
-private func createErrorPluginResult(description: String, errorCode: Int? = nil, domain: String? = "com.infobip.mobile-messaging.cordova-plugin.ios-wrapper") -> CDVPluginResult {
+private func createErrorPluginResult(description: String, errorCode: Any? = nil, domain: String? = "com.infobip.mobile-messaging.cordova-plugin.ios-wrapper") -> CDVPluginResult {
     var error: [AnyHashable: Any] = ["description": description]
     if let errorCode = errorCode {
         error["code"] = errorCode
