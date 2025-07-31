@@ -50,13 +50,16 @@ var MobileMessagingCordova = function () {
  *      messageStorage: '<Message storage save callback>',
  *      defaultMessageStorage: true,
  *      userDataJwt: '<JWT token for authorization of user data related operations>',
+ *      loggingEnabled: false,
  *      ios: {
  *          notificationTypes: ['alert', 'sound', 'badge'],
  *          forceCleanup: <Boolean>,
- *          logging: <Boolean>,
  *          registeringForRemoteNotificationsDisabled: <Boolean>,
  *          overridingNotificationCenterDelegateDisabled: <Boolean>,
  *          unregisteringForRemoteNotificationsDisabled: <Boolean>
+ *      },
+ *      android: {
+ *          withBannerForegroundNotificationsEnabled: <Boolean>
  *      },
  *      privacySettings: {
  *          applicationCodePersistingDisabled: <Boolean>,

@@ -232,6 +232,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             String notificationSound;
             boolean multipleNotifications;
             String notificationAccentColor;
+            boolean withBannerForegroundNotificationsEnabled;
 //            FirebaseOptions firebaseOptions;
         }
 
@@ -540,6 +541,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 builder.withCustomNotificationChannel(configuration.android.notificationChannelId,
                         configuration.android.notificationChannelName,
                         configuration.android.notificationSound);
+            }
+            if (configuration.android.withBannerForegroundNotificationsEnabled) {
+                builder.withBannerForegroundNotifications();
             }
 
             builder.withDisplayNotification(notificationBuilder.build());

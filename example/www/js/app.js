@@ -69,9 +69,12 @@
                     applicationCode: APP_CODE,
                     fullFeaturedInAppsEnabled: true,
                     defaultMessageStorage: true,    // use build in message storage or not
+                    loggingEnabled: true,  // to record logs
                     ios: {
                         notificationTypes: ['alert', 'badge', 'sound'],
-                        logging: true,
+                    },
+                    android: {
+                        withBannerForegroundNotificationsEnabled: true
                     }
                 },
                 function () {

@@ -15,7 +15,7 @@ class MMConfiguration {
         static let fullFeaturedInAppsEnabled = "fullFeaturedInAppsEnabled"
         static let applicationCode = "applicationCode"
         static let forceCleanup = "forceCleanup"
-        static let logging = "logging"
+        static let logging = "loggingEnabled"
         static let defaultMessageStorage = "defaultMessageStorage"
         static let notificationTypes = "notificationTypes"
         static let messageStorage = "messageStorage"
@@ -55,7 +55,7 @@ class MMConfiguration {
         self.inAppChatEnabled = rawConfig[MMConfiguration.Keys.inAppChatEnabled].unwrap(orDefault: false)
         self.fullFeaturedInAppsEnabled = rawConfig[MMConfiguration.Keys.fullFeaturedInAppsEnabled].unwrap(orDefault: false)
         self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
-        self.logging = ios[MMConfiguration.Keys.logging].unwrap(orDefault: false)
+        self.logging = rawConfig[MMConfiguration.Keys.logging].unwrap(orDefault: false)
         self.defaultMessageStorage = rawConfig[MMConfiguration.Keys.defaultMessageStorage].unwrap(orDefault: false)
         self.messageStorageEnabled = rawConfig[MMConfiguration.Keys.messageStorage] != nil ? true : false
         self.registeringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.registeringForRemoteNotificationsDisabled].unwrap(orDefault: false)
