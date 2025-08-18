@@ -10,7 +10,6 @@ class MMConfiguration {
         static let userDataPersistingDisabled = "userDataPersistingDisabled"
         static let carrierInfoSendingDisabled = "carrierInfoSendingDisabled"
         static let systemInfoSendingDisabled = "systemInfoSendingDisabled"
-        static let applicationCodePersistingDisabled = "applicationCodePersistingDisabled"
         static let inAppChatEnabled = "inAppChatEnabled"
         static let fullFeaturedInAppsEnabled = "fullFeaturedInAppsEnabled"
         static let applicationCode = "applicationCode"
@@ -68,7 +67,6 @@ class MMConfiguration {
             ps[MMConfiguration.Keys.userDataPersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
             ps[MMConfiguration.Keys.carrierInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].unwrap(orDefault: false)
             ps[MMConfiguration.Keys.systemInfoSendingDisabled] = rawPrivacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].unwrap(orDefault: false)
-            ps[MMConfiguration.Keys.applicationCodePersistingDisabled] = rawPrivacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].unwrap(orDefault: false)
 
             self.privacySettings = ps
         } else {
@@ -299,7 +297,7 @@ fileprivate class MobileMessagingEventsManager {
 
         let cachedConfigDict = MMConfiguration.getConfigFromDefaults()
         let shouldRestart = needsRestart(userConfigDict: userConfigDict, applicationCode: applicationCode)
-        let shouldStart = cachedConfigDict == nil || (userConfiguration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled] as? Bool ?? false)
+        let shouldStart = cachedConfigDict == nil || MobileMessaging.getKeychainApplicationCode() == nil
 
         if shouldRestart
         {
@@ -676,29 +674,26 @@ fileprivate class MobileMessagingEventsManager {
     //MARK: Utils
 
     private func performEarlyStartIfPossible() {
+        let keychainAppCode = MobileMessaging.getKeychainApplicationCode()
         if let configDict = MMConfiguration.getConfigFromDefaults(), let configuration = MMConfiguration(rawConfig: configDict),
-        !(configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled] as? Bool ?? false),
-        !isStarted
+           !isStarted,
+           let appCode = keychainAppCode
         {
-            start(configuration: configuration, applicationCode: nil)
+            start(configuration: configuration, applicationCode: appCode)
+        } else {
+            MMLogDebug("Failed to start early. Keychain appcode \(keychainAppCode == nil ? "not set" : "set")")
         }
     }
 
-    private func start(configuration: MMConfiguration, applicationCode: String?, onSuccess: (() -> Void)? = nil) {
-
+    private func start(configuration: MMConfiguration, applicationCode: String, onSuccess: (() -> Void)? = nil) {
         setupMobileMessagingStaticParameters(configuration: configuration)
 
-        var mobileMessaging: MobileMessaging?
-        if let appCode = applicationCode {
-            mobileMessaging = MobileMessaging.withApplicationCode(appCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)
-        } else {
-            mobileMessaging = MobileMessaging.withSavedApplicationCode(notificationType: configuration.notificationType)
-        }
-
-        mobileMessaging = mobileMessaging?.withJwtSupplier(VariableJwtSupplier(jwt: configuration.userDataJwt))
-
+        let mobileMessaging = MobileMessaging
+            .withApplicationCode(applicationCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)?
+            .withJwtSupplier(VariableJwtSupplier(jwt: configuration.userDataJwt))
+        
         guard let mobileMessaging = mobileMessaging else {
-            MMLogDebug("Failed to initialize MobileMessaging instance, SDK can't start.")
+            MMLogError("Failed to initialize MobileMessaging instance, SDK can't start.")
             return
         }
 
@@ -723,7 +718,6 @@ fileprivate class MobileMessagingEventsManager {
     }
 
     private func setupMobileMessagingStaticParameters(configuration: MMConfiguration) {
-        MobileMessaging.privacySettings.applicationCodePersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.applicationCodePersistingDisabled].unwrap(orDefault: false)
         MobileMessaging.privacySettings.systemInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.systemInfoSendingDisabled].unwrap(orDefault: false)
         MobileMessaging.privacySettings.carrierInfoSendingDisabled = configuration.privacySettings[MMConfiguration.Keys.carrierInfoSendingDisabled].unwrap(orDefault: false)
         MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
