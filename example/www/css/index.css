@@ -285,6 +285,34 @@ form .title {
     padding: 5px 20px;
 }
 
+/* screen-chat */
+
+.app > .content > .screen.chat {
+    margin-top: 0;
+}
+
+.app > .content > .screen.chat input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #C0C0C0;
+    padding: 2px 5px;
+}
+
+.app > .content > .screen.chat .field {
+    margin-top: 10px;
+}
+
+.app > .content > .screen.chat h3 {
+    color: #F07D00;
+    border-bottom: 1px solid #7A94A6;
+    margin-top: 15px;
+    padding-bottom: 3px;
+}
+
+.app > .content > .screen.chat button {
+    padding: 5px 20px;
+}
+
 /* effects */
 
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {

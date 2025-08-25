@@ -607,70 +607,6 @@ fileprivate class MobileMessagingEventsManager {
         }
     }
 
-    func showChat(_ command: CDVInvokedUrlCommand) {
-        var presentVCModally = false
-        if command.arguments.count > 0,
-            let presentingOptions = command.arguments[0] as? [String: Any],
-            let iosOptions = presentingOptions["ios"] as? [String: Any],
-            let shouldBePresentedModally = iosOptions["shouldBePresentedModally"] as? Bool {
-            presentVCModally = shouldBePresentedModally
-        }
-
-        let vc = presentVCModally ? MMChatViewController.makeRootNavigationViewController(): MMChatViewController.makeRootNavigationViewControllerWithCustomTransition()
-        if presentVCModally {
-            vc.modalPresentationStyle = .fullScreen
-        }
-        if let rootVc = UIApplication.topViewController() {
-            rootVc.present(vc, animated: true, completion: nil)
-        } else {
-            MMLogDebug("[InAppChat] could not define root vc to present in-app-chat")
-        }
-        self.commandDelegate.sendSuccess(for: command)
-    }
-
-    func setLanguage(_ command: CDVInvokedUrlCommand) {
-        guard let localeString = command.arguments[0] as? String else {
-            self.commandDelegate?.send(errorText: "Could not retrieve locale string from arguments", for: command)
-            return
-        }
-        MobileMessaging.inAppChat?.setLanguage(localeString)
-    }
-
-    func sendContextualData(_ command: CDVInvokedUrlCommand) {
-        guard command.arguments.count > 0,
-              let metadata = command.arguments[0] as? String,
-              let allMultiThreadStrategy = command.arguments[1] as? Bool else {
-            self.commandDelegate?.send(errorText: "Could not retrieve contextual data or multi-thread strategy flag from arguments", for: command)
-            return
-        }
-
-        if let chatVC = UIApplication.topViewController() as? MMChatViewController {
-            let mtStrategy: MMChatMultiThreadStrategy = allMultiThreadStrategy ? .ALL : .ACTIVE
-            chatVC.sendContextualData(metadata, multiThreadStrategy: mtStrategy) { error in
-                guard let error = error else {
-                    return
-                }
-                self.commandDelegate?.send(errorText: "Could not send metadata, error \(error.localizedDescription) from arguments", for: command)
-            }
-        }
-    }
-
-    func setupiOSChatSettings(_ command: CDVInvokedUrlCommand) {
-        if let chatSettings = command.arguments[0] as? [String: AnyObject] {
-            MMChatSettings.settings.configureWith(rawConfig: chatSettings)
-        }
-    }
-
-    func getMessageCounter(_ command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.inAppChat?.getMessageCounter ?? 0)
-        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
-    }
-
-    func resetMessageCounter(_ command: CDVInvokedUrlCommand) {
-        MobileMessaging.inAppChat?.resetMessageCounter()
-        self.commandDelegate.sendSuccess(for: command)
-    }
-
     //MARK: Utils
 
     private func performEarlyStartIfPossible() {
@@ -1035,6 +971,142 @@ class VariableJwtSupplier: NSObject, MMJwtSupplier {
         self.jwt = jwt
     }
     func getJwt() -> String? {
+        return jwt
+    }
+}
+
+extension MobileMessagingCordova: MMInAppChatDelegate {
+    func showChat(_ command: CDVInvokedUrlCommand) {
+        MobileMessaging.inAppChat?.delegate = self
+        var presentVCModally = false
+        if command.arguments.count > 0,
+            let presentingOptions = command.arguments[0] as? [String: Any],
+            let iosOptions = presentingOptions["ios"] as? [String: Any],
+            let shouldBePresentedModally = iosOptions["shouldBePresentedModally"] as? Bool {
+            presentVCModally = shouldBePresentedModally
+        }
+
+        let vc = presentVCModally ? MMChatViewController.makeRootNavigationViewController(): MMChatViewController.makeRootNavigationViewControllerWithCustomTransition()
+        if presentVCModally {
+            vc.modalPresentationStyle = .fullScreen
+        }
+        if let rootVc = UIApplication.topViewController() {
+            rootVc.present(vc, animated: true, completion: nil)
+        } else {
+            MMLogDebug("[InAppChat] could not define root vc to present in-app-chat")
+        }
+        self.commandDelegate.sendSuccess(for: command)
+    }
+
+    func setLanguage(_ command: CDVInvokedUrlCommand) {
+        guard let localeString = command.arguments[0] as? String else {
+            self.commandDelegate?.send(errorText: "Could not retrieve locale string from arguments", for: command)
+            return
+        }
+        MobileMessaging.inAppChat?.setLanguage(localeString)
+    }
+
+    func sendContextualData(_ command: CDVInvokedUrlCommand) {
+        guard command.arguments.count > 0,
+              let metadata = command.arguments[0] as? String,
+              let allMultiThreadStrategy = command.arguments[1] as? Bool else {
+            self.commandDelegate?.send(errorText: "Could not retrieve contextual data or multi-thread strategy flag from arguments", for: command)
+            return
+        }
+
+        if let chatVC = UIApplication.topViewController() as? MMChatViewController {
+            let mtStrategy: MMChatMultiThreadStrategy = allMultiThreadStrategy ? .ALL : .ACTIVE
+            chatVC.sendContextualData(metadata, multiThreadStrategy: mtStrategy) { error in
+                guard let error = error else {
+                    return
+                }
+                self.commandDelegate?.send(errorText: "Could not send metadata, error \(error.localizedDescription) from arguments", for: command)
+            }
+        }
+    }
+
+    func setupiOSChatSettings(_ command: CDVInvokedUrlCommand) {
+        if let chatSettings = command.arguments[0] as? [String: AnyObject] {
+            MMChatSettings.settings.configureWith(rawConfig: chatSettings)
+        }
+    }
+
+    func getMessageCounter(_ command: CDVInvokedUrlCommand) {
+        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.inAppChat?.getMessageCounter ?? 0)
+        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+    }
+
+    func resetMessageCounter(_ command: CDVInvokedUrlCommand) {
+        MobileMessaging.inAppChat?.resetMessageCounter()
+        self.commandDelegate.sendSuccess(for: command)
+    }
+
+    private struct ChatJwtBridge {
+        static var callbackId: String?
+        static var pendingCompletion: ((String?) -> Void)?
+        static let lock = NSLock()
+    }
+
+    @objc func setChatJwtProvider(_ command: CDVInvokedUrlCommand) {
+        ChatJwtBridge.lock.lock()
+        defer { ChatJwtBridge.lock.unlock() }
+        ChatJwtBridge.callbackId = command.callbackId
+
+        // Keep callback alive for multiple requests
+        let pluginResult = CDVPluginResult(status: .noResult)
+        pluginResult?.setKeepCallbackAs(true)
+        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+    }
+
+    @objc func setChatJwt(_ command: CDVInvokedUrlCommand) {
+        ChatJwtBridge.lock.lock()
+        defer { ChatJwtBridge.lock.unlock() }
+
+        let jwt = command.arguments.first as? String
+
+        // Fulfill the pending completion
+        if let completion = ChatJwtBridge.pendingCompletion {
+            completion(jwt)
+            ChatJwtBridge.pendingCompletion = nil
+        }
+
+        // Respond to JS
+        let pluginResult: CDVPluginResult
+        if jwt != nil && !(jwt?.isEmpty ?? true) {
+            pluginResult = CDVPluginResult(status: .ok)
+        } else {
+            pluginResult = CDVPluginResult(status: .error, messageAs: "Provided chat JWT is null or empty.")
+        }
+        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+    }
+
+    func requestChatJWTFromJS(completion: @escaping (String?) -> Void) {
+        ChatJwtBridge.lock.lock()
+        defer { ChatJwtBridge.lock.unlock() }
+
+        guard let callbackId = ChatJwtBridge.callbackId else {
+            completion(nil)
+            return
+        }
+
+        // Store completion to be called by setChatJwt
+        ChatJwtBridge.pendingCompletion = completion
+
+        // Notify JS that a JWT is requested
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: "inAppChat.internal.jwtRequested")
+        pluginResult?.setKeepCallbackAs(true)
+        self.commandDelegate?.send(pluginResult, callbackId: callbackId)
+    }
+
+    @objc func getJWT() -> String? {
+        var jwt: String?
+        let semaphore = DispatchSemaphore(value: 0)
+        // Ask JS for a JWT
+        self.requestChatJWTFromJS { receivedJWT in
+            jwt = receivedJWT
+            semaphore.signal()
+        }
+        _ = semaphore.wait(timeout: .now() + 45) // 45s timeout
         return jwt
     }
 }

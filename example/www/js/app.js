@@ -8,6 +8,7 @@
     var LocalInboxScreen = global.LocalInboxScreen;
     var InboxScreen = global.InboxScreen;
     var SettingsScreen = global.SettingsScreen;
+    var ChatScreen = global.ChatScreen;
 
     var APP_CODE = <your application code>;
 
@@ -25,6 +26,7 @@
             this.addScreen(LocalInboxScreen);
             this.addScreen(InboxScreen);
             this.addScreen(SettingsScreen);
+            this.addScreen(ChatScreen);
             this.show(LocalInboxScreen.NAME);
 
             this.registerForEvents();
@@ -37,7 +39,7 @@
             screen.init();
             this.screens[screen.NAME] = screen;
             var options = screen.meta();
-            options.width = "33%";
+            options.width = "25%";
             Layout.addButton(screen.NAME, options, function() {
                 _this.show(screen.NAME);
             });
@@ -70,6 +72,7 @@
                     fullFeaturedInAppsEnabled: true,
                     defaultMessageStorage: true,    // use build in message storage or not
                     loggingEnabled: true,  // to record logs
+                    inAppChatEnabled: true,
                     ios: {
                         notificationTypes: ['alert', 'badge', 'sound'],
                     },

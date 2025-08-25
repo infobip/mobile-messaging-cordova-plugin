@@ -288,6 +288,72 @@ MobileMessagingCordova.prototype.setInboxMessagesSeen = function (externalUserId
 };
 
 /**
+ * Sets the JWT provider used to authenticate in-app chat sessions.
+ *
+ * The `jwtProvider` is a callback function that returns a JSON Web Token (JWT)
+ * used for chat authentication. It supports both **synchronous** and **asynchronous** approaches:
+ *
+ * ### Synchronous usage:
+ * ```ts
+ * MobileMessaging.setChatJwtProvider(() => {
+ *   return "your_token"; // Return a valid JWT string directly
+ * });
+ * ```
+ *
+ * ### Asynchronous usage:
+ * ```ts
+ * MobileMessaging.setChatJwtProvider(async () => {
+ *   const jwt = await getChatToken(...);
+ *   return jwt; // Return a Promise<string> that resolves to a valid JWT
+ * });
+ * ```
+ *
+ * > ⚠️ This callback may be invoked multiple times during the widget's lifecycle 
+ * (e.g., due to screen orientation changes or network reconnection).
+ * It is important to return a **fresh and valid JWT** each time.
+ *
+ * @param jwtProvider A callback function that returns a JWT string or a Promise that resolves to one.
+ * @param errorCallback Optional error handler for catching exceptions thrown during JWT generation.
+ */
+MobileMessagingCordova.prototype.setChatJwtProvider = function (jwtProvider, errorCallback) {
+    const errorHandler = function (e) {
+        cordova.exec(null, null, "MobileMessagingCordova", "setChatJwt", [null]);
+        if (errorCallback) {
+            errorCallback(e);
+        } else {
+            console.error('Error in setChatJwtProvider(), Could not obtain chat JWT: ' + e);
+        }
+    };
+
+    cordova.exec(
+        function onEventFromNative(event) {
+            if (event == 'inAppChat.internal.jwtRequested') {
+                try {
+                    const jwtPromise = jwtProvider();
+                    if (jwtPromise && typeof jwtPromise.then === 'function') { // Handle asynchronous JWT provider of type Promise<string>
+                        jwtPromise
+                            .then(
+                                function (jwt) {
+                                    cordova.exec(null, null, "MobileMessagingCordova", "setChatJwt", [jwt]);
+                                }
+                            )
+                            .catch(errorHandler);
+                    } else { // Handle synchronous JWT provider of type () => string
+                        cordova.exec(null, null, "MobileMessagingCordova", "setChatJwt", [jwtPromise]);
+                    }
+                } catch (e) {
+                    errorHandler(e);
+                }
+            }
+        },
+        errorHandler,
+        'MobileMessagingCordova',
+        'setChatJwtProvider',
+        []
+    );
+};
+
+/**
  * Saves installation to the server.
  *
  * @name saveInstallation

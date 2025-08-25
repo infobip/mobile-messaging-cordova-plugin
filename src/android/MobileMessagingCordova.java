@@ -14,9 +14,11 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.util.Log;
 
 import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
@@ -27,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
+import org.apache.cordova.CordovaInterface;
 import org.infobip.mobile.messaging.BroadcastParameter;
 import org.infobip.mobile.messaging.CustomAttributesMapper;
 import org.infobip.mobile.messaging.Event;
@@ -67,6 +70,8 @@ import org.infobip.mobile.messaging.util.Cryptor;
 import org.infobip.mobile.messaging.util.DeviceInformation;
 import org.infobip.mobile.messaging.util.PreferenceHelper;
 import org.infobip.mobile.messaging.chat.InAppChat;
+import org.infobip.mobile.messaging.chat.core.JwtProvider;
+import org.infobip.mobile.messaging.chat.core.JwtProvider.JwtCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,7 +85,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MobileMessagingCordova extends CordovaPlugin {
     private static final String TAG = "MobileMessagingCordova";
@@ -125,6 +133,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_DEPERSONALIZED = "depersonalized";
     private static final String EVENT_DEEPLINK = "deeplink";
     private static final String EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED = "inAppChat.unreadMessageCounterUpdated";
+    private static final String EVENT_INAPP_CHAT_REQUEST_JWT = "inAppChat.internal.jwtRequested";
 
     private static final String EVENT_NOTIFICATION_TAPPED = "notificationTapped";
     private static final String EVENT_NOTIFICATION_ACTION_TAPPED = "actionTapped";
@@ -133,11 +142,13 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_MESSAGESTORAGE_SAVE = "messageStorage.save";
     private static final String EVENT_MESSAGESTORAGE_FIND_ALL = "messageStorage.findAll";
 
-    private static final String FUNCTION_SHOW_INAPP_CHAT = "showChat";
+    private static final String FUNCTION_INAPP_CHAT_SHOW = "showChat";
     private static final String FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER = "getMessageCounter";
     private static final String FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER = "resetMessageCounter";
     private static final String FUNCTION_INAPP_CHAT_SET_LANGUAGE = "setLanguage";
     private static final String FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA = "sendContextualData";
+    private static final String FUNCTION_INAPP_CHAT_SET_JWT = "setChatJwt";
+    private static final String FUNCTION_INAPP_CHAT_SET_JWT_PROVIDER = "setChatJwtProvider";
 
     private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
     private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
@@ -170,6 +181,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private final CordovaCallContext initContext = new CordovaCallContext();
     private final CordovaCallContext showErrorDialogContext = new CordovaCallContext();
     private static CallbackContext registerForAndroidPermissionContext;
+    private final ChatJwtCallbackHolder chatJwtCallbackHolder = new ChatJwtCallbackHolder();
 
     private static final BroadcastReceiver commonLibraryBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -443,7 +455,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_SUBMIT_EVENT.equals(action)) {
             submitEvent(args, callbackContext);
             return true;
-        } else if (FUNCTION_SHOW_INAPP_CHAT.equals(action)) {
+        } else if (FUNCTION_INAPP_CHAT_SHOW.equals(action)) {
             showInAppChat(args, callbackContext);
             return true;
         } else if (FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER.equals(action)) {
@@ -457,6 +469,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA.equals(action)) {
             sendContextualData(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_SET_JWT_PROVIDER.equals(action)) {
+            setChatJwtProvider(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_SET_JWT.equals(action)) {
+            setChatJwt(args, callbackContext);
             return true;
         } else if (FUNCTION_REGISTER_FOR_POST_NOTIFICATIONS.equals(action)) {
             registerForAndroidRemoteNotifications(args, callbackContext);
@@ -906,6 +924,137 @@ public class MobileMessagingCordova extends CordovaPlugin {
         InAppChat.getInstance(cordova.getActivity().getApplication()).sendContextualData(data, allMultiThreadStrategy);
     }
 
+    /**
+     * ChatJwtCallbackHolder is a helper class responsible for managing JWT requests
+     * from the Java native to the JavaScript side. It supports asynchronous
+     * JWT acquisition and delivers results (token or error) back to queued callbacks.
+     */
+    private static class ChatJwtCallbackHolder {
+
+        private CordovaInterface cordova;
+        private CallbackContext callbackContext;
+        private final Queue<JwtCallback> queue = new ConcurrentLinkedQueue<>();
+        private final AtomicBoolean awaitingJwtFromJs = new AtomicBoolean(false);
+
+        private void sendRequestEvent() {
+            if (callbackContext != null) {
+                PluginResult requestResult = new PluginResult(PluginResult.Status.OK, EVENT_INAPP_CHAT_REQUEST_JWT);
+                requestResult.setKeepCallback(true);
+                callbackContext.sendPluginResult(requestResult);
+            } else {
+                Logger.e(TAG, "Callback context is null, cannot send request for JWT.");
+            }
+        }
+
+        public void requestJwt(JwtCallback callback) {
+            queue.add(callback);
+            if (awaitingJwtFromJs.compareAndSet(false, true)) {
+                sendRequestEvent();
+            }
+        }
+
+        public void resumeWithJwt(String newJwt) {
+            try {
+                Runnable runnable = () -> {
+                    JwtCallback callback = queue.poll();
+                    if (callback != null) {
+                        callback.onJwtReady(newJwt);
+                    }
+                    updateAwaitingState();
+                };
+                if (cordova != null && cordova.getActivity() != null) {
+                    cordova.getActivity().runOnUiThread(runnable);
+                } else {
+                    Logger.w(TAG, "CordovaInterface of Activity is null, cannot resume with JWT value on UI thread.");
+                    runnable.run();
+                }
+            } catch (Throwable t) {
+                Logger.e(TAG, "Could not resume with JWT value " + newJwt, t);
+            }
+        }
+
+        public void resumeWithError(Throwable throwable) {
+            try {
+                Runnable runnable = () -> {
+                    JwtCallback callback = queue.poll();
+                    if (callback != null) {
+                        callback.onJwtError(throwable);
+                    }
+                    updateAwaitingState();
+                };
+                if (cordova != null && cordova.getActivity() != null) {
+                    cordova.getActivity().runOnUiThread(runnable);
+                } else {
+                    Logger.w(TAG, "CordovaInterface of Activity is null, cannot resume with JWT error on UI thread.");
+                    runnable.run();
+                }
+            } catch (Throwable t) {
+                Logger.e(TAG, "Could not resume with JWT error " + throwable.getMessage(), t);
+            }
+        }
+
+        private void updateAwaitingState() {
+            if (queue.isEmpty()) {
+                awaitingJwtFromJs.set(false);
+            } else {
+                awaitingJwtFromJs.set(true);
+                sendRequestEvent();
+            }
+        }
+
+        public CallbackContext getCallbackContext() {
+            return callbackContext;
+        }
+
+        public void setCallbackContext(CallbackContext callbackContext) {
+            this.callbackContext = callbackContext;
+        }
+
+        public CordovaInterface getCordova() {
+            return cordova;
+        }
+
+        public void setCordova(CordovaInterface cordova) {
+            this.cordova = cordova;
+        }
+    }
+
+    private void setChatJwtProvider(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        //Keep the callback for multiple calls
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+        pluginResult.setKeepCallback(true);
+        callbackContext.sendPluginResult(pluginResult);
+
+        //Setup ChatJwtCallbackHolder
+        if (chatJwtCallbackHolder.getCallbackContext() == null) {
+            chatJwtCallbackHolder.setCallbackContext(callbackContext);
+        }
+        if (chatJwtCallbackHolder.getCordova() == null) {
+            chatJwtCallbackHolder.setCordova(cordova);
+        }
+
+        //Setup InAppChat JWT provider
+        JwtProvider jwtProvider = callback -> {
+            chatJwtCallbackHolder.requestJwt(callback);
+        };
+        InAppChat.getInstance(cordova.getActivity().getApplication()).setWidgetJwtProvider(jwtProvider);
+    }
+
+    private void setChatJwt(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        String jwt = null;
+        try {
+            jwt = resolveStringParameter(args);
+        } catch (Exception e) {
+            Logger.e(TAG, "Could not parse JWT argument: " + e.getMessage(), e);
+        }
+
+        if (jwt != null && !jwt.isEmpty()) {
+            chatJwtCallbackHolder.resumeWithJwt(jwt);
+        } else {
+            chatJwtCallbackHolder.resumeWithError(new IllegalArgumentException("Provided chat JWT is null or empty."));
+        }
+    }
+
     private synchronized void defaultMessageStorage_find(JSONArray args, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity();
         String messageId = resolveStringParameter(args);
@@ -1174,7 +1323,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     @NonNull
     private String resolveStringParameter(JSONArray args) throws JSONException {
-        if (args.length() < 1 || args.getString(0) == null) {
+        if (args.length() < 1 || args.isNull(0) || args.getString(0) == null) {
             throw new IllegalArgumentException("Cannot resolve string parameter from arguments");
         }
 
@@ -1182,7 +1331,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private int resolveIntParameter(JSONArray args) throws JSONException {
-        if (args.length() < 1) {
+        if (args.length() < 1 || args.isNull(0)) {
             throw new IllegalArgumentException("Cannot resolve string parameter from arguments");
         }
 
@@ -1194,7 +1343,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
     private boolean resolveBooleanParameterWithIndex(JSONArray args, int index) throws JSONException {
-        if (args.length() < 1) {
+        if (args.length() < 1 || args.isNull(index)) {
             throw new IllegalArgumentException("Cannot resolve boolean parameter from arguments");
         }
 
