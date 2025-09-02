@@ -32,6 +32,7 @@
             this.rootNode = utils.fromTemplate("screen-chat");
             this.personalizationFormNode = this.rootNode.querySelector("form.personalization-data");
             this.showChatButtonNode = this.rootNode.querySelector("button#showChat");
+            this.showCustomizedChatButtonNode = this.rootNode.querySelector("button#showCustomizedChat");
 
             this.personalizationFormNode.addEventListener("submit", function (evt) {
                 evt.preventDefault();
@@ -52,7 +53,68 @@
             this.showChatButtonNode.addEventListener("click", function () {
                 MobileMessaging.showChat();
             });
-
+            this.showCustomizedChatButtonNode.addEventListener("click", function () {
+                var settings = {
+                    chatStatusBarBackgroundColor: '#673AB7',
+                    chatStatusBarIconsColorMode: 'dark',
+                    attachmentPreviewToolbarSaveMenuItemIcon: 'img/ic_download.png',
+                    attachmentPreviewToolbarMenuItemsIconTint: '#9E9E9E',
+                    chatToolbar: {
+                        titleTextAppearance: 'TextAppearance_AppCompat_Title',
+                        titleTextColor: '#FFFFFF',
+                        titleText: 'Some new title',
+                        titleCentered: true,
+                        backgroundColor: '#673AB7',
+                        navigationIcon: 'img/ic_back.png',
+                        navigationIconTint: '#FFFFFF',
+                        subtitleTextAppearance: 'TextAppearance_AppCompat_Subtitle',
+                        subtitleTextColor: '#FFFFFF',
+                        subtitleText: '#1',
+                        subtitleCentered: true,
+                    },
+                    attachmentPreviewToolbar: {
+                        titleTextAppearance: 'TextAppearance_AppCompat_Title',
+                        titleTextColor: '#212121',
+                        titleText: 'Attachment preview',
+                        titleCentered: true,
+                        backgroundColor: '#673AB7',
+                        navigationIcon: 'img/ic_back.png',
+                        navigationIconTint: '#FFFFFF',
+                        subtitleTextAppearance: 'TextAppearance_AppCompat_Subtitle',
+                        subtitleTextColor: '#FFFFFF',
+                        subtitleText: 'Attachment preview subtitle',
+                        subtitleCentered: false,
+                    },
+                    networkErrorText: 'Network error',
+                    networkErrorTextColor: '#FFFFFF',
+                    networkErrorLabelBackgroundColor: '#212121',
+                    chatProgressBarColor: '#9E9E9E',
+                    chatInputTextColor: '#212121',
+                    chatInputBackgroundColor: '#D1C4E9',
+                    chatInputHintText: 'Input Message',
+                    chatInputHintTextColor: '#212121',
+                    chatInputAttachmentIcon: 'img/ic_add_circle.png',
+                    chatInputAttachmentIconTint: '#9E9E9E',
+                    chatInputAttachmentBackgroundColor: '#673AB7',
+                    chatInputAttachmentBackgroundDrawable: '',
+                    chatInputSendIcon: 'img/ic_send.png',
+                    chatInputSendIconTint: '#9E9E9E',
+                    chatInputSendBackgroundColor: '#673AB7',
+                    chatInputSendBackgroundDrawable: '',
+                    chatInputSeparatorLineColor: '#BDBDBD',
+                    chatInputSeparatorLineVisible: true,
+                    chatInputCursorColor: '#9E9E9E',
+                    networkErrorTextAppearance: 'TextAppearance_AppCompat_Title',
+                    chatBackgroundColor: '#673AB7',
+                    chatInputTextAppearance: 'TextAppearance_AppCompat_Subtitle',
+                };
+                MobileMessaging.setChatCustomization(settings,
+                    () => console.log("Customization applied"),
+                    (err) => console.error("Customization error", err)
+                );
+                MobileMessaging.setWidgetTheme('dark', (err) => console.error("Customization error", err));
+                MobileMessaging.showChat();
+            });
         },
 
         title: function () {

@@ -58,9 +58,9 @@
 
 		<podspec>
 			<pods use-frameworks="true">
-				<pod name="MobileMessaging" spec="13.11.0" />
-				<pod name="MobileMessaging/InAppChat" spec="13.11.0" />
-				<pod name="MobileMessaging/Inbox" spec="13.11.0" />
+				<pod name="MobileMessaging" spec="13.11.2" />
+				<pod name="MobileMessaging/InAppChat" spec="13.11.2" />
+				<pod name="MobileMessaging/Inbox" spec="13.11.2" />
 			</pods>
 		</podspec>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
@@ -92,6 +92,7 @@
 		<framework src="androidx.exifinterface:exifinterface:1.3.3"/>
 		<framework src="androidx.core:core-ktx:1.16.0"/>
 		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
+		<source-file src="src/android/ChatCustomization.java" target-dir="src/org/apache/cordova/plugin"/>
 	</platform>
 
 </plugin>

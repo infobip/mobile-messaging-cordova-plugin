@@ -9,6 +9,7 @@
 /example/plugins/
 /example/platforms/
 /example/package-lock.json
+/example/google-services.json
 
 # IDEA
 /example/.idea/

@@ -625,7 +625,7 @@ fileprivate class MobileMessagingEventsManager {
         setupMobileMessagingStaticParameters(configuration: configuration)
 
         let mobileMessaging = MobileMessaging
-            .withApplicationCode(applicationCode, notificationType: configuration.notificationType, forceCleanup: configuration.forceCleanup)?
+            .withApplicationCode(applicationCode, notificationType: configuration.notificationType)?
             .withJwtSupplier(VariableJwtSupplier(jwt: configuration.userDataJwt))
         
         guard let mobileMessaging = mobileMessaging else {
@@ -1109,4 +1109,127 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         _ = semaphore.wait(timeout: .now() + 45) // 45s timeout
         return jwt
     }
+    
+    func setWidgetTheme(_ command: CDVInvokedUrlCommand) {
+        guard let themeName = command.arguments[0] as? String else {
+            self.commandDelegate?.send(errorText: "Could not retrieve widget theme name from arguments", for: command)
+            return
+        }
+        if let chatVC = UIApplication.topViewController() as? MMChatViewController {
+            // Real time change if we detect the chat as top VC
+            chatVC.setWidgetTheme(themeName, completion: { error in
+                if error != nil {
+                    self.commandDelegate?.send(errorText: "Could not set widget theme from arguments", for: command)
+                }
+            })
+        }
+        // And we also set the static value that is used in future loads of the widget
+        MMChatSettings.sharedInstance.widgetTheme = themeName
+    }
+    
+    struct ToolbarCustomization: Decodable {
+        var titleTextAppearance: String?
+        var titleTextColor: String?
+        var titleText: String?
+        var backgroundColor: String?
+        var navigationIcon: String?
+        var navigationIconTint: String?
+    }
+
+    struct ChatCustomization: Decodable {
+        var chatStatusBarBackgroundColor: String?
+        var chatStatusBarIconsColorMode: String?
+        var chatToolbar: ToolbarCustomization?
+        var attachmentPreviewToolbar: ToolbarCustomization?
+        var attachmentPreviewToolbarMenuItemsIconTint: String?
+        var attachmentPreviewToolbarSaveMenuItemIcon: String?
+        var chatBackgroundColor: String?
+        var chatProgressBarColor: String?
+        var chatInputTextAppearance: String?
+        var chatInputTextColor: String?
+        var chatInputBackgroundColor: String?
+        var chatInputHintText: String?
+        var chatInputHintTextColor: String?
+        var chatInputAttachmentIcon: String?
+        var chatInputAttachmentIconTint: String?
+        var chatInputAttachmentBackgroundDrawable: String?
+        var chatInputAttachmentBackgroundColor: String?
+        var chatInputSendIcon: String?
+        var chatInputSendIconTint: String?
+        var chatInputSendBackgroundDrawable: String?
+        var chatInputSendBackgroundColor: String?
+        var chatInputSeparatorLineColor: String?
+        var chatInputSeparatorLineVisible: Bool?
+        var chatInputCursorColor: String?
+        var networkErrorTextColor: String?
+        var networkErrorLabelBackgroundColor: String?
+        var shouldHandleKeyboardAppearance: Bool?
+    }
+    
+    class CustomizationUtils {
+        func setup(customization: ChatCustomization, in settings: MMChatSettings) {
+            setNotNil(&settings.navBarColor, customization.chatToolbar?.backgroundColor?.toColor())
+            setNotNil(&settings.navBarTitleColor, customization.chatToolbar?.titleTextColor?.toColor())
+            setNotNil(&settings.navBarItemsTintColor, customization.chatToolbar?.navigationIconTint?.toColor())
+            setNotNil(&settings.title, customization.chatToolbar?.titleText)
+            setNotNil(&settings.attachmentPreviewBarsColor, customization.attachmentPreviewToolbar?.backgroundColor?.toColor())
+            setNotNil(&settings.attachmentPreviewItemsColor, customization.attachmentPreviewToolbar?.navigationIconTint?.toColor())            
+            setNotNil(&settings.backgroundColor, customization.chatBackgroundColor?.toColor())
+            setNotNil(&settings.advancedSettings.mainTextColor, customization.chatInputTextColor?.toColor())
+            setNotNil(&settings.advancedSettings.textInputBackgroundColor, customization.chatInputBackgroundColor?.toColor())
+            setNotNil(&settings.advancedSettings.attachmentButtonIcon, getImage(with: customization.chatInputAttachmentIcon))
+            setNotNil(&settings.advancedSettings.sendButtonIcon, getImage(with: customization.chatInputSendIcon))
+            setNotNil(&settings.sendButtonTintColor, customization.chatInputSendIconTint?.toColor())
+            setNotNil(&settings.chatInputSeparatorLineColor, customization.chatInputSeparatorLineColor?.toColor())
+            setNotNil(&settings.advancedSettings.isLineSeparatorHidden, customization.chatInputSeparatorLineVisible)
+            setNotNil(&settings.advancedSettings.typingIndicatorColor, customization.chatInputCursorColor?.toColor())
+            setNotNil(&settings.errorLabelTextColor, customization.networkErrorTextColor?.toColor())
+            setNotNil(&settings.errorLabelBackgroundColor, customization.networkErrorLabelBackgroundColor?.toColor())
+            setNotNil(&settings.advancedSettings.mainPlaceholderTextColor, customization.chatInputHintTextColor?.toColor())
+            setNotNil(&settings.shouldHandleKeyboardAppearance, customization.shouldHandleKeyboardAppearance)
+        }
+        
+        func getImage(with name: String?) -> UIImage? {
+            guard let name = name else { return nil }
+            let bundle = Bundle(for: type(of: self))
+            guard let bundlePath = bundle.path(forResource: name, ofType: nil) else { return nil }
+            return UIImage(named: bundlePath)
+        }
+        
+        func getFont(with path: String?, size: CGFloat) -> UIFont? {
+            guard let path = path else { return nil }
+            let bundle = Bundle(for: type(of: self))
+            guard let bundlePath = bundle.path(forResource: path, ofType: nil) else { return nil }
+            guard let data = NSData(contentsOfFile: bundlePath) else { return nil }
+            guard let dataProvider = CGDataProvider(data: data) else { return nil }
+            guard let fontReference = CGFont(dataProvider) else { return nil }
+            
+            guard let fontName = URL(string: path)?.deletingPathExtension().lastPathComponent else { return nil }
+            
+            var errorReference: Unmanaged<CFError>?
+            CTFontManagerRegisterGraphicsFont(fontReference, &errorReference)
+            return UIFont(name: fontName, size: size)
+        }
+
+        func setNotNil<T>(_ forVariable: inout T, _ value:T?) {
+            if let value = value { forVariable = value }
+        }
+    }
+    
+    func setChatCustomization(_ command: CDVInvokedUrlCommand) {
+        guard let chatCustomisationDict = command.arguments[0] as? [String: AnyObject],
+        let jsonObject = try? JSONSerialization.data(withJSONObject: chatCustomisationDict),
+        let customization = try? JSONDecoder().decode(ChatCustomization.self, from: jsonObject) else {
+            self.commandDelegate?.send(errorText: "Could not retrieve widget customisation values from arguments", for: command)
+            return
+        }
+        CustomizationUtils().setup(customization: customization, in: MMChatSettings.sharedInstance)
+    }
 }
+
+extension String {
+    func toColor() -> UIColor? {
+        return UIColor(hexString: self)
+    }
+}
+

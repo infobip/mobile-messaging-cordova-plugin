@@ -689,9 +689,31 @@ MobileMessagingCordova.prototype.registerForAndroidRemoteNotifications = functio
  * @param {Function} errorCallback will be called on error
  */
 MobileMessagingCordova.prototype.setUserDataJwt = function (jwt, errorCallback) {
-    cordova.exec(function () {
-    }, errorCallback, 'MobileMessagingCordova', 'setUserDataJwt', [jwt]);
+    cordova.exec(function () {}, errorCallback, 'MobileMessagingCordova', 'setUserDataJwt', [jwt]);
 }
+
+/**
+ * Sets chat customization.
+ *
+ * @name setChatCustomization
+ * @param {Object} customization - Chat customization JSON object.
+ * @param {Function} successCallback - Success callback.
+ * @param {Function} errorCallback - Error callback.
+ */
+MobileMessagingCordova.prototype.setChatCustomization = function(customization, successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, 'MobileMessagingCordova', 'setChatCustomization', [customization]);
+};
+
+/**
+* Sets widget theme.
+*
+* @name setWidgetTheme
+* @param {String} widgetTheme - Widget theme name.
+* @param {Function} errorCallback - Error callback.
+*/
+MobileMessagingCordova.prototype.setWidgetTheme = function(widgetTheme, errorCallback) {
+    cordova.exec(function () {}, errorCallback, 'MobileMessagingCordova', 'setWidgetTheme', [widgetTheme]);
+};
 
 MobileMessaging = new MobileMessagingCordova();
 module.exports = MobileMessaging;

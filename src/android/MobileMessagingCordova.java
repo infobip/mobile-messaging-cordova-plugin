@@ -149,6 +149,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA = "sendContextualData";
     private static final String FUNCTION_INAPP_CHAT_SET_JWT = "setChatJwt";
     private static final String FUNCTION_INAPP_CHAT_SET_JWT_PROVIDER = "setChatJwtProvider";
+    private static final String FUNCTION_INAPP_CHAT_SET_CUSTOMIZATION = "setChatCustomization";
+    private static final String FUNCTION_INAPP_CHAT_SET_WIDGET_THEME = "setWidgetTheme";
 
     private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
     private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
@@ -475,6 +477,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_INAPP_CHAT_SET_JWT.equals(action)) {
             setChatJwt(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_SET_CUSTOMIZATION.equals(action)) {
+            setChatCustomization(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_SET_WIDGET_THEME.equals(action)) {
+            setWidgetTheme(args, callbackContext);
             return true;
         } else if (FUNCTION_REGISTER_FOR_POST_NOTIFICATIONS.equals(action)) {
             registerForAndroidRemoteNotifications(args, callbackContext);
@@ -1052,6 +1060,44 @@ public class MobileMessagingCordova extends CordovaPlugin {
             chatJwtCallbackHolder.resumeWithJwt(jwt);
         } else {
             chatJwtCallbackHolder.resumeWithError(new IllegalArgumentException("Provided chat JWT is null or empty."));
+        }
+    }
+
+    private void setChatCustomization(JSONArray args, final CallbackContext callbackContext) {
+        try {
+            if (args.length() == 0 || args.isNull(0)) {
+                sendCallbackError(callbackContext, "No customization data provided");
+                return;
+            }
+
+            JSONObject jsonMap = args.getJSONObject(0);
+            ChatCustomization customization = ChatCustomization.resolve(jsonMap);
+
+            cordova.getActivity().runOnUiThread(() -> {
+                try {
+                    InAppChat inAppChat = InAppChat.getInstance(cordova.getActivity().getApplication());
+                    inAppChat.setTheme(customization.createTheme(cordova.getActivity().getApplication()));
+                    sendCallbackSuccess(callbackContext);
+                } catch (Exception e) {
+                    sendCallbackError(callbackContext, "Failed to apply chat customization: " + e.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Failed to parse customization data: " + e.getMessage());
+        }
+    }
+
+    public void setWidgetTheme(final JSONArray args, CallbackContext callbackContext) {
+        String widgetTheme = null;
+        try {
+            widgetTheme = resolveStringParameter(args);
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Could not retrieve locale string from arguments");
+            return;
+        }
+        if (widgetTheme != null) {
+            InAppChat inAppChat = InAppChat.getInstance(cordova.getActivity().getApplication());
+            inAppChat.setWidgetTheme(widgetTheme);
         }
     }
 
