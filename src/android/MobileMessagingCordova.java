@@ -78,15 +78,12 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -674,6 +671,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
         LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(commonLibraryBroadcastReceiver, intentFilter);
 
+        CacheManager.cleanupOldEventsFromPersistedCache(cordova.getActivity());
         for (CacheManager.Event event : CacheManager.loadEvents(cordova.getActivity())) {
             sendCallbackEvent(event.type, callbackContext, event.object);
         }
@@ -1552,7 +1550,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
         private static final String MESSAGES_KEY = TAG + ".cache.messages";
         private static final String EVENTS_KEY = TAG + ".cache.events";
         private static final Object cacheLock = new Object();
-        private static final JsonSerializer serializer = new JsonSerializer(false, new JSONObjectAdapter(), new JSONArrayAdapter());
+
+        private static final Object eventsCacheLock = new Object();
+        private static final List<Event> eventsCache = new LinkedList<Event>();
+
+        private static final Object messagesCacheLock = new Object();
+        private static final List<Message> messagesCache = new LinkedList<Message>();
 
         static class Event {
             String type;
@@ -1570,67 +1573,58 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         private static void saveMessages(Context context, Message... messages) {
-            List<String> newMessages = new ArrayList<String>(messages.length);
-            for (Message m : messages) {
-                newMessages.add(serializer.serialize(m));
+            synchronized (messagesCacheLock) {
+                for (Message m : messages) {
+                    messagesCache.add(m);
+                }
             }
-            saveStringSet(context, MESSAGES_KEY, new HashSet<String>(newMessages));
         }
 
         private static Message[] loadMessages(Context context) {
-            Set<String> set = getAndRemoveStringSet(context, MESSAGES_KEY);
-            List<Message> messages = new ArrayList<Message>(set.size());
-            for (String string : set) {
-                messages.add(serializer.deserialize(string, Message.class));
+            List<Message> drained;
+            synchronized (messagesCacheLock) {
+                if (messagesCache.isEmpty()) {
+                    return new Message[0];
+                }
+                drained = new ArrayList<Message>(messagesCache);
+                messagesCache.clear();
             }
-            return messages.toArray(new Message[messages.size()]);
+            return drained.toArray(new Message[drained.size()]);
         }
 
         private static void saveEvent(Context context, String event, JSONObject object) {
-            String serialized = serializer.serialize(new Event(event, object));
-            saveStringsToSet(context, EVENTS_KEY, serialized);
+            synchronized (eventsCacheLock) {
+                eventsCache.add(new Event(event, object));
+            }
         }
 
         private static Event[] loadEvents(Context context) {
-            Set<String> serialized = getAndRemoveStringSet(context, EVENTS_KEY);
-            List<Event> events = new ArrayList<Event>(serialized.size());
-            for (String s : serialized) {
-                events.add(serializer.deserialize(s, Event.class));
-            }
-            return events.toArray(new Event[events.size()]);
-        }
-
-        private static Set<String> getAndRemoveStringSet(Context context, String key) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            Set<String> set;
-            synchronized (cacheLock) {
-                set = sharedPreferences.getStringSet(key, new HashSet<String>());
-                if (set.isEmpty()) {
-                    return new HashSet<String>();
+            List<Event> drained;
+            synchronized (eventsCacheLock) {
+                if (eventsCache.isEmpty()) {
+                    return new Event[0];
                 }
-                sharedPreferences
-                        .edit()
-                        .remove(key)
-                        .apply();
+                drained = new ArrayList<Event>(eventsCache);
+                eventsCache.clear();
             }
-            return set;
+            return drained.toArray(new Event[drained.size()]);
         }
 
-        @SuppressWarnings("UnusedReturnValue")
-        private static Set<String> saveStringsToSet(Context context, String key, String... strings) {
-            return saveStringSet(context, key, new HashSet<String>(Arrays.asList(strings)));
-        }
-
-        private static Set<String> saveStringSet(Context context, String key, Set<String> newSet) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        private static void cleanupOldEventsFromPersistedCache(Context context) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
             synchronized (cacheLock) {
-                Set<String> set = sharedPreferences.getStringSet(key, new HashSet<String>());
-                newSet.addAll(set);
-                sharedPreferences
-                        .edit()
-                        .putStringSet(key, newSet)
-                        .apply();
-                return set;
+                if (sp.contains(EVENTS_KEY)) {
+                    sp.edit().remove(EVENTS_KEY).apply();
+                }
+            }
+        }
+
+        private static void cleanupOldMessagesFromPersistedCache(Context context) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+            synchronized (cacheLock) {
+                if (sp.contains(MESSAGES_KEY)) {
+                    sp.edit().remove(MESSAGES_KEY).apply();
+                }
             }
         }
     }
@@ -1684,6 +1678,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
 
             if (EVENT_MESSAGESTORAGE_SAVE.equals(method)) {
+                CacheManager.cleanupOldMessagesFromPersistedCache(context);
                 provideMessagesFromCache(context);
             }
         }
