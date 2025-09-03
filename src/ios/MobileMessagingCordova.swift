@@ -25,6 +25,7 @@ class MMConfiguration {
         static let overridingNotificationCenterDelegateDisabled = "overridingNotificationCenterDelegateDisabled"
         static let unregisteringForRemoteNotificationsDisabled = "unregisteringForRemoteNotificationsDisabled"
         static let userDataJwt = "userDataJwt"
+        static let trustedDomains = "trustedDomains"
     }
 
     static let ignoreKeysWhenComparing: [String] = [Keys.applicationCode, Keys.cordovaPluginVersion]
@@ -44,6 +45,7 @@ class MMConfiguration {
     let overridingNotificationCenterDelegateDisabled: Bool
     let unregisteringForRemoteNotificationsDisabled: Bool
     let userDataJwt: String?
+    let trustedDomains: [String]?
 
     init?(rawConfig: [String: AnyObject]) {
         guard let ios = rawConfig["ios"] as? [String: AnyObject] else
@@ -61,6 +63,7 @@ class MMConfiguration {
         self.overridingNotificationCenterDelegateDisabled = ios[MMConfiguration.Keys.overridingNotificationCenterDelegateDisabled].unwrap(orDefault: false)
         self.unregisteringForRemoteNotificationsDisabled = ios[MMConfiguration.Keys.unregisteringForRemoteNotificationsDisabled].unwrap(orDefault: false)
         self.userDataJwt = rawConfig[MMConfiguration.Keys.userDataJwt].unwrap(orDefault: nil)
+        self.trustedDomains = rawConfig[MMConfiguration.Keys.trustedDomains] as? [String]
 
         if let rawPrivacySettings = rawConfig[MMConfiguration.Keys.privacySettings] as? [String: Any] {
             var ps = [String: Any]()
@@ -697,6 +700,10 @@ fileprivate class MobileMessagingEventsManager {
 
         if let webViewSettings = configuration.webViewSettings {
             mobileMessaging.webViewSettings.configureWith(rawConfig: webViewSettings)
+        }
+
+        if let domains = configuration.trustedDomains, !domains.isEmpty {
+            mobileMessaging = mobileMessaging.withTrustedDomains(domains)
         }
 
     }

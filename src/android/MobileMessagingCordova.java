@@ -281,6 +281,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         PrivacySettings privacySettings = new PrivacySettings();
         List<Category> notificationCategories = new ArrayList<Category>();
         String userDataJwt;
+        List<String> trustedDomains;
     }
 
     private static class CordovaCallContext {
@@ -581,6 +582,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
 
         builder.withJwtSupplier(() -> configuration.userDataJwt);
+
+        if (configuration.trustedDomains != null && !configuration.trustedDomains.isEmpty()) {
+            builder.withTrustedDomains(new HashSet<>(configuration.trustedDomains));
+        }
 
         // Checking do we need to migrate data saved with old cryptor,
         // if withCryptorMigration project ext property is set, ECBCryptorImpl class will exist.

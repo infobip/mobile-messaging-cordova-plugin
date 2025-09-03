@@ -50,6 +50,7 @@ var MobileMessagingCordova = function () {
  *      messageStorage: '<Message storage save callback>',
  *      defaultMessageStorage: true,
  *      userDataJwt: '<JWT token for authorization of user data related operations>',
+ *      trustedDomains: ['example.com', 'trusted.org'],
  *      loggingEnabled: false,
  *      ios: {
  *          notificationTypes: ['alert', 'sound', 'badge'],
