@@ -22,6 +22,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
+import org.infobip.mobile.messaging.chat.core.MultithreadStrategy;
+import org.infobip.mobile.messaging.chat.core.widget.LivechatWidgetLanguage;
 import org.infobip.mobile.messaging.mobileapi.apiavailability.ApiAvailability;
 
 import com.google.gson.reflect.TypeToken;
@@ -906,27 +908,35 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void setLanguage(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String language = null;
+        LivechatWidgetLanguage widgetLanguage = null;
         try {
             language = resolveStringParameter(args);
+            widgetLanguage = LivechatWidgetLanguage.findLanguageOrDefault(language);
         } catch (Exception e) {
             sendCallbackError(callbackContext, "Could not retrieve locale string from arguments");
             return;
         }
-        InAppChat.getInstance(cordova.getActivity().getApplication()).setLanguage(language);
+        InAppChat.getInstance(cordova.getActivity().getApplication()).setLanguage(widgetLanguage);
     }
 
     private void sendContextualData(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String data = null;
         boolean allMultiThreadStrategy = false;
+        MultithreadStrategy multithreadStrategy = null;
         try {
             data = resolveStringParameter(args);
             allMultiThreadStrategy = resolveBooleanParameterWithIndex(args, 1);
+            if (allMultiThreadStrategy) {
+                multithreadStrategy = MultithreadStrategy.ALL;
+            } else {
+                multithreadStrategy = MultithreadStrategy.ACTIVE;
+            }
         } catch (Exception e) {
             sendCallbackError(callbackContext, "Could not retrieve contextual data or multi-thread strategy flag from arguments");
             return;
         }
 
-        InAppChat.getInstance(cordova.getActivity().getApplication()).sendContextualData(data, allMultiThreadStrategy);
+        InAppChat.getInstance(cordova.getActivity().getApplication()).sendContextualData(data, multithreadStrategy);
     }
 
     /**
