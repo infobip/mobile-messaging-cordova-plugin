@@ -51,6 +51,15 @@
             });
 
             this.showChatButtonNode.addEventListener("click", function () {
+                // Uncomment to use custom exception handler
+                // MobileMessaging.setChatExceptionHandler(
+                //     function (exception) {
+                //         utils.log('Cordova app: Chat exception received: ' + JSON.stringify(exception));
+                //     },
+                //     function (error) {
+                //         utils.log('Cordova app: Error setting chat exception handler: ' + error);
+                //     }
+                // );
                 MobileMessaging.showChat();
             });
             this.showCustomizedChatButtonNode.addEventListener("click", function () {

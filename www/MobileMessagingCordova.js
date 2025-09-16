@@ -322,7 +322,7 @@ MobileMessagingCordova.prototype.setChatJwtProvider = function (jwtProvider, err
         if (errorCallback) {
             errorCallback(e);
         } else {
-            console.error('Error in setChatJwtProvider(), Could not obtain chat JWT: ' + e);
+            console.error('Error in setChatJwtProvider(), could not obtain chat JWT: ' + e);
         }
     };
 
@@ -351,6 +351,58 @@ MobileMessagingCordova.prototype.setChatJwtProvider = function (jwtProvider, err
         'MobileMessagingCordova',
         'setChatJwtProvider',
         []
+    );
+};
+
+function ChatException(params) {
+    this.code = params.code;
+    this.name = params.name;
+    this.message = params.message;
+    this.origin = params.origin;
+    this.platform = params.platform;
+}
+
+/**
+ * Sets the chat exception handler in case you want to intercept and
+ * display the errors coming from the chat on your own (instead of relying on the prebuild error banners).
+ * The `exceptionHandler` is a function that receives the exception. Passing `null` will remove the previously set handler.
+ *
+ *
+ * ### Example usage:
+ * ```ts
+ *  MobileMessaging.setChatExceptionHandler(
+ *       function (exception) {
+ *           utils.log('Cordova app: Chat exception received: ' + exception);
+ *       },
+ *       function (error) {
+ *           utils.log('Cordova app: Error setting chat exception handler: ' + error);
+ *       }
+ * );
+ * ```
+ *
+ * @param exceptionHandler A function that returns an exception when it is triggered.
+ * @param errorCallback Optional error handler for catching exceptions thrown when handling exceptions from native side.
+ */
+MobileMessagingCordova.prototype.setChatExceptionHandler = function (exceptionHandler, errorCallback) {
+    const errorHandler = function (e) {
+        if (errorCallback) {
+            errorCallback(e);
+        } else {
+            console.error('Error in setChatExceptionHandler(), could not set exception handler: ' + e);
+        }
+    };
+
+    cordova.exec(
+        function onEventFromNative(event) {
+            if (event && event.internalEventId === 'inAppChat.internal.exceptionReceived') {
+               const exception = new ChatException(event);
+               exceptionHandler(exception);
+            }
+        },
+        errorHandler,
+        'MobileMessagingCordova',
+        'setChatExceptionHandler',
+        [exceptionHandler !== null]
     );
 };
 

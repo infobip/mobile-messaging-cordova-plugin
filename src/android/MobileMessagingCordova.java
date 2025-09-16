@@ -21,9 +21,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
 
-import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
-import org.infobip.mobile.messaging.chat.core.MultithreadStrategy;
-import org.infobip.mobile.messaging.chat.core.widget.LivechatWidgetLanguage;
 import org.infobip.mobile.messaging.mobileapi.apiavailability.ApiAvailability;
 
 import com.google.gson.reflect.TypeToken;
@@ -74,6 +71,12 @@ import org.infobip.mobile.messaging.util.PreferenceHelper;
 import org.infobip.mobile.messaging.chat.InAppChat;
 import org.infobip.mobile.messaging.chat.core.JwtProvider;
 import org.infobip.mobile.messaging.chat.core.JwtProvider.JwtCallback;
+import org.infobip.mobile.messaging.chat.core.InAppChatException;
+import org.infobip.mobile.messaging.chat.view.InAppChatErrorsHandler;
+import org.infobip.mobile.messaging.chat.core.widget.LivechatWidgetLanguage;
+import org.infobip.mobile.messaging.chat.core.MultithreadStrategy;
+import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,6 +121,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static final String FUNCTION_REGISTER_FOR_POST_NOTIFICATIONS = "registerForAndroidRemoteNotifications";
 
+    private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
+    private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
+    private static final String FUNCTION_MOBILE_INBOX_SET_SEEN = "setInboxMessagesSeen";
+    private static final String FUNCTION_SET_USER_DATA_JWT = "setUserDataJwt";
+
+    private static final String EVENT_KEY_ID = "internalEventId";
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
     private static final String EVENT_REGISTRATION_UPDATED = "registrationUpdated";
     private static final String EVENT_INSTALLATION_UPDATED = "installationUpdated";
@@ -125,8 +134,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String EVENT_PERSONALIZED = "personalized";
     private static final String EVENT_DEPERSONALIZED = "depersonalized";
     private static final String EVENT_DEEPLINK = "deeplink";
-    private static final String EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED = "inAppChat.unreadMessageCounterUpdated";
-    private static final String EVENT_INAPP_CHAT_REQUEST_JWT = "inAppChat.internal.jwtRequested";
 
     private static final String EVENT_NOTIFICATION_TAPPED = "notificationTapped";
     private static final String EVENT_NOTIFICATION_ACTION_TAPPED = "actionTapped";
@@ -144,11 +151,11 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_INAPP_CHAT_SET_JWT_PROVIDER = "setChatJwtProvider";
     private static final String FUNCTION_INAPP_CHAT_SET_CUSTOMIZATION = "setChatCustomization";
     private static final String FUNCTION_INAPP_CHAT_SET_WIDGET_THEME = "setWidgetTheme";
+    private static final String FUNCTION_INAPP_CHAT_SET_EXCEPTION_HANDLER = "setChatExceptionHandler";
 
-    private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
-    private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
-    private static final String FUNCTION_MOBILE_INBOX_SET_SEEN = "setInboxMessagesSeen";
-    private static final String FUNCTION_SET_USER_DATA_JWT = "setUserDataJwt";
+    private static final String EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED = "inAppChat.unreadMessageCounterUpdated";
+    private static final String EVENT_INAPP_CHAT_REQUEST_JWT = "inAppChat.internal.jwtRequested";
+    private static final String EVENT_INAPP_CHAT_EXCEPTION_RECEIVED = "inAppChat.internal.exceptionReceived";
 
     private static final Map<String, String> broadcastEventMap = new HashMap<String, String>() {{
         put(Event.TOKEN_RECEIVED.getKey(), EVENT_TOKEN_RECEIVED);
@@ -474,6 +481,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_INAPP_CHAT_SET_CUSTOMIZATION.equals(action)) {
             setChatCustomization(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_SET_EXCEPTION_HANDLER.equals(action)) {
+            setChatExceptionHandler(args, callbackContext);
             return true;
         } else if (FUNCTION_INAPP_CHAT_SET_WIDGET_THEME.equals(action)) {
             setWidgetTheme(args, callbackContext);
@@ -894,49 +904,43 @@ public class MobileMessagingCordova extends CordovaPlugin {
     }
 
 
-    private void showInAppChat(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void showInAppChat(final JSONArray args, final CallbackContext callbackContext) {
         InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatScreen().show();
     }
 
-    private void getMessageCounter(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void getMessageCounter(final JSONArray args, final CallbackContext callbackContext) {
         sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, InAppChat.getInstance(cordova.getActivity().getApplication()).getMessageCounter()));
     }
 
-    private void resetMessageCounter(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void resetMessageCounter(final JSONArray args, final CallbackContext callbackContext) {
         InAppChat.getInstance(cordova.getActivity().getApplication()).resetMessageCounter();
     }
 
-    private void setLanguage(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void setLanguage(final JSONArray args, final CallbackContext callbackContext) {
         String language = null;
-        LivechatWidgetLanguage widgetLanguage = null;
         try {
             language = resolveStringParameter(args);
-            widgetLanguage = LivechatWidgetLanguage.findLanguageOrDefault(language);
         } catch (Exception e) {
             sendCallbackError(callbackContext, "Could not retrieve locale string from arguments");
             return;
         }
+        LivechatWidgetLanguage widgetLanguage = LivechatWidgetLanguage.findLanguageOrDefault(language);
         InAppChat.getInstance(cordova.getActivity().getApplication()).setLanguage(widgetLanguage);
     }
 
-    private void sendContextualData(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void sendContextualData(final JSONArray args, final CallbackContext callbackContext) {
         String data = null;
-        boolean allMultiThreadStrategy = false;
-        MultithreadStrategy multithreadStrategy = null;
+        boolean strategyFlag = false;
         try {
             data = resolveStringParameter(args);
-            allMultiThreadStrategy = resolveBooleanParameterWithIndex(args, 1);
-            if (allMultiThreadStrategy) {
-                multithreadStrategy = MultithreadStrategy.ALL;
-            } else {
-                multithreadStrategy = MultithreadStrategy.ACTIVE;
-            }
+            strategyFlag = resolveBooleanParameterWithIndex(args, 1);
         } catch (Exception e) {
             sendCallbackError(callbackContext, "Could not retrieve contextual data or multi-thread strategy flag from arguments");
             return;
         }
 
-        InAppChat.getInstance(cordova.getActivity().getApplication()).sendContextualData(data, multithreadStrategy);
+        MultithreadStrategy strategy = strategyFlag ? MultithreadStrategy.ALL : MultithreadStrategy.ACTIVE;
+        InAppChat.getInstance(cordova.getActivity().getApplication()).sendContextualData(data, strategy);
     }
 
     /**
@@ -1034,7 +1038,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         }
     }
 
-    private void setChatJwtProvider(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void setChatJwtProvider(final JSONArray args, final CallbackContext callbackContext) {
         //Keep the callback for multiple calls
         PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
         pluginResult.setKeepCallback(true);
@@ -1055,7 +1059,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         InAppChat.getInstance(cordova.getActivity().getApplication()).setWidgetJwtProvider(jwtProvider);
     }
 
-    private void setChatJwt(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void setChatJwt(final JSONArray args, final CallbackContext callbackContext) {
         String jwt = null;
         try {
             jwt = resolveStringParameter(args);
@@ -1068,6 +1072,60 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else {
             chatJwtCallbackHolder.resumeWithError(new IllegalArgumentException("Provided chat JWT is null or empty."));
         }
+    }
+
+    private void setChatExceptionHandler(final JSONArray args, final CallbackContext callbackContext) {
+        try {
+            boolean isHandlerPresent = resolveBooleanParameter(args);
+            if (isHandlerPresent) {
+                InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatScreen().setErrorHandler(createErrorsHandler(callbackContext));
+            } else {
+                InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatScreen().setErrorHandler(null);
+            }
+
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            pluginResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(pluginResult);
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Could not set chat exception handler: " + e.getMessage());
+        }
+    }
+
+    private InAppChatErrorsHandler createErrorsHandler(CallbackContext callbackContext) {
+        return new InAppChatErrorsHandler() {
+            @Override
+            public void handlerError(@NonNull String error) {
+                // Deprecated method
+            }
+
+            @Override
+            public void handlerWidgetError(@NonNull String error) {
+                // Deprecated method
+            }
+
+            @Override
+            public void handlerNoInternetConnectionError(boolean hasConnection) {
+                // Deprecated method
+            }
+
+            @Override
+            public boolean handleError(@NonNull InAppChatException exception) {
+                try {
+                    if (callbackContext != null) {
+                        JSONObject payload = exception.toJSON();
+                        payload.putOpt(EVENT_KEY_ID, EVENT_INAPP_CHAT_EXCEPTION_RECEIVED);
+                        PluginResult requestResult = new PluginResult(PluginResult.Status.OK, payload);
+                        requestResult.setKeepCallback(true);
+                        callbackContext.sendPluginResult(requestResult);
+                    } else {
+                        Logger.e(TAG, "Callback context is null, cannot send in-app chat exception.");
+                    }
+                } catch (Exception e) {
+                    Logger.e(TAG, "Cannot send in-app chat exception: " + e.getMessage(), e);
+                }
+                return true;
+            }
+        };
     }
 
     private void setChatCustomization(JSONArray args, final CallbackContext callbackContext) {

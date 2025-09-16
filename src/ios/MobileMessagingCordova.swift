@@ -147,6 +147,12 @@ fileprivate class MobileMessagingEventsManager {
         "deeplink": NSNotification.Name.CDVPluginHandleOpenURLWithAppSourceAndAnnotation.rawValue,
         "inAppChat.unreadMessageCounterUpdated": MMNotificationInAppChatUnreadMessagesCounterUpdated,
     ]
+    
+    struct InternalEvent {
+        static let idKey = "internalEventId"
+        static let chatJWTRequested = "inAppChat.internal.jwtRequested"
+        static let chatExceptionReceived = "inAppChat.internal.exceptionReceived"
+    }
 
     init(plugin: MobileMessagingCordova) {
         self.plugin = plugin
@@ -270,6 +276,7 @@ fileprivate class MobileMessagingEventsManager {
     private var messageStorageAdapter: MessageStorageAdapter?
     private var eventsManager: MobileMessagingEventsManager?
     fileprivate var isStarted: Bool = false
+    private var willUseChatExceptionHandler = false
 
     override func pluginInitialize() {
         super.pluginInitialize()
@@ -1055,6 +1062,11 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         static var pendingCompletion: ((String?) -> Void)?
         static let lock = NSLock()
     }
+    
+    private struct ChatExceptionBridge {
+        static var callbackId: String?
+        static let lock = NSLock()
+    }
 
     @objc func setChatJwtProvider(_ command: CDVInvokedUrlCommand) {
         ChatJwtBridge.lock.lock()
@@ -1102,7 +1114,7 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         ChatJwtBridge.pendingCompletion = completion
 
         // Notify JS that a JWT is requested
-        let pluginResult = CDVPluginResult(status: .ok, messageAs: "inAppChat.internal.jwtRequested")
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: MobileMessagingEventsManager.InternalEvent.chatJWTRequested)
         pluginResult?.setKeepCallbackAs(true)
         self.commandDelegate?.send(pluginResult, callbackId: callbackId)
     }
@@ -1118,6 +1130,37 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         _ = semaphore.wait(timeout: .now() + 45) // 45s timeout
         return jwt
     }
+    
+    @objc func setChatExceptionHandler(_ command: CDVInvokedUrlCommand) {
+        ChatExceptionBridge.lock.lock()
+        defer { ChatExceptionBridge.lock.unlock() }
+        ChatExceptionBridge.callbackId = command.callbackId
+        let enableHandler = (command.arguments[0] as? Bool) ?? false
+        willUseChatExceptionHandler = enableHandler
+        self.commandDelegate.sendSuccess(for: command)
+    }
+    
+    @objc public func didReceiveException(_ exception: MMChatException) -> MMChatExceptionDisplayMode {
+        guard willUseChatExceptionHandler else { return .displayDefaultAlert }
+        ChatExceptionBridge.lock.lock()
+        defer { ChatExceptionBridge.lock.unlock() }
+        
+        var payload: [AnyHashable: Any] = [:]
+        if let message = exception.message {
+            payload["message"] = message
+        }
+        if let name = exception.name {
+            payload["name"] = name
+        }
+        payload["code"] = exception.code
+        payload["origin"] = "LiveChat"
+        payload["platform"] = "Flutter"
+        payload[MobileMessagingEventsManager.InternalEvent.idKey] = MobileMessagingEventsManager.InternalEvent.chatExceptionReceived
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: payload)
+        self.commandDelegate.send(pluginResult, callbackId: ChatExceptionBridge.callbackId)
+        return .noDisplay
+    }
+
     
     func setWidgetTheme(_ command: CDVInvokedUrlCommand) {
         guard let themeName = command.arguments[0] as? String else {
