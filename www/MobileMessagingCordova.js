@@ -1,3 +1,11 @@
+//
+//  MobileMessagingCordova.js
+//  MobileMessagingCordova
+//
+// Copyright (c) 2016-2025 Infobip Limited
+// Licensed under the Apache License, Version 2.0
+//
+
 var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized", "deeplink", "inAppChat.unreadMessageCounterUpdated"];
 var eventHandlers = {};
 

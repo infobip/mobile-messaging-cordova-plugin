@@ -1,3 +1,11 @@
+//
+//  jsrsasign-all-min.js
+//  MobileMessagingCordova
+//
+// Copyright (c) 2016-2025 Infobip Limited
+// Licensed under the Apache License, Version 2.0
+//
+
 /*
  * jsrsasign(all) 11.1.0 (2024-02-01) (c) 2010-2023 Kenji Urushima | kjur.github.io/jsrsasign/license
  */
