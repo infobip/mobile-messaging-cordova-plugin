@@ -840,7 +840,7 @@ class MessageStorageAdapter: MMMessageStorage {
     func findMessage(withId messageId: MessageId) -> MMBaseMessage? {
         queue.sync() {
             sendCallback(for: "messageStorage.find", withMessage: messageId)
-            _ = findSemaphore.wait(wallTimeout: DispatchWallTime.now() + DispatchTimeInterval.seconds(30))
+            _ = findSemaphore.wait(timeout: DispatchTime.now() + DispatchTimeInterval.seconds(30))
         }
         return foundMessage
     }
@@ -1162,7 +1162,7 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         }
         payload["code"] = exception.code
         payload["origin"] = "LiveChat"
-        payload["platform"] = "Flutter"
+        payload["platform"] = "Cordova"
         payload[MobileMessagingEventsManager.InternalEvent.idKey] = MobileMessagingEventsManager.InternalEvent.chatExceptionReceived
         let pluginResult = CDVPluginResult(status: .ok, messageAs: payload)
         self.commandDelegate.send(pluginResult, callbackId: ChatExceptionBridge.callbackId)
