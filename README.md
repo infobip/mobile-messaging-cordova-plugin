@@ -277,16 +277,43 @@ You can change `plaform/android/app/build.gradle` or write sign config to `build
 ```javascript
 MobileMessaging.init({
         applicationCode: <String; Infobip Application Code from the Customer Portal obtained in step 2>,
-        ios: {
-            notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>
-        },
-        android: { // optional
-            notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>,
-            multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
-            notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>
-        },
+
+        // General configuration
+        inAppChatEnabled: <Boolean; set to true to enable in-app chat feature>, // optional
+        fullFeaturedInAppsEnabled: <Boolean; set to true to enable full featured in-app messages>, // optional
+        loggingEnabled: <Boolean; set to true to enable debug logging>, // optional
+        userDataJwt: <String; JWT token for authorization of user data related operations>, // optional
+        trustedDomains: <Array<String>; list of trusted domain strings for web views, e.g. ['example.com', 'trusted.org']>, // optional
         messageStorage: <Object; message storage implementation>, // optional
         defaultMessageStorage: <Boolean; set to 'true' to enable default message storage implementation>, // optional
+
+        // iOS-specific configuration
+        ios: {
+            notificationTypes: <Array; values: 'alert', 'badge', 'sound'; notification types to indicate how the app should alert user when push message arrives>,
+            forceCleanup: <Boolean; defines whether the SDK must be cleaned up on startup. Default: false>, // optional
+            registeringForRemoteNotificationsDisabled: <Boolean; set to true to disable automatic registration for remote notifications. Default: false>, // optional
+            overridingNotificationCenterDelegateDisabled: <Boolean; set to true to prevent SDK from overriding UNUserNotificationCenterDelegate. Default: false>, // optional
+            unregisteringForRemoteNotificationsDisabled: <Boolean; set to true to prevent SDK from unregistering for remote notifications when stopping SDK or after depersonalization, useful when using MobileMessaging SDK with another push provider. Default: false>, // optional
+            webViewSettings: { // optional; settings for web view configuration in in-app messages
+                title: <String; custom title for the web view toolbar>,
+                barTintColor: <String; hex color string for the toolbar background color>,
+                titleColor: <String; hex color string for the toolbar title text color>,
+                tintColor: <String; hex color string for the toolbar button color>
+            }
+        },
+
+        // Android-specific configuration
+        android: { // optional
+            notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>,
+            notificationChannelId: <String; identifier for notification channel>, // optional
+            notificationChannelName: <String; user visible name for notification channel>, // optional
+            notificationSound: <String; a resource name for a notification sound (without extension), located in '/platforms/android/app/src/main/res/raw'>, // optional
+            multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
+            notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>,
+            withBannerForegroundNotificationsEnabled: <Boolean; set to true to always display Push notifications as Banner> // optional
+        },
+
+        // Interactive notifications
         notificationCategories: [ // optional
            {
                identifier: <String; a unique category string identifier>,
@@ -297,23 +324,24 @@ MobileMessaging.init({
                        foreground: <Boolean; to bring the app to foreground or leave it in background state (or not)>,
                        textInputPlaceholder: <String; custom input field placeholder>,
                        moRequired: <Boolean; to trigger MO message sending (or not)>,
-                                               
+
                        // iOS only
                        authenticationRequired: <Boolean; to require device to be unlocked before performing (or not)>,
                        destructive: <Boolean; to be marked as destructive (or not)>,
                        textInputActionButtonTitle: <String; custom label for a sending button>,
-                       
+
                        // Android only
-                       icon:
-                        <String; a resource name for a special action icon>
+                       icon: <String; a resource name for a special action icon>
                    }
-               ]   
+               ]
            }
         ],
+
+        // Privacy settings
         privacySettings: { // optional
-            carrierInfoSendingDisabled: <Boolean; defines if MM SDK should send carrier information to the server; false by default>,
-            systemInfoSendingDisabled: <Boolean; defines if MM SDK should send system information to the server; false by default>,
-            userDataPersistingDisabled: <Boolean; defines if MM SDK should persist User Data locally. Persisting user data locally gives you quick access to the data and eliminates a need to implement the persistent storage yourself; false by default>
+            userDataPersistingDisabled: <Boolean; set to true to disable persisting User Data locally. Default: false>,
+            carrierInfoSendingDisabled: <Boolean; set to true to disable sending carrier information to server. Default: false>,
+            systemInfoSendingDisabled: <Boolean; set to true to disable sending system information (OS version, device model, app version) to server. Default: false>
         }
     },
     function() {

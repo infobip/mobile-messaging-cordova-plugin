@@ -782,7 +782,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             runInBackground(new Runnable() {
                 @Override
                 public void run() {
-                    mobileMessaging().personalize(ctx.userIdentity, ctx.userAttributes, ctx.forceDepersonalize, new MobileMessaging.ResultListener<User>() {
+                    mobileMessaging().personalize(ctx.userIdentity, ctx.userAttributes, ctx.forceDepersonalize, ctx.keepAsLead, new MobileMessaging.ResultListener<User>() {
                         @Override
                         public void onResult(Result<User, MobileMessagingError> result) {
                             if (result.isSuccess()) {

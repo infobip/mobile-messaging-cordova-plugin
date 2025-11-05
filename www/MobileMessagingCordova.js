@@ -52,44 +52,61 @@ var MobileMessagingCordova = function () {
  * @param {JSON} config. Configuration for Mobile Messaging
  * Configuration format:
  *  {
- *      applicationCode: '<The application code of your Application from Push Portal website>',
- *      inAppChatEnabled: true,
- *      fullFeaturedInAppsEnabled: true,
- *      messageStorage: '<Message storage save callback>',
- *      defaultMessageStorage: true,
- *      userDataJwt: '<JWT token for authorization of user data related operations>',
- *      trustedDomains: ['example.com', 'trusted.org'],
- *      loggingEnabled: false,
- *      ios: {
- *          notificationTypes: ['alert', 'sound', 'badge'],
- *          forceCleanup: <Boolean>,
- *          registeringForRemoteNotificationsDisabled: <Boolean>,
- *          overridingNotificationCenterDelegateDisabled: <Boolean>,
- *          unregisteringForRemoteNotificationsDisabled: <Boolean>
+ *      applicationCode: <String; the application code of your Application from Push Portal website>,
+ *      inAppChatEnabled: <Boolean; set to true to enable in-app chat feature>,
+ *      fullFeaturedInAppsEnabled: <Boolean; set to true to enable full featured in-app messages>,
+ *      messageStorage: <Object; custom message storage implementation> {
+ *          start: function() {},                          // Called when storage should be initialized
+ *          stop: function() {},                           // Called when storage should be deinitialized
+ *          save: function(messages) {},                   // Called with array of message objects to save
+ *          find: function(messageId, callback) {},        // Called to find message by ID, must call callback(message) with found message
+ *          findAll: function(callback) {}                 // Called to retrieve all messages, must call callback(messages) with array of messages
  *      },
- *      android: {
+ *      defaultMessageStorage: <Boolean; set to true to use built-in message storage>,
+ *      userDataJwt: <String; JWT token for authorization of user data related operations>,
+ *      trustedDomains: <Array<String>; list of trusted domain strings for web views, e.g. ['example.com', 'trusted.org']>,
+ *      loggingEnabled: <Boolean; set to true to enable debug logging>,
+ *      ios: <Object; iOS-specific configuration settings> {
+ *          notificationTypes: <Array<String>; preferable notification types that indicating how the app alerts the user when a push notification arrives, e.g. ['alert', 'sound', 'badge']>,
+ *          forceCleanup: <Boolean; defines whether the SDK must be cleaned up on startup. Default: false>,
+ *          registeringForRemoteNotificationsDisabled: <Boolean; set to true to disable automatic registration for remote notifications. Default: false>,
+ *          overridingNotificationCenterDelegateDisabled: <Boolean; set to true to prevent SDK from overriding UNUserNotificationCenterDelegate. Default: false>,
+ *          unregisteringForRemoteNotificationsDisabled: <Boolean; set to true to prevent SDK from unregistering for remote notifications when stopping SDK or after depersonalization, useful when using MobileMessaging SDK with another push provider. Default: false>,
+ *          webViewSettings: <Object; settings for web view configuration in in-app messages> {
+ *              title: <String; custom title for the web view toolbar>,
+ *              barTintColor: <String; hex color string for the toolbar background color>,
+ *              titleColor: <String; hex color string for the toolbar title text color>,
+ *              tintColor: <String; hex color string for the toolbar button color>
+ *          }
+ *      },
+ *      android: <Object; Android-specific configuration settings> {
+ *          notificationIcon: <String; a resource name for a status bar icon (without extension), located in '/platforms/android/app/src/main/res/mipmap'>
+ *          notificationChannelId: <String; identifier for notification channel>,
+ *          notificationChannelName: <String; user visible name for notification channel>,
+ *          notificationSound: <String; a resource name for a notification sound (without extension), located in '/platforms/android/app/src/main/res/raw'>,
+ *          multipleNotifications: <Boolean; set to true when you want to show multiple notifications in status bar>,
+ *          notificationAccentColor: <String; hex color string to be used as accent color for notifications>,
  *          withBannerForegroundNotificationsEnabled: <Boolean>
  *      },
- *      privacySettings: {
- *          applicationCodePersistingDisabled: <Boolean>,
- *          userDataPersistingDisabled: <Boolean>,
- *          carrierInfoSendingDisabled: <Boolean>,
- *          systemInfoSendingDisabled: <Boolean>
+ *      privacySettings: <Object; privacy-related configuration settings> {
+ *          userDataPersistingDisabled: <Boolean; set to true to disable persisting User Data locally. Default: false>,
+ *          carrierInfoSendingDisabled: <Boolean; set to true to disable sending carrier information to server. Default: false>,
+ *          systemInfoSendingDisabled: <Boolean; set to true to disable sending system information (OS version, device model, app version) to server. Default: false>
  *      },
- *      notificationCategories: [
- *          {
- *              identifier: <String>,
- *              actions: [
- *                  {
- *                      identifier: <String>,
- *                      title: <String>,
- *                      foreground: <Boolean>,
- *                      authenticationRequired: <Boolean>,
- *                      moRequired: <Boolean>,
- *                      destructive: <Boolean>,
- *                      icon: <String>,
- *                      textInputActionButtonTitle: <String>,
- *                      textInputPlaceholder: <String>
+ *      notificationCategories: <Array; notification categories with interactive actions for push notifications> [
+ *          <Object; notification category> {
+ *              identifier: <String; category identifier>,
+ *              actions: <Array; notification actions> [
+ *                  <Object; notification action> {
+ *                      identifier: <String; a unique action identifier>,
+ *                      title: <String; an action title, represents a notification action button label>,
+ *                      foreground: <Boolean; if true, to bring the app to foreground or leave it in background state (or not): false>,
+ *                      textInputPlaceholder: <String; custom input field placeholder>
+ *                      moRequired: <Boolean; to trigger MO message sending (or not). Default: false>,
+ *                      authenticationRequired: <Boolean; iOS only - to require device to be unlocked before performing (or not). Default: false>,
+ *                      textInputActionButtonTitle: <String; iOS only - custom label for a sending button>,
+ *                      destructive: <Boolean; iOS only - to be marked as destructive (or not). Default: false>,
+ *                      icon: <String; Android only - a resource name for a special action icon'>,
  *                  }
  *              ]
  *          }
@@ -98,7 +115,7 @@ var MobileMessagingCordova = function () {
  *  @param {Function} callback. Called after successful start of Mobile Messaging SDK initialization. Notice: no Mobile Messaging SDK
  *  methods can be called in this callback as it is not yet initialized. To know when Mobile Messaging SDK is fully initialized, subscribe
  *  to "registrationUpdated" event.
- * @param {Function} onInitError. Error callback
+ * @param {Function} onInitError. Error callback.
  */
 MobileMessagingCordova.prototype.init = function (config, callback, onInitError) {
     var messageStorage = config.messageStorage;
@@ -161,12 +178,16 @@ MobileMessagingCordova.prototype.init = function (config, callback, onInitError)
  *   - messageReceived
  *   - notificationTapped
  *   - registrationUpdated
- *   - tokenReceived (iOS only)
+ *   - tokenReceived
  *   - actionTapped
+ *   - installationUpdated
+ *   - userUpdated
+ *   - personalized
+ *   - depersonalized
  *
  * @name register
  * @param {String} eventName
- * @param {Function} handler will be called when event occurs
+ * @param {Function} handler. Will be called when event occurs.
  */
 MobileMessagingCordova.prototype.register = function (eventName, handler) {
     if (eventName != null && typeof eventName == "string" && supportedEvents.indexOf(eventName) > -1) {
@@ -183,7 +204,7 @@ MobileMessagingCordova.prototype.on = MobileMessagingCordova.prototype.register;
  *
  * @name unregister
  * @param {String} eventName
- * @param {Function} handler will be unregistered from event
+ * @param {Function} handler. Will be unregistered from event.
  */
 MobileMessagingCordova.prototype.unregister = function (eventName, handler) {
     var handlers = eventHandlers[eventName] || [];
@@ -212,24 +233,26 @@ MobileMessagingCordova.prototype.unregisterAllHandlers = function (eventName) {
  * @name saveUser
  * @param {Object} userData. An object containing user data
  * {
- *   externalUserId: "myID",
- *   firstName: "John",
- *   lastName: "Smith",
- *   middleName: "D",
- *   gender: "Male",
- *   birthday: "1985-01-15"
- *   phones: ["79210000000", "79110000000"],
- *   emails: ["one@email.com", "two@email.com"],
- *   tags: ["Sports", "Food"],
- *   customAttributes: {
- *     "stringAttribute": "string",
- *     "numberAttribute": 1,
- *     "dateAttribute": "1985-01-15",
- *     "booleanAttribute": true
+ *   externalUserId: <String; external user ID, e.g. "myID">,
+ *   firstName: <String; user's first name, e.g. "John">,
+ *   lastName: <String; user's last name, e.g. "Smith">,
+ *   middleName: <String; user's middle name, e.g. "D">,
+ *   gender: <String; user's gender, can be "Male" or "Female">,
+ *   birthday: <String; user's birthday in format "YYYY-MM-DD", e.g. "1985-01-15">,
+ *   tags: <Array<String>; list of user tags, e.g. ["Sports", "Food"]>,
+ *   phones: <Array<String>; list of user phone numbers, e.g. ["79210000000", "79110000000"]>,
+ *   emails: <Array<String>; list of user email addresses, e.g. ["one@email.com", "two@email.com"]>,
+ *   customAttributes: <Object; map of custom user attributes. Each attribute can be one of the following types: String, Number, Date (in "YYYY-MM-DD" format), DateTime (in ISO8601 UTC format), Boolean, or List. You can provide any combination of these types based on your needs> {
+ *     "someStringAttribute": "value",
+ *     "someNumberAttribute": 123,
+ *     "someDateAttribute": "1985-01-15",
+ *     "someDateTimeAttribute": "2025-01-15T10:30:00Z",
+ *     "someBooleanAttribute": true,
+ *     "someListAttribute": [{"key1": "stringValue", "key2": 456}, {"key1": "anotherString", "key2": true}] // List is an array of objects where each object contains key-value pairs. Values can be String, Number, Date (in "YYYY-MM-DD" format), DateTime (in ISO8601 UTC format), or Boolean
  *   }
  * }
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.saveUser = function (userData, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'saveUser', [userData])
@@ -239,8 +262,8 @@ MobileMessagingCordova.prototype.saveUser = function (userData, callback, errorC
  * Fetch user data from the server.
  *
  * @name fetchUser
- * @param {Function} callback will be called with fetched user data on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called with fetched user data on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.fetchUser = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchUser', [])
@@ -250,8 +273,8 @@ MobileMessagingCordova.prototype.fetchUser = function (callback, errorCallback) 
  * Gets user data from the locally stored cache.
  *
  * @name getUser
- * @param {Function} callback will be called with fetched user data on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called with fetched user data on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.getUser = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getUser', [])
@@ -261,11 +284,18 @@ MobileMessagingCordova.prototype.getUser = function (callback, errorCallback) {
  * Fetch mobile inbox data from the server.
  *
  * @name fetchInboxMessages
- * @param token access token (JWT in a strictly predefined format) required for current user to have access to the Inbox messages
- * @param externalUserId External User ID is meant to be an ID of a user in an external (non-Infobip) service
- * @param filterOptions filtering options applied to messages list in response. Nullable, will return default number of messages
- * @param callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {String} token. Access token (JWT in a strictly predefined format) required for current user to have access to the Inbox messages.
+ * @param {String} externalUserId. External User ID is meant to be an ID of a user in an external (non-Infobip) service.
+ * @param {Object} filterOptions. Filtering options applied to messages list in response. Nullable, will return default number of messages - 20.
+ * {
+ *   fromDateTime: <String; filter messages received after this datetime in ISO8601 format with timezone, e.g. "2024-03-11T12:00:00+01:00">,
+ *   toDateTime: <String; filter messages received before this datetime in ISO8601 format with timezone, e.g. "2024-03-20T12:00:00+01:00">,
+ *   topic: <String; filter messages by a single topic. Mutually exclusive with 'topics' - if 'topic' is provided, 'topics' must be null>,
+ *   topics: <Array<String>; filter messages by multiple topics, e.g. ["topic1", "topic2"]. Mutually exclusive with 'topic' - if 'topics' is provided, 'topic' must be null>,
+ *   limit: <Number; maximum number of messages to return, by default 20>,
+ * }
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.fetchInboxMessages = function (token, externalUserId, filterOptions, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchInboxMessages', [token, externalUserId, filterOptions])
@@ -275,10 +305,17 @@ MobileMessagingCordova.prototype.fetchInboxMessages = function (token, externalU
  * Fetch mobile inbox without token from the server.
  *
  * @name fetchInboxMessagesWithoutToken
- * @param externalUserId External User ID is meant to be an ID of a user in an external (non-Infobip) service
- * @param filterOptions filtering options applied to messages list in response. Nullable, will return default number of messages
- * @param callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {String} externalUserId. External User ID is meant to be an ID of a user in an external (non-Infobip) service.
+ * @param {Object} filterOptions. Filtering options applied to messages list in response. Nullable, will return default number of messages - 20.
+ * {
+ *   fromDateTime: <String; filter messages received after this datetime in ISO8601 format with timezone, e.g. "2024-03-11T12:00:00+01:00">,
+ *   toDateTime: <String; filter messages received before this datetime in ISO8601 format with timezone, e.g. "2024-03-20T12:00:00+01:00">,
+ *   topic: <String; filter messages by a single topic. Mutually exclusive with 'topics' - if 'topic' is provided, 'topics' must be null>,
+ *   topics: <Array<String>; filter messages by multiple topics, e.g. ["topic1", "topic2"]. Mutually exclusive with 'topic' - if 'topics' is provided, 'topic' must be null>,
+ *   limit: <Number; maximum number of messages to return, by default 20>,
+ * }
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.fetchInboxMessagesWithoutToken = function (externalUserId, filterOptions, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchInboxMessagesWithoutToken', [externalUserId, filterOptions])
@@ -287,10 +324,11 @@ MobileMessagingCordova.prototype.fetchInboxMessagesWithoutToken = function (exte
 /**
  * Asynchronously marks inbox messages as seen
  *
- * @param externalUserId External User ID is meant to be an ID of a user in an external (non-Infobip) service
- * @param messageIds array of inbox messages identifiers that need to be marked as seen
- * @param callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @name setInboxMessagesSeen
+ * @param {String} externalUserId. External User ID is meant to be an ID of a user in an external (non-Infobip) service.
+ * @param {Array<String>} messageIds. Array of inbox message identifiers that need to be marked as seen, e.g. ["messageId1", "messageId2"].
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.setInboxMessagesSeen = function (externalUserId, messageIds, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setInboxMessagesSeen', [externalUserId, messageIds])
@@ -420,29 +458,31 @@ MobileMessagingCordova.prototype.setChatExceptionHandler = function (exceptionHa
  * @name saveInstallation
  * @param {Object} installation. An object containing installation data
  * {
- *   isPrimaryDevice: true,
- *   isPushRegistrationEnabled: true,
- *   notificationsEnabled: true,
- *   sdkVersion: "1.2.3",
- *   appVersion: "2.3.4"
- *   os: "iOS",
- *   osVersion: "12",
- *   deviceManufacturer: "Apple",
- *   deviceModel: "iPhone 5s",
- *   deviceSecure: true,
- *   language: "EN",
- *   deviceTimezoneId: "GMT",
- *   applicationUserId: "MyID",
- *   deviceName: "John's iPhone 5s",
- *   customAttributes: {
- *     "stringAttribute": "string",
- *     "numberAttribute": 1,
- *     "dateAttribute": "1985-01-15",
- *     "booleanAttribute": true
+ *   isPrimaryDevice: <Boolean; whether this is the primary device for the user, e.g. true>,
+ *   isPushRegistrationEnabled: <Boolean; whether push registration is enabled, e.g. true>,
+ *   notificationsEnabled: <Boolean; whether notifications are enabled, e.g. true>,
+ *   sdkVersion: <String; SDK version, e.g. "1.2.3">,
+ *   appVersion: <String; application version, e.g. "2.3.4">,
+ *   os: <String; operating system, e.g. "iOS" or "Android">,
+ *   osVersion: <String; operating system version, e.g. "12">,
+ *   deviceManufacturer: <String; device manufacturer, e.g. "Apple">,
+ *   deviceModel: <String; device model, e.g. "iPhone 5s">,
+ *   deviceSecure: <Boolean; whether device has security features enabled, e.g. true>,
+ *   language: <String; device language, e.g. "EN">,
+ *   deviceTimezoneOffset: <String; UTC-related timezone offset that identifies a current timezone of a device>,
+ *   applicationUserId: <String; application-specific user identifier, e.g. "MyID">,
+ *   deviceName: <String; custom device name, e.g. "John's iPhone 5s">,
+ *   customAttributes: <Object; map of custom installation attributes. Each attribute can be one of the following types: String, Number, Date (in "YYYY-MM-DD" format), DateTime (in ISO8601 UTC format), Boolean, or List. You can provide any combination of these types based on your needs> {
+ *     "someStringAttribute": "value",
+ *     "someNumberAttribute": 123,
+ *     "someDateAttribute": "1985-01-15",
+ *     "someDateTimeAttribute": "2025-01-15T10:30:00Z",
+ *     "someBooleanAttribute": true,
+ *     "someListAttribute": [{"key1": "stringValue", "key2": 456}, {"key1": "anotherString", "key2": true}] // List is an array of objects where each object contains key-value pairs. Values can be String, Number, Date (in "YYYY-MM-DD" format), DateTime (in ISO8601 UTC format), or Boolean
  *   }
  * }
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.saveInstallation = function (installation, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'saveInstallation', [installation])
@@ -452,8 +492,8 @@ MobileMessagingCordova.prototype.saveInstallation = function (installation, call
  * Fetches installation from the server.
  *
  * @name fetchInstallation
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.fetchInstallation = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'fetchInstallation', [])
@@ -463,8 +503,8 @@ MobileMessagingCordova.prototype.fetchInstallation = function (callback, errorCa
  * Gets locally cached installation.
  *
  * @name getInstallation
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.getInstallation = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'getInstallation', [])
@@ -474,10 +514,10 @@ MobileMessagingCordova.prototype.getInstallation = function (callback, errorCall
  * Sets any installation as primary for this user.
  *
  * @name setInstallationAsPrimary
- * @param {String} pushRegistrationId of an installation
- * @param {Boolean} primary or not
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {String} pushRegistrationId. Infobip's pushRegistrationId of an installation.
+ * @param {Boolean} primary. Set installation as primary or not.
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.setInstallationAsPrimary = function (pushRegistrationId, primary, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setInstallationAsPrimary', [pushRegistrationId, primary])
@@ -489,19 +529,20 @@ MobileMessagingCordova.prototype.setInstallationAsPrimary = function (pushRegist
  * @name personalize
  * @param {Object} context. An object containing user identity information as well as additional user attributes.
  * {
- *   userIdentity: {
- *     phones: ["79210000000", "79110000000"],
- *     emails: ["one@email.com", "two@email.com"],
- *     externalUserId: "myID"
+ *   userIdentity: <Object; user identity information> {
+ *     phones: <Array<String>; list of user phone numbers, e.g. ["79210000000", "79110000000"]>,
+ *     emails: <Array<String>; list of user email addresses, e.g. ["one@email.com", "two@email.com"]>,
+ *     externalUserId: <String; external user ID, e.g. "myID">
  *   },
- *   userAttributes: {
- *     firstName: "John",
- *     lastName: "Smith"
+ *   userAttributes: <Object; additional user attributes> {
+ *     firstName: <String; user's first name, e.g. "John">,
+ *     lastName: <String; user's last name, e.g. "Smith">
  *   },
- *   forceDepersonalize: false
+ *   forceDepersonalize: <Boolean; if true, depersonalize previous user data before personalizing with new data. Default: false>,
+ *   keepAsLead: <Boolean; set to true if you want to keep the installation as a lead when personalizing it. Default: false>
  * }
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.personalize = function (context, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'personalize', [context])
@@ -511,8 +552,8 @@ MobileMessagingCordova.prototype.personalize = function (context, callback, erro
  * Performs depersonalization of the current installation on the platform.
  *
  * @name depersonalize
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.depersonalize = function (callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'depersonalize', [])
@@ -521,9 +562,9 @@ MobileMessagingCordova.prototype.depersonalize = function (callback, errorCallba
 /**
  * Performs depersonalization of the installation referenced by pushRegistrationId.
  *
- * @param {String} pushRegistrationId of the remote installation to depersonalize
- * @param {Function} callback will be called on success
- * @param {Function} errorCallback will be called on error
+ * @param {String} pushRegistrationId. Infobip's pushRegistrationId of the remote installation to depersonalize.
+ * @param {Function} callback. Will be called on success.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.depersonalizeInstallation = function (pushRegistrationId, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'depersonalizeInstallation', [pushRegistrationId])
@@ -533,9 +574,9 @@ MobileMessagingCordova.prototype.depersonalizeInstallation = function (pushRegis
  * Mark messages as seen
  *
  * @name markMessagesSeen
- * @param {Array} messageIds of identifiers of message to mark as seen
- * @param {Function} callback will be called upon completion
- * @param {Function} errorCallback will be called on error
+ * @param {Array<String>} messageIds. Array of identifiers of message to mark as seen.
+ * @param {Function} callback. Will be called upon completion.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.markMessagesSeen = function (messageIds, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'markMessagesSeen', messageIds)
@@ -545,9 +586,9 @@ MobileMessagingCordova.prototype.markMessagesSeen = function (messageIds, callba
  * Displays built-in error dialog so that user can resolve errors during sdk initialization.
  *
  * @name showDialogForError
- * @param {Number} errorCode to display dialog for
- * @param {Function} callback will be called upon completion
- * @param {Function} errorCallback will be called on error
+ * @param {Number} errorCode. The error code to display dialog for.
+ * @param {Function} callback. Will be called upon completion.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.showDialogForError = function (errorCode, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'showDialogForError', [errorCode])
@@ -603,12 +644,13 @@ function messageStorage_findAll() {
  * @name submitEvent
  * @param {Object} eventData. An object containing event data
  * {
- *   definitionId: "eventDefinitionId"
- *   properties: {
- *     "stringAttribute": "string",
- *     "numberAttribute": 1,
- *     "dateAttribute": "2020-02-26T09:41:57Z",
- *     "booleanAttribute": true
+ *   definitionId: <String; event definition identifier, e.g. "eventDefinitionId">,
+ *   properties: <Object; map of event properties. Each property can be one of the following types: String, Number, Date (in ISO8601 UTC format), Boolean, or List (array of objects with key-value pairs where values can be String, Number, Date, or Boolean). You can provide any combination of these types based on your needs> {
+ *     "someStringAttribute": "value",
+ *     "someNumberAttribute": 123,
+ *     "someDateAttribute": "2020-02-26T09:41:57Z",
+ *     "someBooleanAttribute": true,
+ *     "someListAttribute": [{"key1": "stringValue", "key2": 456}, {"key1": "anotherString", "key2": true}] // List is an array of objects where each object contains key-value pairs. Values can be String, Number, Date (in ISO8601 UTC format), or Boolean
  *   }
  * }
  */
@@ -625,16 +667,17 @@ MobileMessagingCordova.prototype.submitEvent = function (eventData) {
  * @name submitEventImmediately
  * @param {Object} eventData. An object containing event data
  * {
- *   definitionId: "eventDefinitionId"
- *   properties: {
- *     "stringAttribute": "string",
- *     "numberAttribute": 1,
- *     "dateAttribute": "2020-02-26T09:41:57Z",
- *     "booleanAttribute": true
+ *   definitionId: <String; event definition identifier, e.g. "eventDefinitionId">,
+ *   properties: <Object; map of event properties. Each property can be one of the following types: String, Number, Date (in ISO8601 UTC format), Boolean, or List (array of objects with key-value pairs where values can be String, Number, Date, or Boolean). You can provide any combination of these types based on your needs> {
+ *     "someStringAttribute": "value",
+ *     "someNumberAttribute": 123,
+ *     "someDateAttribute": "2020-02-26T09:41:57Z",
+ *     "someBooleanAttribute": true,
+ *     "someListAttribute": [{"key1": "stringValue", "key2": 456}, {"key1": "anotherString", "key2": true}] // List is an array of objects where each object contains key-value pairs. Values can be String, Number, Date (in ISO8601 UTC format), or Boolean
  *   }
  * }
- * @param {Function} successCallback will be called upon completion
- * @param {Function} errorCallback will be called on error, you have to handle error and do retries yourself
+ * @param {Function} successCallback. Will be called upon completion.
+ * @param {Function} errorCallback. Will be called on error, you have to handle error and do retries yourself.
  */
 MobileMessagingCordova.prototype.submitEventImmediately = function (eventData, successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, 'MobileMessagingCordova', 'submitEventImmediately', [eventData]);
@@ -746,8 +789,8 @@ MobileMessagingCordova.prototype.registerForAndroidRemoteNotifications = functio
 /**
  * Updates JWT used for user data fetching and personalization.
  * @name setJwt
- * @param {String} jwt - JWT token in a predefined format
- * @param {Function} errorCallback will be called on error
+ * @param {String} jwt. JWT token in a predefined format.
+ * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.setUserDataJwt = function (jwt, errorCallback) {
     cordova.exec(function () {}, errorCallback, 'MobileMessagingCordova', 'setUserDataJwt', [jwt]);
