@@ -22,6 +22,17 @@ const sourceDirs = [
   'tests',         // Tests
 ];
 
+// Patterns to ignore (from .gitignore)
+const ignoredPatterns = [
+  'node_modules',
+  'plugins',
+  'platforms',
+  '.idea',
+  'test_results',
+  'package-lock.json',
+  'google-services.json'
+];
+
 function makeHeader(fileName) {
   return `//
 //  ${fileName}
@@ -35,6 +46,10 @@ function makeHeader(fileName) {
 
 function hasLicensedUnder(content) {
   return content.toLowerCase().includes('licensed under');
+}
+
+function shouldIgnore(filePath) {
+  return ignoredPatterns.some(pattern => filePath.includes(pattern));
 }
 
 function processFile(filePath) {
@@ -100,6 +115,12 @@ function walk(dir) {
   }
   fs.readdirSync(dir).forEach(file => {
     const fullPath = path.join(dir, file);
+
+    // Skip ignored paths
+    if (shouldIgnore(fullPath)) {
+      return;
+    }
+
     try {
       if (fs.statSync(fullPath).isDirectory()) {
         walk(fullPath);
@@ -114,5 +135,3 @@ function walk(dir) {
 
 // Run for all source directories
 sourceDirs.forEach(dir => walk(dir));
-
-console.log('✅ Copyright header addition/replacement complete.');
