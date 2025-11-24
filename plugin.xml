@@ -58,9 +58,9 @@
 
 		<podspec>
             <pods use-frameworks="true">
-                <pod name="MobileMessaging" spec="14.0.0" />
-                <pod name="MobileMessaging/InAppChat" spec="14.0.0" />
-                <pod name="MobileMessaging/Inbox" spec="14.0.0" />
+                <pod name="MobileMessaging" spec="14.0.1" />
+                <pod name="MobileMessaging/InAppChat" spec="14.0.1" />
+                <pod name="MobileMessaging/Inbox" spec="14.0.1" />
             </pods>
 		</podspec>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />

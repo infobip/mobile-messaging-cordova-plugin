@@ -1102,21 +1102,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private InAppChatErrorsHandler createErrorsHandler(CallbackContext callbackContext) {
         return new InAppChatErrorsHandler() {
             @Override
-            public void handlerError(@NonNull String error) {
-                // Deprecated method
-            }
-
-            @Override
-            public void handlerWidgetError(@NonNull String error) {
-                // Deprecated method
-            }
-
-            @Override
-            public void handlerNoInternetConnectionError(boolean hasConnection) {
-                // Deprecated method
-            }
-
-            @Override
             public boolean handleError(@NonNull InAppChatException exception) {
                 try {
                     if (callbackContext != null) {
