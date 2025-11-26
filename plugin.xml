@@ -58,9 +58,9 @@
 
 		<podspec>
             <pods use-frameworks="true">
-                <pod name="MobileMessaging" spec="14.0.1" />
-                <pod name="MobileMessaging/InAppChat" spec="14.0.1" />
-                <pod name="MobileMessaging/Inbox" spec="14.0.1" />
+                <pod name="MobileMessaging" spec="14.1.1" />
+                <pod name="MobileMessaging/InAppChat" spec="14.1.1" />
+                <pod name="MobileMessaging/Inbox" spec="14.1.1" />
             </pods>
 		</podspec>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
@@ -88,8 +88,8 @@
 		</config-file>
 
 		<framework src="libs/android/mobile-messaging-aar.gradle" custom="true" type="gradleReference" />
-		<framework src="com.google.android.material:material:1.12.0"/>
-		<framework src="androidx.exifinterface:exifinterface:1.3.3"/>
+		<framework src="com.google.android.material:material:1.13.0"/>
+		<framework src="androidx.exifinterface:exifinterface:1.4.1"/>
 		<framework src="androidx.core:core-ktx:1.16.0"/>
 		<framework src="androidx.lifecycle:lifecycle-runtime-ktx:2.9.3"/>
 		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>

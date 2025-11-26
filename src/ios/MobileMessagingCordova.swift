@@ -730,7 +730,7 @@ extension MMInbox {
         var result = [String: Any]()
         result["countTotal"] = countTotal
         result["countUnread"] = countUnread
-        result["messages"] = messages.map { $0.dictionary() }
+        result["messages"] = messages.map { $0.dictionaryRepresentation }
         result["countTotalFiltered"] = countTotalFiltered
         result["countUnreadFiltered"] = countUnreadFiltered
         return result
