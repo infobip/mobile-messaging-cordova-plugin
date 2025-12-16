@@ -49,8 +49,8 @@ android {
 // apply plugin: 'com.huawei.agconnect'
 
 dependencies {
-    def mmHmsVersion = '8.6.7'
-    def mmFcmVersion = '14.7.9'
+    def mmHmsVersion = '8.7.2'
+    def mmFcmVersion = '14.9.2'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
 

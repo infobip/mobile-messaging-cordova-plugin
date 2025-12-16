@@ -58,12 +58,13 @@
 
 		<podspec>
             <pods use-frameworks="true">
-                <pod name="MobileMessaging" spec="14.1.1" />
-                <pod name="MobileMessaging/InAppChat" spec="14.1.1" />
-                <pod name="MobileMessaging/Inbox" spec="14.1.1" />
+                <pod name="MobileMessaging" spec="14.2.0" />
+                <pod name="MobileMessaging/InAppChat" spec="14.2.0" />
+                <pod name="MobileMessaging/Inbox" spec="14.2.0" />
             </pods>
 		</podspec>
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
+		<source-file src="src/ios/InfobipMobileMessagingCordovaLogger.swift" />
 	</platform>
 
 	<platform name="android">
@@ -94,6 +95,8 @@
 		<framework src="androidx.lifecycle:lifecycle-runtime-ktx:2.9.3"/>
 		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
 		<source-file src="src/android/ChatCustomization.java" target-dir="src/org/apache/cordova/plugin"/>
+		<source-file src="src/android/CordovaLogger.java" target-dir="src/org/apache/cordova/plugin"/>
+		<source-file src="src/android/CordovaLogWriter.java" target-dir="src/org/apache/cordova/plugin"/>
 	</platform>
 
 </plugin>

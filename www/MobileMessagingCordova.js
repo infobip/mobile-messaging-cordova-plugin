@@ -160,6 +160,10 @@ MobileMessagingCordova.prototype.init = function (config, callback, onInitError)
 
     config.cordovaPluginVersion = cordova.require("cordova/plugin_list").metadata["com-infobip-plugins-mobilemessaging"];
 
+    if (config.loggingEnabled === true) {
+        this._subscribePlatformNativeLogs();
+    }
+
     if (!config.applicationCode) {
         console.error('No application code provided');
         _onInitErrorHandler('No application code provided');
@@ -169,6 +173,28 @@ MobileMessagingCordova.prototype.init = function (config, callback, onInitError)
     cordova.exec(execEventHandlerIfExists, function () {
     }, 'MobileMessagingCordova', 'registerReceiver', [supportedEvents]);
     cordova.exec(_successCallback, _onInitErrorHandler, 'MobileMessagingCordova', 'init', [config]);
+};
+
+/**
+ * Sets up persistent platform native logs subscription.
+ * This callback will remain active and receive events continuously from the native side.
+ * @private
+ */
+MobileMessagingCordova.prototype._subscribePlatformNativeLogs = function() {
+    cordova.exec(
+        function onEventFromNative(event) {
+            // This callback will be called multiple times for each debug event
+            if (event && event.internalEventId === 'internal.platformNativeLogSent') {
+                console.log(event.message);
+            }
+        },
+        function errorHandler(e) {
+            console.error('Error in platform native logs subscription: ' + e);
+        },
+        'MobileMessagingCordova',
+        'enablePlatformNativeLogging',
+        [] 
+    );
 };
 
 /**
@@ -355,7 +381,7 @@ MobileMessagingCordova.prototype.setInboxMessagesSeen = function (externalUserId
  * });
  * ```
  *
- * > ⚠️ This callback may be invoked multiple times during the widget's lifecycle 
+ * > ⚠️ This callback may be invoked multiple times during the widget's lifecycle
  * (e.g., due to screen orientation changes or network reconnection).
  * It is important to return a **fresh and valid JWT** each time.
  *

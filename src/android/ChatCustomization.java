@@ -17,9 +17,10 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import org.apache.cordova.plugin.CordovaLogger;
 import androidx.annotation.NonNull;
 
 import org.infobip.mobile.messaging.MobileMessaging;
@@ -41,6 +42,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import static org.apache.cordova.plugin.MobileMessagingCordova.TAG;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -284,7 +288,7 @@ public class ChatCustomization {
         try {
             result = Integer.valueOf(Color.parseColor(color));
         } catch (IllegalArgumentException e) {
-            Log.e("CordovaMobileMessaging", "parseColor: " + color + e.getMessage());
+            CordovaLogger.e(TAG, "parseColor: " + color + e.getMessage());
         }
         return result;
     }
@@ -314,7 +318,7 @@ public class ChatCustomization {
             }
             return Integer.valueOf(resId);
         } catch (Exception e) {
-            Log.e("CordovaMobileMessaging", "getResId: " + resPath + e.getMessage());
+            CordovaLogger.e(TAG, "getResId: " + resPath + e.getMessage());
             return null;
         }
     }
@@ -336,7 +340,7 @@ public class ChatCustomization {
         InputStream inputStream = assetManager.open(assetPath);
         return Drawable.createFromStream(inputStream, null);
     } catch (IOException e) {
-        Log.e("CordovaMobileMessaging", "Failed to load drawable from asset: " + drawableUri, e);
+        CordovaLogger.e(TAG, "Failed to load drawable from asset: " + drawableUri, e);
         return null;
     }
 }

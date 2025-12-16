@@ -132,7 +132,7 @@ class MMConfiguration {
     }
 }
 
-fileprivate class MobileMessagingEventsManager {
+class MobileMessagingEventsManager {
     private var plugin: MobileMessagingCordova!
     private typealias CallbackId = String
     private typealias CordovaEventName = String
@@ -158,6 +158,7 @@ fileprivate class MobileMessagingEventsManager {
     
     struct InternalEvent {
         static let idKey = "internalEventId"
+        static let debugMessageReceived = "internal.platformNativeLogSent"
         static let chatJWTRequested = "inAppChat.internal.jwtRequested"
         static let chatExceptionReceived = "inAppChat.internal.exceptionReceived"
     }
@@ -678,7 +679,7 @@ fileprivate class MobileMessagingEventsManager {
         MobileMessaging.privacySettings.userDataPersistingDisabled = configuration.privacySettings[MMConfiguration.Keys.userDataPersistingDisabled].unwrap(orDefault: false)
         MobileMessaging.userAgent.pluginVersion = "cordova \(configuration.cordovaPluginVersion)"
         if (configuration.logging) {
-            MobileMessaging.logger = MMDefaultLogger()
+            MobileMessaging.logger = InfobipMobileMessagingCordovaLogger(commandDelegate)
         }
     }
 
@@ -937,7 +938,7 @@ private func createErrorPluginResult(description: String, errorCode: Any? = nil,
     return CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error)
 }
 
-fileprivate extension CDVCommandDelegate {
+extension CDVCommandDelegate {
     func send(errorText: String, for command: CDVInvokedUrlCommand) {
         let errorResult = createErrorPluginResult(description: errorText)
         self.send(errorResult, callbackId: command.callbackId)
@@ -1077,6 +1078,11 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         static let lock = NSLock()
     }
 
+    struct MMDebugMessageBridge {
+        static var callbackId: String?
+        static let lock = NSLock()
+    }
+    
     @objc func setChatJwtProvider(_ command: CDVInvokedUrlCommand) {
         ChatJwtBridge.lock.lock()
         defer { ChatJwtBridge.lock.unlock() }
@@ -1147,6 +1153,15 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         let enableHandler = (command.arguments[0] as? Bool) ?? false
         willUseChatExceptionHandler = enableHandler
         self.commandDelegate.sendSuccess(for: command)
+    }
+
+    @objc func enablePlatformNativeLogging(_ command: CDVInvokedUrlCommand) {
+        MMDebugMessageBridge.lock.lock()
+        defer { MMDebugMessageBridge.lock.unlock() }
+        MMDebugMessageBridge.callbackId = command.callbackId
+        let pluginResult = CDVPluginResult(status: .noResult)
+        pluginResult?.setKeepCallbackAs(true)
+        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
     }
     
     @objc public func didReceiveException(_ exception: MMChatException) -> MMChatExceptionDisplayMode {
