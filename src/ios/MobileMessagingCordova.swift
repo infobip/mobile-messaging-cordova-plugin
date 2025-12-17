@@ -1237,6 +1237,8 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         var chatInputSeparatorLineColor: String?
         var chatInputSeparatorLineVisible: Bool?
         var chatInputCursorColor: String?
+        var chatInputCharCounterDefaultColor: String?
+        var chatInputCharCounterAlertColor: String?
         var networkErrorTextColor: String?
         var networkErrorLabelBackgroundColor: String?
         var shouldHandleKeyboardAppearance: Bool?
@@ -1263,6 +1265,8 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
             setNotNil(&settings.errorLabelBackgroundColor, customization.networkErrorLabelBackgroundColor?.toColor())
             setNotNil(&settings.advancedSettings.mainPlaceholderTextColor, customization.chatInputHintTextColor?.toColor())
             setNotNil(&settings.shouldHandleKeyboardAppearance, customization.shouldHandleKeyboardAppearance)
+            setNotNil(&settings.advancedSettings.charCounterDefaultColor, customization.chatInputCharCounterDefaultColor?.toColor())
+            setNotNil(&settings.advancedSettings.charCounterAlertColor, customization.chatInputCharCounterAlertColor?.toColor())
         }
         
         func getImage(with name: String?) -> UIImage? {

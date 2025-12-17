@@ -94,7 +94,6 @@
 		<framework src="androidx.core:core-ktx:1.16.0"/>
 		<framework src="androidx.lifecycle:lifecycle-runtime-ktx:2.9.3"/>
 		<source-file src="src/android/MobileMessagingCordova.java" target-dir="src/org/apache/cordova/plugin"/>
-		<source-file src="src/android/ChatCustomization.java" target-dir="src/org/apache/cordova/plugin"/>
 		<source-file src="src/android/CordovaLogger.java" target-dir="src/org/apache/cordova/plugin"/>
 		<source-file src="src/android/CordovaLogWriter.java" target-dir="src/org/apache/cordova/plugin"/>
 	</platform>

@@ -14,3 +14,5 @@
 # IDEA
 /example/.idea/
 .idea/
+/CLAUDE.md
+/local_build.sh

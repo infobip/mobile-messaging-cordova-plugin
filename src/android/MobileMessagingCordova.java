@@ -18,10 +18,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.graphics.drawable.Drawable;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -76,19 +79,25 @@ import org.infobip.mobile.messaging.storage.SQLiteMessageStore;
 import org.infobip.mobile.messaging.util.Cryptor;
 import org.infobip.mobile.messaging.util.DeviceInformation;
 import org.infobip.mobile.messaging.util.PreferenceHelper;
+import org.infobip.mobile.messaging.util.StringUtils;
 import org.infobip.mobile.messaging.chat.InAppChat;
 import org.infobip.mobile.messaging.chat.core.JwtProvider;
 import org.infobip.mobile.messaging.chat.core.JwtProvider.JwtCallback;
 import org.infobip.mobile.messaging.chat.core.InAppChatException;
-import org.infobip.mobile.messaging.chat.view.InAppChatErrorsHandler;
 import org.infobip.mobile.messaging.chat.core.widget.LivechatWidgetLanguage;
 import org.infobip.mobile.messaging.chat.core.MultithreadStrategy;
 import org.infobip.mobile.messaging.chat.core.InAppChatEvent;
+import org.infobip.mobile.messaging.chat.view.InAppChatErrorsHandler;
+import org.infobip.mobile.messaging.chat.view.styles.InAppChatTheme;
+import org.infobip.mobile.messaging.chat.view.styles.PluginChatCustomization;
+import org.infobip.mobile.messaging.chat.view.styles.PluginChatCustomization.DrawableLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.*;
@@ -913,7 +922,6 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 .show();
     }
 
-
     private void showInAppChat(final JSONArray args, final CallbackContext callbackContext) {
         InAppChat.getInstance(cordova.getActivity().getApplication()).inAppChatScreen().show();
     }
@@ -1123,6 +1131,31 @@ public class MobileMessagingCordova extends CordovaPlugin {
         };
     }
 
+    private PluginChatCustomization.DrawableLoader createDrawableLoader() {
+        return new PluginChatCustomization.DrawableLoader() {
+
+            @Override
+            public @Nullable Drawable loadDrawable(@NonNull Context context, @Nullable String drawableSrc) {
+                if (StringUtils.isNotBlank(drawableSrc)) {
+                    return null;
+                }
+                try {
+                    String assetPath = drawableSrc;
+                    // If the path does not include a protocol, assume it's relative to assets/www/
+                    if (!drawableSrc.contains("://")) {
+                        assetPath = "www/" + drawableSrc;
+                    }
+                    AssetManager assetManager = context.getAssets();
+                    InputStream inputStream = assetManager.open(assetPath);
+                    return Drawable.createFromStream(inputStream, null);
+                } catch (IOException e) {
+                    CordovaLogger.e(TAG, "Failed to load drawable from asset: " + drawableSrc, e);
+                    return null;
+                }
+            }
+        };
+    }
+    
     private void setChatCustomization(JSONArray args, final CallbackContext callbackContext) {
         try {
             if (args.length() == 0 || args.isNull(0)) {
@@ -1131,19 +1164,18 @@ public class MobileMessagingCordova extends CordovaPlugin {
             }
 
             JSONObject jsonMap = args.getJSONObject(0);
-            ChatCustomization customization = ChatCustomization.resolve(jsonMap);
+            PluginChatCustomization customization = PluginChatCustomization.Companion.parseOrNull(jsonMap);
 
-            cordova.getActivity().runOnUiThread(() -> {
-                try {
-                    InAppChat inAppChat = InAppChat.getInstance(cordova.getActivity().getApplication());
-                    inAppChat.setTheme(customization.createTheme(cordova.getActivity().getApplication()));
-                    sendCallbackSuccess(callbackContext);
-                } catch (Exception e) {
-                    sendCallbackError(callbackContext, "Failed to apply chat customization: " + e.getMessage());
-                }
-            });
+            if (customization != null) {
+                cordova.getActivity().runOnUiThread(() -> {
+                    InAppChatTheme theme = customization.createTheme(cordova.getActivity().getApplication(), createDrawableLoader());
+                    InAppChat.getInstance(cordova.getActivity().getApplication()).setTheme(theme);
+                });
+            } else {
+                CordovaLogger.d(TAG, "Chat customization object is null or invalid.");
+            }
         } catch (Exception e) {
-            sendCallbackError(callbackContext, "Failed to parse customization data: " + e.getMessage());
+            sendCallbackError(callbackContext, "Failed to set chat customization: " + e.getMessage());
         }
     }
 
