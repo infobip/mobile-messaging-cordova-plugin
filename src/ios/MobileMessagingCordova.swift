@@ -154,6 +154,7 @@ class MobileMessagingEventsManager {
         "userUpdated": MMNotificationUserSynced,
         "deeplink": NSNotification.Name.CDVPluginHandleOpenURLWithAppSourceAndAnnotation.rawValue,
         "inAppChat.unreadMessageCounterUpdated": MMNotificationInAppChatUnreadMessagesCounterUpdated,
+        "inAppChat.availabilityUpdated": MMNotificationInAppChatAvailabilityUpdated,
     ]
     
     struct InternalEvent {
@@ -267,6 +268,10 @@ class MobileMessagingEventsManager {
             if let counter = notification.userInfo?[MMNotificationKeyInAppChatUnreadMessagesCounter] as? Int {
                 notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, counter])
             }
+        case MMNotificationInAppChatAvailabilityUpdated:
+            if let available = notification.userInfo?[MMNotificationInAppChatAvailabilityUpdated] as? Bool {
+                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, available])
+            }
         default: break
         }
 
@@ -286,6 +291,7 @@ class MobileMessagingEventsManager {
     private var eventsManager: MobileMessagingEventsManager?
     fileprivate var isStarted: Bool = false
     private var willUseChatExceptionHandler = false
+    private var isInAppChatAvailable = false
 
     override func pluginInitialize() {
         super.pluginInitialize()
@@ -687,6 +693,7 @@ class MobileMessagingEventsManager {
         var mobileMessaging = mobileMessaging
         if configuration.inAppChatEnabled {
             mobileMessaging = mobileMessaging.withInAppChat()
+            MobileMessaging.inAppChat?.delegate = self
         }
 
         if configuration.fullFeaturedInAppsEnabled {
@@ -1002,6 +1009,10 @@ class VariableJwtSupplier: NSObject, MMJwtSupplier {
 }
 
 extension MobileMessagingCordova: MMInAppChatDelegate {
+    func inAppChatIsEnabled(_ enabled: Bool) {
+        isInAppChatAvailable = enabled
+    }
+    
     func showChat(_ command: CDVInvokedUrlCommand) {
         MobileMessaging.inAppChat?.delegate = self
         var presentVCModally = false
@@ -1059,6 +1070,12 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
 
     func getMessageCounter(_ command: CDVInvokedUrlCommand) {
         let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.inAppChat?.getMessageCounter ?? 0)
+        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+    }
+
+    func isChatAvailable(_ command: CDVInvokedUrlCommand) {
+        let successResult = CDVPluginResult(
+            status: CDVCommandStatus_OK, messageAs: isInAppChatAvailable)
         self.commandDelegate?.send(successResult, callbackId: command.callbackId)
     }
 

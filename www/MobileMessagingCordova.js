@@ -6,7 +6,7 @@
 // Licensed under the Apache License, Version 2.0
 //
 
-var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized", "deeplink", "inAppChat.unreadMessageCounterUpdated"];
+var supportedEvents = ["messageReceived", "notificationTapped", "tokenReceived", "registrationUpdated", "actionTapped", "installationUpdated", "userUpdated", "personalized", "depersonalized", "deeplink", "inAppChat.unreadMessageCounterUpdated", "inAppChat.availabilityUpdated"];
 var eventHandlers = {};
 
 function execEventHandlerIfExists(parameters) {
@@ -193,7 +193,7 @@ MobileMessagingCordova.prototype._subscribePlatformNativeLogs = function() {
         },
         'MobileMessagingCordova',
         'enablePlatformNativeLogging',
-        [] 
+        []
     );
 };
 
@@ -210,6 +210,8 @@ MobileMessagingCordova.prototype._subscribePlatformNativeLogs = function() {
  *   - userUpdated
  *   - personalized
  *   - depersonalized
+ *   - inAppChat.unreadMessageCounterUpdated
+ *   - inAppChat.availabilityUpdated
  *
  * @name register
  * @param {String} eventName
@@ -776,6 +778,17 @@ MobileMessagingCordova.prototype.resetMessageCounter = function () {
 MobileMessagingCordova.prototype.getMessageCounter = function (resultCallback) {
     cordova.exec(resultCallback, function () {
     }, 'MobileMessagingCordova', 'getMessageCounter', []);
+};
+
+/**
+ * Checks if in-app chat is currently available.
+ *
+ * @name isChatAvailable
+ * @param {Function} resultCallback will be called upon completion with boolean availability value.
+ */
+MobileMessagingCordova.prototype.isChatAvailable = function (resultCallback) {
+    cordova.exec(resultCallback, function () {
+    }, 'MobileMessagingCordova', 'isChatAvailable', []);
 };
 
 /**

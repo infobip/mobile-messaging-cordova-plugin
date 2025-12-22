@@ -138,7 +138,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static final String FUNCTION_REGISTER_FOR_POST_NOTIFICATIONS = "registerForAndroidRemoteNotifications";
     private static final String FUNCTION_ENABLE_PLATFORM_NATIVE_LOGGING = "enablePlatformNativeLogging";
-    
+
     private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
     private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
     private static final String FUNCTION_MOBILE_INBOX_SET_SEEN = "setInboxMessagesSeen";
@@ -164,6 +164,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private static final String FUNCTION_INAPP_CHAT_SHOW = "showChat";
     private static final String FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER = "getMessageCounter";
+    private static final String FUNCTION_INAPP_CHAT_IS_AVAILABLE = "isChatAvailable";
     private static final String FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER = "resetMessageCounter";
     private static final String FUNCTION_INAPP_CHAT_SET_LANGUAGE = "setLanguage";
     private static final String FUNCTION_INAPP_CHAT_SEND_CONTEXTUAL_DATA = "sendContextualData";
@@ -174,6 +175,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_INAPP_CHAT_SET_EXCEPTION_HANDLER = "setChatExceptionHandler";
 
     private static final String EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED = "inAppChat.unreadMessageCounterUpdated";
+    private static final String EVENT_INAPP_CHAT_AVAILABILITY_UPDATED = "inAppChat.availabilityUpdated";
     private static final String EVENT_INAPP_CHAT_REQUEST_JWT = "inAppChat.internal.jwtRequested";
     private static final String EVENT_INAPP_CHAT_EXCEPTION_RECEIVED = "inAppChat.internal.exceptionReceived";
 
@@ -186,6 +188,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         put(Event.DEPERSONALIZED.getKey(), EVENT_DEPERSONALIZED);
         put(InteractiveEvent.NOTIFICATION_ACTION_TAPPED.getKey(), EVENT_NOTIFICATION_ACTION_TAPPED);
         put(InAppChatEvent.UNREAD_MESSAGES_COUNTER_UPDATED.getKey(), EVENT_INAPP_CHAT_UNREAD_MESSAGE_COUNTER_UPDATED);
+        put(InAppChatEvent.IN_APP_CHAT_AVAILABILITY_UPDATED.getKey(), EVENT_INAPP_CHAT_AVAILABILITY_UPDATED);
     }};
 
     private static final Map<String, String> messageBroadcastEventMap = new HashMap<String, String>() {{
@@ -245,6 +248,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 data = intent.getStringExtra(BroadcastParameter.EXTRA_INFOBIP_ID);
             } else if (InAppChatEvent.UNREAD_MESSAGES_COUNTER_UPDATED.getKey().equals(intent.getAction())) {
                 data = intent.getIntExtra(BroadcastParameter.EXTRA_UNREAD_CHAT_MESSAGES_COUNT, 0);
+            } else if (InAppChatEvent.IN_APP_CHAT_AVAILABILITY_UPDATED.getKey().equals(intent.getAction())) {
+                data = intent.getBooleanExtra(BroadcastParameter.EXTRA_IS_CHAT_AVAILABLE, false);
             }
 
             if (libraryEventReceiver != null) {
@@ -483,6 +488,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_INAPP_CHAT_GET_MESSAGE_COUNTER.equals(action)) {
             getMessageCounter(args, callbackContext);
+            return true;
+        } else if (FUNCTION_INAPP_CHAT_IS_AVAILABLE.equals(action)) {
+            isChatAvailable(args, callbackContext);
             return true;
         } else if (FUNCTION_INAPP_CHAT_RESET_MESSAGE_COUNTER.equals(action)) {
             resetMessageCounter(args, callbackContext);
@@ -932,6 +940,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
 
     private void resetMessageCounter(final JSONArray args, final CallbackContext callbackContext) {
         InAppChat.getInstance(cordova.getActivity().getApplication()).resetMessageCounter();
+    }
+
+    private void isChatAvailable(final JSONArray args, final CallbackContext callbackContext) {
+        sendCallbackWithResult(callbackContext, new PluginResult(PluginResult.Status.OK, InAppChat.getInstance(cordova.getActivity().getApplication()).isChatAvailable()));
     }
 
     private void setLanguage(final JSONArray args, final CallbackContext callbackContext) {

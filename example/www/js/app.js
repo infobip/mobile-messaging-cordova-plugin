@@ -108,6 +108,10 @@
             MobileMessaging.register("deeplink", function(deeplinkPath) {
                 _this.handleDeeplinkEvent(deeplinkPath);
             });
+
+            MobileMessaging.register("inAppChat.availabilityUpdated", function(isAvailable) {
+                console.log(`InAppChat availability updated: ${isAvailable}`);
+            });
         },
         handleDeeplinkEvent: function (deeplink) {
             if (!deeplink) {
