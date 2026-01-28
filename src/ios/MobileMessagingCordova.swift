@@ -1259,6 +1259,16 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         var networkErrorTextColor: String?
         var networkErrorLabelBackgroundColor: String?
         var shouldHandleKeyboardAppearance: Bool?
+        var chatBannerErrorTextColor: String?
+        var chatBannerErrorBackgroundColor: String?
+        var chatBannerErrorIcon: String?
+        var chatBannerErrorIconTint: String?
+        var chatFullScreenErrorIcon: String?
+        var chatFullScreenErrorTitleText: String?
+        var chatFullScreenErrorDescriptionText: String?
+        var chatFullScreenErrorTitleTextColor: String?
+        var chatFullScreenErrorDescriptionTextColor: String?
+        var chatFullScreenErrorBackgroundColor: String?
     }
     
     class CustomizationUtils {
@@ -1278,12 +1288,23 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
             setNotNil(&settings.chatInputSeparatorLineColor, customization.chatInputSeparatorLineColor?.toColor())
             setNotNil(&settings.advancedSettings.isLineSeparatorHidden, customization.chatInputSeparatorLineVisible)
             setNotNil(&settings.advancedSettings.typingIndicatorColor, customization.chatInputCursorColor?.toColor())
-            setNotNil(&settings.errorLabelTextColor, customization.networkErrorTextColor?.toColor())
-            setNotNil(&settings.errorLabelBackgroundColor, customization.networkErrorLabelBackgroundColor?.toColor())
             setNotNil(&settings.advancedSettings.mainPlaceholderTextColor, customization.chatInputHintTextColor?.toColor())
             setNotNil(&settings.shouldHandleKeyboardAppearance, customization.shouldHandleKeyboardAppearance)
             setNotNil(&settings.advancedSettings.charCounterDefaultColor, customization.chatInputCharCounterDefaultColor?.toColor())
             setNotNil(&settings.advancedSettings.charCounterAlertColor, customization.chatInputCharCounterAlertColor?.toColor())
+            
+            setNotNil(&settings.networkErrorLabelTextColor, customization.networkErrorTextColor?.toColor())
+            setNotNil(&settings.networkErrorLabelBackgroundColor, customization.networkErrorLabelBackgroundColor?.toColor())
+            setNotNil(&settings.errorLabelTextColor, customization.chatBannerErrorTextColor?.toColor())
+            setNotNil(&settings.errorLabelBackgroundColor, customization.chatBannerErrorBackgroundColor?.toColor())
+            setNotNil(&settings.errorBannerIcon, getImage(with: customization.chatBannerErrorIcon))
+            setNotNil(&settings.errorBannerIconTint, customization.chatBannerErrorIconTint?.toColor())
+            setNotNil(&settings.fullScreenErrorImage, getImage(with: customization.chatFullScreenErrorIcon))
+            setNotNil(&settings.fullScreenErrorTitleText, customization.chatFullScreenErrorTitleText)
+            setNotNil(&settings.fullScreenErrorSubtitleText, customization.chatFullScreenErrorDescriptionText)
+            setNotNil(&settings.fullScreenErrorTitleTextColor, customization.chatFullScreenErrorTitleTextColor?.toColor())
+            setNotNil(&settings.fullScreenErrorSubtitleTextColor, customization.chatFullScreenErrorDescriptionTextColor?.toColor())
+            setNotNil(&settings.fullScreenErrorBackgroundColor, customization.chatFullScreenErrorBackgroundColor?.toColor())
         }
         
         func getImage(with name: String?) -> UIImage? {
