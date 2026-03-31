@@ -19,7 +19,6 @@ For iOS project:
 - Cocoapods 1.14.x
 - Minimum deployment target 15.0
 - [cordova-ios@7.x.x](https://cordova.apache.org/announcements/2023/07/10/cordova-ios-7.0.0.html)
-- Ruby (2.7.x - 3.1.x)
 
 For Android project: 
 - Android Studio
@@ -58,9 +57,26 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
     </details>
 3. Configure platforms
 
-    1. **iOS**: [Integrate Notification Service Extension](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Delivery-improvements-and-rich-content-notifications) into your app in order to obtain:
-        - more accurate processing of messages and delivery stats
-        - support of rich notifications on the lock screen
+    1. **iOS**:
+        1. Add `IOS_EXTENSION_APP_GROUP` variable to the plugin section and required preferences to your `config.xml`:
+            ```xml
+               <plugin name="com-infobip-plugins-mobilemessaging" spec="<current plugin version>">
+                  <variable name="IOS_EXTENSION_APP_GROUP" value="group.your.bundle.id" />
+               </plugin>
+               <platform name="ios">
+                  <preference name="SwiftVersion" value="5.0" />
+                  <preference name="deployment-target" value="15.0" />
+                  ...
+               </platform>
+            ```
+            - `SwiftVersion` and `deployment-target` are required for the plugin to build correctly
+            - `IOS_EXTENSION_APP_GROUP` enables automatic [Notification Service Extension](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Delivery-improvements-and-rich-content-notifications) integration, providing more accurate delivery stats and rich notifications on the lock screen
+        2. Run `cordova platform add ios` (for new projects) or `cordova prepare ios` (if the iOS platform is already added). This will automatically create the Notification Service Extension target if `IOS_EXTENSION_APP_GROUP` is set.
+        3. Setup signing for **both** the main app target and the `MobileMessagingNotificationServiceExtension` target (select your Team and configure provisioning profiles).
+        4. After signing is configured, you need to build the app:
+            ```bash
+            $ cordova build ios
+            ```
     2. **Android**: 
        1. Get the Firebase configuration file (google-services.json) as described in <a href="https://firebase.google.com/docs/android/setup#add-config-file" target="_blank">`Firebase documentation`</a> and put it to the root application folder.
        2. Add following to your config.xml
@@ -352,6 +368,48 @@ MobileMessaging.init({
     }
 );
 ```
+
+## Troubleshooting
+
+### iOS: "Could not find *-Info.plist file, or config.xml file"
+
+This error can occur during `cordova build ios` or `cordova prepare ios` when the Notification Service Extension target is present. It is caused by the Xcode project's build configurations being reordered, which confuses Cordova's project file parser.
+
+**To fix**, remove and re-add the iOS platform:
+```bash
+$ cordova platform remove ios
+$ cordova platform add ios
+```
+Then configure signing in Xcode and rebuild.
+
+If the issue persists, try a full clean reinstall:
+```bash
+$ rm -rf platforms plugins node_modules
+$ npm install
+$ cordova plugin add com-infobip-plugins-mobilemessaging
+$ cordova platform add ios
+```
+
+As a last resort, you can manually fix the ordering in `platforms/ios/YourApp.xcodeproj/project.pbxproj`. Open the file in a text editor, find the `/* Begin XCBuildConfiguration section */`, and move the block that contains your app's `INFOPLIST_FILE` (e.g. `INFOPLIST_FILE = "YourApp/YourApp-Info.plist"`) **above** the block that contains the extension's `INFOPLIST_FILE` (e.g. `INFOPLIST_FILE = NotificationServiceExtension/MobileMessagingNotificationServiceExtension.plist`). Each block starts with a UUID and ends with `};`.
+
+### iOS: "SWIFT_VERSION '' is unsupported"
+
+Make sure you have added the `SwiftVersion` preference inside the `<platform name="ios">` section of your `config.xml`:
+```xml
+<platform name="ios">
+    <preference name="SwiftVersion" value="5.0" />
+</platform>
+```
+
+### iOS: Extension target not created
+
+Ensure `IOS_EXTENSION_APP_GROUP` is set in your `config.xml` inside the plugin section:
+```xml
+<plugin name="com-infobip-plugins-mobilemessaging" spec="<current plugin version>">
+    <variable name="IOS_EXTENSION_APP_GROUP" value="group.your.bundle.id" />
+</plugin>
+```
+Then run `cordova prepare ios` — the extension is created during the prepare step, not during plugin installation.
 
 #### More details on SDK features and FAQ you can find on [Wiki](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki)
 

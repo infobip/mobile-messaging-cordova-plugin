@@ -8,9 +8,8 @@
 	<keywords>Infobip,push,cordova</keywords>
 	<engines>
         <engine name="cordova-android" version=">=4.1.0"/>
-        <engine name="cordova-ios" version=">=4.3.0"/>
+        <engine name="cordova-ios" version=">=7.0.0"/>
     </engines>
-	<dependency id="cordova-plugin-add-swift-support"/>
 	<dependency id="cordova-custom-config"/>
 
 	<js-module name="mobileMessaging" src="www/MobileMessagingCordova.js">
@@ -20,14 +19,14 @@
 	<hook type="before_build" src="scripts/hms_fix_dependencies.js"/>
 	<hook type="after_plugin_add" src="scripts/installDependencies.js"/>
 	<hook type="after_prepare" src="scripts/android_fix_google_app_id.js"/>
-	<hook type="before_prepare" src="scripts/integrate_notification_extension.js"/>
+	<hook type="after_prepare" src="scripts/integrate_notification_extension.js"/>
 
 	<preference name="ANDROID_SUPPORT_VER_OVERRIDE" default="false" />
 	<preference name="ANDROID_GMS_VER_OVERRIDE" default="false" />
 	<preference name="ANDROID_FIREBASE_VER_OVERRIDE" default="false" />
 
 	<platform name="ios">
-		<config-file parent="UIBackgroundModes" target="*Info.plist">
+		<config-file parent="UIBackgroundModes" target="*-Info.plist">
             <array>
                 <string>remote-notification</string>
             </array>
@@ -57,12 +56,14 @@
 		</config-file>
 
 		<podspec>
+
             <pods use-frameworks="true">
-                <pod name="MobileMessaging" spec="14.4.3" />
-                <pod name="MobileMessaging/InAppChat" spec="14.4.3" />
-                <pod name="MobileMessaging/Inbox" spec="14.4.3" />
+                <pod name="MobileMessaging" spec="15.0.0" />
+                <pod name="MobileMessaging/InAppChat" spec="15.0.0" />
+                <pod name="MobileMessaging/Inbox" spec="15.0.0" />
             </pods>
 		</podspec>
+		<header-file src="src/ios/MobileMessagingCordova-Bridging-Header.h" type="BridgingHeader" />
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 		<source-file src="src/ios/InfobipMobileMessagingCordovaLogger.swift" />
 	</platform>
