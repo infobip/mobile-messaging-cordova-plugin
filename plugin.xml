@@ -58,9 +58,9 @@
 		<podspec>
 
             <pods use-frameworks="true">
-                <pod name="MobileMessaging" spec="15.0.0" />
-                <pod name="MobileMessaging/InAppChat" spec="15.0.0" />
-                <pod name="MobileMessaging/Inbox" spec="15.0.0" />
+                <pod name="MobileMessaging" spec="15.5.0" />
+                <pod name="MobileMessaging/InAppChat" spec="15.5.0" />
+                <pod name="MobileMessaging/Inbox" spec="15.5.0" />
             </pods>
 		</podspec>
 		<header-file src="src/ios/MobileMessagingCordova-Bridging-Header.h" type="BridgingHeader" />

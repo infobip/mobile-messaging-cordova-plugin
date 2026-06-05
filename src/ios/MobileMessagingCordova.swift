@@ -488,7 +488,8 @@ class MobileMessagingEventsManager {
         let ua = uaDict == nil ? nil : MMUserAttributes(dictRepresentation: uaDict!)
         let forceDepersonalize = context["forceDepersonalize"] as? Bool ?? false
         let keepAsLead = context["keepAsLead"] as? Bool ?? false
-        MobileMessaging.personalize(forceDepersonalize: forceDepersonalize, keepAsLead: keepAsLead, userIdentity: ui, userAttributes: ua) { (error) in
+        let setDeviceAsPrimary = context["setDeviceAsPrimary"] as? Bool ?? false
+        MobileMessaging.personalize(forceDepersonalize: forceDepersonalize, keepAsLead: keepAsLead, setDeviceAsPrimary: setDeviceAsPrimary, userIdentity: ui, userAttributes: ua) { (error) in
             if let error = error {
                 self.commandDelegate?.send(error: error, for: command)
             } else {

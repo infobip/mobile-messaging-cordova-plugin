@@ -567,7 +567,8 @@ MobileMessagingCordova.prototype.setInstallationAsPrimary = function (pushRegist
  *     lastName: <String; user's last name, e.g. "Smith">
  *   },
  *   forceDepersonalize: <Boolean; if true, depersonalize previous user data before personalizing with new data. Default: false>,
- *   keepAsLead: <Boolean; set to true if you want to keep the installation as a lead when personalizing it. Default: false>
+ *   keepAsLead: <Boolean; set to true if you want to keep the installation as a lead when personalizing it. Default: false>,
+ *   setDeviceAsPrimary: <Boolean; set to true to mark this installation as primary for the personalized user. Default: false>
  * }
  * @param {Function} callback. Will be called on success.
  * @param {Function} errorCallback. Will be called on error.
