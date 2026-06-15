@@ -143,6 +143,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
     private static final String FUNCTION_MOBILE_INBOX_SET_SEEN = "setInboxMessagesSeen";
     private static final String FUNCTION_SET_USER_DATA_JWT = "setUserDataJwt";
+    private static final String FUNCTION_CLEANUP = "cleanup";
 
     public static final String EVENT_KEY_ID = "internalEventId";
     private static final String EVENT_TOKEN_RECEIVED = "tokenReceived";
@@ -531,6 +532,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
         } else if (FUNCTION_SET_USER_DATA_JWT.equals(action)) {
             setJwtSupplier(args, callbackContext);
             return true;
+        } else if (FUNCTION_CLEANUP.equals(action)) {
+            cleanup(callbackContext);
+            return true;
         } else if (FUNCTION_ENABLE_PLATFORM_NATIVE_LOGGING.equals(action)) {
             togglePlatformNativeLogging(true, callbackContext);
             return true;
@@ -827,6 +831,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     @Override
                     public void onResult(Result<SuccessPending, MobileMessagingError> result) {
                         if (result.isSuccess()) {
+                            mobileMessaging().setJwtSupplier(() -> null);
                             sendCallbackSuccess(callbackContext, depersonalizeStates.get(result.getData()));
                         } else {
                             sendCallbackError(callbackContext, result.getError().getMessage());
@@ -1638,12 +1643,27 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return notificationActions;
     }
 
+    private void cleanup(final CallbackContext callbackContext) {
+        runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                mobileMessaging().setJwtSupplier(() -> null);
+                mobileMessaging().cleanup();
+                sendCallbackSuccess(callbackContext, "success");
+            }
+        });
+    }
+
     private void setJwtSupplier(final JSONArray args, final CallbackContext callbackContext) {
         try {
             String jwt = resolveStringParameter(args);
-            mobileMessaging().setJwtSupplier(() -> jwt);
+            if (jwt == null || jwt.isEmpty()) {
+                mobileMessaging().setJwtSupplier(null);
+            } else {
+                mobileMessaging().setJwtSupplier(() -> jwt);
+            }
         } catch (Exception e) {
-            mobileMessaging().setJwtSupplier(() -> null);
+            mobileMessaging().setJwtSupplier(null);
         }
     }
 

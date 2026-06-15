@@ -36,7 +36,7 @@ class MMConfiguration {
         static let trustedDomains = "trustedDomains"
     }
 
-    static let ignoreKeysWhenComparing: [String] = [Keys.applicationCode, Keys.cordovaPluginVersion]
+    static let ignoreKeysWhenComparing: [String] = [Keys.applicationCode, Keys.cordovaPluginVersion, Keys.userDataJwt]
 
     let inAppChatEnabled: Bool
     let fullFeaturedInAppsEnabled: Bool
@@ -113,7 +113,8 @@ class MMConfiguration {
     }
 
     static func saveConfigToDefaults(rawConfig: [String: AnyObject]) {
-        UserDefaults.standard.set(rawConfig, forKey: cordovaConfigKey)
+        let serializedConfig = serializedConfig(from: rawConfig)
+        UserDefaults.standard.set(serializedConfig, forKey: cordovaConfigKey)
     }
 
     static func getConfigFromDefaults() -> [String: AnyObject]? {
@@ -129,6 +130,20 @@ class MMConfiguration {
             return (userConfigDict as NSDictionary) != (cachedConfigDict as NSDictionary)
         }
         return false
+    }
+    
+    private static func serializedConfig(from rawConfig: [String: AnyObject]) -> [String: AnyObject] {
+        var rawConfig = rawConfig
+        rawConfig.removeValue(forKey: MMConfiguration.Keys.applicationCode)
+        rawConfig.removeValue(forKey: MMConfiguration.Keys.userDataJwt)
+        
+        let serializableConfig = rawConfig.compactMapValues { value -> AnyObject? in
+            if value is NSString || value is NSNumber || value is NSArray || value is NSDictionary || value is NSDate || value is NSData {
+                return value
+            }
+            return nil
+        }
+        return serializableConfig
     }
 }
 
@@ -500,12 +515,15 @@ class MobileMessagingEventsManager {
 
     func depersonalize(_ command: CDVInvokedUrlCommand) {
         MobileMessaging.depersonalize(completion: { (status, error) in
-            if (status == MMSuccessPending.pending) {
-                self.commandDelegate?.send(message: "pending", for: command)
-            } else if let error = error {
+            if let error = error {
                 self.commandDelegate?.send(error: error, for: command)
             } else {
-                self.commandDelegate?.send(message: "success", for: command)
+                MobileMessaging.jwtSupplier = nil
+                if (status == MMSuccessPending.pending) {
+                    self.commandDelegate?.send(message: "pending", for: command)
+                } else {
+                    self.commandDelegate?.send(message: "success", for: command)
+                }
             }
         })
     }
@@ -539,9 +557,20 @@ class MobileMessagingEventsManager {
         self.commandDelegate?.send(errorText: "Not supported", for: command)
     }
 
+    func cleanup(_ command: CDVInvokedUrlCommand) {
+        MobileMessaging.jwtSupplier = nil
+        MMConfiguration.saveConfigToDefaults(rawConfig: [:])
+        MobileMessaging.cleanUpAndStop(false, completion: {
+            self.commandDelegate?.send(message: "success", for: command)
+        })
+    }
+
     func setUserDataJwt(_ command: CDVInvokedUrlCommand) {
-        let jwtString = command.arguments.first as? String
-        MobileMessaging.jwtSupplier = VariableJwtSupplier(jwt: jwtString)
+        if let jwtString = command.arguments.first as? String, !jwtString.isEmpty {
+            MobileMessaging.jwtSupplier = VariableJwtSupplier(jwt: jwtString)
+        } else {
+            MobileMessaging.jwtSupplier = nil
+        }
     }
 
     //MARK: MessageStorage
@@ -1279,7 +1308,7 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
             setNotNil(&settings.navBarItemsTintColor, customization.chatToolbar?.navigationIconTint?.toColor())
             setNotNil(&settings.title, customization.chatToolbar?.titleText)
             setNotNil(&settings.attachmentPreviewBarsColor, customization.attachmentPreviewToolbar?.backgroundColor?.toColor())
-            setNotNil(&settings.attachmentPreviewItemsColor, customization.attachmentPreviewToolbar?.navigationIconTint?.toColor())            
+            setNotNil(&settings.attachmentPreviewItemsColor, customization.attachmentPreviewToolbar?.navigationIconTint?.toColor())
             setNotNil(&settings.backgroundColor, customization.chatBackgroundColor?.toColor())
             setNotNil(&settings.advancedSettings.mainTextColor, customization.chatInputTextColor?.toColor())
             setNotNil(&settings.advancedSettings.textInputBackgroundColor, customization.chatInputBackgroundColor?.toColor())

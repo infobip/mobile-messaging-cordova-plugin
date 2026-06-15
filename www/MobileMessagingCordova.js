@@ -837,6 +837,19 @@ MobileMessagingCordova.prototype.setUserDataJwt = function (jwt, errorCallback) 
 }
 
 /**
+ * Cleans up the SDK, removing all data and stopping all services.
+ * After cleanup, you should call init() again with a new configuration to restart the SDK.
+ * JWT supplier is also cleared during cleanup.
+ *
+ * @name cleanup
+ * @param {Function} callback will be called on success
+ * @param {Function} errorCallback will be called on error
+ */
+MobileMessagingCordova.prototype.cleanup = function (callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'cleanup', []);
+}
+
+/**
  * Sets chat customization.
  *
  * @name setChatCustomization
