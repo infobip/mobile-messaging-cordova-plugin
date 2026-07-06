@@ -16,3 +16,8 @@
 .idea/
 /CLAUDE.md
 /local_build.sh
+
+# SPM
+.build/
+.swiftpm/
+Package.resolved

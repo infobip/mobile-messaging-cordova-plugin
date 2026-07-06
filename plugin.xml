@@ -8,7 +8,7 @@
 	<keywords>Infobip,push,cordova</keywords>
 	<engines>
         <engine name="cordova-android" version=">=4.1.0"/>
-        <engine name="cordova-ios" version=">=7.0.0"/>
+        <engine name="cordova-ios" version=">=7.1.1"/>
     </engines>
 	<dependency id="cordova-custom-config"/>
 
@@ -25,7 +25,7 @@
 	<preference name="ANDROID_GMS_VER_OVERRIDE" default="false" />
 	<preference name="ANDROID_FIREBASE_VER_OVERRIDE" default="false" />
 
-	<platform name="ios">
+	<platform name="ios" package="swift">
 		<config-file parent="UIBackgroundModes" target="*-Info.plist">
             <array>
                 <string>remote-notification</string>
@@ -56,16 +56,17 @@
 		</config-file>
 
 		<podspec>
-
             <pods use-frameworks="true">
-                <pod name="MobileMessaging" spec="15.5.0" />
-                <pod name="MobileMessaging/InAppChat" spec="15.5.0" />
-                <pod name="MobileMessaging/Inbox" spec="15.5.0" />
+                <pod name="MobileMessaging" spec="15.5.2" nospm="true"/>
+                <pod name="MobileMessaging/InAppChat" spec="15.5.2" nospm="true"/>
+                <pod name="MobileMessaging/Inbox" spec="15.5.2" nospm="true"/>
             </pods>
 		</podspec>
+
 		<header-file src="src/ios/MobileMessagingCordova-Bridging-Header.h" type="BridgingHeader" />
 		<source-file src="src/ios/MobileMessagingCordova.swift" />
 		<source-file src="src/ios/InfobipMobileMessagingCordovaLogger.swift" />
+		<source-file src="src/ios/MobileMessagingPluginApplicationDelegate.swift" />
 	</platform>
 
 	<platform name="android">

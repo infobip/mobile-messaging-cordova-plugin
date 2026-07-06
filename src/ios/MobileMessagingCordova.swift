@@ -6,10 +6,20 @@
 // Licensed under the Apache License, Version 2.0
 //
 
+#if canImport(Cordova)
+import Cordova
+#endif
 import Foundation
 import UIKit
-import MobileMessaging
 import Dispatch
+import MobileMessaging
+
+#if canImport(MobileMessagingInbox)
+import MobileMessagingInbox
+#endif
+#if canImport(InAppChat)
+import InAppChat
+#endif
 
 class MMConfiguration {
     static let cordovaConfigKey = "com.mobile-messaging.corodovaPluginConfiguration"
@@ -236,28 +246,28 @@ class MobileMessagingEventsManager {
     }
 
     private func handleMMNotification(cordovaEventName: String, callbackId: String, notification: Notification) {
-        var notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+        var notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName])
         switch notification.name.rawValue {
         case NSNotification.Name.CDVPluginHandleOpenURLWithAppSourceAndAnnotation.rawValue:
             if let dictionary = notification.object as? [String: Any],
                 let url = dictionary["url"] as? URL {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, url.absoluteString])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, url.absoluteString])
             }
         case MMNotificationMessageReceived:
             if let message = notification.userInfo?[MMNotificationKeyMessage] as? MM_MTMessage {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary()])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, message.dictionary()])
             }
         case MMNotificationDeviceTokenReceived:
             if let token = notification.userInfo?[MMNotificationKeyDeviceToken] as? String {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, token])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, token])
             }
         case MMNotificationRegistrationUpdated:
             if let internalId = notification.userInfo?[MMNotificationKeyRegistrationInternalId] as? String {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, internalId])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, internalId])
             }
         case MMNotificationMessageTapped:
             if let message = notification.userInfo?[MMNotificationKeyMessage] as? MM_MTMessage {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, message.dictionary()])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, message.dictionary()])
             }
         case MMNotificationActionTapped:
             if let message = notification.userInfo?[MMNotificationKeyMessage] as? MM_MTMessage, let actionIdentifier = notification.userInfo?[MMNotificationKeyActionIdentifier] as? String {
@@ -265,32 +275,32 @@ class MobileMessagingEventsManager {
                 if let textInput = notification.userInfo?[MMNotificationKeyActionTextInput] as? String {
                     parameters.append(textInput)
                 }
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: parameters)
+                notificationResult = pluginResult(status: .ok, messageAs: parameters)
             }
         case MMNotificationDepersonalized:
-            notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+            notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName])
         case MMNotificationPersonalized:
-            notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName])
+            notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName])
         case MMNotificationInstallationSynced:
             if let installation = notification.userInfo?[MMNotificationKeyInstallation] as? MMInstallation {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, installation.dictionaryRepresentation])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, installation.dictionaryRepresentation])
             }
         case MMNotificationUserSynced:
             if let user = notification.userInfo?[MMNotificationKeyUser] as? MMUser {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, user.dictionaryRepresentation])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, user.dictionaryRepresentation])
             }
         case MMNotificationInAppChatUnreadMessagesCounterUpdated:
             if let counter = notification.userInfo?[MMNotificationKeyInAppChatUnreadMessagesCounter] as? Int {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, counter])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, counter])
             }
         case MMNotificationInAppChatAvailabilityUpdated:
             if let available = notification.userInfo?[MMNotificationInAppChatAvailabilityUpdated] as? Bool {
-                notificationResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [cordovaEventName, available])
+                notificationResult = pluginResult(status: .ok, messageAs: [cordovaEventName, available])
             }
         default: break
         }
 
-        notificationResult?.setKeepCallbackAs(true)
+        notificationResult.setKeepCallbackAs(true)
 
         plugin.commandDelegate?.send(notificationResult, callbackId: callbackId)
     }
@@ -356,8 +366,8 @@ class MobileMessagingEventsManager {
     func registerReceiver(_ command: CDVInvokedUrlCommand) {
         eventsManager?.registerReceiver(command)
 
-        let result = CDVPluginResult(status: CDVCommandStatus_OK)
-        result?.setKeepCallbackAs(true)
+        let result = pluginResult(status: .ok)
+        result.setKeepCallbackAs(true)
         commandDelegate?.send(result, callbackId: command.callbackId)
     }
 
@@ -388,8 +398,12 @@ class MobileMessagingEventsManager {
     }
 
     func getUser(_ command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.getUser()?.dictionaryRepresentation)
-        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+        if let userDict = MobileMessaging.getUser()?.dictionaryRepresentation {
+            let successResult = pluginResult(status: .ok, messageAs: userDict)
+            self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+        } else {
+            self.commandDelegate?.send(pluginResult(status: .ok), callbackId: command.callbackId)
+        }
     }
 
     func fetchInboxMessages(_ command: CDVInvokedUrlCommand) {
@@ -469,8 +483,12 @@ class MobileMessagingEventsManager {
     }
 
     func getInstallation(_ command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.getInstallation()?.dictionaryRepresentation)
-        self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+        if let installationDict = MobileMessaging.getInstallation()?.dictionaryRepresentation {
+            let successResult = pluginResult(status: .ok, messageAs: installationDict)
+            self.commandDelegate?.send(successResult, callbackId: command.callbackId)
+        } else {
+            self.commandDelegate?.send(pluginResult(status: .ok), callbackId: command.callbackId)
+        }
     }
 
     func setInstallationAsPrimary(_ command: CDVInvokedUrlCommand) {
@@ -597,9 +615,9 @@ class MobileMessagingEventsManager {
         }
 
         storage.findMessages(withIds: [messageId], completion: { messages in
-            var result: CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
+            var result: CDVPluginResult = pluginResult(status: .ok)
             if let messageDict = messages?[0].dictionary() {
-                result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: messageDict)
+                result = pluginResult(status: .ok, messageAs: messageDict)
             }
             self.commandDelegate?.send(result, callbackId: command.callbackId)
         })
@@ -927,8 +945,8 @@ class MessageStorageAdapter: MMMessageStorage {
             return
         }
 
-        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: array)
-        result?.setKeepCallbackAs(true)
+        let result = pluginResult(status: .ok, messageAs: array)
+        result.setKeepCallbackAs(true)
         plugin.commandDelegate?.send(result, callbackId: callbackId)
     }
 
@@ -937,8 +955,8 @@ class MessageStorageAdapter: MMMessageStorage {
             return
         }
 
-        let result = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: string)
-        result?.setKeepCallbackAs(true)
+        let result = pluginResult(status: .ok, messageAs: string)
+        result.setKeepCallbackAs(true)
         plugin.commandDelegate?.send(result, callbackId: callbackId)
     }
 }
@@ -960,6 +978,28 @@ extension Dictionary {
     }
 }
 
+private func pluginResult(status: CDVCommandStatus) -> CDVPluginResult {
+    return CDVPluginResult(status: status)
+}
+private func pluginResult(status: CDVCommandStatus, messageAs value: Int) -> CDVPluginResult {
+    return CDVPluginResult(status: status, messageAs: value)
+}
+private func pluginResult(status: CDVCommandStatus, messageAs array: [Any]) -> CDVPluginResult {
+    return CDVPluginResult(status: status, messageAs: array)
+}
+private func pluginResult(status: CDVCommandStatus, messageAs dict: [AnyHashable: Any]) -> CDVPluginResult {
+    return CDVPluginResult(status: status, messageAs: dict)
+}
+private func pluginResult(status: CDVCommandStatus, messageAs string: String) -> CDVPluginResult {
+    return CDVPluginResult(status: status, messageAs: string)
+}
+private func pluginResult(status: CDVCommandStatus, messageAs bool: Bool) -> CDVPluginResult {
+    return CDVPluginResult(status: status, messageAs: bool)
+}
+private func pluginResult(status: CDVCommandStatus, messageAs int: Int32) -> CDVPluginResult {
+    return CDVPluginResult(status: status, messageAs: int)
+}
+
 private func createErrorPluginResult(error: NSError) -> CDVPluginResult {
     return createErrorPluginResult(description: error.localizedDescription, errorCode: error.mm_code ?? error.code, domain: error.domain)
 }
@@ -972,7 +1012,7 @@ private func createErrorPluginResult(description: String, errorCode: Any? = nil,
     if let domain = domain {
         error["domain"] = domain
     }
-    return CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error)
+    return pluginResult(status: .error, messageAs: error)
 }
 
 extension CDVCommandDelegate {
@@ -985,19 +1025,19 @@ extension CDVCommandDelegate {
         self.send(errorResult, callbackId: command.callbackId)
     }
     func send(dict: [AnyHashable: Any], for command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dict)
+        let successResult = pluginResult(status: .ok, messageAs: dict)
         self.send(successResult, callbackId: command.callbackId)
     }
     func send(array: [Any], for command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: array)
+        let successResult = pluginResult(status: .ok, messageAs: array)
         self.send(successResult, callbackId: command.callbackId)
     }
     func send(message: String, for command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+        let successResult = pluginResult(status: .ok, messageAs: message)
         self.send(successResult, callbackId: command.callbackId)
     }
     func sendSuccess(for command: CDVInvokedUrlCommand) {
-        self.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+        self.send(pluginResult(status: .ok), callbackId: command.callbackId)
     }
 }
 
@@ -1099,13 +1139,12 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
     }
 
     func getMessageCounter(_ command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: MobileMessaging.inAppChat?.getMessageCounter ?? 0)
+        let successResult = pluginResult(status: .ok, messageAs: MobileMessaging.inAppChat?.getMessageCounter ?? 0)
         self.commandDelegate?.send(successResult, callbackId: command.callbackId)
     }
 
     func isChatAvailable(_ command: CDVInvokedUrlCommand) {
-        let successResult = CDVPluginResult(
-            status: CDVCommandStatus_OK, messageAs: isInAppChatAvailable)
+        let successResult = pluginResult(status: .ok, messageAs: isInAppChatAvailable)
         self.commandDelegate?.send(successResult, callbackId: command.callbackId)
     }
 
@@ -1136,9 +1175,9 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         ChatJwtBridge.callbackId = command.callbackId
 
         // Keep callback alive for multiple requests
-        let pluginResult = CDVPluginResult(status: .noResult)
-        pluginResult?.setKeepCallbackAs(true)
-        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+        let result = pluginResult(status: .noResult)
+        result.setKeepCallbackAs(true)
+        self.commandDelegate?.send(result, callbackId: command.callbackId)
     }
 
     @objc func setChatJwt(_ command: CDVInvokedUrlCommand) {
@@ -1154,13 +1193,13 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         }
 
         // Respond to JS
-        let pluginResult: CDVPluginResult
+        let result: CDVPluginResult
         if jwt != nil && !(jwt?.isEmpty ?? true) {
-            pluginResult = CDVPluginResult(status: .ok)
+            result = pluginResult(status: .ok)
         } else {
-            pluginResult = CDVPluginResult(status: .error, messageAs: "Provided chat JWT is null or empty.")
+            result = pluginResult(status: .error, messageAs: "Provided chat JWT is null or empty.")
         }
-        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+        self.commandDelegate?.send(result, callbackId: command.callbackId)
     }
 
     func requestChatJWTFromJS(completion: @escaping (String?) -> Void) {
@@ -1176,9 +1215,9 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         ChatJwtBridge.pendingCompletion = completion
 
         // Notify JS that a JWT is requested
-        let pluginResult = CDVPluginResult(status: .ok, messageAs: MobileMessagingEventsManager.InternalEvent.chatJWTRequested)
-        pluginResult?.setKeepCallbackAs(true)
-        self.commandDelegate?.send(pluginResult, callbackId: callbackId)
+        let result = pluginResult(status: .ok, messageAs: MobileMessagingEventsManager.InternalEvent.chatJWTRequested)
+        result.setKeepCallbackAs(true)
+        self.commandDelegate?.send(result, callbackId: callbackId)
     }
 
     @objc func getJWT() -> String? {
@@ -1206,16 +1245,18 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         MMDebugMessageBridge.lock.lock()
         defer { MMDebugMessageBridge.lock.unlock() }
         MMDebugMessageBridge.callbackId = command.callbackId
-        let pluginResult = CDVPluginResult(status: .noResult)
-        pluginResult?.setKeepCallbackAs(true)
-        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+        let result = pluginResult(status: .noResult)
+        result.setKeepCallbackAs(true)
+        self.commandDelegate?.send(result, callbackId: command.callbackId)
     }
-    
+
     @objc public func didReceiveException(_ exception: MMChatException) -> MMChatExceptionDisplayMode {
         guard willUseChatExceptionHandler else { return .displayDefaultAlert }
         ChatExceptionBridge.lock.lock()
         defer { ChatExceptionBridge.lock.unlock() }
         
+        guard let callbackId = ChatExceptionBridge.callbackId else { return .noDisplay }
+
         var payload: [AnyHashable: Any] = [:]
         if let message = exception.message {
             payload["message"] = message
@@ -1227,8 +1268,8 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         payload["origin"] = "LiveChat"
         payload["platform"] = "Cordova"
         payload[MobileMessagingEventsManager.InternalEvent.idKey] = MobileMessagingEventsManager.InternalEvent.chatExceptionReceived
-        let pluginResult = CDVPluginResult(status: .ok, messageAs: payload)
-        self.commandDelegate.send(pluginResult, callbackId: ChatExceptionBridge.callbackId)
+        let result = pluginResult(status: .ok, messageAs: payload)
+        self.commandDelegate.send(result, callbackId: callbackId)
         return .noDisplay
     }
 

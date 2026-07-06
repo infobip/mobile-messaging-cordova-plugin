@@ -30,10 +30,14 @@ module.exports = function (ctx) {
         return;
     }
 
-    var projectName = config.name().normalize('NFD');
     var bundleId = config.packageName();
     var projectRoot = ctx.opts.projectRoot;
     var iosPlatformPath = path.join(projectRoot, 'platforms', 'ios');
+
+    // cordova-ios v8 always names the Xcode project and build target "App".
+    // cordova-ios v7 uses the app name from config.xml.
+    var isSPM = fs.existsSync(path.join(iosPlatformPath, 'App.xcodeproj', 'project.pbxproj'));
+    var projectName = isSPM ? 'App' : config.name().normalize('NFD');
     var xcodeProjectPath = path.join(iosPlatformPath, projectName + '.xcodeproj', 'project.pbxproj');
 
     if (!fs.existsSync(xcodeProjectPath)) {
@@ -67,11 +71,22 @@ module.exports = function (ctx) {
 
     var existingTarget = xcodeProject.pbxTargetByName(EXTENSION_NAME);
     if (!existingTarget) {
-        addExtensionTarget(xcodeProject);
+        if (isSPM) {
+            addExtensionTargetSPM(xcodeProject, bundleId);
+        } else {
+            addExtensionTarget(xcodeProject);
+        }
         updateExtensionBuildSettings(xcodeProject, projectName, bundleId);
         addSourceToExtension(xcodeProject);
         renameEmbedPhase(xcodeProject);
         setTargetAttributes(xcodeProject);
+
+        if (isSPM) {
+            console.log('Infobip: Using SPM path for ' + EXTENSION_NAME);
+            addSPMFrameworkToExtension(xcodeProject, iosPlatformPath);
+        } else {
+            console.log('Infobip: Using CocoaPods path for ' + EXTENSION_NAME);
+        }
 
         var pbxContent = xcodeProject.writeSync();
         pbxContent = fixBuildConfigOrdering(pbxContent, projectName);
@@ -86,11 +101,11 @@ module.exports = function (ctx) {
     // Step 4: Set app group in main Info.plist
     setAppGroupInInfoPlist(mainInfoPlistPath, appGroup, plist);
 
-    // Step 5: Modify Podfile
-    modifyPodfile(podfilePath, projectName, mmVersion);
-
-    // Step 6: Run pod install
-    runPodInstall(iosPlatformPath);
+    // Step 5 & 6: CocoaPods only — SPM resolves packages via the workspace
+    if (!isSPM) {
+        modifyPodfile(podfilePath, projectName, mmVersion);
+        runPodInstall(iosPlatformPath);
+    }
 
     console.log('Infobip: Notification Service Extension integration complete');
     console.log('-----------------------------');
@@ -126,6 +141,7 @@ function createExtensionFiles(extensionDir, entitlementsPath, appGroup, resource
     fs.writeFileSync(entitlementsPath, plist.build(entitlementsObj), 'utf-8');
 }
 
+// CocoaPods path: uses xcode module's built-in addTarget()
 function addExtensionTarget(xcodeProject) {
     console.log('Infobip: Creating extension target: ' + EXTENSION_NAME);
     xcodeProject.addTarget(EXTENSION_NAME, 'app_extension', EXTENSION_DIR_NAME);
@@ -136,6 +152,85 @@ function addExtensionTarget(xcodeProject) {
         xcodeProject.addBuildPhase([], 'PBXSourcesBuildPhase', 'Sources', extensionTargetUuid);
         xcodeProject.addBuildPhase([], 'PBXFrameworksBuildPhase', 'Frameworks', extensionTargetUuid);
     }
+}
+
+// SPM path: manual target construction to avoid xcode module's addTarget() which
+// crashes on cordova-ios v8 projects due to file references without a path property
+function addExtensionTargetSPM(xcodeProject, bundleId) {
+    console.log('Infobip: Creating extension target: ' + EXTENSION_NAME);
+
+    var targetUuid = xcodeProject.generateUuid();
+    var productType = 'com.apple.product-type.app-extension';
+    var productFileType = '"wrapper.app-extension"';
+    var productFile = xcodeProject.addProductFile(EXTENSION_NAME, {
+        group: 'Copy Files',
+        target: targetUuid,
+        explicitFileType: productFileType
+    });
+
+    xcodeProject.addToPbxBuildFileSection(productFile);
+
+    var buildConfigurationsList = [
+        {
+            name: 'Debug',
+            isa: 'XCBuildConfiguration',
+            buildSettings: {
+                GCC_PREPROCESSOR_DEFINITIONS: ['"DEBUG=1"', '"$(inherited)"'],
+                INFOPLIST_FILE: '"' + path.join(EXTENSION_DIR_NAME, EXTENSION_NAME + '.plist') + '"',
+                LD_RUNPATH_SEARCH_PATHS: '"$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"',
+                PRODUCT_NAME: '"' + EXTENSION_NAME + '"',
+                SKIP_INSTALL: 'YES'
+            }
+        },
+        {
+            name: 'Release',
+            isa: 'XCBuildConfiguration',
+            buildSettings: {
+                INFOPLIST_FILE: '"' + path.join(EXTENSION_DIR_NAME, EXTENSION_NAME + '.plist') + '"',
+                LD_RUNPATH_SEARCH_PATHS: '"$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"',
+                PRODUCT_NAME: '"' + EXTENSION_NAME + '"',
+                SKIP_INSTALL: 'YES'
+            }
+        }
+    ];
+
+    if (bundleId) {
+        buildConfigurationsList.forEach(function (configuration) {
+            configuration.buildSettings.PRODUCT_BUNDLE_IDENTIFIER = '"' + bundleId + '.notification-extension"';
+        });
+    }
+
+    var buildConfigurations = xcodeProject.addXCConfigurationList(
+        buildConfigurationsList,
+        'Release',
+        'Build configuration list for PBXNativeTarget "' + EXTENSION_NAME + '"'
+    );
+
+    var target = {
+        uuid: targetUuid,
+        pbxNativeTarget: {
+            isa: 'PBXNativeTarget',
+            name: '"' + EXTENSION_NAME + '"',
+            productName: '"' + EXTENSION_NAME + '"',
+            productReference: productFile.fileRef,
+            productType: '"' + productType + '"',
+            buildConfigurationList: buildConfigurations.uuid,
+            buildPhases: [],
+            buildRules: [],
+            dependencies: []
+        }
+    };
+
+    xcodeProject.addToPbxNativeTargetSection(target);
+    xcodeProject.addToPbxProjectSection(target);
+
+    // Add the extension target phases explicitly instead of relying on xcode's addTarget()
+    xcodeProject.addBuildPhase([], 'PBXSourcesBuildPhase', 'Sources', targetUuid);
+    xcodeProject.addBuildPhase([], 'PBXFrameworksBuildPhase', 'Frameworks', targetUuid);
+    xcodeProject.addBuildPhase([], 'PBXCopyFilesBuildPhase', 'Copy Files', xcodeProject.getFirstTarget().uuid, 'app_extension');
+    xcodeProject.addToPbxCopyfilesBuildPhase(productFile);
+
+    return targetUuid;
 }
 
 function updateExtensionBuildSettings(xcodeProject, projectName, bundleId) {
@@ -489,6 +584,129 @@ function fixBuildConfigOrdering(pbxContent, projectName) {
     var after = pbxContent.substring(sectionEnd);
 
     return before + reorderedSection + after;
+}
+
+// Creates a direct local package reference for the plugin package so the NSE
+// target can link MobileMessagingNotificationExtension through SPM.
+function addSPMFrameworkToExtension(xcodeProject, iosPlatformPath) {
+    var nativeTargets = xcodeProject.pbxNativeTargetSection();
+    var extensionTargetUuid = findExtensionTargetUuid(nativeTargets);
+    if (!extensionTargetUuid) {
+        console.log('WARNING: Could not find extension target for SPM framework linking');
+        return;
+    }
+
+    var objects = xcodeProject.hash.project.objects;
+    var pluginPackagePath = path.join(iosPlatformPath, 'packages', 'com-infobip-plugins-mobilemessaging');
+
+    // Create or reuse a direct XCLocalSwiftPackageReference for the plugin package.
+    var localPackageRefs = objects['XCLocalSwiftPackageReference'] || {};
+    var pluginPackageRefUuid = null;
+    for (var refKey in localPackageRefs) {
+        if (COMMENT_KEY.test(refKey)) continue;
+        var ref = localPackageRefs[refKey];
+        if (ref.relativePath === 'packages/com-infobip-plugins-mobilemessaging') {
+            pluginPackageRefUuid = refKey;
+            break;
+        }
+    }
+
+    if (!pluginPackageRefUuid) {
+        if (!fs.existsSync(path.join(pluginPackagePath, 'Package.swift'))) {
+            console.log('WARNING: Could not find local plugin package at ' + pluginPackagePath + '.');
+            return;
+        }
+
+        pluginPackageRefUuid = xcodeProject.generateUuid();
+        if (!objects['XCLocalSwiftPackageReference']) {
+            objects['XCLocalSwiftPackageReference'] = {};
+        }
+        objects['XCLocalSwiftPackageReference'][pluginPackageRefUuid] = {
+            isa: 'XCLocalSwiftPackageReference',
+            relativePath: 'packages/com-infobip-plugins-mobilemessaging'
+        };
+        objects['XCLocalSwiftPackageReference'][pluginPackageRefUuid + '_comment'] = 'com-infobip-plugins-mobilemessaging';
+
+        var projectSection = xcodeProject.pbxProjectSection();
+        var projectUuid = Object.keys(projectSection).find(function (key) {
+            return !COMMENT_KEY.test(key) && projectSection[key].isa === 'PBXProject';
+        });
+        if (projectUuid) {
+            var project = projectSection[projectUuid];
+            if (!project.packageReferences) {
+                project.packageReferences = [];
+            }
+            project.packageReferences.push({
+                value: pluginPackageRefUuid,
+                comment: 'com-infobip-plugins-mobilemessaging'
+            });
+        }
+    }
+
+    // Check if the product dependency already exists
+    var productDeps = objects['XCSwiftPackageProductDependency'] || {};
+    for (var depKey in productDeps) {
+        if (COMMENT_KEY.test(depKey)) continue;
+        var dep = productDeps[depKey];
+        if (dep.productName === '"MobileMessagingNotificationExtension"' ||
+            dep.productName === 'MobileMessagingNotificationExtension') {
+            console.log('Infobip: MobileMessagingNotificationExtension SPM dependency already linked.');
+            return;
+        }
+    }
+
+    // Create XCSwiftPackageProductDependency pointing to the plugin package.
+    // The plugin package's Package.swift depends on mobile-messaging-sdk-ios,
+    // so Xcode resolves MobileMessagingNotificationExtension transitively from it.
+    var productDepUuid = xcodeProject.generateUuid();
+    if (!objects['XCSwiftPackageProductDependency']) {
+        objects['XCSwiftPackageProductDependency'] = {};
+    }
+    objects['XCSwiftPackageProductDependency'][productDepUuid] = {
+        isa: 'XCSwiftPackageProductDependency',
+        package: pluginPackageRefUuid,
+        package_comment: 'com-infobip-plugins-mobilemessaging',
+        productName: '"MobileMessagingNotificationExtension"'
+    };
+    objects['XCSwiftPackageProductDependency'][productDepUuid + '_comment'] = 'MobileMessagingNotificationExtension';
+
+    // Create PBXBuildFile referencing the product dependency
+    var buildFileUuid = xcodeProject.generateUuid();
+    if (!objects['PBXBuildFile']) {
+        objects['PBXBuildFile'] = {};
+    }
+    objects['PBXBuildFile'][buildFileUuid] = {
+        isa: 'PBXBuildFile',
+        productRef: productDepUuid,
+        productRef_comment: 'MobileMessagingNotificationExtension'
+    };
+    objects['PBXBuildFile'][buildFileUuid + '_comment'] = 'MobileMessagingNotificationExtension in Frameworks';
+
+    // Add the build file to the NSE target's Frameworks build phase
+    var frameworksPhase = xcodeProject.buildPhaseObject('PBXFrameworksBuildPhase', 'Frameworks', extensionTargetUuid);
+    if (!frameworksPhase) {
+        console.log('WARNING: Frameworks build phase not found for extension target');
+        return;
+    }
+    if (!frameworksPhase.files) {
+        frameworksPhase.files = [];
+    }
+    frameworksPhase.files.push({
+        value: buildFileUuid,
+        comment: 'MobileMessagingNotificationExtension in Frameworks'
+    });
+
+    // Register the product dependency on the NSE target
+    var extensionTarget = nativeTargets[extensionTargetUuid];
+    if (!extensionTarget.packageProductDependencies) {
+        extensionTarget.packageProductDependencies = [];
+    }
+    extensionTarget.packageProductDependencies.push({
+        value: productDepUuid,
+        comment: 'MobileMessagingNotificationExtension'
+    });
+
+    console.log('Infobip: Linked MobileMessagingNotificationExtension via SPM to ' + EXTENSION_NAME);
 }
 
 function findExtensionTargetUuid(nativeTargets) {

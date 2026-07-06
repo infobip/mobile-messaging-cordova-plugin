@@ -16,9 +16,13 @@ The document describes library integration steps for your Cordova project.
 
 For iOS project:
 - Xcode 16.x
-- Cocoapods 1.14.x
 - Minimum deployment target 15.0
-- [cordova-ios@7.x.x](https://cordova.apache.org/announcements/2023/07/10/cordova-ios-7.0.0.html)
+- If using CocoaPods: 
+    - [cordova-ios@7.1.1](https://cordova.apache.org/announcements/2024/07/24/cordova-ios-7.1.1.html) 
+    - Cocoapods 1.14.x
+- If using Swift Package Manager (SPM):
+    - [cordova-ios@8.x.x](https://cordova.apache.org/announcements/2025/11/23/cordova-ios-8.0.0.html)
+    - Cocoapods 1.16.x (this requirement will be removed in future releases, once the CocoaPods Trunk permanently becomes read-only)
 
 For Android project: 
 - Android Studio
@@ -77,6 +81,10 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
             ```bash
             $ cordova build ios
             ```
+
+        > ### Notice (CocoaPods and Swift Package Manager integration):
+        > From version `8.5.0`, the plugin supports both **Swift Package Manager** ([cordova-ios@8.x.x](https://cordova.apache.org/announcements/2025/11/23/cordova-ios-8.0.0.html) and above) and **CocoaPods** (cordova-ios v7). The correct integration is selected automatically, and no extra configuration is needed. After December 2nd 2026, CocoaPods will permanently become read-only so migration to SPM in recommended to get the latest plugin updates. See the [Swift Package Manager integration guide](https://github.com/infobip/mobile-messaging-cordova-plugin/wiki/Swift-Package-Manager-integration) for details on migrating from CocoaPods to Swift Package Manager.
+
     2. **Android**: 
        1. Get the Firebase configuration file (google-services.json) as described in <a href="https://firebase.google.com/docs/android/setup#add-config-file" target="_blank">`Firebase documentation`</a> and put it to the root application folder.
        2. Add following to your config.xml

@@ -6,6 +6,9 @@
 // Licensed under the Apache License, Version 2.0
 //
 
+#if canImport(Cordova)
+import Cordova
+#endif
 import MobileMessaging
 
 class InfobipMobileMessagingCordovaLogger: NSObject, MMLogging {
@@ -35,8 +38,8 @@ class InfobipMobileMessagingCordovaLogger: NSObject, MMLogging {
         let payload: [String: Any] = [MobileMessagingEventsManager.InternalEvent.idKey : MobileMessagingEventsManager.InternalEvent.debugMessageReceived,
                                       "message": cordovaMessage]
 
-        let pluginResult = CDVPluginResult(status: .ok, messageAs: payload)
-        pluginResult?.setKeepCallbackAs(true)
+        let pluginResult = pluginResult(status: .ok, messageAs: payload)
+        pluginResult.setKeepCallbackAs(true)
         self.commandDelegate?.send(pluginResult, callbackId: callbackId)
     }
 
@@ -58,5 +61,9 @@ class InfobipMobileMessagingCordovaLogger: NSObject, MMLogging {
 
     public func logVerbose(message: String) {
         log(LogIcons.verbose, message)
+    }
+    
+    private func pluginResult(status: CDVCommandStatus, messageAs payload: [String: Any]) -> CDVPluginResult {
+        return CDVPluginResult(status: status, messageAs: payload)
     }
 }
