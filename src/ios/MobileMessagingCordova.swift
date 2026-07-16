@@ -1315,10 +1315,12 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
         var chatInputHintText: String?
         var chatInputHintTextColor: String?
         var chatInputAttachmentIcon: String?
+        var chatInputAttachmentDisabledIconTint: String?
         var chatInputAttachmentIconTint: String?
         var chatInputAttachmentBackgroundDrawable: String?
         var chatInputAttachmentBackgroundColor: String?
         var chatInputSendIcon: String?
+        var chatInputSendDisabledIconTint: String?
         var chatInputSendIconTint: String?
         var chatInputSendBackgroundDrawable: String?
         var chatInputSendBackgroundColor: String?
@@ -1356,6 +1358,9 @@ extension MobileMessagingCordova: MMInAppChatDelegate {
             setNotNil(&settings.advancedSettings.attachmentButtonIcon, getImage(with: customization.chatInputAttachmentIcon))
             setNotNil(&settings.advancedSettings.sendButtonIcon, getImage(with: customization.chatInputSendIcon))
             setNotNil(&settings.sendButtonTintColor, customization.chatInputSendIconTint?.toColor())
+            setNotNil(&settings.sendButtonTintDisabledColor, customization.chatInputSendDisabledIconTint?.toColor())
+            setNotNil(&settings.attachmentButtonTintColor, customization.chatInputAttachmentIconTint?.toColor())
+            setNotNil(&settings.attachmentButtonTintDisabledColor, customization.chatInputAttachmentDisabledIconTint?.toColor())
             setNotNil(&settings.chatInputSeparatorLineColor, customization.chatInputSeparatorLineColor?.toColor())
             setNotNil(&settings.advancedSettings.isLineSeparatorHidden, customization.chatInputSeparatorLineVisible)
             setNotNil(&settings.advancedSettings.typingIndicatorColor, customization.chatInputCursorColor?.toColor())

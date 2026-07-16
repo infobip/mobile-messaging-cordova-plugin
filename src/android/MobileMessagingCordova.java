@@ -1188,8 +1188,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     InAppChatTheme theme = customization.createTheme(cordova.getActivity().getApplication(), createDrawableLoader());
                     InAppChat.getInstance(cordova.getActivity().getApplication()).setTheme(theme);
                 });
+                sendCallbackSuccessEmpty(callbackContext);
             } else {
-                CordovaLogger.d(TAG, "Chat customization object is null or invalid.");
+                sendCallbackError(callbackContext, "Chat customization object is null or invalid.");
             }
         } catch (Exception e) {
             sendCallbackError(callbackContext, "Failed to set chat customization: " + e.getMessage());
