@@ -50,7 +50,7 @@ android {
 
 dependencies {
     def mmHmsVersion = '8.14.0'
-    def mmFcmVersion = '15.1.0'
+    def mmFcmVersion = '16.0.0'
     // Modified by scripts/hms_fix_dependencies.js . To enable run: cordova build android --hms
     def isHmsBuild = false
 
