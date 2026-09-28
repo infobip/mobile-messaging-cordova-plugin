@@ -98,11 +98,15 @@
         },
         registerForEvents: function() {
             var _this = this;
+            // Deeplinks can arrive through two different tap events, both need to be handled:
+            //  - `notificationTapped`: user tapped a push notification or a banner in-app message.
+            //  - `actionTapped`: user tapped an action button (interactive notification category action,
+            //    or the primary button of a popup / fullscreen in-app message).
             MobileMessaging.register("notificationTapped", function(message) {
-                if (!message.deeplink) {
-                    return;
-                }
-                _this.handleDeeplinkEvent(message.deeplink);
+                _this.handleTapEvent(message);
+            });
+            MobileMessaging.register("actionTapped", function(message, actionId, text) {
+                _this.handleTapEvent(message);
             });
 
             MobileMessaging.register("deeplink", function(deeplinkPath) {
@@ -112,6 +116,13 @@
             MobileMessaging.register("inAppChat.availabilityUpdated", function(isAvailable) {
                 console.log(`InAppChat availability updated: ${isAvailable}`);
             });
+        },
+        handleTapEvent: function (message) {
+            var deeplink = message && typeof message.deeplink === 'string' ? message.deeplink.trim() : '';
+            if (!deeplink) {
+                return;
+            }
+            this.handleDeeplinkEvent(deeplink);
         },
         handleDeeplinkEvent: function (deeplink) {
             if (!deeplink) {
