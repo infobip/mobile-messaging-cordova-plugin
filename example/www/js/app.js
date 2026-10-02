@@ -106,6 +106,11 @@
                 _this.handleTapEvent(message);
             });
             MobileMessaging.register("actionTapped", function(message, actionId, text) {
+                // The iOS SDK also fires actionTapped for dismiss actions (swipe-away or
+                // in-app close). Skip those so a deeplink is not opened on dismissal.
+                if (actionId === 'com.apple.UNNotificationDismissActionIdentifier') {
+                    return;
+                }
                 _this.handleTapEvent(message);
             });
 
