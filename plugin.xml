@@ -57,9 +57,9 @@
 
 		<podspec>
             <pods use-frameworks="true">
-                <pod name="MobileMessaging" spec="15.5.2" nospm="true"/>
-                <pod name="MobileMessaging/InAppChat" spec="15.5.2" nospm="true"/>
-                <pod name="MobileMessaging/Inbox" spec="15.5.2" nospm="true"/>
+                <pod name="MobileMessaging" spec="15.7.6" nospm="true"/>
+                <pod name="MobileMessaging/InAppChat" spec="15.7.6" nospm="true"/>
+                <pod name="MobileMessaging/Inbox" spec="15.7.6" nospm="true"/>
             </pods>
 		</podspec>
 
