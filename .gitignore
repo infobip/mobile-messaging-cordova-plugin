@@ -21,3 +21,4 @@
 .build/
 .swiftpm/
 Package.resolved
+/AGENTS.md

@@ -81,6 +81,7 @@
                     defaultMessageStorage: true,    // use build in message storage or not
                     loggingEnabled: true,  // to record logs
                     inAppChatEnabled: true,
+                    inAppChatPushNavigationEnabled: true,
                     ios: {
                         notificationTypes: ['alert', 'badge', 'sound'],
                     },

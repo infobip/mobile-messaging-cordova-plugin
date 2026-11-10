@@ -299,6 +299,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
         AndroidConfiguration android;
         String applicationCode;
         boolean inAppChatEnabled;
+        boolean inAppChatPushNavigationEnabled;
         boolean fullFeaturedInAppsEnabled;
         Map<String, ?> messageStorage;
         boolean defaultMessageStorage;
@@ -664,7 +665,9 @@ public class MobileMessagingCordova extends CordovaPlugin {
         });
 
         if (configuration.inAppChatEnabled) {
-            InAppChat.getInstance(context).activate();
+            InAppChat chat = InAppChat.getInstance(context);
+            chat.activate();
+            chat.setPushNavigationEnabled(configuration.inAppChatPushNavigationEnabled);
         }
     }
 

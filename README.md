@@ -28,6 +28,7 @@ For Android project:
 - Android Studio
 - Supported API Levels: 24 ( Android 7.0 - [Nougat](https://developer.android.com/about/versions/nougat)) - 36 (Android 16)
 - [cordova-android@15.x.x](https://cordova.apache.org/announcements/2026/03/06/cordova-android-15.0.0.html)
+- Android SDK Platform 37; set `android-compileSdkVersion` to `37` in `config.xml` for FCM and HMS builds.
 
 For Huawei:
 - Android Studio
@@ -92,6 +93,7 @@ This guide is designed to get you up and running with Mobile Messaging SDK plugi
               <platform name="android">
                  <resource-file src="google-services.json" target="app/google-services.json" />
                  <preference name="GradlePluginGoogleServicesEnabled" value="true"/>
+                 <preference name="android-compileSdkVersion" value="37"/>
                  ...
               </platform>
            ```
@@ -304,6 +306,7 @@ MobileMessaging.init({
 
         // General configuration
         inAppChatEnabled: <Boolean; set to true to enable in-app chat feature>, // optional
+        inAppChatPushNavigationEnabled: <Boolean; set to true to open in-app chat on a chat push tap. Default: false>, // optional
         fullFeaturedInAppsEnabled: <Boolean; set to true to enable full featured in-app messages>, // optional
         loggingEnabled: <Boolean; set to true to enable debug logging>, // optional
         userDataJwt: <String; JWT token for authorization of user data related operations>, // optional

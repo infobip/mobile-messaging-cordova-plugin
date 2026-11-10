@@ -2,7 +2,7 @@
 
 import PackageDescription
 
-let mmSdkVersion: Version = "15.7.6"
+let mmSdkVersion: Version = "15.10.1"
 let cordovaIosVersion: Version = "8.1.0"
 
 let package = Package(

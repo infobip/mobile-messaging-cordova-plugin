@@ -54,6 +54,7 @@ var MobileMessagingCordova = function () {
  *  {
  *      applicationCode: <String; the application code of your Application from Push Portal website>,
  *      inAppChatEnabled: <Boolean; set to true to enable in-app chat feature>,
+ *      inAppChatPushNavigationEnabled: <Boolean; set to true to open In-app chat on a chat push tap. Default: false>,
  *      fullFeaturedInAppsEnabled: <Boolean; set to true to enable full featured in-app messages>,
  *      messageStorage: <Object; custom message storage implementation> {
  *          start: function() {},                          // Called when storage should be initialized
@@ -122,6 +123,7 @@ MobileMessagingCordova.prototype.init = function (config, callback, onInitError)
     var _onInitErrorHandler = onInitError || function () {};
     var _successCallback = callback || function () {};
 
+    config.inAppChatPushNavigationEnabled = config.inAppChatPushNavigationEnabled === true;
     this.configuration = config;
 
     if (messageStorage) {

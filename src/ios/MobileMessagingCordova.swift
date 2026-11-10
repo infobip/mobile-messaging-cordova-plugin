@@ -29,6 +29,7 @@ class MMConfiguration {
         static let carrierInfoSendingDisabled = "carrierInfoSendingDisabled"
         static let systemInfoSendingDisabled = "systemInfoSendingDisabled"
         static let inAppChatEnabled = "inAppChatEnabled"
+        static let inAppChatPushNavigationEnabled = "inAppChatPushNavigationEnabled"
         static let fullFeaturedInAppsEnabled = "fullFeaturedInAppsEnabled"
         static let applicationCode = "applicationCode"
         static let forceCleanup = "forceCleanup"
@@ -49,6 +50,7 @@ class MMConfiguration {
     static let ignoreKeysWhenComparing: [String] = [Keys.applicationCode, Keys.cordovaPluginVersion, Keys.userDataJwt]
 
     let inAppChatEnabled: Bool
+    let inAppChatPushNavigationEnabled: Bool
     let fullFeaturedInAppsEnabled: Bool
     let messageStorageEnabled: Bool
     let defaultMessageStorage: Bool
@@ -72,6 +74,7 @@ class MMConfiguration {
         }
 
         self.inAppChatEnabled = rawConfig[MMConfiguration.Keys.inAppChatEnabled].unwrap(orDefault: false)
+        self.inAppChatPushNavigationEnabled = rawConfig[MMConfiguration.Keys.inAppChatPushNavigationEnabled].unwrap(orDefault: false)
         self.fullFeaturedInAppsEnabled = rawConfig[MMConfiguration.Keys.fullFeaturedInAppsEnabled].unwrap(orDefault: false)
         self.forceCleanup = ios[MMConfiguration.Keys.forceCleanup].unwrap(orDefault: false)
         self.logging = rawConfig[MMConfiguration.Keys.logging].unwrap(orDefault: false)
@@ -740,7 +743,9 @@ class MobileMessagingEventsManager {
     private func setupConfiguration(mobileMessaging: MobileMessaging, configuration: MMConfiguration) {
         var mobileMessaging = mobileMessaging
         if configuration.inAppChatEnabled {
-            mobileMessaging = mobileMessaging.withInAppChat()
+            mobileMessaging = mobileMessaging.withInAppChat(
+                pushPresentationMode: configuration.inAppChatPushNavigationEnabled ? .uikit : nil
+            )
             MobileMessaging.inAppChat?.delegate = self
         }
 
