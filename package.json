@@ -3,7 +3,9 @@
   "version": "8.6.2",
   "description": "Infobip Mobile Messaging Cordova Plugin",
   "main": "www/MobileMessagingCordova.js",
-  "scripts": {},
+  "scripts": {
+    "test": "node --test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/infobip/mobile-messaging-cordova-plugin.git"

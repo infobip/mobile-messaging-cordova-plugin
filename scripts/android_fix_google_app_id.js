@@ -61,6 +61,12 @@ module.exports = function(ctx) {
         var deferred = Q.defer();
         var resourcesRoot = path.join(ctx.opts.projectRoot, resourcesRelativeRoot);
         var strings = path.join(resourcesRoot, 'strings.xml');
+        // Cordova Android 15 generates cdv_strings.xml instead of strings.xml.
+        // Prefer an existing strings.xml to preserve custom resource overrides.
+        var cordovaStrings = path.join(resourcesRoot, 'cdv_strings.xml');
+        if (!fs.existsSync(strings) && fs.existsSync(cordovaStrings)) {
+            strings = cordovaStrings;
+        }
         console.log(strings);
         fs.readFile(strings, 'utf8', function (err,data) {
             if (err) {
