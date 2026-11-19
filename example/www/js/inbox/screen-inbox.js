@@ -14,6 +14,8 @@
     var utils = global.utils;
     var ListView = global.ListView;
     var Layout = global.Layout;
+    // deleteInboxMessages accepts at most 100 message identifiers per call
+    var MAX_DELETE_MESSAGE_IDS = 100;
 
     var InboxScreen = {
         NAME: "INBOX_SCREEN",
@@ -23,6 +25,8 @@
         listView: null,
         userData: null,
         inboxMessages: null,
+        filterOptions: null,
+        nextCursor: null,
 
         init: function () {
             var _this = this;
@@ -34,11 +38,17 @@
             this.formInboxNode = this.rootNode.querySelector("form.inbox-filtering-form");
             this.formGetInboxNode = this.rootNode.querySelector("form.get-inbox");
             this.formSetInboxNode = this.rootNode.querySelector("form.set-inbox-seen");
+            this.formLoadMoreInboxNode = this.rootNode.querySelector("form.load-more-inbox");
+            this.formDeleteFirstInboxNode = this.rootNode.querySelector("form.delete-first-inbox");
+            this.formDeleteAllInboxNode = this.rootNode.querySelector("form.delete-all-inbox");
 
             this.formGetInboxNode.addEventListener("click", function () {
                 if (_this.userData !== null && _this.userData.externalUserId !== null) {
-                    utils.log("Filtering options: " + JSON.stringify(_this._setFilteringOptions()));
-                    _this._fetchInboxMessagesWithoutToken(_this.userData.externalUserId, _this._setFilteringOptions());
+                    _this.filterOptions = _this._setFilteringOptions();
+                    // cursor belongs to the previous filters, drop it even if this fetch fails
+                    _this.nextCursor = null;
+                    utils.log("Filtering options: " + JSON.stringify(_this.filterOptions));
+                    _this._fetchInboxMessagesWithoutToken(_this.userData.externalUserId, _this.filterOptions, false);
                 } else {
                     utils.log("User data is not fetched!" + JSON.stringify(_this.userData));
                 }
@@ -48,11 +58,40 @@
                 if (_this.userData !== null && _this.inboxMessages.length > 0) {
                     let messageIds = [];
                     for (let i = 0; i < _this.inboxMessages.length; i++) {
-                        messageIds.push(_this.inboxMessages[_this.inboxMessages.length - 1].messageId);
+                        messageIds.push(_this.inboxMessages[i].messageId);
                     }
                     _this._setInboxMessagesSeen(_this.userData.externalUserId, messageIds);
                 } else {
                     utils.log("Error setting inbox messages seen" + JSON.stringify(_this.inboxMessages));
+                }
+            });
+
+            // Fetches the next page with the same filter options and the cursor returned by the previous page
+            this.formLoadMoreInboxNode.addEventListener("click", function () {
+                if (_this.userData === null || !_this.nextCursor) {
+                    utils.log("No more inbox messages to load");
+                    return;
+                }
+                var filterOptions = Object.assign({}, _this.filterOptions, {cursor: _this.nextCursor});
+                _this._fetchInboxMessagesWithoutToken(_this.userData.externalUserId, filterOptions, true);
+            });
+
+            this.formDeleteFirstInboxNode.addEventListener("click", function () {
+                if (_this.userData !== null && _this.inboxMessages.length > 0) {
+                    _this._deleteInboxMessagesWithoutToken(_this.userData.externalUserId, [_this.inboxMessages[0].messageId]);
+                } else {
+                    utils.log("No inbox messages to delete");
+                }
+            });
+
+            this.formDeleteAllInboxNode.addEventListener("click", function () {
+                if (_this.userData !== null && _this.inboxMessages.length > 0) {
+                    var messageIds = _this.inboxMessages.slice(0, MAX_DELETE_MESSAGE_IDS).map(function (message) {
+                        return message.messageId;
+                    });
+                    _this._deleteInboxMessagesWithoutToken(_this.userData.externalUserId, messageIds);
+                } else {
+                    utils.log("No inbox messages to delete");
                 }
             });
         },
@@ -117,12 +156,20 @@
             Layout.busy(true);
             MobileMessaging.fetchUser(
                 function (userData) {
-                    utils.log('User data fetched: ' + JSON.stringify(_this.userData));
+                    utils.log('User data fetched: ' + JSON.stringify(userData));
+                    var previousExternalUserId = _this.userData ? _this.userData.externalUserId : null;
                     _this.userData = userData;
+                    if (previousExternalUserId !== (userData ? userData.externalUserId : null)) {
+                        // messages and cursor belong to the previous user
+                        _this.inboxMessages.length = 0;
+                        _this.filterOptions = null;
+                        _this.nextCursor = null;
+                        _this._checkForEmptyAndRender();
+                    }
                     Layout.busy(false);
                 },
                 function (error) {
-                    utils.log('Error while syncing user data: ' + error);
+                    utils.log('Error while syncing user data: ' + JSON.stringify(error));
                     Layout.busy(false);
                 }
             );
@@ -142,9 +189,13 @@
                     value = null;
                 }
 
-                if (name === "fromDateTime" || name === "toDateTime") {
+                if ((name === "fromDateTime" || name === "toDateTime") && value !== null) {
+                    // new Date(null) would be the epoch, so empty dates stay null (no date filter)
                     const inputDate = new Date(value);
                     filteringOptions[name] = this._formatDate(inputDate);
+                } else if (name === "limit" && value !== null) {
+                    // form values are strings, the native SDKs expect a number
+                    filteringOptions[name] = parseInt(value, 10);
                 } else {
                     filteringOptions[name] = value;
                 }
@@ -172,22 +223,27 @@
         },
 
         /**
-         * Fetch inbox messages
+         * Fetch inbox messages. When `append` is true, the fetched page is added to already loaded messages.
          */
-        _fetchInboxMessagesWithoutToken: function (externalUserId, filterOptions) {
+        _fetchInboxMessagesWithoutToken: function (externalUserId, filterOptions, append) {
             var _this = this;
-            _this.inboxMessages = [];
             Layout.busy(true);
             MobileMessaging.fetchInboxMessagesWithoutToken(externalUserId, filterOptions,
                 function (inbox) {
                     utils.log('Inbox data fetched: ' + JSON.stringify(inbox));
+                    if (!append) {
+                        // Cleared in place, list view keeps a reference to this array
+                        _this.inboxMessages.length = 0;
+                    }
                     for (var i = 0; i < inbox.messages.length; i++) {
                         _this.inboxMessages.push(inbox.messages[i]);
-                        _this._checkForEmptyAndRender();
                     }
+                    _this.nextCursor = inbox.nextCursor || null;
+                    utils.log(_this.nextCursor ? 'More inbox messages available' : 'No more inbox messages');
+                    _this._checkForEmptyAndRender();
                     Layout.busy(false);
                 }, function (error) {
-                    utils.log("Error getting inbox messages: " + error);
+                    utils.log("Error getting inbox messages: " + JSON.stringify(error));
                     Layout.busy(false);
                 });
         },
@@ -205,6 +261,29 @@
                     Layout.busy(false);
                 }, function (error) {
                     utils.log("Error setting messages seen: " + JSON.stringify(error));
+                    Layout.busy(false);
+                });
+        },
+
+        /**
+         * Delete inbox messages
+         */
+        _deleteInboxMessagesWithoutToken: function (externalUserId, messageIds) {
+            var _this = this;
+            Layout.busy(true);
+            utils.log('About to delete messages: ' + externalUserId + " " + JSON.stringify(messageIds));
+            MobileMessaging.deleteInboxMessagesWithoutToken(externalUserId, messageIds,
+                function (deletedMessageIds) {
+                    utils.log('Messages deleted: ' + JSON.stringify(deletedMessageIds));
+                    for (var i = _this.inboxMessages.length - 1; i >= 0; i--) {
+                        if (deletedMessageIds.indexOf(_this.inboxMessages[i].messageId) !== -1) {
+                            _this.inboxMessages.splice(i, 1);
+                        }
+                    }
+                    _this._checkForEmptyAndRender();
+                    Layout.busy(false);
+                }, function (error) {
+                    utils.log("Error deleting messages: " + JSON.stringify(error));
                     Layout.busy(false);
                 });
         },

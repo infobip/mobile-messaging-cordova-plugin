@@ -416,13 +416,14 @@ class MobileMessagingEventsManager {
             return
         }
 
-        let filters = MMInboxFilterOptions(dictRepresentation: command.argument(at: 2) as? [String : Any] ?? [:])
+        guard let service = inboxService(for: command),
+              let filters = inboxFilterOptions(command, at: 2) else { return }
 
-        MobileMessaging.inbox?.fetchInbox(token: token, externalUserId: extUserId, options: filters, completion: { (inbox, error) in
+        service.fetchInbox(token: token, externalUserId: extUserId, options: filters, completion: { (inbox, error) in
                    if let error = error {
-                       self.commandDelegate?.send(error: error, for: command)
+                       self.commandDelegate?.send(inboxError: error, for: command)
                    } else {
-                       self.commandDelegate?.send(dict: inbox?.dictionary() ?? [:], for: command)
+                       self.commandDelegate?.send(dict: inbox?.dictionaryRepresentation ?? [:], for: command)
                    }
                })
     }
@@ -433,15 +434,77 @@ class MobileMessagingEventsManager {
                 return
             }
 
-            let filters = MMInboxFilterOptions(dictRepresentation: command.argument(at: 1) as? [String : Any] ?? [:])
+            guard let service = inboxService(for: command),
+                  let filters = inboxFilterOptions(command, at: 1) else { return }
 
-            MobileMessaging.inbox?.fetchInbox(externalUserId: extUserId, options: filters, completion: { (inbox, error) in
+            service.fetchInbox(externalUserId: extUserId, options: filters, completion: { (inbox, error) in
                 if let error = error {
-                    self.commandDelegate?.send(error: error, for: command)
+                    self.commandDelegate?.send(inboxError: error, for: command)
                 } else {
-                    self.commandDelegate?.send(dict: inbox?.dictionary() ?? [:], for: command)
+                    self.commandDelegate?.send(dict: inbox?.dictionaryRepresentation ?? [:], for: command)
                 }
             })
+    }
+
+    func deleteInboxMessages(_ command: CDVInvokedUrlCommand) {
+        // Non-string token or External User Id become "", so the SDK rejects them with "20013", same as on Android
+        let token = command.argument(at: 0) as? String ?? ""
+        let extUserId = command.argument(at: 1) as? String ?? ""
+        guard let mIds = inboxMessageIds(command.argument(at: 2)) else {
+            self.commandDelegate?.send(errorText: "Could not retrieve messages data from argument", for: command)
+            return
+        }
+        performInboxDelete(command: command, messageIds: mIds) { inbox in
+            try await inbox.deleteMessages(token: token, externalUserId: extUserId, messageIds: mIds)
+        }
+    }
+
+    func deleteInboxMessagesWithoutToken(_ command: CDVInvokedUrlCommand) {
+        let extUserId = command.argument(at: 0) as? String ?? ""
+        guard let mIds = inboxMessageIds(command.argument(at: 1)) else {
+            self.commandDelegate?.send(errorText: "Could not retrieve messages data from argument", for: command)
+            return
+        }
+        performInboxDelete(command: command, messageIds: mIds) { inbox in
+            try await inbox.deleteMessages(externalUserId: extUserId, messageIds: mIds)
+        }
+    }
+
+    /// Missing or null filter options mean "no filters"; any other non-object value is rejected (sends an error and returns nil).
+    private func inboxFilterOptions(_ command: CDVInvokedUrlCommand, at index: UInt) -> MMInboxFilterOptions? {
+        let argument = command.argument(at: index)
+        if argument != nil && !(argument is [String: Any]) {
+            self.commandDelegate?.send(errorText: "filterOptions must be an object or null", for: command)
+            return nil
+        }
+        return MMInboxFilterOptions(dictRepresentation: argument as? [String : Any] ?? [:])
+    }
+
+    /// Maps non-string elements (e.g. NSNull from a JS null) to "", so the SDK rejects them with "20013", same as on Android.
+    private func inboxMessageIds(_ argument: Any?) -> [String]? {
+        return (argument as? [Any])?.map { $0 as? String ?? "" }
+    }
+
+    /// Returns the inbox service, or sends an error to JS if MobileMessaging isn't initialized, so the callback always fires.
+    private func inboxService(for command: CDVInvokedUrlCommand) -> MMInboxService? {
+        guard let inbox = MobileMessaging.inbox else {
+            self.commandDelegate?.send(errorText: "Inbox is not available, check that MobileMessaging is initialized", for: command)
+            return nil
+        }
+        return inbox
+    }
+
+    private func performInboxDelete(command: CDVInvokedUrlCommand, messageIds: [String], operation: @escaping (MMInboxService) async throws -> Void) {
+        guard let inbox = inboxService(for: command) else { return }
+        // Main actor so that plugin results are sent on the main thread, Cordova expects that
+        Task { @MainActor in
+            do {
+                try await operation(inbox)
+                self.commandDelegate?.send(array: messageIds, for: command)
+            } catch {
+                self.commandDelegate?.send(inboxError: error as NSError, for: command)
+            }
+        }
     }
 
     func setInboxMessagesSeen(_ command: CDVInvokedUrlCommand) {
@@ -450,9 +513,10 @@ class MobileMessagingEventsManager {
                    self.commandDelegate?.send(errorText: "Could not retrieve messages data from argument", for: command)
                    return
               }
-        MobileMessaging.inbox?.setSeen(externalUserId: extUserId, messageIds: mIds, completion: { error in
+        guard let service = inboxService(for: command) else { return }
+        service.setSeen(externalUserId: extUserId, messageIds: mIds, completion: { error in
             if let error = error {
-                self.commandDelegate?.send(error: error, for: command)
+                self.commandDelegate?.send(inboxError: error, for: command)
             } else {
                 self.commandDelegate?.send(array: mIds, for: command)
             }
@@ -786,18 +850,6 @@ class MobileMessagingEventsManager {
     }
 }
 
-extension MMInbox {
-    func dictionary() -> [String: Any] {
-        var result = [String: Any]()
-        result["countTotal"] = countTotal
-        result["countUnread"] = countUnread
-        result["messages"] = messages.map { $0.dictionaryRepresentation }
-        result["countTotalFiltered"] = countTotalFiltered
-        result["countUnreadFiltered"] = countUnreadFiltered
-        return result
-    }
-}
-
 extension MM_MTMessage {
     override func dictionary() -> [String: Any] {
         var result = [String: Any]()
@@ -1028,6 +1080,19 @@ extension CDVCommandDelegate {
     func send(error: NSError, for command: CDVInvokedUrlCommand) {
         let errorResult = createErrorPluginResult(error: error)
         self.send(errorResult, callbackId: command.callbackId)
+    }
+    /// Inbox errors always carry a String `code` (e.g. "20013", "UNAUTHORIZED"), same as on Android.
+    func send(inboxError error: NSError, for command: CDVInvokedUrlCommand) {
+        let errorResult = createErrorPluginResult(description: error.localizedDescription, errorCode: error.mm_code ?? inboxLocalErrorCode(error), domain: error.domain)
+        self.send(errorResult, callbackId: command.callbackId)
+    }
+    /// Code for errors without `mm_code`. Inbox validation errors already have `mm_code` "20013", so the only local Inbox error
+    /// without it is `NoRegistration`, reported with Android's `NO_VALID_REGISTRATION` code.
+    private func inboxLocalErrorCode(_ error: NSError) -> String {
+        if error.domain == MMInternalErrorDomain && error.code == NSError(type: .NoRegistration).code {
+            return "20006"
+        }
+        return String(error.code)
     }
     func send(dict: [AnyHashable: Any], for command: CDVInvokedUrlCommand) {
         let successResult = pluginResult(status: .ok, messageAs: dict)

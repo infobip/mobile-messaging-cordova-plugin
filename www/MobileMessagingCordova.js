@@ -321,11 +321,23 @@ MobileMessagingCordova.prototype.getUser = function (callback, errorCallback) {
  * {
  *   fromDateTime: <String; filter messages received after this datetime in ISO8601 format with timezone, e.g. "2024-03-11T12:00:00+01:00">,
  *   toDateTime: <String; filter messages received before this datetime in ISO8601 format with timezone, e.g. "2024-03-20T12:00:00+01:00">,
- *   topic: <String; filter messages by a single topic. Mutually exclusive with 'topics' - if 'topic' is provided, 'topics' must be null>,
- *   topics: <Array<String>; filter messages by multiple topics, e.g. ["topic1", "topic2"]. Mutually exclusive with 'topic' - if 'topics' is provided, 'topic' must be null>,
- *   limit: <Number; maximum number of messages to return, by default 20>,
+ *   topic: <String; filter messages by a single topic. If both 'topic' and 'topics' are provided, 'topic' is used and 'topics' is ignored>,
+ *   topics: <Array<String>; filter messages by a list of topics, e.g. ["topic1", "topic2"]. Messages are filtered on the device from
+ *            the 1000 most recent ones; any nonempty list, even with a single topic, doesn't support pagination>,
+ *   limit: <Number; maximum number of messages to return, by default 20 (no topic or a single 'topic')>,
+ *   cursor: <String; 'nextCursor' from the previous page to fetch the next page, omit or null to fetch the first page.
+ *            Keep 'fromDateTime', 'toDateTime' and 'topic' unchanged between pages. A cursor together with a nonempty 'topics' list fails with code "20013">,
  * }
- * @param {Function} callback. Will be called on success.
+ * @param {Function} callback. Will be called on success with the inbox object:
+ * {
+ *   countTotal: <Number>,
+ *   countUnread: <Number>,
+ *   countTotalFiltered: <Number; optional>,
+ *   countUnreadFiltered: <Number; optional>,
+ *   nextCursor: <String; optional, cursor for fetching the next page. Absent on the last page, when filtering by a nonempty 'topics' list,
+ *                with 'limit' 0, and with older backends without cursor support>,
+ *   messages: <Array<Message>>
+ * }
  * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.fetchInboxMessages = function (token, externalUserId, filterOptions, callback, errorCallback) {
@@ -341,11 +353,14 @@ MobileMessagingCordova.prototype.fetchInboxMessages = function (token, externalU
  * {
  *   fromDateTime: <String; filter messages received after this datetime in ISO8601 format with timezone, e.g. "2024-03-11T12:00:00+01:00">,
  *   toDateTime: <String; filter messages received before this datetime in ISO8601 format with timezone, e.g. "2024-03-20T12:00:00+01:00">,
- *   topic: <String; filter messages by a single topic. Mutually exclusive with 'topics' - if 'topic' is provided, 'topics' must be null>,
- *   topics: <Array<String>; filter messages by multiple topics, e.g. ["topic1", "topic2"]. Mutually exclusive with 'topic' - if 'topics' is provided, 'topic' must be null>,
- *   limit: <Number; maximum number of messages to return, by default 20>,
+ *   topic: <String; filter messages by a single topic. If both 'topic' and 'topics' are provided, 'topic' is used and 'topics' is ignored>,
+ *   topics: <Array<String>; filter messages by a list of topics, e.g. ["topic1", "topic2"]. Messages are filtered on the device from
+ *            the 1000 most recent ones; any nonempty list, even with a single topic, doesn't support pagination>,
+ *   limit: <Number; maximum number of messages to return, by default 20 (no topic or a single 'topic')>,
+ *   cursor: <String; 'nextCursor' from the previous page to fetch the next page, omit or null to fetch the first page.
+ *            Keep 'fromDateTime', 'toDateTime' and 'topic' unchanged between pages. A cursor together with a nonempty 'topics' list fails with code "20013">,
  * }
- * @param {Function} callback. Will be called on success.
+ * @param {Function} callback. Will be called on success with the inbox object, same as for `fetchInboxMessages`.
  * @param {Function} errorCallback. Will be called on error.
  */
 MobileMessagingCordova.prototype.fetchInboxMessagesWithoutToken = function (externalUserId, filterOptions, callback, errorCallback) {
@@ -363,6 +378,45 @@ MobileMessagingCordova.prototype.fetchInboxMessagesWithoutToken = function (exte
  */
 MobileMessagingCordova.prototype.setInboxMessagesSeen = function (externalUserId, messageIds, callback, errorCallback) {
     cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'setInboxMessagesSeen', [externalUserId, messageIds])
+};
+
+/**
+ * Asynchronously deletes one or more inbox messages. Uses the same access token authorization as `fetchInboxMessages`.
+ * Deletion is idempotent: messages that are missing or already deleted are treated as successfully deleted,
+ * so a failed call can safely be retried with the same message identifiers.
+ *
+ * @name deleteInboxMessages
+ * @param {String} token. Access token (JWT in a strictly predefined format) required for current user to have access to the Inbox messages.
+ * @param {String} externalUserId. External User ID is meant to be an ID of a user in an external (non-Infobip) service.
+ * @param {Array<String>} messageIds. Non-empty array of inbox message identifiers to delete, e.g. ["messageId1", "messageId2"].
+ * At most 100 supplied identifiers per call, duplicates included. Larger requests are rejected by the server with code "BAD_REQUEST",
+ * the plugin doesn't split them, so split larger selections into batches of 100.
+ * To delete a single message, pass an array containing only that message identifier.
+ * @param {Function} callback. Will be called on success with the array of message identifiers passed for deletion.
+ * @param {Function} errorCallback. Will be called on error with an error object `{code, description}`.
+ * Blank token, blank externalUserId, empty messageIds or blank message identifiers are rejected without sending a request, with code "20013".
+ */
+MobileMessagingCordova.prototype.deleteInboxMessages = function (token, externalUserId, messageIds, callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'deleteInboxMessages', [token, externalUserId, messageIds])
+};
+
+/**
+ * Asynchronously deletes one or more inbox messages. Uses Application Code for authorization, same as `fetchInboxMessagesWithoutToken`.
+ * Deletion is idempotent: messages that are missing or already deleted are treated as successfully deleted,
+ * so a failed call can safely be retried with the same message identifiers.
+ *
+ * @name deleteInboxMessagesWithoutToken
+ * @param {String} externalUserId. External User ID is meant to be an ID of a user in an external (non-Infobip) service.
+ * @param {Array<String>} messageIds. Non-empty array of inbox message identifiers to delete, e.g. ["messageId1", "messageId2"].
+ * At most 100 supplied identifiers per call, duplicates included. Larger requests are rejected by the server with code "BAD_REQUEST",
+ * the plugin doesn't split them, so split larger selections into batches of 100.
+ * To delete a single message, pass an array containing only that message identifier.
+ * @param {Function} callback. Will be called on success with the array of message identifiers passed for deletion.
+ * @param {Function} errorCallback. Will be called on error with an error object `{code, description}`.
+ * Blank externalUserId, empty messageIds or blank message identifiers are rejected without sending a request, with code "20013".
+ */
+MobileMessagingCordova.prototype.deleteInboxMessagesWithoutToken = function (externalUserId, messageIds, callback, errorCallback) {
+    cordova.exec(callback, errorCallback, 'MobileMessagingCordova', 'deleteInboxMessagesWithoutToken', [externalUserId, messageIds])
 };
 
 /**

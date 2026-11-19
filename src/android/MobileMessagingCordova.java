@@ -142,6 +142,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
     private static final String FUNCTION_MOBILE_FETCH_INBOX = "fetchInboxMessages";
     private static final String FUNCTION_MOBILE_FETCH_INBOX_WITHOUT_TOKEN = "fetchInboxMessagesWithoutToken";
     private static final String FUNCTION_MOBILE_INBOX_SET_SEEN = "setInboxMessagesSeen";
+    private static final String FUNCTION_MOBILE_INBOX_DELETE = "deleteInboxMessages";
+    private static final String FUNCTION_MOBILE_INBOX_DELETE_WITHOUT_TOKEN = "deleteInboxMessagesWithoutToken";
     private static final String FUNCTION_SET_USER_DATA_JWT = "setUserDataJwt";
     private static final String FUNCTION_CLEANUP = "cleanup";
 
@@ -530,6 +532,12 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return true;
         } else if (FUNCTION_MOBILE_INBOX_SET_SEEN.equals(action)) {
             setInboxMessagesSeen(args, callbackContext);
+            return true;
+        } else if (FUNCTION_MOBILE_INBOX_DELETE.equals(action)) {
+            deleteInboxMessages(args, callbackContext);
+            return true;
+        } else if (FUNCTION_MOBILE_INBOX_DELETE_WITHOUT_TOKEN.equals(action)) {
+            deleteInboxMessagesWithoutToken(args, callbackContext);
             return true;
         } else if (FUNCTION_SET_USER_DATA_JWT.equals(action)) {
             setJwtSupplier(args, callbackContext);
@@ -1398,6 +1406,47 @@ public class MobileMessagingCordova extends CordovaPlugin {
         return array;
     }
 
+    /**
+     * Unlike {@link #resolveStringArray(JSONArray)}, allows an empty array and blank elements,
+     * so that the native SDK validates them and reports its own error code.
+     */
+    @NonNull
+    private static String[] toStringArray(JSONArray jsonArray) {
+        String[] array = new String[jsonArray.length()];
+        for (int i = 0; i < jsonArray.length(); i++) {
+            // non-string elements (e.g. JSON null, which optString would turn into "null") become blank, same as on iOS
+            Object element = jsonArray.opt(i);
+            array[i] = element instanceof String ? (String) element : "";
+        }
+        return array;
+    }
+
+    /**
+     * Non-string values (null, numbers, objects) become blank instead of being stringified,
+     * so the native SDK rejects them with "20013", same as on iOS.
+     */
+    @NonNull
+    private static String inboxStringArgument(JSONArray args, int index) {
+        Object value = args.opt(index);
+        return value instanceof String ? (String) value : "";
+    }
+
+    /**
+     * Missing or null filter options mean "no filters"; any other non-object value is rejected
+     * instead of being silently treated as "no filters".
+     */
+    @Nullable
+    private static MobileInboxFilterOptions inboxFilterOptionsArgument(JSONArray args, int index) {
+        if (args.isNull(index)) {
+            return null;
+        }
+        Object value = args.opt(index);
+        if (!(value instanceof JSONObject)) {
+            throw new IllegalArgumentException("filterOptions must be an object or null");
+        }
+        return MobileInboxFilterOptionsJson.mobileInboxFilterOptionsFromJSON((JSONObject) value);
+    }
+
     private void setInboxMessagesSeen(JSONArray args, final CallbackContext callbackContext) {
         try {
             String externalUserId = args.getString(0);
@@ -1429,7 +1478,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
                         sendCallbackError(callbackContext, e.getMessage());
                     }
                 } else {
-                    sendCallbackError(callbackContext, result.getError().getMessage());
+                    sendCallbackError(callbackContext, result.getError().getMessage(), result.getError().getCode());
                 }
             }
         };
@@ -1441,9 +1490,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return;
         }
         try {
-            String token = args.getString(0);
-            String externalUserId = args.getString(1);
-            MobileInboxFilterOptions filterOptions = MobileInboxFilterOptionsJson.mobileInboxFilterOptionsFromJSON(args.getJSONObject(2));
+            // getString would turn a JS null into "null", reject non-strings before sending anything, same as on iOS
+            String token = args.opt(0) instanceof String ? args.getString(0) : null;
+            String externalUserId = args.opt(1) instanceof String ? args.getString(1) : null;
+            MobileInboxFilterOptions filterOptions = inboxFilterOptionsArgument(args, 2);
             if (externalUserId == null || token == null) {
                 sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid arguments");
                 return;
@@ -1466,8 +1516,8 @@ public class MobileMessagingCordova extends CordovaPlugin {
             return;
         }
         try {
-            String externalUserId = args.getString(0);
-            MobileInboxFilterOptions filterOptions = MobileInboxFilterOptionsJson.mobileInboxFilterOptionsFromJSON(args.getJSONObject(1));
+            String externalUserId = args.opt(0) instanceof String ? args.getString(0) : null;
+            MobileInboxFilterOptions filterOptions = inboxFilterOptionsArgument(args, 1);
             if (externalUserId == null) {
                 sendCallbackError(callbackContext, "Failed fetching inbox messages, invalid arguments");
                 return;
@@ -1493,7 +1543,71 @@ public class MobileMessagingCordova extends CordovaPlugin {
                     JSONObject json = InboxMapper.toJSON(result.getData());
                     sendCallbackSuccess(callbackContext, json);
                 } else {
-                    sendCallbackError(callbackContext, result.getError().getMessage());
+                    sendCallbackError(callbackContext, result.getError().getMessage(), result.getError().getCode());
+                }
+            }
+        };
+    }
+
+    private void deleteInboxMessages(JSONArray args, final CallbackContext callbackContext) {
+        if (args.length() < 3) {
+            sendCallbackError(callbackContext, "Failed deleting inbox messages, invalid number of arguments");
+            return;
+        }
+        try {
+            if (args.isNull(2)) {
+                sendCallbackError(callbackContext, "Failed deleting inbox messages, invalid arguments");
+                return;
+            }
+            String token = inboxStringArgument(args, 0);
+            String externalUserId = inboxStringArgument(args, 1);
+            String[] messageIds = toStringArray(args.getJSONArray(2));
+            runInBackground(new Runnable() {
+                @Override
+                public void run() {
+                    MobileInbox.getInstance(cordova.getActivity().getApplication()).deleteMessages(token, externalUserId, messageIds, deleteResultListener(callbackContext, messageIds));
+                }
+            });
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Failed deleting inbox messages " + e.getMessage());
+        }
+    }
+
+    private void deleteInboxMessagesWithoutToken(JSONArray args, final CallbackContext callbackContext) {
+        if (args.length() < 2) {
+            sendCallbackError(callbackContext, "Failed deleting inbox messages, invalid number of arguments");
+            return;
+        }
+        try {
+            if (args.isNull(1)) {
+                sendCallbackError(callbackContext, "Failed deleting inbox messages, invalid arguments");
+                return;
+            }
+            String externalUserId = inboxStringArgument(args, 0);
+            String[] messageIds = toStringArray(args.getJSONArray(1));
+            runInBackground(new Runnable() {
+                @Override
+                public void run() {
+                    MobileInbox.getInstance(cordova.getActivity().getApplication()).deleteMessages(externalUserId, messageIds, deleteResultListener(callbackContext, messageIds));
+                }
+            });
+        } catch (Exception e) {
+            sendCallbackError(callbackContext, "Failed deleting inbox messages " + e.getMessage());
+        }
+    }
+
+    private static MobileMessaging.ResultListener<Void> deleteResultListener(final CallbackContext callbackContext, final String[] messageIds) {
+        return new MobileMessaging.ResultListener<Void>() {
+            @Override
+            public void onResult(Result<Void, MobileMessagingError> result) {
+                if (result.isSuccess()) {
+                    try {
+                        sendCallbackSuccess(callbackContext, new JSONArray(messageIds));
+                    } catch (JSONException e) {
+                        sendCallbackError(callbackContext, e.getMessage());
+                    }
+                } else {
+                    sendCallbackError(callbackContext, result.getError().getMessage(), result.getError().getCode());
                 }
             }
         };
