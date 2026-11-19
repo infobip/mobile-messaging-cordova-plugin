@@ -87,7 +87,8 @@ var MobileMessagingCordova = function () {
  *          notificationSound: <String; a resource name for a notification sound (without extension), located in '/platforms/android/app/src/main/res/raw'>,
  *          multipleNotifications: <Boolean; set to true when you want to show multiple notifications in status bar>,
  *          notificationAccentColor: <String; hex color string to be used as accent color for notifications>,
- *          withBannerForegroundNotificationsEnabled: <Boolean>
+ *          withBannerForegroundNotificationsEnabled: <Boolean>,
+ *          appManagedFcmTokenLifecycle: <Boolean; optional; default false; set to true when the app manages the FCM token lifecycle>
  *      },
  *      privacySettings: <Object; privacy-related configuration settings> {
  *          userDataPersistingDisabled: <Boolean; set to true to disable persisting User Data locally. Default: false>,

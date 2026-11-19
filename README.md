@@ -337,7 +337,8 @@ MobileMessaging.init({
             notificationSound: <String; a resource name for a notification sound (without extension), located in '/platforms/android/app/src/main/res/raw'>, // optional
             multipleNotifications: <Boolean; set to 'true' to enable multiple notifications>,
             notificationAccentColor: <String; set to hex color value in format '#RRGGBB' or '#AARRGGBB'>,
-            withBannerForegroundNotificationsEnabled: <Boolean; set to true to always display Push notifications as Banner> // optional
+            withBannerForegroundNotificationsEnabled: <Boolean; set to true to always display Push notifications as Banner>, // optional
+            appManagedFcmTokenLifecycle: <Boolean; optional; default false; set to true when the app manages the FCM token lifecycle>
         },
 
         // Interactive notifications
@@ -379,6 +380,10 @@ MobileMessaging.init({
     }
 );
 ```
+
+`android.appManagedFcmTokenLifecycle` defaults to `false`. Set it to `true` when the host app manages the FCM token lifecycle. During depersonalization or repersonalization, the Android SDK will not delete or forcibly regenerate the FCM token. Internal cleanup and processing of future token callbacks continue. The app is responsible for renewing and supplying tokens when needed. Omitting the setting on a later initialization restores `false`.
+
+See [FCM token handling on depersonalization](https://github.com/infobip/mobile-messaging-sdk-android/wiki/FCM-token-handling-on-depersonalization).
 
 ## Troubleshooting
 

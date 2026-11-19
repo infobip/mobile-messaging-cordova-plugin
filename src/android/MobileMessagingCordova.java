@@ -274,6 +274,7 @@ public class MobileMessagingCordova extends CordovaPlugin {
             String notificationAccentColor;
             boolean withBannerForegroundNotificationsEnabled;
 //            FirebaseOptions firebaseOptions;
+            boolean appManagedFcmTokenLifecycle;
         }
 
         class PrivacySettings {
@@ -564,6 +565,10 @@ public class MobileMessagingCordova extends CordovaPlugin {
                 .withoutRegisteringForRemoteNotifications()
                 .withApplicationCode(configuration.applicationCode);
 
+        // Set on every init so an omitted option resets a previously enabled value.
+        configureAppManagedFcmTokenLifecycle(builder, configuration.android != null
+                && configuration.android.appManagedFcmTokenLifecycle);
+
         if (configuration.privacySettings.userDataPersistingDisabled) {
             builder.withoutStoringUserData();
         }
@@ -668,6 +673,20 @@ public class MobileMessagingCordova extends CordovaPlugin {
             InAppChat chat = InAppChat.getInstance(context);
             chat.activate();
             chat.setPushNavigationEnabled(configuration.inAppChatPushNavigationEnabled);
+        }
+    }
+
+    private static void configureAppManagedFcmTokenLifecycle(MobileMessaging.Builder builder, boolean enabled) {
+        try {
+            // The FCM SDK exposes this option; the Huawei SDK 9.6.0 does not.
+            builder.getClass().getMethod("withAppManagedFcmTokenLifecycle", boolean.class)
+                    .invoke(builder, enabled);
+        } catch (NoSuchMethodException e) {
+            if (enabled) {
+                CordovaLogger.w(TAG, "appManagedFcmTokenLifecycle is not supported by this native SDK variant");
+            }
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("Cannot configure app-managed FCM token lifecycle", e);
         }
     }
 
